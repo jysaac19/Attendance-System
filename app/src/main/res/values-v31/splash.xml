@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.App.First" parent="Theme.SplashScreen">
+         <item name="windowSplashScreenBackground">#FFF</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/img_nbs_logo1</item>
+        <item name="postSplashScreenTheme">@style/Theme.NBSCollege</item>
+
+    </style>
+</resources>
