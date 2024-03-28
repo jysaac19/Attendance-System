@@ -1,5 +1,6 @@
 package com.attendanceapp2.screens.navigation.bottomNavBar
 
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -27,7 +28,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.attendanceapp2.screens.navigation.routes.MainRoute
 
@@ -83,8 +86,8 @@ fun BottomNavBar(navController: NavController) {
                         navController.navigate(item.route)
                     },
                     modifier = Modifier
-                        .padding(bottom = 16.dp)
-                        .size(75.dp),
+                        .size(75.dp)
+                        .graphicsLayer(translationY = -100f),
                     containerColor = Color.Red,
                     contentColor = Color.White,
                     shape = CircleShape
@@ -103,9 +106,6 @@ fun BottomNavBar(navController: NavController) {
                         selectedItem = index
                         navController.navigate(item.route)
                     },
-                    label = {
-                        Text(text = item.title)
-                    },
                     alwaysShowLabel = true,
                     icon = {
                         Icon(
@@ -115,9 +115,9 @@ fun BottomNavBar(navController: NavController) {
                             contentDescription = item.title
                         )
                     },
-                    modifier = Modifier.padding(8.dp),
+                    modifier = Modifier.height(40.dp).padding(8.dp),
                     colors = NavigationBarItemDefaults.colors(
-                        indicatorColor = Color.LightGray
+                        indicatorColor = Color.Transparent
                     )
                 )
             }
