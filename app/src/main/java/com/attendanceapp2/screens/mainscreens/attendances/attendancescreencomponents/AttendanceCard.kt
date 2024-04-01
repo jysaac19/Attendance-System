@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ColorScheme
@@ -29,7 +30,8 @@ fun AttendanceCard(attendance: Attendance, index: Int) {
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp)
+            .height(50.dp),
+        shape = RoundedCornerShape(20.dp)
     ) {
         Column(modifier = Modifier
             .fillMaxWidth(),
@@ -76,7 +78,8 @@ fun AttendanceColumnName () {
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp)
+            .height(50.dp),
+        shape = RoundedCornerShape(20.dp)
     ) {
         Column(modifier = Modifier
             .fillMaxWidth(),
