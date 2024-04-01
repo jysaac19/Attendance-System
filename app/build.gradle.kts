@@ -106,7 +106,7 @@ dependencies {
     implementation("androidx.room:room-runtime:$room_version")
 
     //Data Converter
-    implementation ("com.google.code.gson:gson:2.10")
+    implementation ("com.google.code.gson:gson:2.10.1")
 
     //live clock
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
@@ -121,4 +121,14 @@ dependencies {
 
     //dropdown
     implementation ("me.saket.cascade:cascade-compose:2.0.0-beta1")
+
+    //CameraX
+    implementation("androidx.camera:camera-camera2:1.3.2")
+    implementation("androidx.camera:camera-lifecycle:1.3.2")
+    implementation("androidx.camera:camera-view:1.3.2")
+
+    //Zxing
+    implementation("com.google.zxing:core:3.3.2")
+    implementation ("com.journeyapps:zxing-android-embedded:4.2.0")
+
 }

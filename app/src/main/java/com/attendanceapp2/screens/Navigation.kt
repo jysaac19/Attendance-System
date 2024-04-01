@@ -13,6 +13,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.screens.mainscreens.attendances.AttendanceScreen
+import com.attendanceapp2.screens.mainscreens.scanner.Scanner
+import com.attendanceapp2.screens.mainscreens.scanner.SimpleQRScanner
 import com.attendanceapp2.screens.mainscreens.subjects.SubjectScreen
 import com.attendanceapp2.screens.navigation.bottomNavBar.BottomNavBar
 import com.attendanceapp2.screens.navigation.routes.MainRoute
@@ -42,7 +44,7 @@ fun Navigation() {
                 }
 
                 composable(route = MainRoute.Scanner.name) {
-
+                    SimpleQRScanner()
                 }
 
                 composable(route = MainRoute.Notifications.name) {
