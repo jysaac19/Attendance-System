@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.sp
 import com.attendanceapp2.R
 
 @Composable
-fun signInScreen() {
+fun SignInScreen() {
 
     var username by remember { mutableStateOf("") }
 
@@ -49,9 +49,7 @@ fun signInScreen() {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 50.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(horizontal = 24.dp, vertical = 50.dp)
     ) {
 
         item {
