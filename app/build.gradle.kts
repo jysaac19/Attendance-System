@@ -128,7 +128,6 @@ dependencies {
     implementation("androidx.camera:camera-view:1.3.2")
 
     //Zxing
-    implementation("com.google.zxing:core:3.3.2")
+    implementation("com.google.zxing:core:3.4.0")
     implementation ("com.journeyapps:zxing-android-embedded:4.2.0")
-
 }

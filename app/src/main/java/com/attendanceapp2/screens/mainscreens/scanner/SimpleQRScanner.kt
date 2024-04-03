@@ -12,6 +12,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -66,6 +67,7 @@ fun SimpleQRScanner() {
             AndroidView(
                 factory = {
                     val previewView = PreviewView(context)
+                    previewView.scaleType = PreviewView.ScaleType.FILL_CENTER
                     val preview = Preview.Builder().build()
                     val selector = CameraSelector.Builder()
                         .requireLensFacing(CameraSelector.LENS_FACING_BACK)
@@ -99,7 +101,9 @@ fun SimpleQRScanner() {
                     }
                     previewView
                 },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .fillMaxSize()
+//                    .aspectRatio(1f)
             )
             Text(
                 text = code,
