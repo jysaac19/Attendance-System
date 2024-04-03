@@ -127,6 +127,9 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:1.3.2")
     implementation("androidx.camera:camera-view:1.3.2")
 
+    val camerax_version = "1.3.0-alpha04"
+    implementation ("com.google.mlkit:barcode-scanning:17.2.0")
+
     //Zxing
     implementation("com.google.zxing:core:3.4.0")
     implementation ("com.journeyapps:zxing-android-embedded:4.2.0")

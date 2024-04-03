@@ -28,7 +28,6 @@ import com.attendanceapp2.screens.mainscreens.attendances.attendancescreencompon
 import com.attendanceapp2.screens.mainscreens.attendances.attendancescreencomponents.AttendanceColumnName
 import com.attendanceapp2.screens.mainscreens.attendances.attendancescreencomponents.CustomDatePicker
 import com.attendanceapp2.screens.mainscreens.attendances.attendancescreencomponents.SubjectDropdown
-import java.nio.file.Files.list
 import java.time.LocalDate
 
 @Composable
@@ -46,89 +45,84 @@ fun AttendanceScreen (navController : NavController) {
     var selectedSubject by remember { mutableIntStateOf(0) }
     val subjects = listOf("All", "Math", "Science", "History", "English", "Art")
 
-    LazyColumn(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp, vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        item{
-            Text(
-                "Attendances",
-                fontSize = 35.sp,
-                fontWeight = FontWeight.Bold
-            )
+        Text(
+            "Attendances",
+            fontSize = 35.sp,
+            fontWeight = FontWeight.Bold
+        )
 
-            Text(
-                "S.Y. 2023 - 2024",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
+        Text(
+            "S.Y. 2023 - 2024",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )
 
-            Spacer(Modifier.height(8.dp))
-        }
+        Spacer(Modifier.height(8.dp))
 
-        item {
-            Column(
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                Column(
+                    modifier = Modifier.weight(1f)
                 ) {
-                    Column(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        CustomDatePicker(
-                            label = "From",
-                            selectedDate = startdate,
-                            onDateSelected = { date ->
-                                startdate = date
-                            }
-                        )
-                    }
+                    CustomDatePicker(
+                        label = "From",
+                        selectedDate = startdate,
+                        onDateSelected = { date ->
+                            startdate = date
+                        }
+                    )
+                }
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
-                    Column(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        CustomDatePicker(
-                            label = "To",
-                            selectedDate = enddate,
-                            onDateSelected = { date ->
-                                enddate = date
-                            }
-                        )
-                    }
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    CustomDatePicker(
+                        label = "To",
+                        selectedDate = enddate,
+                        onDateSelected = { date ->
+                            enddate = date
+                        }
+                    )
                 }
             }
         }
 
-        item{
-            Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(8.dp))
 
-            SubjectDropdown(
-                label = "Subjects",
-                items = subjects,
-                selectedItem = selectedSubject,
-                onItemSelected = { selectedSubject = it }
-            )
+        SubjectDropdown(
+            label = "Subjects",
+            items = subjects,
+            selectedItem = selectedSubject,
+            onItemSelected = { selectedSubject = it }
+        )
 
-            Spacer(Modifier.height(8.dp))
-        }
+        Spacer(Modifier.height(8.dp))
 
-        item{
-            Spacer(Modifier.height(8.dp))
-            AttendanceColumnName()
-        }
+        Spacer(Modifier.height(8.dp))
 
-        attendances.forEachIndexed { index, attendance ->
-            item {
-                AttendanceCard(attendance = attendance, index = index)
+        AttendanceColumnName()
+
+        LazyColumn {
+            attendances.forEachIndexed { index, attendance ->
+                item {
+                    AttendanceCard(attendance = attendance, index = index)
+                }
             }
         }
     }
