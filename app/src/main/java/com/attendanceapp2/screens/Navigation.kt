@@ -1,4 +1,4 @@
-package com.attendanceapp2.screens.main
+package com.attendanceapp2.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -12,12 +12,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.attendanceapp2.screens.mainscreens.attendances.AttendanceScreen
+import com.attendanceapp2.screens.mainscreens.scanner.Scanner
+import com.attendanceapp2.screens.mainscreens.subjects.SubjectScreen
 import com.attendanceapp2.screens.navigation.bottomNavBar.BottomNavBar
 import com.attendanceapp2.screens.navigation.routes.MainRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun Navigation() {
     val navController: NavHostController = rememberNavController()
 //    val screenViewModel: ScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 
@@ -32,15 +35,15 @@ fun MainScreen() {
                 startDestination = MainRoute.Subjects.name
             ) {
                 composable(route = MainRoute.Subjects.name) {
-
+                    SubjectScreen(navController)
                 }
 
                 composable(route = MainRoute.Attendances.name) {
-
+                    AttendanceScreen(navController)
                 }
 
                 composable(route = MainRoute.Scanner.name) {
-
+                    Scanner()
                 }
 
                 composable(route = MainRoute.Notifications.name) {
