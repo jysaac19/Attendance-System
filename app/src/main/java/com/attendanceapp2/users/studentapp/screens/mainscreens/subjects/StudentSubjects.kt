@@ -12,10 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.attendanceapp2.data.model.Subject
-import com.attendanceapp2.users.studentapp.screens.mainscreens.subjects.subjectscreencomponents.SubjectCard
+import com.attendanceapp2.screenuniversalcomponents.subjectscreencomponents.SubjectCard
 
 @Composable
-fun SubjectScreen ( navController : NavController) {
+fun StudentSubjects ( navController : NavController) {
     val subjects = listOf(
         Subject(
             0,

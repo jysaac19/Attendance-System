@@ -1,4 +1,4 @@
-package com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.attendancescreencomponents
+package com.attendanceapp2.screenuniversalcomponents.attendancescreencomponents
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.shape.RoundedCornerShape

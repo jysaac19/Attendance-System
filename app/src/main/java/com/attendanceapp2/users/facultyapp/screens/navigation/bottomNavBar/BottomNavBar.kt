@@ -1,11 +1,6 @@
-package com.attendanceapp2.users.studentapp.screens.navigation.bottomNavBar
+package com.attendanceapp2.users.facultyapp.screens.navigation.bottomNavBar
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,7 +30,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,36 +39,37 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.attendanceapp2.approutes.StudentMainRoute
+import com.attendanceapp2.users.studentapp.screens.navigation.bottomNavBar.StudentBottomNavItem
 
 
 @Composable
-fun BottomNavBar(navController: NavController) {
+fun FacultyBottomNavBar(navController: NavController) {
     val items = listOf(
-        BottomNavItem(
+        StudentBottomNavItem(
             "Subjects",
             Icons.Default.Folder,
             Icons.Default.FolderOpen,
             StudentMainRoute.Subjects.name
         ),
-        BottomNavItem(
+        StudentBottomNavItem(
             "Attendances",
             Icons.Filled.PieChart,
             Icons.Outlined.PieChart,
             StudentMainRoute.Attendances.name
         ),
-        BottomNavItem(
+        StudentBottomNavItem(
             "Scanner",
             Icons.Filled.QrCode2,
             Icons.Outlined.QrCode2,
             StudentMainRoute.Scanner.name
         ),
-        BottomNavItem(
+        StudentBottomNavItem(
             "Notifications",
             Icons.Filled.Notifications,
             Icons.Outlined.Notifications,
             StudentMainRoute.Notifications.name
         ),
-        BottomNavItem(
+        StudentBottomNavItem(
             "Profile",
             Icons.Filled.Person,
             Icons.Outlined.Person,

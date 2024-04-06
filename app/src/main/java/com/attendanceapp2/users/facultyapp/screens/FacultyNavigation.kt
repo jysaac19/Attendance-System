@@ -1,4 +1,4 @@
-package com.attendanceapp2.users.studentapp.screens
+package com.attendanceapp2.users.facultyapp.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -13,19 +13,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.approutes.StudentMainRoute
-import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.StudentAttendances
-import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.StudentScanner
-import com.attendanceapp2.users.studentapp.screens.mainscreens.subjects.StudentSubjects
-import com.attendanceapp2.users.studentapp.screens.navigation.bottomNavBar.StudentBottomNavBar
+import com.attendanceapp2.users.facultyapp.screens.navigation.bottomNavBar.FacultyBottomNavBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StudentNavigation() {
+fun FacultyNavigation() {
     val navController: NavHostController = rememberNavController()
 //    val screenViewModel: ScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 
     Scaffold(
-        bottomBar = { StudentBottomNavBar(navController = navController) }
+        bottomBar = { FacultyBottomNavBar(navController = navController) }
     ) {
         Box(modifier = Modifier.padding(it)) {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -35,15 +32,15 @@ fun StudentNavigation() {
                 startDestination = StudentMainRoute.Subjects.name
             ) {
                 composable(route = StudentMainRoute.Subjects.name) {
-                    StudentSubjects(navController)
+
                 }
 
                 composable(route = StudentMainRoute.Attendances.name) {
-                    StudentAttendances(navController)
+
                 }
 
                 composable(route = StudentMainRoute.Scanner.name) {
-                    StudentScanner()
+
                 }
 
                 composable(route = StudentMainRoute.Notifications.name) {

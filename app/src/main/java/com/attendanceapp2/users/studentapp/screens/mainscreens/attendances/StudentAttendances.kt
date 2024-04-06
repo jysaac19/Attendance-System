@@ -24,14 +24,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.attendanceapp2.data.model.Attendance
-import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.attendancescreencomponents.AttendanceCard
-import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.attendancescreencomponents.AttendanceColumnName
-import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.attendancescreencomponents.CustomDatePicker
-import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.attendancescreencomponents.SubjectDropdown
+import com.attendanceapp2.screenuniversalcomponents.attendancescreencomponents.AttendanceCard
+import com.attendanceapp2.screenuniversalcomponents.attendancescreencomponents.AttendanceColumnName
+import com.attendanceapp2.screenuniversalcomponents.attendancescreencomponents.CustomDatePicker
+import com.attendanceapp2.screenuniversalcomponents.attendancescreencomponents.SubjectDropdown
 import java.time.LocalDate
 
 @Composable
-fun AttendanceScreen (navController : NavController) {
+fun StudentAttendances (navController : NavController) {
     val attendances = listOf(
         Attendance(235, "Kenneth", "Bonaagua", "Mathematics", "MATH101", "2024-03-29", "08:00 AM", "2023-2024", 1),
         Attendance(200, "Kenneth", "Bonaagua", "Physics", "PHY101", "2024-03-29", "10:00 AM", "2023-2024", 1),
