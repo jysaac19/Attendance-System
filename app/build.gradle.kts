@@ -52,7 +52,7 @@ android {
 
 dependencies {
     // Icons
-    implementation("androidx.compose.material:material-icons-extended:1.6.4")
+    implementation("androidx.compose.material:material-icons-extended:1.6.5")
     implementation("com.google.firebase:firebase-inappmessaging-ktx:20.4.1")
     // Navigation
 //    val nav_version = "2.7.4" implemment $nav_version
@@ -62,13 +62,13 @@ dependencies {
     //==========================================
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
-    implementation(platform("androidx.compose:compose-bom:2024.03.00"))
+    implementation(platform("androidx.compose:compose-bom:2024.04.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3:1.2.1")
     implementation("androidx.compose.material3:material3-window-size-class:1.2.1")
-    implementation("androidx.compose.ui:ui-graphics-android:1.6.4")
+    implementation("androidx.compose.ui:ui-graphics-android:1.6.5")
     implementation("com.google.android.engage:engage-core:1.4.0")
     implementation("com.google.android.gms:play-services-mlkit-subject-segmentation:16.0.0-beta1")
     implementation("com.google.android.material:material:1.11.0")
@@ -76,16 +76,16 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.03.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.04.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     //external implementations
-    implementation ("androidx.compose.foundation:foundation:1.6.4")
-    implementation ("androidx.compose.foundation:foundation-layout:1.6.4")
-    implementation ("androidx.compose.ui:ui-tooling:1.6.4")
-    implementation ("androidx.compose.runtime:runtime-livedata:1.6.4")
+    implementation ("androidx.compose.foundation:foundation:1.6.5")
+    implementation ("androidx.compose.foundation:foundation-layout:1.6.5")
+    implementation ("androidx.compose.ui:ui-tooling:1.6.5")
+    implementation ("androidx.compose.runtime:runtime-livedata:1.6.5")
 
     //Material 3 Core
     implementation ("com.maxkeppeler.sheets-compose-dialogs:core:1.0.2")
