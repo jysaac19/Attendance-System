@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
@@ -77,12 +78,11 @@ fun StudentScanner () {
                     modifier = Modifier
                         .fillMaxSize()
                         .drawWithContent {
-
                             val canvasWidth = size.width
                             val canvasHeight = size.height
+                            val cornerRadius = 16.dp.toPx()
                             val width = canvasWidth * 0.6f
                             val height = width * 2 / 2f
-                            val cornerRadius = 16f
 
                             drawContent()
 
@@ -94,9 +94,10 @@ fun StudentScanner () {
 
                                 // Source
                                 // This is where we extract this rect from transparent
-                                drawRect(
+                                drawRoundRect(
                                     topLeft = Offset((canvasWidth - width) / 2, canvasHeight * .3f),
                                     size = Size(width, height),
+                                    cornerRadius = CornerRadius(cornerRadius),
                                     color = Color.Transparent,
                                     blendMode = BlendMode.SrcIn
                                 )
@@ -105,6 +106,7 @@ fun StudentScanner () {
                             drawRoundRect(
                                 topLeft = Offset((canvasWidth - width) / 2, canvasHeight * .3f),
                                 size = Size(width, height),
+                                cornerRadius = CornerRadius(cornerRadius),
                                 color = Color.White,
                                 style = Stroke(2.dp.toPx())
                             )
@@ -121,7 +123,7 @@ fun StudentScanner () {
 
                             // Set the target resolution to a smaller square size
                             val targetResolution = android.util.Size(200, 200)
-                            val imageAnalysis = ImageAnalysis.Builder()
+                            @Suppress("DEPRECATION") val imageAnalysis = ImageAnalysis.Builder()
                                 .setTargetResolution(targetResolution)
                                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                                 .build()
