@@ -3,8 +3,8 @@ package com.attendanceapp2.data.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Student")
-data class Student(
+@Entity(tableName = "User")
+data class User(
     @PrimaryKey(autoGenerate = true)
     val id : Long,
     val firstname : String,
@@ -12,6 +12,5 @@ data class Student(
     val email : String,
     val password : String,
     val usertype : String,
-    val department : String,
-    val year : String
+    val department : String
 )

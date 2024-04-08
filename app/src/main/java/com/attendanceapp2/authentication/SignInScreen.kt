@@ -36,10 +36,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.attendanceapp2.R
+import com.attendanceapp2.approutes.AuthRoute
 
 @Composable
-fun SignInScreen() {
+fun SignInScreen(navController: NavController) {
 
     var username by remember { mutableStateOf("") }
 
@@ -49,7 +51,8 @@ fun SignInScreen() {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 50.dp)
+            .padding(horizontal = 24.dp, vertical = 150.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
         item {
@@ -68,8 +71,6 @@ fun SignInScreen() {
                 fontWeight = FontWeight.Bold
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
-
             Text(
                 text = "Please sign in using your school email",
                 fontSize = 18.sp,
@@ -82,8 +83,7 @@ fun SignInScreen() {
                 value = username,
                 onValueChange = { username = it },
                 label = { Text("Username") },
-                modifier = Modifier.fillMaxWidth()
-                    .padding(bottom = 8.dp),
+                modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp)
             )
 
@@ -99,18 +99,17 @@ fun SignInScreen() {
                         )
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
-                    .padding(bottom = 8.dp),
+                modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp)
             )
 
+            Spacer(modifier = Modifier.height(8.dp))
+
             Button(
                 onClick = {  },
-                shape = RoundedCornerShape(15.dp),
+                shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 50.dp ,vertical = 4.dp)
-                    .size(width = 80.dp,height = 50.dp)
+                    .size(width = 350.dp,height = 50.dp)
             ) {
                 Text(
                     text = "Sign In",
@@ -120,13 +119,13 @@ fun SignInScreen() {
                 )
             }
 
+            Spacer(modifier = Modifier.height(8.dp))
+
             Button(
                 onClick = {  },
-                shape = RoundedCornerShape(15.dp),
+                shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 50.dp ,vertical = 4.dp)
-                    .size(width = 80.dp,height = 50.dp),
+                    .size(width = 350.dp,height = 50.dp),
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -160,7 +159,7 @@ fun SignInScreen() {
 
                 ClickableText(
                     text = AnnotatedString("Sign Up"),
-                    onClick = {  },
+                    onClick = { navController.navigate(AuthRoute.SignUp.name) },
                     style = TextStyle(
                         color = Color.Red,
                         fontSize = 18.sp,

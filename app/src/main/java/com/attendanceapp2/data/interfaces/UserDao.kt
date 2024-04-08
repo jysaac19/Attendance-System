@@ -5,19 +5,19 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Update
-import com.attendanceapp2.data.model.Student
+import com.attendanceapp2.data.model.User
 
 
 @Dao
-interface StudentDao {
+interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(student: Student)
+    suspend fun insert(user: User)
 
     @Update
-    suspend fun update(student: Student)
+    suspend fun update(user: User)
 
     @Delete
-    suspend fun delete(student: Student)
+    suspend fun delete(user: User)
 
 }

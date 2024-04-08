@@ -43,11 +43,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.attendanceapp2.R
+import com.attendanceapp2.approutes.AuthRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun signUpScreen() {
+fun SignUpScreen(navController: NavController) {
     val context = LocalContext.current
 
     // State variables to store the text field values
@@ -66,7 +68,7 @@ fun signUpScreen() {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 50.dp),
+            .padding(horizontal = 24.dp, vertical = 150.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -100,28 +102,31 @@ fun signUpScreen() {
                 value = firstName,
                 onValueChange = { firstName = it },
                 label = { Text("First Name") },
-                modifier = Modifier.fillMaxWidth()
-                    .padding(bottom = 8.dp),
+                modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp)
             )
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = lastName,
                 onValueChange = { lastName = it },
                 label = { Text("Last Name") },
-                modifier = Modifier.fillMaxWidth()
-                    .padding(bottom = 8.dp),
+                modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp)
             )
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = username,
                 onValueChange = { username = it },
                 label = { Text("Username") },
-                modifier = Modifier.fillMaxWidth()
-                    .padding(bottom = 8.dp),
+                modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp)
             )
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = password,
@@ -135,11 +140,11 @@ fun signUpScreen() {
                         )
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
-                    .padding(bottom = 8.dp),
+                modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp)
             )
 
+            Spacer(modifier = Modifier.height(16.dp))
 
             ExposedDropdownMenuBox(
                 expanded = expanded,
@@ -153,8 +158,7 @@ fun signUpScreen() {
                     readOnly = true,
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                     modifier = Modifier
-                        .menuAnchor()
-                        .padding(bottom = 8.dp),
+                        .menuAnchor(),
                     shape = RoundedCornerShape(20.dp),
                     textStyle = TextStyle(textAlign = TextAlign.Center)
                 )
@@ -176,13 +180,13 @@ fun signUpScreen() {
                 }
             }
 
+            Spacer(modifier = Modifier.height(8.dp))
+
             Button(
                 onClick = {  },
-                shape = RoundedCornerShape(15.dp),
+                shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 50.dp ,vertical = 4.dp)
-                    .size(width = 80.dp,height = 50.dp)
+                    .size(width = 350.dp,height = 50.dp)
             ) {
                 Text(
                     text = "Sign Up",
@@ -192,13 +196,13 @@ fun signUpScreen() {
                 )
             }
 
+            Spacer(modifier = Modifier.height(8.dp))
+
             Button(
                 onClick = {  },
-                shape = RoundedCornerShape(15.dp),
+                shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 50.dp ,vertical = 4.dp)
-                    .size(width = 80.dp,height = 50.dp),
+                    .size(width = 350.dp,height = 50.dp),
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -220,9 +224,10 @@ fun signUpScreen() {
                 }
             }
 
+            Spacer(modifier = Modifier.height(8.dp))
+
             Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.padding(vertical = 16.dp)
+                horizontalArrangement = Arrangement.Center
             ) {
                 Text(
                     text = "Already have an account? ",
@@ -232,7 +237,7 @@ fun signUpScreen() {
 
                 ClickableText(
                     text = AnnotatedString("Sign In"),
-                    onClick = {  },
+                    onClick = { navController.navigate(AuthRoute.SignIn.name) },
                     style = TextStyle(
                         color = Color.Red,
                         fontSize = 18.sp,

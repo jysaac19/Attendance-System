@@ -1,4 +1,4 @@
-package com.attendanceapp2.screenuniversalcomponents.navigationbar
+package com.attendanceapp2.screenuniversalcomponents.navigation
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -38,42 +38,42 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.attendanceapp2.approutes.FacultyMainRoute
-import com.attendanceapp2.users.facultyapp.screens.bottomNavBar.FacultyBottomNavItem
+import com.attendanceapp2.approutes.StudentMainRoute
+import com.attendanceapp2.users.studentapp.screens.navigation.bottomNavBar.StudentBottomNavItem
 
 
 @Composable
-fun FacultyBottomNavBar(navController: NavController) {
+fun StudentBottomNavBar(navController: NavController) {
     val items = listOf(
-        FacultyBottomNavItem(
+        StudentBottomNavItem(
             "Subjects",
             Icons.Default.Folder,
             Icons.Default.FolderOpen,
-            FacultyMainRoute.Subjects.name
+            StudentMainRoute.Subjects.name
         ),
-        FacultyBottomNavItem(
+        StudentBottomNavItem(
             "Attendances",
             Icons.Filled.PieChart,
             Icons.Outlined.PieChart,
-            FacultyMainRoute.Attendances.name
+            StudentMainRoute.Attendances.name
         ),
-        FacultyBottomNavItem(
+        StudentBottomNavItem(
             "Scanner",
             Icons.Filled.QrCode2,
             Icons.Outlined.QrCode2,
-            FacultyMainRoute.Code.name
+            StudentMainRoute.Scanner.name
         ),
-        FacultyBottomNavItem(
+        StudentBottomNavItem(
             "Notifications",
             Icons.Filled.Notifications,
             Icons.Outlined.Notifications,
-            FacultyMainRoute.Notifications.name
+            StudentMainRoute.Notifications.name
         ),
-        FacultyBottomNavItem(
+        StudentBottomNavItem(
             "Profile",
             Icons.Filled.Person,
             Icons.Outlined.Person,
-            FacultyMainRoute.Profile.name
+            StudentMainRoute.Profile.name
         )
     )
 
