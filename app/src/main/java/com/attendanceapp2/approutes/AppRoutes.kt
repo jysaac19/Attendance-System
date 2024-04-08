@@ -4,5 +4,6 @@ enum class AppRoutes {
     AUTH,
     STUDENT,
     FACULTY,
-    ADMIN
+    ADMIN,
+    PORTALS
 }
