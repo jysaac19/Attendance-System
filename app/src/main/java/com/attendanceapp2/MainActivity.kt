@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.attendanceapp2.screenuniversalcomponents.navigation.AuthNavigation
+import com.attendanceapp2.screenuniversalcomponents.navigation.FacultyNavigation
+import com.attendanceapp2.screenuniversalcomponents.navigation.StudentNavigation
 import com.attendanceapp2.theme.NBSCollegeTheme
 import com.attendanceapp2.viewmodel.AppViewModelProvider
 import com.shin.myproject.ViewModel.ScreenViewModel
@@ -62,8 +64,8 @@ class MainActivity : ComponentActivity() {
                         .wrapContentHeight(Alignment.CenterVertically)
                 ) {
 
-//                    FacultyNavigation()
-//                    StudentNavigation()
+                    FacultyNavigation()
+                    StudentNavigation()
                     AuthNavigation()
                 }
             }
