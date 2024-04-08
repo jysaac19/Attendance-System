@@ -36,14 +36,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.R
+import com.attendanceapp2.approutes.AppRoutes
 import com.attendanceapp2.approutes.AuthRoute
+import com.attendanceapp2.data.model.User
+import com.attendanceapp2.viewmodel.AppViewModelProvider
+
 
 @Composable
-fun SignInScreen(navController: NavController) {
+fun SignInScreen(navController: NavController,
+                 viewModel: SignInViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
 
-    var username by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
 
     var password by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
@@ -80,8 +86,8 @@ fun SignInScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
-                value = username,
-                onValueChange = { username = it },
+                value = email,
+                onValueChange = { email = it },
                 label = { Text("Username") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp)
@@ -106,7 +112,12 @@ fun SignInScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = {  },
+                onClick = {
+                    viewModel.email = email
+                    viewModel.password = password
+                    viewModel.checkUser()
+                    navController.navigate(AppRoutes.PORTALS.name)
+                },
                 shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
                     .size(width = 350.dp,height = 50.dp)
@@ -170,3 +181,27 @@ fun SignInScreen(navController: NavController) {
         }
     }
 }
+
+private val users = listOf(
+    User(101,
+        "Je",
+        "Ysaac",
+        "je@yahoo.com",
+        "123",
+        "Student",
+        "ComSci"),
+    User(201,
+        "Admin",
+        "Ysaac",
+        "admin@yahoo.com",
+        "123",
+        "Admin",
+        "ComSci"),
+    User(301,
+        "Faculty",
+        "Ysaac",
+        "faculty@yahoo.com",
+        "123",
+        "Faculty",
+        "ComSci")
+)
