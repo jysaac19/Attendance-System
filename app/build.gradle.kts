@@ -132,6 +132,21 @@ dependencies {
     implementation ("com.google.mlkit:barcode-scanning:17.2.0")
 
     //Zxing
+<<<<<<< Updated upstream
     implementation("com.google.zxing:core:3.4.1")
     implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
+=======
+    implementation("com.google.zxing:core:3.4.0")
+    implementation ("com.journeyapps:zxing-android-embedded:4.2.0")
+
+    // Ktor
+
+    val ktorVersion = "2.3.9"
+
+    implementation ("io.ktor:ktor-client-android:$ktorVersion")
+    implementation ("io.ktor:ktor-client-json:$ktorVersion")
+    implementation ("io.ktor:ktor-client-serialization:$ktorVersion")
+    implementation ("io.ktor:ktor-client-logging:$ktorVersion")
+
+>>>>>>> Stashed changes
 }

@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
+import androidx.camera.core.processing.DefaultSurfaceProcessor.Factory
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
@@ -39,9 +40,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.attendanceapp2.viewmodel.AppViewModelProvider
 
 @Composable
+<<<<<<< Updated upstream:app/src/main/java/com/attendanceapp2/users/studentapp/screens/mainscreens/scanner/StudentScanner.kt
 fun StudentScanner () {
+=======
+fun Scanner (viewModel: ScannerViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+>>>>>>> Stashed changes:app/src/main/java/com/attendanceapp2/screens/mainscreens/scanner/Scanner.kt
     var code by remember { mutableStateOf("") }
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -130,7 +137,7 @@ fun StudentScanner () {
                             imageAnalysis.setAnalyzer(
                                 ContextCompat.getMainExecutor(context),
                                 QRCodeAnalyzer { result ->
-                                    code = result
+                                    viewModel.code = result
                                 }
                             )
 

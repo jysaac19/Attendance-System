@@ -14,7 +14,11 @@ import com.attendanceapp2.data.model.User
 /**
  * Database class with a singleton Instance object.
  */
+<<<<<<< Updated upstream
 @Database(entities = [Subject::class, User::class, Attendance::class], version = 3, exportSchema = false)
+=======
+@Database(entities = [Faculty::class, Subject::class, Student::class, Attendance::class], version = 1, exportSchema = false)
+>>>>>>> Stashed changes
 abstract class AttendanceAppDatabase : RoomDatabase() {
     abstract fun subjectDao(): SubjectDao
     abstract fun userDao(): UserDao

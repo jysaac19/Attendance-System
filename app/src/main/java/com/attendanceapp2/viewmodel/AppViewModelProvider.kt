@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.attendanceapp2.data.NBSAttendanceApp
+import com.attendanceapp2.NBSAttendanceApp
+import com.attendanceapp2.screens.mainscreens.scanner.ScannerViewModel
 import com.shin.myproject.ViewModel.ScreenViewModel
 
 /**
@@ -30,6 +31,10 @@ object AppViewModelProvider {
         // ScreenViewModel
         initializer {
             ScreenViewModel()
+        }
+        // ScannerViewModel
+        initializer {
+            ScannerViewModel(nbsAttendanceApplication().container.studentRepository, nbsAttendanceApplication().container.attendanceRepository)
         }
     }
 }
