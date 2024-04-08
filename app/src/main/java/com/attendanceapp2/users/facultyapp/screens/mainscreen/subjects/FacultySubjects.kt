@@ -1,4 +1,4 @@
-package com.attendanceapp2.users.studentapp.screens.mainscreens.subjects
+package com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +15,7 @@ import com.attendanceapp2.data.model.Subject
 import com.attendanceapp2.screenuniversalcomponents.subjectscreencomponents.SubjectCard
 
 @Composable
-fun StudentSubjects ( navController : NavController) {
+fun FacultySubjects ( navController : NavController) {
     val subjects = listOf(
         Subject(
             0,

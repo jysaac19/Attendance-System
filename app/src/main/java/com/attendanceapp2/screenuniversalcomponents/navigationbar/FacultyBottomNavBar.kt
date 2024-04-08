@@ -1,4 +1,4 @@
-package com.attendanceapp2.users.studentapp.screens.navigation.bottomNavBar
+package com.attendanceapp2.screenuniversalcomponents.navigationbar
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -38,41 +38,42 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.attendanceapp2.approutes.StudentMainRoute
+import com.attendanceapp2.approutes.FacultyMainRoute
+import com.attendanceapp2.users.facultyapp.screens.bottomNavBar.FacultyBottomNavItem
 
 
 @Composable
-fun StudentBottomNavBar(navController: NavController) {
+fun FacultyBottomNavBar(navController: NavController) {
     val items = listOf(
-        StudentBottomNavItem(
+        FacultyBottomNavItem(
             "Subjects",
             Icons.Default.Folder,
             Icons.Default.FolderOpen,
-            StudentMainRoute.Subjects.name
+            FacultyMainRoute.Subjects.name
         ),
-        StudentBottomNavItem(
+        FacultyBottomNavItem(
             "Attendances",
             Icons.Filled.PieChart,
             Icons.Outlined.PieChart,
-            StudentMainRoute.Attendances.name
+            FacultyMainRoute.Attendances.name
         ),
-        StudentBottomNavItem(
+        FacultyBottomNavItem(
             "Scanner",
             Icons.Filled.QrCode2,
             Icons.Outlined.QrCode2,
-            StudentMainRoute.Scanner.name
+            FacultyMainRoute.Code.name
         ),
-        StudentBottomNavItem(
+        FacultyBottomNavItem(
             "Notifications",
             Icons.Filled.Notifications,
             Icons.Outlined.Notifications,
-            StudentMainRoute.Notifications.name
+            FacultyMainRoute.Notifications.name
         ),
-        StudentBottomNavItem(
+        FacultyBottomNavItem(
             "Profile",
             Icons.Filled.Person,
             Icons.Outlined.Person,
-            StudentMainRoute.Profile.name
+            FacultyMainRoute.Profile.name
         )
     )
 

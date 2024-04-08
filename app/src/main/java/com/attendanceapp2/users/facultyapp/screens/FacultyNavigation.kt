@@ -1,4 +1,4 @@
-package com.attendanceapp2.users.studentapp.screens
+package com.attendanceapp2.users.facultyapp.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -12,45 +12,45 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.attendanceapp2.approutes.StudentMainRoute
-import com.attendanceapp2.screenuniversalcomponents.navigationbar.StudentBottomNavBar
+import com.attendanceapp2.approutes.FacultyMainRoute
+import com.attendanceapp2.screenuniversalcomponents.navigationbar.FacultyBottomNavBar
+import com.attendanceapp2.users.facultyapp.screens.mainscreen.qrscreen.QRCode
 import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.StudentAttendances
-import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.StudentScanner
 import com.attendanceapp2.users.studentapp.screens.mainscreens.subjects.StudentSubjects
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StudentNavigation() {
+fun FacultyNavigation() {
     val navController: NavHostController = rememberNavController()
 //    val screenViewModel: ScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 
     Scaffold(
-        bottomBar = { StudentBottomNavBar(navController = navController) }
+        bottomBar = { FacultyBottomNavBar(navController = navController) }
     ) {
         Box(modifier = Modifier.padding(it)) {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
 
             NavHost(
                 navController = navController,
-                startDestination = StudentMainRoute.Subjects.name
+                startDestination = FacultyMainRoute.Subjects.name
             ) {
-                composable(route = StudentMainRoute.Subjects.name) {
+                composable(route = FacultyMainRoute.Subjects.name) {
                     StudentSubjects(navController)
                 }
 
-                composable(route = StudentMainRoute.Attendances.name) {
+                composable(route = FacultyMainRoute.Attendances.name) {
                     StudentAttendances(navController)
                 }
 
-                composable(route = StudentMainRoute.Scanner.name) {
-                    StudentScanner()
+                composable(route = FacultyMainRoute.Code.name) {
+                    QRCode()
                 }
 
-                composable(route = StudentMainRoute.Notifications.name) {
+                composable(route = FacultyMainRoute.Notifications.name) {
 
                 }
 
-                composable(route = StudentMainRoute.Profile.name) {
+                composable(route = FacultyMainRoute.Profile.name) {
 
                 }
             }

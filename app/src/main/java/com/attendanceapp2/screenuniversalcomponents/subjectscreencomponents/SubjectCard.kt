@@ -56,8 +56,8 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "${subject.day}, ${subject.start} - ${subject.end}",
-                fontSize = 18.sp
+                text = "${subject.day}: ${subject.start} - ${subject.end}",
+                fontSize = 14.sp
             )
         }
 

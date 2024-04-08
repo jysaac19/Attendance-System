@@ -1,4 +1,4 @@
-package com.attendanceapp2.users.facultyapp.screen
+package com.attendanceapp2.users.facultyapp.screens.mainscreen.qrscreen
 
 import android.graphics.Bitmap
 import androidx.compose.ui.graphics.Color

@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.attendanceapp2.theme.NBSCollegeTheme
-import com.attendanceapp2.users.facultyapp.screen.QRCode
+import com.attendanceapp2.users.facultyapp.screens.FacultyNavigation
 import com.attendanceapp2.viewmodel.AppViewModelProvider
 import com.shin.myproject.ViewModel.ScreenViewModel
 import kotlinx.coroutines.delay
@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
                         .wrapContentHeight(Alignment.CenterVertically)
                 ) {
 
-                    QRCode()
+                    FacultyNavigation()
 
                 }
             }
