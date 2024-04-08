@@ -3,8 +3,8 @@ package com.attendanceapp2.data
 import android.content.Context
 import com.attendanceapp2.data.repositories.attendancce.AttendanceRepository
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
-import com.attendanceapp2.data.repositories.student.OfflineUserRepository
-import com.attendanceapp2.data.repositories.student.UserRepository
+import com.attendanceapp2.data.repositories.user.OfflineUserRepository
+import com.attendanceapp2.data.repositories.user.UserRepository
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import com.attendanceapp2.data.repositories.subject.SubjectRepository
 

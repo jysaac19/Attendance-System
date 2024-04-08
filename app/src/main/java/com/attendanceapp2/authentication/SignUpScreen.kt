@@ -144,6 +144,22 @@ fun SignUpScreen(navController: NavController) {
                 shape = RoundedCornerShape(20.dp)
             )
 
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Re-enter Password") },
+                trailingIcon = {
+                    IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                        Icon(
+                            imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                            contentDescription = "Toggle password visibility"
+                        )
+                    }
+                },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp)
+            )
+
             Spacer(modifier = Modifier.height(16.dp))
 
             ExposedDropdownMenuBox(

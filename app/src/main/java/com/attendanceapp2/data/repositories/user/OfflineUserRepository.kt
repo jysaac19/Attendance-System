@@ -1,4 +1,4 @@
-package com.attendanceapp2.data.repositories.student
+package com.attendanceapp2.data.repositories.user
 
 import com.attendanceapp2.data.interfaces.UserDao
 import com.attendanceapp2.data.model.User
