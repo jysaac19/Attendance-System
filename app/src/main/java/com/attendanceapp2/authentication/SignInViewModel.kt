@@ -1,6 +1,8 @@
 package com.attendanceapp2.authentication
 
 import android.widget.Toast
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -9,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.approutes.AppRoutes
 import com.attendanceapp2.data.model.User
 import com.attendanceapp2.data.repositories.user.UserRepository
+import com.sun.activation.registries.LogSupport.log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -61,12 +64,12 @@ class SignInViewModel(
         )
     )
 
-    var loggedInUser: LoggedInUser? = null
+    var loggedInUser: MutableState<LoggedInUser?> = mutableStateOf(null)
 
-    fun checkUser(email: String, password: String): LoggedInUser? {
+    fun checkUser(email: String, password: String): LoginResult {
         users.forEach { user ->
             if (user.email == email && user.password == password) {
-                return LoggedInUser(
+                loggedInUser.value = LoggedInUser(
                     user.id,
                     user.firstname,
                     user.lastname,
@@ -74,8 +77,9 @@ class SignInViewModel(
                     user.usertype,
                     user.department
                 )
+                return LoginResult.Success
             }
         }
-        return null
+        return LoginResult.Failure("Invalid email or password")
     }
 }

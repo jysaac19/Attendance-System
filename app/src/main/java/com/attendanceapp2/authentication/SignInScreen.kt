@@ -1,6 +1,7 @@
 package com.attendanceapp2.authentication
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -31,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -39,23 +41,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.attendanceapp2.R
 import com.attendanceapp2.approutes.AppRoutes
 import com.attendanceapp2.approutes.AuthRoute
 import com.attendanceapp2.data.model.User
 import com.attendanceapp2.viewmodel.AppViewModelProvider
 import com.sun.activation.registries.LogSupport.log
+import io.ktor.http.ContentType
 
 
 @Composable
 fun SignInScreen(
-    navController: NavController,
+    navController: NavHostController,
     viewModel: SignInViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+
+    val context = LocalContext.current
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
-    var loginResult: LoginResult by remember { mutableStateOf(LoginResult.Success) }
 
     LazyColumn(
         modifier = Modifier
@@ -114,31 +119,16 @@ fun SignInScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Display error message if login fails
-            if (loginResult is LoginResult.Failure) {
-                Text(
-                    text = (loginResult as LoginResult.Failure).errorMessage,
-                    color = Color.Red,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
             Button(
                 onClick = {
-                    val user = viewModel.checkUser(email, password)
-                    if (user != null) {
-                        when (user.usertype) {
-                            "Student" -> navController.navigate(AppRoutes.STUDENT.name)
-                            "Faculty" -> navController.navigate(AppRoutes.FACULTY.name)
-                            "Admin" -> navController.navigate(AppRoutes.ADMIN.name)
-                            else -> {
-                                Log.d("SignInScreen", "Invalid user type: ${user.usertype}")
-                            }
-                        }
-                    } else {
-                        // Handle invalid credentials
+                    val result = viewModel.checkUser(email, password)
+                    if (result is LoginResult.Failure) {
+                        // Show an error message
+                        Toast.makeText(
+                            context,
+                            result.errorMessage,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 },
                 shape = RoundedCornerShape(50.dp),
