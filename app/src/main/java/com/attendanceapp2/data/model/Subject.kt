@@ -17,5 +17,7 @@ data class Subject(
     val start : String,
     @ColumnInfo("end_time")
     val end : String,
-    val day : String
+    val day : String,
+    val sy : String,
+    val semester : Int
 )

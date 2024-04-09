@@ -3,14 +3,17 @@ package com.attendanceapp2.data
 import android.content.Context
 import com.attendanceapp2.data.repositories.attendancce.AttendanceRepository
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
-import com.attendanceapp2.data.repositories.user.OfflineUserRepository
-import com.attendanceapp2.data.repositories.user.UserRepository
+import com.attendanceapp2.data.repositories.faculty.FacultyRepository
+import com.attendanceapp2.data.repositories.faculty.OfflineFacultyRepository
+import com.attendanceapp2.data.repositories.student.OfflineStudentRepository
+import com.attendanceapp2.data.repositories.student.StudentRepository
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import com.attendanceapp2.data.repositories.subject.SubjectRepository
 
 interface AppContainer {
+    val facultyRepository: FacultyRepository
     val subjectRepository: SubjectRepository
-    val userRepository: UserRepository
+    val studentRepository: StudentRepository
     val attendanceRepository: AttendanceRepository
 }
 
@@ -19,16 +22,22 @@ interface AppContainer {
  */
 class AppDataContainer(private val context: Context) : AppContainer {
     /**
+     * Implementation for [userRepository]
+     */
+    override val facultyRepository: FacultyRepository by lazy {
+        OfflineFacultyRepository(AttendanceAppDatabase.getDatabase(context).facultyDao())
+    }
+    /**
      * Implementation for [subjectRepository]
      */
     override val subjectRepository: SubjectRepository by lazy {
         OfflineSubjectRepository(AttendanceAppDatabase.getDatabase(context).subjectDao())
     }
     /**
-     * Implementation for [userRepository]
+     * Implementation for [studentRepository]
      */
-    override val userRepository: UserRepository by lazy {
-        OfflineUserRepository(AttendanceAppDatabase.getDatabase(context).userDao())
+    override val studentRepository: StudentRepository by lazy {
+        OfflineStudentRepository(AttendanceAppDatabase.getDatabase(context).studentDao())
     }
     /**
      * Implementation for [attendanceRepository]

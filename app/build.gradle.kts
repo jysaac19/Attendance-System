@@ -73,7 +73,6 @@ dependencies {
     implementation("com.google.android.gms:play-services-mlkit-subject-segmentation:16.0.0-beta1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
-    implementation("androidx.wear.compose:compose-material:1.3.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -128,25 +127,10 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:1.3.2")
     implementation("androidx.camera:camera-view:1.3.2")
 
-    //Scanner
+    val camerax_version = "1.3.0-alpha04"
     implementation ("com.google.mlkit:barcode-scanning:17.2.0")
 
     //Zxing
-<<<<<<< Updated upstream
-    implementation("com.google.zxing:core:3.4.1")
-    implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
-=======
     implementation("com.google.zxing:core:3.4.0")
     implementation ("com.journeyapps:zxing-android-embedded:4.2.0")
-
-    // Ktor
-
-    val ktorVersion = "2.3.9"
-
-    implementation ("io.ktor:ktor-client-android:$ktorVersion")
-    implementation ("io.ktor:ktor-client-json:$ktorVersion")
-    implementation ("io.ktor:ktor-client-serialization:$ktorVersion")
-    implementation ("io.ktor:ktor-client-logging:$ktorVersion")
-
->>>>>>> Stashed changes
 }
