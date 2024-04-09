@@ -4,8 +4,10 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import androidx.room.Update
 import com.attendanceapp2.data.model.User
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -19,5 +21,8 @@ interface UserDao {
 
     @Delete
     suspend fun delete(user: User)
+
+//    @Query("")
+//    fun getUser(user: User): Flow<User>
 
 }

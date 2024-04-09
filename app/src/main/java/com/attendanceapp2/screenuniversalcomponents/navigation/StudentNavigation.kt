@@ -13,7 +13,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.approutes.StudentMainRoute
-import com.attendanceapp2.screenuniversalcomponents.navigation.StudentBottomNavBar
 import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.StudentAttendances
 import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.StudentScanner
 import com.attendanceapp2.users.studentapp.screens.mainscreens.subjects.StudentSubjects

@@ -134,4 +134,13 @@ dependencies {
     //Zxing
     implementation("com.google.zxing:core:3.4.1")
     implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
+
+    // Ktor
+
+    val ktorVersion = "2.3.9"
+
+    implementation ("io.ktor:ktor-client-android:$ktorVersion")
+    implementation ("io.ktor:ktor-client-json:$ktorVersion")
+    implementation ("io.ktor:ktor-client-serialization:$ktorVersion")
+    implementation ("io.ktor:ktor-client-logging:$ktorVersion")
 }

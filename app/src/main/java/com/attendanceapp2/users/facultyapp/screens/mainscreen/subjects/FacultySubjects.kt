@@ -26,8 +26,8 @@ fun FacultySubjects ( navController : NavController) {
             "1:00 P.M.",
             "3:00 P.M.",
             "Tuesday",
-            "2021-2022",
-            1
+//            "2021-2022",
+//            1
         ),
         Subject(
             2,
@@ -38,8 +38,8 @@ fun FacultySubjects ( navController : NavController) {
             "3:30 P.M.",
             "5:30 P.M.",
             "Tuesday",
-            "2021-2022",
-            1
+//            "2021-2022",
+//            1
         ),
     )
 

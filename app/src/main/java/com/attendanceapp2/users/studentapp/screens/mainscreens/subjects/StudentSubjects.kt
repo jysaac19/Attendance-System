@@ -25,9 +25,7 @@ fun StudentSubjects ( navController : NavController) {
             "Jack Santos",
             "1:00 P.M.",
             "3:00 P.M.",
-            "Tuesday",
-            "2021-2022",
-            1
+            "Tuesday"
         ),
         Subject(
             2,
@@ -37,9 +35,7 @@ fun StudentSubjects ( navController : NavController) {
             "Jack Santos",
             "3:30 P.M.",
             "5:30 P.M.",
-            "Tuesday",
-            "2021-2022",
-            1
+            "Tuesday"
         ),
     )
 

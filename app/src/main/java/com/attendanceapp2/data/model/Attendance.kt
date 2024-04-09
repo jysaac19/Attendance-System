@@ -12,7 +12,5 @@ data class Attendance(
     val subjectName : String,
     val subjectCode : String,
     val date: String,
-    val time: String,
-    val sy : String,
-    val semester : Int
+    val time: String
 )

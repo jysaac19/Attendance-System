@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.attendanceapp2.data.NBSAttendanceApp
+import com.attendanceapp2.NBSAttendanceApp
+import com.attendanceapp2.authentication.SignInViewModel
+import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.ScannerViewModel
 import com.shin.myproject.ViewModel.ScreenViewModel
 
 /**
@@ -13,23 +15,17 @@ import com.shin.myproject.ViewModel.ScreenViewModel
 object AppViewModelProvider {
     val Factory = viewModelFactory {
 
-        // Initializer for RegistrationViewModel
-//        initializer {
-//            RegisterViewModel(
-//                  nbsAttendanceApplication().container.userRepository
-//            )
-//        }
-//
-//        // Initializer for LoginViewModel
-//        initializer {
-//            LoginViewModel(
-//                nbsAttendanceApplication().container.userRepository,
-//            )
-//        }
-
         // ScreenViewModel
         initializer {
             ScreenViewModel()
+        }
+        // ScannerViewModel
+        initializer {
+            ScannerViewModel(nbsAttendanceApplication().container.attendanceRepository)
+        }
+
+        initializer {
+                SignInViewModel(nbsAttendanceApplication().container.userRepository)
         }
     }
 }

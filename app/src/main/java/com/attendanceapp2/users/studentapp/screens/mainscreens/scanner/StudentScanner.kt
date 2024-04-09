@@ -39,9 +39,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.attendanceapp2.viewmodel.AppViewModelProvider
 
 @Composable
-fun StudentScanner () {
+fun StudentScanner (viewModel: ScannerViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     var code by remember { mutableStateOf("") }
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -130,7 +132,7 @@ fun StudentScanner () {
                             imageAnalysis.setAnalyzer(
                                 ContextCompat.getMainExecutor(context),
                                 QRCodeAnalyzer { result ->
-                                    code = result
+                                    viewModel.code = result
                                 }
                             )
 
