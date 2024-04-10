@@ -5,22 +5,19 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.attendanceapp2.data.interfaces.AttendanceDao
-import com.attendanceapp2.data.interfaces.FacultyDao
-import com.attendanceapp2.data.interfaces.StudentDao
-import com.attendanceapp2.data.model.Attendance
-import com.attendanceapp2.data.model.Faculty
-import com.attendanceapp2.data.model.Student
-import com.attendanceapp2.data.model.Subject
 import com.attendanceapp2.data.interfaces.SubjectDao
+import com.attendanceapp2.data.interfaces.UserDao
+import com.attendanceapp2.data.model.Attendance
+import com.attendanceapp2.data.model.Subject
+import com.attendanceapp2.data.model.User
 
 /**
  * Database class with a singleton Instance object.
  */
-@Database(entities = [Faculty::class, Subject::class, Student::class, Attendance::class], version = 3, exportSchema = false)
+@Database(entities = [Subject::class, User::class, Attendance::class], version = 3, exportSchema = false)
 abstract class AttendanceAppDatabase : RoomDatabase() {
-    abstract fun facultyDao(): FacultyDao
     abstract fun subjectDao(): SubjectDao
-    abstract fun studentDao(): StudentDao
+    abstract fun userDao(): UserDao
     abstract fun attendanceDao(): AttendanceDao
 
 
