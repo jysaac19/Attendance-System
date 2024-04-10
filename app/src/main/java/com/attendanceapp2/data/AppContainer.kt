@@ -7,8 +7,10 @@ import com.attendanceapp2.data.repositories.user.OfflineUserRepository
 import com.attendanceapp2.data.repositories.user.UserRepository
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import com.attendanceapp2.data.repositories.subject.SubjectRepository
+import com.attendanceapp2.posts.repository.OnlinePostRepository
 
 interface AppContainer {
+    val onlinePostRepository: OnlinePostRepository
     val subjectRepository: SubjectRepository
     val userRepository: UserRepository
     val attendanceRepository: AttendanceRepository
@@ -18,6 +20,10 @@ interface AppContainer {
  * [AppContainer] implementation that provides instance of [OfflineUserRepository]
  */
 class AppDataContainer(private val context: Context) : AppContainer {
+    override val onlinePostRepository: OnlinePostRepository by lazy {
+        OnlinePostRepository()
+    }
+
     /**
      * Implementation for [subjectRepository]
      */
