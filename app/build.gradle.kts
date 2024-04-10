@@ -2,6 +2,13 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
+    id("kotlin-parcelize")
+    id("kotlinx-serialization")
+    //id("org.jetbrains.kotlin.plugin.serialization")
+    //id("org.jetbrains.kotlin.plugin.serialization") version "1.8.21"
+
+    //id ("org.jetbrains.kotlin.multiplatform") version "1.9.22"
+    //id ("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
 }
 
 android {
@@ -54,12 +61,10 @@ dependencies {
     // Icons
     implementation("androidx.compose.material:material-icons-extended:1.6.5")
     implementation("com.google.firebase:firebase-inappmessaging-ktx:20.4.1")
-    // Navigation
-//    val nav_version = "2.7.4" implemment $nav_version
-    implementation("androidx.navigation:navigation-compose:2.7.7")
+
     // Splash screen
     implementation("androidx.core:core-splashscreen:1.0.1")
-    //==========================================
+
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation(platform("androidx.compose:compose-bom:2024.04.00"))
@@ -135,12 +140,33 @@ dependencies {
     implementation("com.google.zxing:core:3.4.1")
     implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
 
-    // Ktor
+    //Navigation
+    val nav_version = "2.7.7"
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation("androidx.compose.material:material-icons-extended")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
-    val ktorVersion = "2.3.9"
+    val work_version = "2.9.0"
+    // Kotlin + coroutines
+    implementation("androidx.work:work-runtime-ktx:$work_version")
 
-    implementation ("io.ktor:ktor-client-android:$ktorVersion")
-    implementation ("io.ktor:ktor-client-json:$ktorVersion")
-    implementation ("io.ktor:ktor-client-serialization:$ktorVersion")
-    implementation ("io.ktor:ktor-client-logging:$ktorVersion")
+    implementation ("com.jakewharton.timber:timber:5.0.1")
+    // ktor for networking
+    val ktor_version = "2.3.9"
+    implementation ("io.ktor:ktor-client-core:$ktor_version")
+    implementation ("io.ktor:ktor-client-android:$ktor_version")
+    implementation ("io.ktor:ktor-client-serialization:$ktor_version")
+    implementation ("io.ktor:ktor-client-logging:$ktor_version")
+    implementation ("io.ktor:ktor-client-auth:$ktor_version")
+    implementation ("io.ktor:ktor-client-content-negotiation:$ktor_version")
+    implementation ("io.ktor:ktor-server-http-redirect:$ktor_version")
+
+    //Dagger - Hilt
+    implementation ("com.google.dagger:hilt-android:2.49")
+    ksp ("com.google.dagger:hilt-android-compiler:2.45")
+    ksp ("androidx.hilt:hilt-compiler:1.2.0")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation ("com.google.dagger:dagger-android-support:2.45")
+    implementation( "io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 }

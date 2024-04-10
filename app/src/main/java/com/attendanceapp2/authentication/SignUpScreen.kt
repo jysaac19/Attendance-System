@@ -144,6 +144,8 @@ fun SignUpScreen(navController: NavController) {
                 shape = RoundedCornerShape(20.dp)
             )
 
+            Spacer(modifier = Modifier.height(8.dp))
+
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },

@@ -1,7 +1,7 @@
 package com.attendanceapp2
 
-
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
@@ -11,22 +11,33 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.compose.rememberNavController
-import com.attendanceapp2.authentication.SignInViewModel
 import com.attendanceapp2.screenuniversalcomponents.navigation.AppNavigation
+import com.attendanceapp2.screenuniversalcomponents.navigation.FacultyNavigation
+import com.attendanceapp2.screenuniversalcomponents.navigation.StudentNavigation
 import com.attendanceapp2.theme.NBSCollegeTheme
 import com.attendanceapp2.viewmodel.AppViewModelProvider
+import com.attendanceapp2.viewmodel.LoggedInUser
+import com.attendanceapp2.viewmodel.LoggedInUserHolder
+import com.attendanceapp2.viewmodel.splashscreen.SplashScreen
+import com.shin.myproject.ViewModel.ScreenViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
-    private val signInViewModel: SignInViewModel by viewModels {
+    private val screenViewModel: ScreenViewModel by viewModels {
         AppViewModelProvider.Factory
     }
+    private val _loggedInUser = MutableStateFlow<LoggedInUser?>(null)
+    val loggedInUser: StateFlow<LoggedInUser?> = _loggedInUser
 
     private var backPressedOnce = false
 
@@ -40,7 +51,11 @@ class MainActivity : ComponentActivity() {
                 if (backPressedOnce) {
                     finish()
                 } else {
-                    Toast.makeText(this@MainActivity, "Press back again to exit", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Press back again to exit",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     backPressedOnce = true
 
                     // Reset the flag after a delay (e.g., 2 seconds)
@@ -55,6 +70,8 @@ class MainActivity : ComponentActivity() {
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         setContent {
+            val loggedInUser by LoggedInUserHolder.loggedInUser.collectAsState()
+
             NBSCollegeTheme {
                 Surface(
                     modifier = Modifier
@@ -63,7 +80,22 @@ class MainActivity : ComponentActivity() {
                         .wrapContentHeight(Alignment.CenterVertically)
                 ) {
 
-                    AppNavigation()
+                    if (loggedInUser?.usertype == "Student") {
+                            SplashScreen(screenViewModel = screenViewModel) {
+                                StudentNavigation()
+                            }
+                        }
+                    else if (loggedInUser?.usertype == "Faculty") {
+                            SplashScreen(screenViewModel = screenViewModel) {
+                                FacultyNavigation()
+                            }
+                        }
+                    else if (loggedInUser?.usertype == "Admin") {
+                        SplashScreen(screenViewModel = screenViewModel) {
+                            FacultyNavigation()
+                        }
+                    }
+                    else { AppNavigation() }
                 }
             }
         }
