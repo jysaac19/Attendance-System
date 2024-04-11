@@ -12,4 +12,6 @@ interface UserRepository {
     suspend fun deleteStudent(user : User)
 
     suspend fun getUserByEmailAndPassword(email: String, password: String): User?
+
+    suspend fun getUserByEmail(email: String): User?
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.attendanceapp2.NBSAttendanceApp
 import com.attendanceapp2.authentication.SignInViewModel
+import com.attendanceapp2.authentication.SignUpViewModel
 import com.attendanceapp2.posts.viewmodel.PostViewModel
 import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.ScannerViewModel
 import com.shin.myproject.ViewModel.ScreenViewModel
@@ -26,8 +27,14 @@ object AppViewModelProvider {
         }
 
         initializer {
-                SignInViewModel(nbsAttendanceApplication().container.userRepository)
+
+            SignInViewModel(nbsAttendanceApplication().container.userRepository)
         }
+
+        initializer {
+            SignUpViewModel(nbsAttendanceApplication().container.userRepository)
+        }
+
 
         initializer {
             PostViewModel(nbsAttendanceApplication().container.onlinePostRepository)

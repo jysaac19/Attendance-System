@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,32 +44,52 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.R
 import com.attendanceapp2.approutes.AuthRoute
+import com.attendanceapp2.viewmodel.AppViewModelProvider
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen(navController: NavController) {
+fun SignUpScreen(
+    navController: NavController,
+    viewModel: SignUpViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
 
     // State variables to store the text field values
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
-    var username by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
 
     var password by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
 
+    var reEnterPassword by remember { mutableStateOf("") }
+    var isReEnterPasswordVisible by remember { mutableStateOf(false) }
+
     //user dropdown menu
     val userType = arrayOf("Student", "Faculty")
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf(userType[0]) }
+    var selectedUserType by remember { mutableStateOf(userType[0]) }
+
+    //department dropdown menu
+    val program = arrayOf("BSCS", "BSAIS", "BSE", "BSA", "BSTM")
+    var expandedDepartment by remember { mutableStateOf(false) }
+    var selectedDepartment by remember { mutableStateOf(program[0]) }
+
+    // Function to capitalize the first letter of each word
+    fun capitalizeFirstLetter(text: String): String {
+        return text.split(" ").joinToString(" ") { it.capitalize() }
+    }
 
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 150.dp),
+            .padding(start = 24.dp, end = 24.dp, top = 150.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -98,31 +119,39 @@ fun SignUpScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            OutlinedTextField(
-                value = firstName,
-                onValueChange = { firstName = it },
-                label = { Text("First Name") },
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp)
-            )
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                OutlinedTextField(
+                    value = firstName,
+                    onValueChange = { firstName = capitalizeFirstLetter(it.toLowerCase()) },
+                    label = { Text("First Name") },
+                    modifier = Modifier.weight(1f),
+                    singleLine = true,
+                    shape = RoundedCornerShape(20.dp)
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                OutlinedTextField(
+                    value = lastName,
+                    onValueChange = { lastName = capitalizeFirstLetter(it.toLowerCase()) },
+                    label = { Text("Last Name") },
+                    modifier = Modifier.weight(1f),
+                    singleLine = true,
+                    shape = RoundedCornerShape(20.dp)
+                )
+            }
 
             Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
-                value = lastName,
-                onValueChange = { lastName = it },
-                label = { Text("Last Name") },
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Email") },
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp)
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            OutlinedTextField(
-                value = username,
-                onValueChange = { username = it },
-                label = { Text("Username") },
-                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
                 shape = RoundedCornerShape(20.dp)
             )
 
@@ -141,24 +170,26 @@ fun SignUpScreen(navController: NavController) {
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
                 shape = RoundedCornerShape(20.dp)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
+                value = reEnterPassword,
+                onValueChange = { reEnterPassword = it },
                 label = { Text("Re-enter Password") },
                 trailingIcon = {
-                    IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                    IconButton(onClick = { isReEnterPasswordVisible = !isReEnterPasswordVisible }) {
                         Icon(
-                            imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                            imageVector = if (isReEnterPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                             contentDescription = "Toggle password visibility"
                         )
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
                 shape = RoundedCornerShape(20.dp)
             )
 
@@ -171,7 +202,7 @@ fun SignUpScreen(navController: NavController) {
                 }
             ) {
                 OutlinedTextField(
-                    value = selectedText,
+                    value = selectedUserType,
                     onValueChange = {  },
                     readOnly = true,
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
@@ -189,8 +220,44 @@ fun SignUpScreen(navController: NavController) {
                         DropdownMenuItem(
                             text = { Text(text = item) },
                             onClick = {
-                                selectedText = item
+                                selectedUserType = item
                                 expanded = false
+                                Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
+                            }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            ExposedDropdownMenuBox(
+                expanded = expandedDepartment,
+                onExpandedChange = {
+                    expandedDepartment = !expandedDepartment
+                }
+            ) {
+                OutlinedTextField(
+                    value = selectedDepartment,
+                    onValueChange = {  },
+                    readOnly = true,
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedDepartment) },
+                    modifier = Modifier
+                        .menuAnchor(),
+                    shape = RoundedCornerShape(20.dp),
+                    textStyle = TextStyle(textAlign = TextAlign.Center)
+                )
+
+                ExposedDropdownMenu(
+                    expanded = expandedDepartment,
+                    onDismissRequest = { expandedDepartment = false }
+                ) {
+                    program.forEach { item ->
+                        DropdownMenuItem(
+                            text = { Text(text = item) },
+                            onClick = {
+                                selectedDepartment = item
+                                expandedDepartment = false
                                 Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
                             }
                         )
@@ -201,7 +268,35 @@ fun SignUpScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = {  },
+                onClick = {
+                    coroutineScope.launch {
+                        val result = viewModel.signUp(
+                            firstName,
+                            lastName,
+                            email,
+                            password,
+                            reEnterPassword,
+                            selectedUserType,
+                            selectedDepartment
+                        )
+                        when (result) {
+                            is SignUpResult.Success -> {
+                                // Successfully signed up, navigate to the next screen or show a success message
+                                Toast.makeText(
+                                    context,
+                                    "Signed up successfully!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                navController.navigate(AuthRoute.SignIn.name)
+                            }
+
+                            is SignUpResult.Error -> {
+                                // Show an error message
+                                Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                },
                 shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
                     .size(width = 350.dp,height = 50.dp)

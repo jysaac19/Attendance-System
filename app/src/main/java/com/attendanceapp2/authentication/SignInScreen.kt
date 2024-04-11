@@ -64,7 +64,7 @@ fun SignInScreen(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 150.dp),
+            .padding(start = 24.dp, end = 24.dp, top = 150.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
@@ -97,6 +97,7 @@ fun SignInScreen(
                 onValueChange = { email = it },
                 label = { Text("Username") },
                 modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
                 shape = RoundedCornerShape(20.dp)
             )
 
@@ -113,6 +114,7 @@ fun SignInScreen(
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
                 shape = RoundedCornerShape(20.dp)
             )
 

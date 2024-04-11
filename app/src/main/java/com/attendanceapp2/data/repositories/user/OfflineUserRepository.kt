@@ -25,4 +25,8 @@ class OfflineUserRepository(private val userDao: UserDao, private val users: Lis
     override suspend fun getUserByEmailAndPassword(email: String, password: String): User? {
         return userDao.getUserByEmailAndPassword(email, password)
     }
+
+    override suspend fun getUserByEmail(email: String): User? {
+        return userDao.getUserByEmail(email)
+    }
 }
