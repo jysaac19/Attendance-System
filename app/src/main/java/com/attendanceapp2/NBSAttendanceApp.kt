@@ -3,6 +3,8 @@ package com.attendanceapp2
 import android.app.Application
 import com.attendanceapp2.data.AppContainer
 import com.attendanceapp2.data.AppDataContainer
+import com.attendanceapp2.data.model.User
+import com.attendanceapp2.viewmodel.LoggedInUserHolder
 
 class NBSAttendanceApp : Application() {
     /**
@@ -12,6 +14,37 @@ class NBSAttendanceApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        container = AppDataContainer(this)
+        // Define your list of embedded users here
+        val embeddedUsers = listOf(
+            User(
+                101,
+                "Je",
+                "Ysaac",
+                "k",
+                "123",
+                "Student",
+                "ComSci"
+            ),
+            User(
+                201,
+                "Admin",
+                "Ysaac",
+                "j",
+                "123",
+                "Admin",
+                "ComSci"
+            ),
+            User(
+                301,
+                "Faculty",
+                "Ysaac",
+                "s",
+                "123",
+                "Faculty",
+                "ComSci"
+            )
+        )
+        LoggedInUserHolder.init(this)
+        container = AppDataContainer(this, embeddedUsers)
     }
 }

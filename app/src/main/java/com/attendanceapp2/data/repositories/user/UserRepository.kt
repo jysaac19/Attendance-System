@@ -11,5 +11,5 @@ interface UserRepository {
 
     suspend fun deleteStudent(user : User)
 
-//    fun getUser(user : User) : Flow<User>
+    suspend fun getUserByEmailAndPassword(email: String, password: String): User?
 }

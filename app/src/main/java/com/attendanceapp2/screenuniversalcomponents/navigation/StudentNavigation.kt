@@ -14,6 +14,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.approutes.StudentMainRoute
 import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.StudentAttendances
+import com.attendanceapp2.screenuniversalcomponents.ProfileScreen
 import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.StudentScanner
 import com.attendanceapp2.users.studentapp.screens.mainscreens.subjects.StudentSubjects
 
@@ -50,7 +51,7 @@ fun StudentNavigation() {
                 }
 
                 composable(route = StudentMainRoute.Profile.name) {
-
+                    ProfileScreen()
                 }
             }
         }

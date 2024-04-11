@@ -1,6 +1,7 @@
 package com.attendanceapp2.data
 
 import android.content.Context
+import com.attendanceapp2.data.model.User
 import com.attendanceapp2.data.repositories.attendancce.AttendanceRepository
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
 import com.attendanceapp2.data.repositories.user.OfflineUserRepository
@@ -19,7 +20,7 @@ interface AppContainer {
 /**
  * [AppContainer] implementation that provides instance of [OfflineUserRepository]
  */
-class AppDataContainer(private val context: Context) : AppContainer {
+class AppDataContainer(private val context: Context, private val embeddedUsers: List<User>) : AppContainer {
     override val onlinePostRepository: OnlinePostRepository by lazy {
         OnlinePostRepository()
     }
@@ -34,7 +35,7 @@ class AppDataContainer(private val context: Context) : AppContainer {
      * Implementation for [userRepository]
      */
     override val userRepository: UserRepository by lazy {
-        OfflineUserRepository(AttendanceAppDatabase.getDatabase(context).userDao())
+        OfflineUserRepository(AttendanceAppDatabase.getDatabase(context).userDao(), embeddedUsers)
     }
     /**
      * Implementation for [attendanceRepository]

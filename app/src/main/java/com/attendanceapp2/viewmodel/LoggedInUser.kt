@@ -35,9 +35,12 @@ object LoggedInUserHolder {
         }
     }
 
+    @Synchronized
     fun setLoggedInUser(user: LoggedInUser) {
-        _loggedInUser.value = user
-        saveUserToPrefs(user)
+        if (_loggedInUser.value != user) {
+            _loggedInUser.value = user
+            saveUserToPrefs(user)
+        }
     }
 
     fun clearLoggedInUser() {

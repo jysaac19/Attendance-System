@@ -36,8 +36,6 @@ class MainActivity : ComponentActivity() {
     private val screenViewModel: ScreenViewModel by viewModels {
         AppViewModelProvider.Factory
     }
-    private val _loggedInUser = MutableStateFlow<LoggedInUser?>(null)
-    val loggedInUser: StateFlow<LoggedInUser?> = _loggedInUser
 
     private var backPressedOnce = false
 
@@ -79,23 +77,27 @@ class MainActivity : ComponentActivity() {
                         .wrapContentWidth(Alignment.CenterHorizontally)
                         .wrapContentHeight(Alignment.CenterVertically)
                 ) {
-
-                    if (loggedInUser?.usertype == "Student") {
-                            SplashScreen(screenViewModel = screenViewModel) {
-                                StudentNavigation()
+                    when (val user = loggedInUser) {
+                        is LoggedInUser -> {
+                            when (user.usertype) {
+                                "Student" -> {
+                                    StudentNavigation()
+                                }
+                                "Faculty" -> {
+                                    FacultyNavigation()
+                                }
+                                "Admin" -> {
+                                    FacultyNavigation()
+                                }
+                                else -> {
+                                    AppNavigation()
+                                }
                             }
                         }
-                    else if (loggedInUser?.usertype == "Faculty") {
-                            SplashScreen(screenViewModel = screenViewModel) {
-                                FacultyNavigation()
-                            }
-                        }
-                    else if (loggedInUser?.usertype == "Admin") {
-                        SplashScreen(screenViewModel = screenViewModel) {
-                            FacultyNavigation()
+                        else -> {
+                            AppNavigation()
                         }
                     }
-                    else { AppNavigation() }
                 }
             }
         }

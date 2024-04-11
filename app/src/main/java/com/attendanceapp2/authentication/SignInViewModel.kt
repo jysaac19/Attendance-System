@@ -1,5 +1,6 @@
 package com.attendanceapp2.authentication
 
+import android.util.Log
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.ViewModel
 import com.attendanceapp2.data.model.User
@@ -40,8 +41,9 @@ class SignInViewModel(
             "ComSci"
         )
     )
-    fun validateSignIn(email: String, password: String): Login {
-        val user = users.find { it.email == email && it.password == password }
+
+    suspend fun validateSignIn(email: String, password: String): Login {
+        val user = userRepo.getUserByEmailAndPassword(email, password)
         return if (user != null) {
             val loggedInUser = LoggedInUser(
                 userId = user.id,
@@ -52,9 +54,11 @@ class SignInViewModel(
                 usertype = user.usertype,
                 department = user.department
             )
-            LoggedInUserHolder.setLoggedInUser(loggedInUser) // Set the user as loggedInUser
+            LoggedInUserHolder.setLoggedInUser(loggedInUser)
+            Log.d("SignInViewModel", "Login successful. User: $loggedInUser")
             Login.Successfully(loggedInUser)
         } else {
+            Log.d("SignInViewModel", "Login failed. Invalid email or password")
             Login.Failed("Invalid email or password")
         }
     }

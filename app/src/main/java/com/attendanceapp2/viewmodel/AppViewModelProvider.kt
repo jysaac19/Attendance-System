@@ -32,6 +32,10 @@ object AppViewModelProvider {
         initializer {
             PostViewModel(nbsAttendanceApplication().container.onlinePostRepository)
         }
+
+        initializer {
+            ProfileViewModel()
+        }
     }
 }
 
