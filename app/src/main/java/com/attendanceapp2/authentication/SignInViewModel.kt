@@ -1,12 +1,9 @@
 package com.attendanceapp2.authentication
 
 import android.util.Log
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.ViewModel
 import com.attendanceapp2.data.model.User
 import com.attendanceapp2.data.repositories.user.UserRepository
-import com.attendanceapp2.viewmodel.LoggedInUser
-import com.attendanceapp2.viewmodel.LoggedInUserHolder
 
 class SignInViewModel(
     private val userRepo: UserRepository

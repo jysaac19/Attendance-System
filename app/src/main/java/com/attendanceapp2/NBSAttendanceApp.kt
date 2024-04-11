@@ -4,7 +4,7 @@ import android.app.Application
 import com.attendanceapp2.data.AppContainer
 import com.attendanceapp2.data.AppDataContainer
 import com.attendanceapp2.data.model.User
-import com.attendanceapp2.viewmodel.LoggedInUserHolder
+import com.attendanceapp2.authentication.LoggedInUserHolder
 
 class NBSAttendanceApp : Application() {
     /**

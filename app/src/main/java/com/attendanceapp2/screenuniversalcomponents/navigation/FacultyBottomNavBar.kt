@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.FolderOpen
@@ -22,9 +23,11 @@ import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.PieChart
 import androidx.compose.material.icons.outlined.QrCode2
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,31 +47,31 @@ import com.attendanceapp2.approutes.FacultyMainRoute
 @Composable
 fun FacultyBottomNavBar(navController: NavController) {
     val items = listOf(
-        FacultyBottomNavItem(
+        BottomNavItem(
             "Subjects",
             Icons.Default.Folder,
             Icons.Default.FolderOpen,
             FacultyMainRoute.Subjects.name
         ),
-        FacultyBottomNavItem(
+        BottomNavItem(
             "Attendances",
             Icons.Filled.PieChart,
             Icons.Outlined.PieChart,
             FacultyMainRoute.Attendances.name
         ),
-        FacultyBottomNavItem(
+        BottomNavItem(
             "Scanner",
             Icons.Filled.QrCode2,
             Icons.Outlined.QrCode2,
             FacultyMainRoute.Code.name
         ),
-        FacultyBottomNavItem(
+        BottomNavItem(
             "Notifications",
             Icons.Filled.Notifications,
             Icons.Outlined.Notifications,
             FacultyMainRoute.Notifications.name
         ),
-        FacultyBottomNavItem(
+        BottomNavItem(
             "Profile",
             Icons.Filled.Person,
             Icons.Outlined.Person,
@@ -126,11 +129,22 @@ fun FacultyBottomNavBar(navController: NavController) {
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier.padding(16.dp)
                     ) {
-                        IconButton(
+                        Button(
                             onClick = {
                                 selectedItem = index
                                 navController.navigate(item.route)
-                            }
+                            },
+                            shape = RoundedCornerShape(20.dp),
+                            modifier = Modifier
+                                .size(width = 70.dp, height = 38.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (index == selectedItem) {
+                                    Color.Black.copy(alpha = 0.3f)
+                                } else {
+                                    Color.Transparent
+                                },
+                                contentColor = LocalContentColor.current
+                            )
                         ) {
                             Icon(
                                 imageVector = if (index == selectedItem) {
@@ -141,11 +155,13 @@ fun FacultyBottomNavBar(navController: NavController) {
                                     .size(30.dp)
                             )
                         }
-                        Text(
-                            text = item.title,
-                            fontSize = 12.sp,
-                            modifier = Modifier.padding(top = 4.dp)
-                        )
+                        if (index == selectedItem) {
+                            Text(
+                                text = item.title,
+                                fontSize = 12.sp,
+                                modifier = Modifier.padding(top = 4.dp)
+                            )
+                        }
                     }
                 }
             }

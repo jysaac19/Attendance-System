@@ -16,32 +16,6 @@ import com.attendanceapp2.screenuniversalcomponents.subjectscreencomponents.Subj
 
 @Composable
 fun FacultySubjects ( navController : NavController) {
-    val subjects = listOf(
-        Subject(
-            0,
-            "MTH-101",
-            "Mathematics",
-            "RM409",
-            "Jack Santos",
-            "1:00 P.M.",
-            "3:00 P.M.",
-            "Tuesday",
-//            "2021-2022",
-//            1
-        ),
-        Subject(
-            2,
-            "SCI-101",
-            "Science",
-            "RM409",
-            "Jack Santos",
-            "3:30 P.M.",
-            "5:30 P.M.",
-            "Tuesday",
-//            "2021-2022",
-//            1
-        ),
-    )
 
     Column (
         modifier = Modifier
@@ -55,13 +29,9 @@ fun FacultySubjects ( navController : NavController) {
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            items(subjects) { subject ->
-                SubjectCard(
-                    subject,
-                    onClick = {}
-                )
-            }
-        }
 
+
+
+        }
     }
 }

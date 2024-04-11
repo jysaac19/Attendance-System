@@ -51,6 +51,11 @@ import com.attendanceapp2.approutes.AuthRoute
 import com.attendanceapp2.viewmodel.AppViewModelProvider
 import kotlinx.coroutines.launch
 
+// Function to capitalize the first letter of each word
+public fun capitalizeFirstLetter(text: String): String {
+    return text.split(" ").joinToString(" ") { it.capitalize() }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(
@@ -81,19 +86,12 @@ fun SignUpScreen(
     var expandedDepartment by remember { mutableStateOf(false) }
     var selectedDepartment by remember { mutableStateOf(program[0]) }
 
-    // Function to capitalize the first letter of each word
-    fun capitalizeFirstLetter(text: String): String {
-        return text.split(" ").joinToString(" ") { it.capitalize() }
-    }
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 24.dp, end = 24.dp, top = 150.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(horizontal = 24.dp, vertical = 100.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-
         item {
             Image(
                 modifier = Modifier

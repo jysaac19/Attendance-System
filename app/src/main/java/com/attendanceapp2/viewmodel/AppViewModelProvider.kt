@@ -7,6 +7,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.attendanceapp2.NBSAttendanceApp
 import com.attendanceapp2.authentication.SignInViewModel
 import com.attendanceapp2.authentication.SignUpViewModel
+import com.attendanceapp2.data.screen.schedule.NewScheduleViewModel
+import com.attendanceapp2.data.screen.subject.NewSubjectViewModel
 import com.attendanceapp2.posts.viewmodel.PostViewModel
 import com.attendanceapp2.users.facultyapp.viewmodel.QRGeneratorViewModel
 import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.ScannerViewModel
@@ -22,32 +24,53 @@ object AppViewModelProvider {
         initializer {
             ScreenViewModel()
         }
+
         // ScannerViewModel
         initializer {
             ScannerViewModel(nbsAttendanceApplication().container.attendanceRepository)
         }
 
+        //QR Generator ViewModel
         initializer {
+            QRGeneratorViewModel(nbsAttendanceApplication().container.subjectRepository)
+        }
 
+        //Sign In ViewModel
+        initializer {
             SignInViewModel(nbsAttendanceApplication().container.userRepository)
         }
 
+        //Sign Up ViewModel
         initializer {
             SignUpViewModel(nbsAttendanceApplication().container.userRepository)
         }
 
-
+        //Posts ViewModel [sample ktor implementation]
         initializer {
             PostViewModel(nbsAttendanceApplication().container.onlinePostRepository)
         }
 
+        //New Subject ViewModel
         initializer {
-            ProfileViewModel()
+            NewSubjectViewModel(
+                nbsAttendanceApplication().container.subjectRepository,
+                nbsAttendanceApplication().container.scheduleRepository
+
+            )
         }
 
-
+        //New Schedule ViewModel
         initializer {
-            QRGeneratorViewModel(nbsAttendanceApplication().container.subjectRepository)
+            NewScheduleViewModel(
+                nbsAttendanceApplication().container.subjectRepository,
+                nbsAttendanceApplication().container.scheduleRepository
+
+            )
+        }
+
+        //Profile ViewModel
+        initializer {
+            ProfileViewModel()
         }
     }
 }

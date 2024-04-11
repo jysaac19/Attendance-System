@@ -39,20 +39,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import com.attendanceapp2.R
 import com.attendanceapp2.approutes.AuthRoute
-import com.attendanceapp2.approutes.FacultyMainRoute
-import com.attendanceapp2.approutes.StudentMainRoute
 import com.attendanceapp2.viewmodel.AppViewModelProvider
-import com.attendanceapp2.viewmodel.LoggedInUserHolder
-import com.attendanceapp2.viewmodel.LoggedInUserHolder.loggedInUser
 import kotlinx.coroutines.launch
 
 
 @Composable
 fun SignInScreen(
-    navController: NavHostController,
+    navController: NavController,
     viewModel: SignInViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     var email by remember { mutableStateOf("") }
@@ -64,12 +60,11 @@ fun SignInScreen(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 24.dp, end = 24.dp, top = 150.dp),
+            .padding(horizontal = 24.dp, vertical = 100.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
         item {
-
             Image(
                 modifier = Modifier
                     .size(200.dp)

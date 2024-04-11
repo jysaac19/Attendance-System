@@ -12,10 +12,6 @@ data class Subject(
     val name : String,
     val room : String,
     @ColumnInfo("faculty_name")
-    val faculty : String,
-    @ColumnInfo("start_time")
-    val start : String,
-    @ColumnInfo("end_time")
-    val end : String,
-    val day : String
+    val faculty : String
 )
+

@@ -1,4 +1,4 @@
-package com.attendanceapp2.viewmodel
+package com.attendanceapp2.authentication
 
 import android.content.Context
 import android.content.SharedPreferences
