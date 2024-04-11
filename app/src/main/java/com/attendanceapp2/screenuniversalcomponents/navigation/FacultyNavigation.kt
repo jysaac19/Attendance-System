@@ -44,7 +44,7 @@ fun FacultyNavigation() {
                 }
 
                 composable(route = FacultyMainRoute.Code.name) {
-                    QRCode()
+                    QRCode(navController)
                 }
 
                 composable(route = FacultyMainRoute.Notifications.name) {

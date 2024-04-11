@@ -39,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.attendanceapp2.approutes.FacultyMainRoute
-import com.attendanceapp2.users.facultyapp.screens.bottomNavBar.FacultyBottomNavItem
 
 
 @Composable

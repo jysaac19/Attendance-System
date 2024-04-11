@@ -8,6 +8,7 @@ import com.attendanceapp2.NBSAttendanceApp
 import com.attendanceapp2.authentication.SignInViewModel
 import com.attendanceapp2.authentication.SignUpViewModel
 import com.attendanceapp2.posts.viewmodel.PostViewModel
+import com.attendanceapp2.users.facultyapp.viewmodel.QRGeneratorViewModel
 import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.ScannerViewModel
 import com.shin.myproject.ViewModel.ScreenViewModel
 
@@ -42,6 +43,11 @@ object AppViewModelProvider {
 
         initializer {
             ProfileViewModel()
+        }
+
+
+        initializer {
+            QRGeneratorViewModel(nbsAttendanceApplication().container.subjectRepository)
         }
     }
 }

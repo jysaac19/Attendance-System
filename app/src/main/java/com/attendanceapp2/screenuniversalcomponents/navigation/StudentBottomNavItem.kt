@@ -1,4 +1,4 @@
-package com.attendanceapp2.users.studentapp.screens.navigation.bottomNavBar
+package com.attendanceapp2.screenuniversalcomponents.navigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
 
