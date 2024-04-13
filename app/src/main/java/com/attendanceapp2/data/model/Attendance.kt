@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class Attendance(
     @PrimaryKey(autoGenerate = true)
     val id : Long,
+    val userId : Long,
     val firstname : String,
     val lastname : String,
     val subjectId : String,

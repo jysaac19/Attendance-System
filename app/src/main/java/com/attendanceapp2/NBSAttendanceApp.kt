@@ -56,26 +56,26 @@ class NBSAttendanceApp : Application() {
         )
 
         val embeddedAttendances = listOf(
-            Attendance(1, "Firstname1", "Lastname1", "CS101", "Introduction to Computer Science", "CS101", "2024-04-01", "09:00 AM"),
-            Attendance(2, "Firstname2", "Lastname2", "CS101", "Introduction to Computer Science", "CS101", "2024-04-02", "10:00 AM"),
-            Attendance(3, "Firstname3", "Lastname3", "ENG201", "English Literature", "ENG201", "2024-04-03", "11:00 AM"),
-            Attendance(4, "Firstname4", "Lastname4", "MATH301", "Advanced Mathematics", "MATH301", "2024-04-04", "12:00 PM"),
-            Attendance(5, "Firstname5", "Lastname5", "PHY401", "Physics", "PHY401", "2024-04-05", "01:00 PM"),
-            Attendance(6, "Firstname6", "Lastname6", "CHEM501", "Chemistry", "CHEM501", "2024-04-06", "02:00 PM"),
-            Attendance(7, "Firstname7", "Lastname7", "BIO601", "Biology", "BIO601", "2024-04-07", "03:00 PM"),
-            Attendance(8, "Firstname8", "Lastname8", "HIST701", "History", "HIST701", "2024-04-08", "04:00 PM"),
-            Attendance(9, "Firstname9", "Lastname9", "CS101", "Introduction to Computer Science", "CS101", "2024-04-09", "09:00 AM"),
-            Attendance(10, "Firstname10", "Lastname10", "ENG201", "English Literature", "ENG201", "2024-04-10", "10:00 AM"),
-            Attendance(11, "Firstname11", "Lastname11", "MATH301", "Advanced Mathematics", "MATH301", "2024-04-11", "11:00 AM"),
-            Attendance(12, "Firstname12", "Lastname12", "PHY401", "Physics", "PHY401", "2024-04-12", "12:00 PM"),
-            Attendance(13, "Firstname13", "Lastname13", "CHEM501", "Chemistry", "CHEM501", "2024-04-13", "01:00 PM"),
-            Attendance(14, "Firstname14", "Lastname14", "BIO601", "Biology", "BIO601", "2024-04-14", "02:00 PM"),
-            Attendance(15, "Firstname15", "Lastname15", "HIST701", "History", "HIST701", "2024-04-15", "03:00 PM"),
-            Attendance(16, "Firstname16", "Lastname16", "CS101", "Introduction to Computer Science", "CS101", "2024-04-16", "09:00 AM"),
-            Attendance(17, "Firstname17", "Lastname17", "ENG201", "English Literature", "ENG201", "2024-04-17", "10:00 AM"),
-            Attendance(18, "Firstname18", "Lastname18", "MATH301", "Advanced Mathematics", "MATH301", "2024-04-18", "11:00 AM"),
-            Attendance(19, "Firstname19", "Lastname19", "PHY401", "Physics", "PHY401", "2024-04-19", "12:00 PM"),
-            Attendance(20, "Firstname20", "Lastname20", "CHEM501", "Chemistry", "CHEM501", "2024-04-20", "01:00 PM")
+            Attendance(1, 101, "Firstname1", "Lastname1", "CS101", "Introduction to Computer Science", "CS101", "2024-04-01", "09:00 AM"),
+            Attendance(2, 102, "Firstname2", "Lastname2", "CS101", "Introduction to Computer Science", "CS101", "2024-04-02", "10:00 AM"),
+            Attendance(3, 103, "Firstname3", "Lastname3", "ENG201", "English Literature", "ENG201", "2024-04-03", "11:00 AM"),
+            Attendance(4, 104, "Firstname4", "Lastname4", "MATH301", "Advanced Mathematics", "MATH301", "2024-04-04", "12:00 PM"),
+            Attendance(5, 105, "Firstname5", "Lastname5", "PHY401", "Physics", "PHY401", "2024-04-05", "01:00 PM"),
+            Attendance(6, 106, "Firstname6", "Lastname6", "CHEM501", "Chemistry", "CHEM501", "2024-04-06", "02:00 PM"),
+            Attendance(7, 107, "Firstname7", "Lastname7", "BIO601", "Biology", "BIO601", "2024-04-07", "03:00 PM"),
+            Attendance(8, 108, "Firstname8", "Lastname8", "HIST701", "History", "HIST701", "2024-04-08", "04:00 PM"),
+            Attendance(9, 101, "Firstname9", "Lastname9", "CS101", "Introduction to Computer Science", "CS101", "2024-04-09", "09:00 AM"),
+            Attendance(10, 102, "Firstname10", "Lastname10", "ENG201", "English Literature", "ENG201", "2024-04-10", "10:00 AM"),
+            Attendance(11, 103, "Firstname11", "Lastname11", "MATH301", "Advanced Mathematics", "MATH301", "2024-04-11", "11:00 AM"),
+            Attendance(12, 104, "Firstname12", "Lastname12", "PHY401", "Physics", "PHY401", "2024-04-12", "12:00 PM"),
+            Attendance(13, 105, "Firstname13", "Lastname13", "CHEM501", "Chemistry", "CHEM501", "2024-04-13", "01:00 PM"),
+            Attendance(14, 106, "Firstname14", "Lastname14", "BIO601", "Biology", "BIO601", "2024-04-14", "02:00 PM"),
+            Attendance(15, 107, "Firstname15", "Lastname15", "HIST701", "History", "HIST701", "2024-04-15", "03:00 PM"),
+            Attendance(16, 108, "Firstname16", "Lastname16", "CS101", "Introduction to Computer Science", "CS101", "2024-04-16", "09:00 AM"),
+            Attendance(17, 101, "Firstname17", "Lastname17", "ENG201", "English Literature", "ENG201", "2024-04-17", "10:00 AM"),
+            Attendance(18, 102, "Firstname18", "Lastname18", "MATH301", "Advanced Mathematics", "MATH301", "2024-04-18", "11:00 AM"),
+            Attendance(19, 103, "Firstname19", "Lastname19", "PHY401", "Physics", "PHY401", "2024-04-19", "12:00 PM"),
+            Attendance(20, 104, "Firstname20", "Lastname20", "CHEM501", "Chemistry", "CHEM501", "2024-04-20", "01:00 PM")
         )
 
         LoggedInUserHolder.init(this)
