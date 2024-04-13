@@ -7,8 +7,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class OfflineUserRepository(private val userDao: UserDao, private val users: List<User>) : UserRepository {
-
+class OfflineUserRepository(
+    private val userDao: UserDao,
+    private val users: List<User>
+) : UserRepository {
     init {
         // Initialize the database with the list of users
         CoroutineScope(Dispatchers.IO).launch {

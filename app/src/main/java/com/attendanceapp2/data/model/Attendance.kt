@@ -9,6 +9,7 @@ data class Attendance(
     val id : Long,
     val firstname : String,
     val lastname : String,
+    val subjectId : String,
     val subjectName : String,
     val subjectCode : String,
     val date: String,

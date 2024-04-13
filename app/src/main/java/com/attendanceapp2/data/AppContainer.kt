@@ -1,6 +1,7 @@
 package com.attendanceapp2.data
 
 import android.content.Context
+import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.model.Subject
 import com.attendanceapp2.data.model.User
 import com.attendanceapp2.data.model.UserSubjectCrossRef
@@ -32,6 +33,7 @@ class AppDataContainer(
     private val context: Context,
     private val embeddedUsers: List<User>,
     private val embeddedSubjects: List<Subject>,
+    private val embeddedAttendances : List<Attendance>,
     private val embeddedUserSubjectCrossRefs: List<UserSubjectCrossRef>
 ) : AppContainer {
     override val onlinePostRepository: OnlinePostRepository by lazy {
@@ -63,7 +65,7 @@ class AppDataContainer(
      * Implementation for [attendanceRepository]
      */
     override val attendanceRepository: AttendanceRepository by lazy {
-        OfflineAttendanceRepository(AttendanceAppDatabase.getDatabase(context).attendanceDao())
+        OfflineAttendanceRepository(AttendanceAppDatabase.getDatabase(context).attendanceDao(), embeddedAttendances)
     }
 
     /**

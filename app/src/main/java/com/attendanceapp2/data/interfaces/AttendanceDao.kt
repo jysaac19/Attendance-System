@@ -9,7 +9,6 @@ import com.attendanceapp2.data.model.Attendance
 
 @Dao
 interface AttendanceDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(attendance: Attendance)
 
