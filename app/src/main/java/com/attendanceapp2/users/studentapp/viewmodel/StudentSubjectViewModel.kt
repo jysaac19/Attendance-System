@@ -23,10 +23,18 @@ class SubjectViewModel(private val userSubjectCrossRefRepository: UserSubjectCro
         loggedInUser?.let { user ->
             viewModelScope.launch {
                 val userId = user.userId
-                // Call the repository to get subject IDs
                 val subjectIds = userSubjectCrossRefRepository.getSubjectIdsForUser(userId)
-                // Update the subject IDs in the StateFlow
                 _subjectIds.value = subjectIds ?: emptyList()
+
+                // Log the fetched subject IDs
+                subjectIds.let {
+                    if (it.isNotEmpty()) {
+                        val subjectIdsString = it.joinToString(", ")
+                        println("Fetched subject IDs: $subjectIdsString")
+                    } else {
+                        println("No subject IDs fetched.")
+                    }
+                } ?: println("Failed to fetch subject IDs.")
             }
         }
     }

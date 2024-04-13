@@ -5,6 +5,7 @@ import com.attendanceapp2.data.AppContainer
 import com.attendanceapp2.data.AppDataContainer
 import com.attendanceapp2.data.model.User
 import com.attendanceapp2.authentication.LoggedInUserHolder
+import com.attendanceapp2.data.model.Subject
 
 class NBSAttendanceApp : Application() {
     /**
@@ -44,7 +45,56 @@ class NBSAttendanceApp : Application() {
                 "ComSci"
             )
         )
+
+        val embeddedSubjects = listOf(
+            Subject(
+                code = "CS101",
+                name = "Introduction to Computer Science",
+                room = "Room A",
+                faculty = "John Doe",
+                day = "Monday",
+                start = "9:00 AM",
+                end = "11:00 AM"
+            ),
+            Subject(
+                code = "ENG201",
+                name = "English Literature",
+                room = "Room B",
+                faculty = "Jane Smith",
+                day = "Tuesday",
+                start = "10:00 AM",
+                end = "12:00 PM"
+            ),
+            Subject(
+                code = "MATH301",
+                name = "Advanced Mathematics",
+                room = "Room C",
+                faculty = "Alice Johnson",
+                day = "Wednesday",
+                start = "11:00 AM",
+                end = "1:00 PM"
+            ),
+            Subject(
+                code = "PHY401",
+                name = "Physics",
+                room = "Room D",
+                faculty = "Robert Brown",
+                day = "Thursday",
+                start = "1:00 PM",
+                end = "3:00 PM"
+            ),
+            Subject(
+                code = "CHEM501",
+                name = "Chemistry",
+                room = "Room E",
+                faculty = "Emily Wilson",
+                day = "Friday",
+                start = "2:00 PM",
+                end = "4:00 PM"
+            )
+        )
+
         LoggedInUserHolder.init(this)
-        container = AppDataContainer(this, embeddedUsers)
+        container = AppDataContainer(this, embeddedUsers, embeddedSubjects)
     }
 }
