@@ -14,7 +14,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.approutes.FacultyMainRoute
 import com.attendanceapp2.screenuniversalcomponents.ProfileScreen
+import com.attendanceapp2.users.facultyapp.screens.mainscreen.attendances.FacultyAttendances
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.qrscreen.QRCode
+import com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects.FacultySubjects
 import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.StudentAttendances
 import com.attendanceapp2.users.studentapp.screens.mainscreens.subjects.StudentSubjects
 
@@ -37,11 +39,11 @@ fun FacultyNavigation() {
                 startDestination = FacultyMainRoute.Subjects.name
             ) {
                 composable(route = FacultyMainRoute.Subjects.name) {
-                    StudentSubjects(navController)
+                    FacultySubjects(navController)
                 }
 
                 composable(route = FacultyMainRoute.Attendances.name) {
-                    StudentAttendances(navController)
+                    FacultyAttendances(navController)
                 }
 
                 composable(route = FacultyMainRoute.Code.name) {

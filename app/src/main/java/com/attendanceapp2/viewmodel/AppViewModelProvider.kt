@@ -11,7 +11,7 @@ import com.attendanceapp2.data.screen.subject.NewSubjectViewModel
 import com.attendanceapp2.posts.viewmodel.PostViewModel
 import com.attendanceapp2.users.facultyapp.viewmodel.QRGeneratorViewModel
 import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.ScannerViewModel
-import com.attendanceapp2.users.studentapp.viewmodel.SubjectViewModel
+import com.attendanceapp2.users.studentapp.viewmodel.StudentSubjectViewModel
 import com.shin.myproject.ViewModel.ScreenViewModel
 
 /**
@@ -58,6 +58,19 @@ object AppViewModelProvider {
                 nbsAttendanceApplication().container.subjectRepository
             )
         }
+
+
+        //Subject ViewModel for Student
+        initializer {
+            StudentSubjectViewModel(
+                nbsAttendanceApplication().container.userSubjectCrossRefRepository,
+                nbsAttendanceApplication().container.subjectRepository,SubjectViewModel(
+                    nbsAttendanceApplication().container.userSubjectCrossRefRepository,
+                    nbsAttendanceApplication().container.subjectRepository
+                )
+            )
+        }
+
 
         //Posts ViewModel [sample ktor implementation]
         initializer {

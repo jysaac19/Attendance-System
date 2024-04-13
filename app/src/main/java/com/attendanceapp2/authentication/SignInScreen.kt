@@ -42,8 +42,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.R
 import com.attendanceapp2.approutes.AuthRoute
-import com.attendanceapp2.users.studentapp.viewmodel.SubjectViewModel
 import com.attendanceapp2.viewmodel.AppViewModelProvider
+import com.attendanceapp2.viewmodel.SubjectViewModel
 import kotlinx.coroutines.launch
 
 

@@ -1,11 +1,14 @@
 package com.attendanceapp2.screenuniversalcomponents.subjectscreencomponents
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -35,15 +38,16 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
     ) {
         Column(
             modifier = Modifier
-                .padding(vertical = 8.dp, horizontal = 16.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(vertical = 8.dp, horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
 
             Text(
                 text = subject.name,
-                fontSize = 24.sp
+                fontSize = 24.sp,
+                textAlign = TextAlign.Center,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -56,39 +60,31 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
             Spacer(modifier = Modifier.height(8.dp))
         }
 
-        Column(
+        Card(
             modifier = Modifier
                 .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            colors = CardDefaults.cardColors(
+                Color.Red
+            ),
+            shape = RoundedCornerShape(20.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
         ) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    Color.Red
-                ),
-                shape = RoundedCornerShape(20.dp),
-                elevation = CardDefaults.cardElevation( defaultElevation = 16.dp )
 
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
 
-                Column(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-
-                    Text(
-                        text = subject.code,
-                        fontSize = 30.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                        textAlign = TextAlign.Center,
-                        color = Color.White
-                    )
-                }
+                Text(
+                    text = subject.code,
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Center,
+                    color = Color.White
+                )
             }
         }
     }

@@ -32,13 +32,6 @@ import java.time.LocalDate
 
 @Composable
 fun StudentAttendances (navController : NavController) {
-    val attendances = listOf(
-        Attendance(235, "Kenneth", "Bonaagua", "Mathematics", "MATH101", "2024-03-29", "08:00 AM"),
-        Attendance(200, "Kenneth", "Bonaagua", "Physics", "PHY101", "2024-03-29", "10:00 AM"),
-        Attendance(189, "Kenneth", "Bonaagua", "Chemistry", "CHEM101", "2024-03-29", "01:00 PM"),
-        Attendance(135, "Kenneth", "Bonaagua", "Biology", "BIO101", "2024-03-29", "03:00 PM"),
-        Attendance(85, "Kenneth", "Bonaagua", "History", "HIST101", "2024-03-29", "05:00 PM")
-    )
 
     var startdate by remember { mutableStateOf(LocalDate.now()) }
     var enddate by remember { mutableStateOf(LocalDate.now()) }
@@ -57,13 +50,15 @@ fun StudentAttendances (navController : NavController) {
             fontWeight = FontWeight.Bold
         )
 
+        Spacer(modifier = Modifier.width(16.dp))
+
         Text(
             "S.Y. 2023 - 2024",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(modifier = Modifier.width(16.dp))
 
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -119,11 +114,7 @@ fun StudentAttendances (navController : NavController) {
         AttendanceColumnName()
 
         LazyColumn {
-            attendances.forEachIndexed { index, attendance ->
-                item {
-                    AttendanceCard(attendance = attendance, index = index)
-                }
-            }
+
         }
     }
 }
