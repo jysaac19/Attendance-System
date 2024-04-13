@@ -1,4 +1,4 @@
-package com.attendanceapp2.viewmodel
+package com.attendanceapp2.universalviewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

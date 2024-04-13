@@ -15,7 +15,7 @@ import com.attendanceapp2.authentication.SignUpScreen
 import com.attendanceapp2.universalscreencomponents.navigation.faculty.FacultyNavigation
 import com.attendanceapp2.universalscreencomponents.navigation.student.StudentNavigation
 import com.attendanceapp2.viewmodel.AppViewModelProvider
-import com.shin.myproject.ViewModel.ScreenViewModel
+import com.attendanceapp2.universalviewmodel.ScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

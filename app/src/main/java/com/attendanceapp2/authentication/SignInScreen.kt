@@ -44,7 +44,7 @@ import com.attendanceapp2.R
 import com.attendanceapp2.approutes.AuthRoute
 import com.attendanceapp2.universaldata.LoggedInUserHolder
 import com.attendanceapp2.viewmodel.AppViewModelProvider
-import com.attendanceapp2.viewmodel.SubjectViewModel
+import com.attendanceapp2.universalviewmodel.SubjectViewModel
 import kotlinx.coroutines.launch
 
 

@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.attendanceapp2.viewmodel.AppViewModelProvider
-import com.attendanceapp2.viewmodel.ProfileViewModel
+import com.attendanceapp2.universalviewmodel.ProfileViewModel
 
 @Composable
 fun ProfileScreen (

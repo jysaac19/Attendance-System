@@ -1,10 +1,15 @@
 package com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,12 +25,18 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.attendanceapp2.data.repositories.user.UserRepository
 import com.attendanceapp2.universaldata.LoggedInUserHolder
+import com.attendanceapp2.universaldata.SelectedSubjectHolder
+import com.attendanceapp2.universalscreencomponents.attendancescreencomponents.AttendanceColumnName
+import com.attendanceapp2.universalscreencomponents.attendancescreencomponents.CustomDatePicker
+import com.attendanceapp2.universalscreencomponents.attendancescreencomponents.SubjectDropdown
 import java.time.LocalDate
 
 @Composable
 fun FacultySubjectAttendances (
     navController : NavController,
 ) {
+    val subjectInfo = SelectedSubjectHolder.getSelectedSubject()
+
     var startdate by remember { mutableStateOf(LocalDate.now()) }
     var enddate by remember { mutableStateOf(LocalDate.now()) }
     var selectedSubject by remember { mutableIntStateOf(0) }
@@ -38,7 +49,7 @@ fun FacultySubjectAttendances (
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            "Attendances",
+            text = subjectInfo?.name ?: "Attendances",
             fontSize = 35.sp,
             fontWeight = FontWeight.Bold
         )
@@ -53,6 +64,50 @@ fun FacultySubjectAttendances (
 
         Spacer(modifier = Modifier.width(16.dp))
 
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    CustomDatePicker(
+                        label = "From",
+                        selectedDate = startdate,
+                        onDateSelected = { date ->
+                            startdate = date
+                        }
+                    )
+                }
 
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    CustomDatePicker(
+                        label = "To",
+                        selectedDate = enddate,
+                        onDateSelected = { date ->
+                            enddate = date
+                        }
+                    )
+                }
+            }
+        }
+
+        Spacer(Modifier.height(8.dp))
+
+        AttendanceColumnName()
+
+        LazyColumn {
+
+        }
     }
 }

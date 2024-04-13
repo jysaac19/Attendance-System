@@ -25,7 +25,7 @@ import com.attendanceapp2.universalscreencomponents.navigation.faculty.FacultyNa
 import com.attendanceapp2.universalscreencomponents.navigation.student.StudentNavigation
 import com.attendanceapp2.theme.NBSCollegeTheme
 import com.attendanceapp2.viewmodel.AppViewModelProvider
-import com.shin.myproject.ViewModel.ScreenViewModel
+import com.attendanceapp2.universalviewmodel.ScreenViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

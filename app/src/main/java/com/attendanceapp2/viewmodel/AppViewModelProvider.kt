@@ -9,10 +9,13 @@ import com.attendanceapp2.authentication.SignInViewModel
 import com.attendanceapp2.authentication.SignUpViewModel
 import com.attendanceapp2.data.screen.subject.NewSubjectViewModel
 import com.attendanceapp2.posts.viewmodel.PostViewModel
+import com.attendanceapp2.universalviewmodel.ProfileViewModel
+import com.attendanceapp2.universalviewmodel.ScreenViewModel
+import com.attendanceapp2.universalviewmodel.SubjectViewModel
+import com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
 import com.attendanceapp2.users.facultyapp.viewmodel.QRGeneratorViewModel
 import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.ScannerViewModel
 import com.attendanceapp2.users.studentapp.viewmodel.StudentSubjectViewModel
-import com.shin.myproject.ViewModel.ScreenViewModel
 
 /**
  * Provides Factory to create instance of ViewModel for the entire Inventory app
@@ -59,18 +62,20 @@ object AppViewModelProvider {
             )
         }
 
-
         //Subject ViewModel for Student
         initializer {
             StudentSubjectViewModel(
                 nbsAttendanceApplication().container.userSubjectCrossRefRepository,
-                nbsAttendanceApplication().container.subjectRepository,SubjectViewModel(
+                nbsAttendanceApplication().container.subjectRepository, SubjectViewModel(
                     nbsAttendanceApplication().container.userSubjectCrossRefRepository,
                     nbsAttendanceApplication().container.subjectRepository
                 )
             )
         }
 
+        initializer {
+            FacultySubjectAttendancesViewModel(nbsAttendanceApplication().container.attendanceRepository)
+        }
 
         //Posts ViewModel [sample ktor implementation]
         initializer {

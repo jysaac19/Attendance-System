@@ -10,4 +10,6 @@ interface AttendanceRepository {
 
     suspend fun deleteAttendance(attendance : Attendance)
 
+    suspend fun getAttendancesBySubjectId(subjectId: Long): List<Attendance>
+
 }

@@ -23,4 +23,7 @@ class OfflineAttendanceRepository(
 
     override suspend fun deleteAttendance(attendance: Attendance) = attendanceDao.delete(attendance)
 
+    override suspend fun getAttendancesBySubjectId(subjectId: Long): List<Attendance> {
+        return attendanceDao.getAttendancesBySubjectId(subjectId)
+    }
 }

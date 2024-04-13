@@ -26,19 +26,22 @@ import com.attendanceapp2.universaldata.SelectedSubject
 import com.attendanceapp2.universaldata.SelectedSubjectHolder
 import com.attendanceapp2.universalscreencomponents.subjectscreencomponents.SubjectCard
 import com.attendanceapp2.viewmodel.AppViewModelProvider
-import com.attendanceapp2.viewmodel.SubjectViewModel
+import com.attendanceapp2.universalviewmodel.SubjectViewModel
+import com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
 
 @Composable
 fun FacultySubjects (
     navController : NavController,
-    viewModel: SubjectViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    subjectVM: SubjectViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    facultySubjectAttendanceVM: FacultySubjectAttendancesViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
 
-    val subjects by viewModel.subjects.collectAsState()
+    val subjects by subjectVM.subjects.collectAsState()
 
     LaunchedEffect(key1 = true) {
-        viewModel.fetchSubjectsForLoggedInUser()
+        subjectVM.fetchSubjectsForLoggedInUser()
     }
+
 
     Column(
         modifier = Modifier
