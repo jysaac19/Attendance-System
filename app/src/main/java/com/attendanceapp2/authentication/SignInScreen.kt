@@ -134,8 +134,6 @@ fun SignInScreen(
                             is Login.Successfully -> {
                                 val loggedInUser = LoggedInUserHolder.getLoggedInUser()
                                 Log.d("Sign In", "Logged in user: $loggedInUser")
-                                // Fetch subject IDs for the logged-in user
-                                subjectVM.fetchSubjectIdsForLoggedInUser()
                             }
                             is Login.Failed -> {
                                 errorMessage = loginResult.errorMessage

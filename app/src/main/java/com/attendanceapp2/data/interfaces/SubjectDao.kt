@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import androidx.room.Update
 import com.attendanceapp2.data.model.Subject
 
@@ -18,4 +19,7 @@ interface SubjectDao {
 
     @Delete
     suspend fun delete(subject: Subject)
+
+    @Query("SELECT * FROM Subject WHERE id IN (:subjectIds)")
+    suspend fun getSubjectsByIds(subjectIds: List<Long>): List<Subject>
 }

@@ -11,4 +11,5 @@ interface SubjectRepository {
 
     suspend fun deleteSubject(subject : Subject)
 
+    suspend fun getSubjectsByIds(subjectIds: List<Long>): List<Subject>
 }

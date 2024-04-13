@@ -6,6 +6,7 @@ import com.attendanceapp2.data.model.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class OfflineSubjectRepository(private val subjectDao: SubjectDao, private val subjects: List<Subject>) : SubjectRepository {
 
@@ -22,4 +23,9 @@ class OfflineSubjectRepository(private val subjectDao: SubjectDao, private val s
 
     override suspend fun deleteSubject(subject : Subject) = subjectDao.delete(subject)
 
+    override suspend fun getSubjectsByIds(subjectIds: List<Long>): List<Subject> {
+        return withContext(Dispatchers.IO) {
+            subjectDao.getSubjectsByIds(subjectIds)
+        }
+    }
 }

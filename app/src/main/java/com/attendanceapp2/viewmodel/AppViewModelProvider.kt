@@ -37,7 +37,13 @@ object AppViewModelProvider {
 
         //Sign In ViewModel
         initializer {
-            SignInViewModel(nbsAttendanceApplication().container.userRepository)
+            SignInViewModel(
+                nbsAttendanceApplication().container.userRepository,
+                SubjectViewModel(
+                    nbsAttendanceApplication().container.userSubjectCrossRefRepository,
+                    nbsAttendanceApplication().container.subjectRepository
+                )
+            )
         }
 
         //Sign Up ViewModel
@@ -47,7 +53,10 @@ object AppViewModelProvider {
 
         //Subject ViewModel
         initializer {
-            SubjectViewModel(nbsAttendanceApplication().container.userSubjectCrossRefRepository)
+            SubjectViewModel(
+                nbsAttendanceApplication().container.userSubjectCrossRefRepository,
+                nbsAttendanceApplication().container.subjectRepository
+            )
         }
 
         //Posts ViewModel [sample ktor implementation]

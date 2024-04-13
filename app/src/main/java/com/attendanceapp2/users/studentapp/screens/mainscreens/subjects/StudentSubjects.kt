@@ -7,15 +7,24 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.data.model.Subject
 import com.attendanceapp2.screenuniversalcomponents.subjectscreencomponents.SubjectCard
+import com.attendanceapp2.users.studentapp.viewmodel.SubjectViewModel
+import com.attendanceapp2.viewmodel.AppViewModelProvider
 
 @Composable
-fun StudentSubjects ( navController : NavController) {
+fun StudentSubjects (
+    navController : NavController,
+    viewModel: SubjectViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
 
     Column (
         modifier = Modifier
@@ -29,8 +38,6 @@ fun StudentSubjects ( navController : NavController) {
             modifier = Modifier
                 .fillMaxSize()
         ) {
-
-
 
         }
     }
