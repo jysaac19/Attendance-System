@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.attendanceapp2.data.repositories.user.UserRepository
 import com.attendanceapp2.universaldata.LoggedInUserHolder
 import java.time.LocalDate
 
@@ -51,6 +52,7 @@ fun FacultySubjectAttendances (
         )
 
         Spacer(modifier = Modifier.width(16.dp))
+
 
     }
 }

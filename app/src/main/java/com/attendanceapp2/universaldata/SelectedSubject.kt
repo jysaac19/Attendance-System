@@ -2,6 +2,7 @@ package com.attendanceapp2.universaldata
 
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
+import com.attendanceapp2.data.model.Subject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
