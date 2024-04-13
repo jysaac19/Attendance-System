@@ -1,10 +1,7 @@
 package com.attendanceapp2.screenuniversalcomponents.navigation
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -15,6 +12,8 @@ import com.attendanceapp2.approutes.AppRoutes
 import com.attendanceapp2.approutes.AuthRoute
 import com.attendanceapp2.authentication.SignInScreen
 import com.attendanceapp2.authentication.SignUpScreen
+import com.attendanceapp2.screenuniversalcomponents.navigation.faculty.FacultyNavigation
+import com.attendanceapp2.screenuniversalcomponents.navigation.student.StudentNavigation
 import com.attendanceapp2.viewmodel.AppViewModelProvider
 import com.shin.myproject.ViewModel.ScreenViewModel
 

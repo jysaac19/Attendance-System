@@ -1,4 +1,4 @@
-package com.attendanceapp2.screenuniversalcomponents.navigation
+package com.attendanceapp2.screenuniversalcomponents.navigation.faculty
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -14,7 +14,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.approutes.FacultyMainRoute
 import com.attendanceapp2.screenuniversalcomponents.ProfileScreen
-import com.attendanceapp2.screenuniversalcomponents.navigation.FacultyBottomNavBar
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.qrscreen.QRCode
 import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.StudentAttendances
 import com.attendanceapp2.users.studentapp.screens.mainscreens.subjects.StudentSubjects
@@ -26,7 +25,9 @@ fun FacultyNavigation() {
 //    val screenViewModel: ScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 
     Scaffold(
+
         bottomBar = { FacultyBottomNavBar(navController = navController) }
+
     ) {
         Box(modifier = Modifier.padding(it)) {
             val navBackStackEntry by navController.currentBackStackEntryAsState()

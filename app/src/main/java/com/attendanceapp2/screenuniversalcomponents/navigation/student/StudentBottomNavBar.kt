@@ -1,4 +1,4 @@
-package com.attendanceapp2.screenuniversalcomponents.navigation
+package com.attendanceapp2.screenuniversalcomponents.navigation.student
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -41,41 +41,42 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.attendanceapp2.approutes.FacultyMainRoute
+import com.attendanceapp2.approutes.StudentMainRoute
+import com.attendanceapp2.screenuniversalcomponents.navigation.BottomNavItem
 
 
 @Composable
-fun FacultyBottomNavBar(navController: NavController) {
+fun StudentBottomNavBar(navController: NavController) {
     val items = listOf(
         BottomNavItem(
             "Subjects",
             Icons.Default.Folder,
             Icons.Default.FolderOpen,
-            FacultyMainRoute.Subjects.name
+            StudentMainRoute.Subjects.name
         ),
         BottomNavItem(
             "Attendances",
             Icons.Filled.PieChart,
             Icons.Outlined.PieChart,
-            FacultyMainRoute.Attendances.name
+            StudentMainRoute.Attendances.name
         ),
         BottomNavItem(
             "Scanner",
             Icons.Filled.QrCode2,
             Icons.Outlined.QrCode2,
-            FacultyMainRoute.Code.name
+            StudentMainRoute.Scanner.name
         ),
         BottomNavItem(
             "Notifications",
             Icons.Filled.Notifications,
             Icons.Outlined.Notifications,
-            FacultyMainRoute.Notifications.name
+            StudentMainRoute.Notifications.name
         ),
         BottomNavItem(
             "Profile",
             Icons.Filled.Person,
             Icons.Outlined.Person,
-            FacultyMainRoute.Profile.name
+            StudentMainRoute.Profile.name
         )
     )
 
