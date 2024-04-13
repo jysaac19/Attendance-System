@@ -42,6 +42,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.R
 import com.attendanceapp2.approutes.AuthRoute
+import com.attendanceapp2.users.studentapp.viewmodel.SubjectViewModel
 import com.attendanceapp2.viewmodel.AppViewModelProvider
 import kotlinx.coroutines.launch
 
@@ -49,7 +50,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun SignInScreen(
     navController: NavController,
-    viewModel: SignInViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    signInVM: SignInViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    subjectVM: SubjectViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -127,11 +129,13 @@ fun SignInScreen(
             Button(
                 onClick = {
                     coroutineScope.launch {
-                        val loginResult = viewModel.validateSignIn(email, password)
+                        val loginResult = signInVM.validateSignIn(email, password)
                         when (loginResult) {
                             is Login.Successfully -> {
                                 val loggedInUser = LoggedInUserHolder.getLoggedInUser()
                                 Log.d("Sign In", "Logged in user: $loggedInUser")
+                                // Fetch subject IDs for the logged-in user
+                                subjectVM.fetchSubjectIdsForLoggedInUser()
                             }
                             is Login.Failed -> {
                                 errorMessage = loginResult.errorMessage

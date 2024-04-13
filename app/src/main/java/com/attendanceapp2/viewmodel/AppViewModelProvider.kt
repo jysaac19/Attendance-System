@@ -7,11 +7,11 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.attendanceapp2.NBSAttendanceApp
 import com.attendanceapp2.authentication.SignInViewModel
 import com.attendanceapp2.authentication.SignUpViewModel
-import com.attendanceapp2.data.screen.schedule.NewScheduleViewModel
 import com.attendanceapp2.data.screen.subject.NewSubjectViewModel
 import com.attendanceapp2.posts.viewmodel.PostViewModel
 import com.attendanceapp2.users.facultyapp.viewmodel.QRGeneratorViewModel
 import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.ScannerViewModel
+import com.attendanceapp2.users.studentapp.viewmodel.SubjectViewModel
 import com.shin.myproject.ViewModel.ScreenViewModel
 
 /**
@@ -45,6 +45,11 @@ object AppViewModelProvider {
             SignUpViewModel(nbsAttendanceApplication().container.userRepository)
         }
 
+        //Subject ViewModel
+        initializer {
+            SubjectViewModel(nbsAttendanceApplication().container.userSubjectCrossRefRepository)
+        }
+
         //Posts ViewModel [sample ktor implementation]
         initializer {
             PostViewModel(nbsAttendanceApplication().container.onlinePostRepository)
@@ -53,18 +58,7 @@ object AppViewModelProvider {
         //New Subject ViewModel
         initializer {
             NewSubjectViewModel(
-                nbsAttendanceApplication().container.subjectRepository,
-                nbsAttendanceApplication().container.scheduleRepository
-
-            )
-        }
-
-        //New Schedule ViewModel
-        initializer {
-            NewScheduleViewModel(
-                nbsAttendanceApplication().container.subjectRepository,
-                nbsAttendanceApplication().container.scheduleRepository
-
+                nbsAttendanceApplication().container.subjectRepository
             )
         }
 

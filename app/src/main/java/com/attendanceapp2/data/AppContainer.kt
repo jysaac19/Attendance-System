@@ -6,10 +6,12 @@ import com.attendanceapp2.data.repositories.attendancce.AttendanceRepository
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
 import com.attendanceapp2.data.repositories.schedule.OfflineScheduleRepository
 import com.attendanceapp2.data.repositories.schedule.ScheduleRepository
-import com.attendanceapp2.data.repositories.user.OfflineUserRepository
-import com.attendanceapp2.data.repositories.user.UserRepository
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import com.attendanceapp2.data.repositories.subject.SubjectRepository
+import com.attendanceapp2.data.repositories.user.OfflineUserRepository
+import com.attendanceapp2.data.repositories.user.UserRepository
+import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
+import com.attendanceapp2.data.repositories.usersubjectcossref.UserSubjectCrossRefRepository
 import com.attendanceapp2.posts.repository.OnlinePostRepository
 
 interface AppContainer {
@@ -18,6 +20,7 @@ interface AppContainer {
     val userRepository: UserRepository
     val attendanceRepository: AttendanceRepository
     val scheduleRepository: ScheduleRepository
+    val userSubjectCrossRefRepository: UserSubjectCrossRefRepository
 }
 
 /**
@@ -54,5 +57,12 @@ class AppDataContainer(private val context: Context, private val embeddedUsers: 
      */
     override val attendanceRepository: AttendanceRepository by lazy {
         OfflineAttendanceRepository(AttendanceAppDatabase.getDatabase(context).attendanceDao())
+    }
+
+    /**
+     * Implementation for [userSubjectCrossRefRepository]
+     */
+    override val userSubjectCrossRefRepository: UserSubjectCrossRefRepository by lazy {
+        OfflineUserSubjectCrossRefRepository(AttendanceAppDatabase.getDatabase(context).userSubjectCrossRefDao())
     }
 }

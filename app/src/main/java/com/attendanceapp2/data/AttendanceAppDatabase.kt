@@ -8,20 +8,23 @@ import com.attendanceapp2.data.interfaces.AttendanceDao
 import com.attendanceapp2.data.interfaces.ScheduleDao
 import com.attendanceapp2.data.interfaces.SubjectDao
 import com.attendanceapp2.data.interfaces.UserDao
+import com.attendanceapp2.data.interfaces.UserSubjectCrossRefDao
 import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.model.Schedule
 import com.attendanceapp2.data.model.Subject
 import com.attendanceapp2.data.model.User
+import com.attendanceapp2.data.model.UserSubjectCrossRef
 
 /**
  * Database class with a singleton Instance object.
  */
-@Database(entities = [Subject::class, Schedule::class, User::class, Attendance::class], version = 3, exportSchema = false)
+@Database(entities = [Subject::class, Schedule::class, User::class, Attendance::class, UserSubjectCrossRef::class], version = 4, exportSchema = false)
 abstract class AttendanceAppDatabase : RoomDatabase() {
     abstract fun subjectDao(): SubjectDao
     abstract fun userDao(): UserDao
     abstract fun attendanceDao(): AttendanceDao
     abstract fun scheduleDao(): ScheduleDao
+    abstract fun userSubjectCrossRefDao(): UserSubjectCrossRefDao
 
 
     companion object {
