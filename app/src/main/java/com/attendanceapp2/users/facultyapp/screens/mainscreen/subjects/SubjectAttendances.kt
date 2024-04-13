@@ -22,7 +22,7 @@ import com.attendanceapp2.universaldata.LoggedInUserHolder
 import java.time.LocalDate
 
 @Composable
-fun SubjectAttendances (
+fun FacultySubjectAttendances (
     navController : NavController,
 ) {
     var startdate by remember { mutableStateOf(LocalDate.now()) }

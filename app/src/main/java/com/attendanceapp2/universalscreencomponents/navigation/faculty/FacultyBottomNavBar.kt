@@ -44,9 +44,12 @@ import androidx.navigation.NavController
 import com.attendanceapp2.approutes.faculty.FacultyMainRoute
 import com.attendanceapp2.universalscreencomponents.navigation.BottomNavItem
 
-
 @Composable
-fun FacultyBottomNavBar(navController: NavController) {
+fun FacultyBottomNavBar(
+    navController: NavController,
+    centerItem: Boolean,
+    nonCenterItem: Boolean
+) {
     val items = listOf(
         BottomNavItem(
             "Subjects",
@@ -82,86 +85,89 @@ fun FacultyBottomNavBar(navController: NavController) {
 
     var selectedItem by remember { mutableIntStateOf(0) }
     val translationY by animateFloatAsState(
-        targetValue = if (selectedItem == items.size / 2 && selectedItem == selectedItem) -120f else -80f,
+        targetValue = if (centerItem && !nonCenterItem) -250f else if (selectedItem == items.size / 2 && selectedItem == selectedItem) -120f else -80f,
         label = ""
     )
 
-    Box(
-        modifier = Modifier
-            .background(Color.Red.copy(alpha = 0.10f))
-    ) {
-        Row(
+    // Conditionally render the Box based on centerItem and nonCenterItem
+    if (centerItem || nonCenterItem) {
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(150.dp)
-                .padding(bottom = 45.dp)
-                .align(Alignment.Center),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
+                .background(Color.Red.copy(alpha = 0.10f))
         ) {
-            items.forEachIndexed { index, item ->
-                if (index == items.size / 2) {
-                    // If the item is in the middle, show a FloatingActionButton
-                    FloatingActionButton(
-                        onClick = {
-                            selectedItem = index
-                            navController.navigate(item.route)
-                        },
-                        modifier = Modifier
-                            .size(80.dp)
-                            .graphicsLayer(
-                                translationY = translationY
-                            ),
-                        containerColor = Color.Red,
-                        contentColor = Color.White,
-                        shape = CircleShape,
-                        content = {
-                            Icon(
-                                imageVector = item.selectedIcon,
-                                contentDescription = item.title,
-                                modifier = Modifier.size(45.dp)
-                            )
-                        }
-                    )
-                } else {
-                    // Otherwise, show a NavigationBarItem with title when selected
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Button(
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp)
+                    .padding(bottom = 45.dp)
+                    .align(Alignment.Center),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                items.forEachIndexed { index, item ->
+                    if (index == items.size / 2 && centerItem) {
+                        // If the item is in the middle and should be shown, show a FloatingActionButton
+                        FloatingActionButton(
                             onClick = {
                                 selectedItem = index
                                 navController.navigate(item.route)
                             },
-                            shape = RoundedCornerShape(20.dp),
                             modifier = Modifier
-                                .size(width = 70.dp, height = 38.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (index == selectedItem) {
-                                    Color.Black.copy(alpha = 0.3f)
-                                } else {
-                                    Color.Transparent
-                                },
-                                contentColor = LocalContentColor.current
-                            )
+                                .size(80.dp)
+                                .graphicsLayer(
+                                    translationY = translationY
+                                ),
+                            containerColor = Color.Red,
+                            contentColor = Color.White,
+                            shape = CircleShape,
+                            content = {
+                                Icon(
+                                    imageVector = item.selectedIcon,
+                                    contentDescription = item.title,
+                                    modifier = Modifier.size(45.dp)
+                                )
+                            }
+                        )
+                    } else if (nonCenterItem) {
+                        // If the item is not in the middle and should be shown, show a NavigationBarItem with title when selected
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(16.dp)
                         ) {
-                            Icon(
-                                imageVector = if (index == selectedItem) {
-                                    item.selectedIcon
-                                } else item.unselectedIcon,
-                                contentDescription = item.title,
+                            Button(
+                                onClick = {
+                                    selectedItem = index
+                                    navController.navigate(item.route)
+                                },
+                                shape = RoundedCornerShape(20.dp),
                                 modifier = Modifier
-                                    .size(30.dp)
-                            )
-                        }
-                        if (index == selectedItem) {
-                            Text(
-                                text = item.title,
-                                fontSize = 12.sp,
-                                modifier = Modifier.padding(top = 4.dp)
-                            )
+                                    .size(width = 70.dp, height = 38.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = if (index == selectedItem) {
+                                        Color.Black.copy(alpha = 0.3f)
+                                    } else {
+                                        Color.Transparent
+                                    },
+                                    contentColor = LocalContentColor.current
+                                )
+                            ) {
+                                Icon(
+                                    imageVector = if (index == selectedItem) {
+                                        item.selectedIcon
+                                    } else item.unselectedIcon,
+                                    contentDescription = item.title,
+                                    modifier = Modifier
+                                        .size(30.dp)
+                                )
+                            }
+                            if (index == selectedItem) {
+                                Text(
+                                    text = item.title,
+                                    fontSize = 12.sp,
+                                    modifier = Modifier.padding(top = 4.dp)
+                                )
+                            }
                         }
                     }
                 }
