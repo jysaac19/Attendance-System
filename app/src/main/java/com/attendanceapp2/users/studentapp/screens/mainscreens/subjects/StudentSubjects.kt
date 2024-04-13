@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.attendanceapp2.screenuniversalcomponents.subjectscreencomponents.SubjectCard
+import com.attendanceapp2.universalscreencomponents.subjectscreencomponents.SubjectCard
 import com.attendanceapp2.viewmodel.AppViewModelProvider
 import com.attendanceapp2.viewmodel.SubjectViewModel
 

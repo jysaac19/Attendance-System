@@ -1,4 +1,4 @@
-package com.attendanceapp2.screenuniversalcomponents.navigation
+package com.attendanceapp2.universalscreencomponents.navigation
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
@@ -12,8 +12,8 @@ import com.attendanceapp2.approutes.AppRoutes
 import com.attendanceapp2.approutes.AuthRoute
 import com.attendanceapp2.authentication.SignInScreen
 import com.attendanceapp2.authentication.SignUpScreen
-import com.attendanceapp2.screenuniversalcomponents.navigation.faculty.FacultyNavigation
-import com.attendanceapp2.screenuniversalcomponents.navigation.student.StudentNavigation
+import com.attendanceapp2.universalscreencomponents.navigation.faculty.FacultyNavigation
+import com.attendanceapp2.universalscreencomponents.navigation.student.StudentNavigation
 import com.attendanceapp2.viewmodel.AppViewModelProvider
 import com.shin.myproject.ViewModel.ScreenViewModel
 

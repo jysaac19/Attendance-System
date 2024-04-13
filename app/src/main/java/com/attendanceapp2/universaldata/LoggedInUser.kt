@@ -1,4 +1,4 @@
-package com.attendanceapp2.authentication
+package com.attendanceapp2.universaldata
 
 import android.content.Context
 import android.content.SharedPreferences

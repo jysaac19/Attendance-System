@@ -3,6 +3,8 @@ package com.attendanceapp2.authentication
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.attendanceapp2.data.repositories.user.UserRepository
+import com.attendanceapp2.universaldata.LoggedInUser
+import com.attendanceapp2.universaldata.LoggedInUserHolder
 import com.attendanceapp2.viewmodel.SubjectViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

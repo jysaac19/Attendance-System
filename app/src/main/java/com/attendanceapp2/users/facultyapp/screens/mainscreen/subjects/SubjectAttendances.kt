@@ -5,37 +5,30 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.attendanceapp2.approutes.faculty.FacultySubjects
-import com.attendanceapp2.universalscreencomponents.subjectscreencomponents.SubjectCard
-import com.attendanceapp2.viewmodel.AppViewModelProvider
-import com.attendanceapp2.viewmodel.SubjectViewModel
+import com.attendanceapp2.universaldata.LoggedInUserHolder
+import java.time.LocalDate
 
 @Composable
-fun FacultySubjects (
+fun SubjectAttendances (
     navController : NavController,
-    viewModel: SubjectViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-
-    val subjects by viewModel.subjects.collectAsState()
-
-    LaunchedEffect(key1 = true) {
-        viewModel.fetchSubjectsForLoggedInUser()
-    }
+    var startdate by remember { mutableStateOf(LocalDate.now()) }
+    var enddate by remember { mutableStateOf(LocalDate.now()) }
+    var selectedSubject by remember { mutableIntStateOf(0) }
+    val subjects = listOf("All", "Math", "Science", "History", "English", "Art")
 
     Column(
         modifier = Modifier
@@ -44,7 +37,7 @@ fun FacultySubjects (
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            "Subjects",
+            "Attendances",
             fontSize = 35.sp,
             fontWeight = FontWeight.Bold
         )
@@ -59,16 +52,5 @@ fun FacultySubjects (
 
         Spacer(modifier = Modifier.width(16.dp))
 
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 200.dp),
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            items(subjects) { subject ->
-                SubjectCard(subject = subject) {
-                    navController.navigate(FacultySubjects.SubjectAttendances.name)
-                }
-            }
-        }
     }
 }

@@ -1,4 +1,4 @@
-package com.attendanceapp2.screenuniversalcomponents.subjectscreencomponents
+package com.attendanceapp2.universalscreencomponents.subjectscreencomponents
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

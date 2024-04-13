@@ -1,4 +1,4 @@
-package com.attendanceapp2.screenuniversalcomponents.attendancescreencomponents
+package com.attendanceapp2.universalscreencomponents.attendancescreencomponents
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box

@@ -1,4 +1,4 @@
-package com.attendanceapp2.screenuniversalcomponents
+package com.attendanceapp2.universalscreencomponents
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

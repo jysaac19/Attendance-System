@@ -1,7 +1,7 @@
 package com.attendanceapp2
 
 import android.app.Application
-import com.attendanceapp2.authentication.LoggedInUserHolder
+import com.attendanceapp2.universaldata.LoggedInUserHolder
 import com.attendanceapp2.data.AppContainer
 import com.attendanceapp2.data.AppDataContainer
 import com.attendanceapp2.data.model.Attendance

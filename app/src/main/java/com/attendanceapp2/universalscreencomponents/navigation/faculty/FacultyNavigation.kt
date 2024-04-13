@@ -1,4 +1,4 @@
-package com.attendanceapp2.screenuniversalcomponents.navigation.faculty
+package com.attendanceapp2.universalscreencomponents.navigation.faculty
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -11,14 +11,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.attendanceapp2.approutes.FacultyMainRoute
-import com.attendanceapp2.screenuniversalcomponents.ProfileScreen
+import androidx.navigation.navigation
+import com.attendanceapp2.approutes.faculty.FacultyMainRoute
+import com.attendanceapp2.approutes.faculty.FacultySubjects
+import com.attendanceapp2.universalscreencomponents.ProfileScreen
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.attendances.FacultyAttendances
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.qrscreen.QRCode
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects.FacultySubjects
-import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.StudentAttendances
-import com.attendanceapp2.users.studentapp.screens.mainscreens.subjects.StudentSubjects
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +42,14 @@ fun FacultyNavigation() {
                 composable(route = FacultyMainRoute.Subjects.name) {
                     FacultySubjects(navController)
                 }
-
+                navigation(startDestination = FacultyMainRoute.Subjects.name, route = FacultySubjects.MainSubjectScreen.name) {
+                    composable(route = FacultyMainRoute.Subjects.name) {
+                        FacultySubjects(navController)
+                    }
+                    composable(route = FacultySubjects.SubjectAttendances.name) {
+                        FacultyAttendances(navController)
+                    }
+                }
                 composable(route = FacultyMainRoute.Attendances.name) {
                     FacultyAttendances(navController)
                 }

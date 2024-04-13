@@ -2,7 +2,7 @@ package com.attendanceapp2.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.attendanceapp2.authentication.LoggedInUserHolder
+import com.attendanceapp2.universaldata.LoggedInUserHolder
 import com.attendanceapp2.data.model.Subject
 import com.attendanceapp2.data.repositories.subject.SubjectRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.UserSubjectCrossRefRepository
