@@ -14,14 +14,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.attendanceapp2.approutes.faculty.FacultyMainRoute
 import com.attendanceapp2.approutes.faculty.FacultySubjects
 import com.attendanceapp2.universalscreencomponents.ProfileScreen
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.attendances.FacultyAttendances
-import com.attendanceapp2.users.facultyapp.screens.mainscreen.qrscreen.QRCode
+import com.attendanceapp2.users.facultyapp.screens.mainscreen.qrscreen.QRGeneratorScreen
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects.FacultySubjectAttendances
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects.FacultySubjects
 
@@ -75,7 +74,7 @@ fun FacultyNavigation() {
                 }
 
                 composable(route = FacultyMainRoute.Code.name) {
-                    QRCode(navController)
+                    QRGeneratorScreen(navController)
                     centerItem = true
                     nonCenterItem = true
                 }
