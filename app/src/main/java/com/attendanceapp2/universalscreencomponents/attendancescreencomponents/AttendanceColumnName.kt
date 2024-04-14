@@ -16,13 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.attendanceapp2.data.model.Attendance
+
 
 @Composable
-fun AttendanceCard(attendance: Attendance, index: Int) {
+fun AttendanceColumnName () {
     Card(
         colors = CardDefaults.cardColors(
-            if (index % 2 == 0) Color.Transparent else Color.Gray
+            containerColor = Color.Gray
         ),
         modifier = Modifier
             .fillMaxWidth()
@@ -42,27 +42,27 @@ fun AttendanceCard(attendance: Attendance, index: Int) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    attendance.subjectCode,
+                    "Subject Code",
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    attendance.lastname,
+                    "Lastname",
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    attendance.firstname,
+                    "Firstname",
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    attendance.date,
+                    "Date",
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    attendance.time,
+                    "Time",
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center
                 )
