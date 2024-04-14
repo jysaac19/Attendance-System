@@ -29,6 +29,8 @@ class FacultyQRGeneratorViewModel : ViewModel() {
      * @param selectedSubject The selected subject.
      * @return The generated QR code bitmap.
      */
+
+    // Gson instance
     private val gson = Gson()
 
     fun generateQrCodeBitmap(selectedSubject: SelectedSubject): Bitmap? {
@@ -47,8 +49,6 @@ class FacultyQRGeneratorViewModel : ViewModel() {
 
         return qrCodeGenerator(qrCodeJson)
     }
-
-
     /**
      * Get the current date in the Philippines timezone in "MMM dd, yyyy" format.
      *
@@ -70,7 +70,6 @@ class FacultyQRGeneratorViewModel : ViewModel() {
         val timeFormatter = DateTimeFormatter.ofPattern("hh:mm a")
         return ZonedDateTime.now(zoneId).format(timeFormatter)
     }
-
     /**
      * Generate a QR code bitmap for the given data string.
      *
@@ -106,5 +105,4 @@ class FacultyQRGeneratorViewModel : ViewModel() {
         }
         return null
     }
-
 }

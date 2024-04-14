@@ -36,6 +36,7 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(110.dp)
                 .padding(vertical = 8.dp, horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center

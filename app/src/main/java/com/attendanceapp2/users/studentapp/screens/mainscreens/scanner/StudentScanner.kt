@@ -1,7 +1,7 @@
 package com.attendanceapp2.users.studentapp.screens.mainscreens.scanner
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
@@ -12,12 +12,12 @@ import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,16 +42,21 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.attendanceapp2.universaldata.ScannedQRCodeHolder
 import com.attendanceapp2.viewmodel.AppViewModelProvider
+import kotlinx.coroutines.DelicateCoroutinesApi
 
-// Composable function for the student QR code scanner screen
+@OptIn(DelicateCoroutinesApi::class)
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun StudentScanner (
-    navController: NavController,
     viewModel: ScannerViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    var attendanceResult by remember { mutableStateOf<String?>(null) }
+    var isSuccess by remember { mutableStateOf(false) }
+    // Collect the scanned QR code state
+    val scannedQRCode by ScannedQRCodeHolder.scannedQRCodeHolder.collectAsState()
+
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
@@ -99,7 +104,7 @@ fun StudentScanner (
 
                                 // Destination
                                 // This is transparent color
-                                drawRect(Color.Black.copy(alpha = 0.7f))
+                                drawRect(Color.Black.copy(alpha = 0.9f))
 
                                 // Source
                                 // This is where we extract this rect from transparent
@@ -132,19 +137,15 @@ fun StudentScanner (
 
                             // Set the target resolution to a smaller square size
                             val targetResolution = android.util.Size(200, 200)
-                            @Suppress("DEPRECATION") val imageAnalysis = ImageAnalysis.Builder()
+                            @Suppress("DEPRECATION")
+                            val imageAnalysis = ImageAnalysis.Builder()
                                 .setTargetResolution(targetResolution)
                                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                                 .build()
                             imageAnalysis.setAnalyzer(
                                 ContextCompat.getMainExecutor(context),
-                                QRCodeAnalyzer { result ->
-                                    viewModel.code = result.toString()
-                                    ScannedQRCodeHolder.setScannedQRCode(result)
-                                    Log.d(
-                                        "ScannedQRCode",
-                                        "SubjectId: ${result.subjectId}, SubjectName: ${result.subjectName}, SubjectCode: ${result.subjectCode}, Date: ${result.date}, Time: ${result.time}"
-                                    )
+                                QRCodeAnalyzer(viewModel) { qrCode ->
+                                    // Handle the scanned QR code here
                                 }
                             )
 
@@ -172,18 +173,58 @@ fun StudentScanner (
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 250.dp),
+            .padding(bottom = 200.dp),
         contentAlignment = Alignment.BottomCenter
     ) {
-        Text(
-            text = viewModel.code,
-            color = Color.White,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .width(300.dp)
-        )
+        scannedQRCode?.let { qrCode ->
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = qrCode.subjectCode,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.width(250.dp)
+                )
+                Text(
+                    text = qrCode.subjectName,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.width(250.dp)
+                )
+                // Display attendance result here
+                attendanceResult?.let {
+                    val color = if (isSuccess) Color.Green else Color.Red
+                    Text(
+                        text = it,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = color,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.width(250.dp)
+                    )
+                }
+            }
+        }
+    }
+
+    // Call validateAndInsertAttendance function here and update attendance result
+    LaunchedEffect(scannedQRCode) {
+        scannedQRCode?.let {
+            val result = viewModel.validateAndInsertAttendance()
+            isSuccess = when(result) {
+                is AttendanceResult.Success -> true
+                is AttendanceResult.Error -> false
+            }
+            attendanceResult = when(result) {
+                is AttendanceResult.Success -> result.message
+                is AttendanceResult.Error -> result.errorMessage
+            }
+        }
     }
 }
 

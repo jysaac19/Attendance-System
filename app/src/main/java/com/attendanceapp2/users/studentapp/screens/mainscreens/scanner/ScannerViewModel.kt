@@ -1,69 +1,59 @@
 package com.attendanceapp2.users.studentapp.screens.mainscreens.scanner
 
-import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.repositories.attendancce.AttendanceRepository
 import com.attendanceapp2.universaldata.LoggedInUserHolder
-import com.attendanceapp2.universaldata.ScannedQRCode
 import com.attendanceapp2.universaldata.ScannedQRCodeHolder
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.TimeZone
 
 sealed class AttendanceResult {
-    data class Failed(val reason: String) : AttendanceResult()
-    object Successful : AttendanceResult()
+    data class Success(val message: String) : AttendanceResult()
+    data class Error(val errorMessage: String) : AttendanceResult()
 }
 
-// ViewModel for the QR code scanner screen
 class ScannerViewModel(
     private val attendanceRepo: AttendanceRepository
 ) : ViewModel() {
-    var code by mutableStateOf("")
 
-    suspend fun validateScannedQRCode(): AttendanceResult {
-        val scannedQRCode = ScannedQRCodeHolder.getScannedQRCode()
+    suspend fun validateAndInsertAttendance(): AttendanceResult {
+        val currentDate = getCurrentDateInPhilippines()
+        val currentTime = getCurrentTimeInPhilippines()
+
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
-        val currentDate = ZonedDateTime.now(ZoneId.of("Asia/Manila")).format(DateTimeFormatter.ofPattern("MMM dd, yyyy"))
-        val currentTime = ZonedDateTime.now(ZoneId.of("Asia/Manila")).format(DateTimeFormatter.ofPattern("hh:mm a"))
+        val scannedQRCode = ScannedQRCodeHolder.getScannedQRCode()
 
-        // Check if scannedQRCode is null
-        if (scannedQRCode == null) {
-            return AttendanceResult.Failed("Invalid QR Code: Data is missing")
+        if (loggedInUser == null || scannedQRCode == null) {
+            return AttendanceResult.Error("User or QR code information is missing.")
         }
 
-        // Check if the QR code date matches the current date
+        // Validate expiration date
         if (scannedQRCode.date != currentDate) {
-            return AttendanceResult.Failed("Invalid QR Code: Date does not match")
+            return AttendanceResult.Error("QR code has expired.")
         }
 
-        // Check if the QR code time is within 5 minutes before the current time
-        val qrCodeTime = ZonedDateTime.parse(scannedQRCode.time, DateTimeFormatter.ofPattern("hh:mm a"))
-        val fiveMinutesAgo = ZonedDateTime.now(ZoneId.of("Asia/Manila")).minusMinutes(5)
-        if (qrCodeTime.isBefore(fiveMinutesAgo)) {
-            return AttendanceResult.Failed("Invalid QR Code: Time is too old")
+        // Validate time
+        if (!isValidTime(scannedQRCode.time, currentTime)) {
+            return AttendanceResult.Error("QR code scan time exceeds 5 minutes.")
         }
 
-        // Check if the user already has an attendance for the selected subject and current date
-        val existingAttendance = attendanceRepo.getAttendancesBySubjectIdAndUserId(
+        // Check if the user already has attendance
+        val existingAttendances = attendanceRepo.getAttendancesByUserIdSubjectIdAndDate(
+            loggedInUser.userId,
             scannedQRCode.subjectId,
-            loggedInUser?.userId ?: 0,
             currentDate
         )
-        if (existingAttendance.isNotEmpty()) {
-            return AttendanceResult.Failed("Already have an Attendance")
+        if (existingAttendances.isNotEmpty()) {
+            return AttendanceResult.Error("Attendance Recorded Successfully")
         }
 
-        // All checks passed, attendance is successful
+        // Insert attendance
         val attendance = Attendance(
-            id = 0, // auto-generated ID
-            userId = loggedInUser?.userId ?: 0,
-            firstname = loggedInUser?.firstname ?: "",
-            lastname = loggedInUser?.lastname ?: "",
+            userId = loggedInUser.userId,
+            firstname = loggedInUser.firstname,
+            lastname = loggedInUser.lastname,
             subjectId = scannedQRCode.subjectId,
             subjectName = scannedQRCode.subjectName,
             subjectCode = scannedQRCode.subjectCode,
@@ -72,7 +62,29 @@ class ScannerViewModel(
         )
 
         attendanceRepo.insertAttendance(attendance)
-        Log.d("Attendance Successful", "Attendance: $attendance")
-        return AttendanceResult.Successful
+
+        return AttendanceResult.Success("Attendance recorded successfully.")
+    }
+
+    private fun isValidTime(qrTime: String, currentTime: String): Boolean {
+        val qrFormattedTime = SimpleDateFormat("hh:mm a").parse(qrTime)
+        val currentFormattedTime = SimpleDateFormat("hh:mm a").parse(currentTime)
+
+        val differenceInMillis = currentFormattedTime.time - qrFormattedTime.time
+        val differenceInMinutes = differenceInMillis / (1000 * 60)
+
+        return differenceInMinutes <= 5
+    }
+
+    private fun getCurrentDateInPhilippines(): String {
+        val dateFormat = SimpleDateFormat("MMM dd, yyyy")
+        dateFormat.timeZone = TimeZone.getTimeZone("Asia/Manila")
+        return dateFormat.format(Date())
+    }
+
+    private fun getCurrentTimeInPhilippines(): String {
+        val timeFormat = SimpleDateFormat("hh:mm a")
+        timeFormat.timeZone = TimeZone.getTimeZone("Asia/Manila")
+        return timeFormat.format(Date())
     }
 }

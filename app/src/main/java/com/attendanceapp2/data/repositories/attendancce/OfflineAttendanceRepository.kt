@@ -2,12 +2,10 @@ package com.attendanceapp2.data.repositories.attendancce
 
 import com.attendanceapp2.data.interfaces.AttendanceDao
 import com.attendanceapp2.data.model.Attendance
-import com.attendanceapp2.data.model.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-// Implementation of AttendanceRepository for offline mode
 class OfflineAttendanceRepository(
     private val attendanceDao: AttendanceDao,
     private val attendances: List<Attendance>
@@ -27,8 +25,7 @@ class OfflineAttendanceRepository(
     override suspend fun getAttendancesBySubjectId(subjectId: Long): List<Attendance> {
         return attendanceDao.getAttendancesBySubjectId(subjectId)
     }
-
-    override suspend fun getAttendancesBySubjectIdAndUserId(subjectId: Long, userId: Long, date: String): List<Attendance> {
-        return attendanceDao.getAttendancesBySubjectIdAndUserId(subjectId, userId, date)
+    override suspend fun getAttendancesByUserIdSubjectIdAndDate(userId: Long, subjectId: Long, date: String): List<Attendance> {
+        return attendanceDao.getAttendancesByUserIdSubjectIdAndDate(userId, subjectId, date)
     }
 }
