@@ -31,13 +31,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.attendanceapp2.authentication.SignInViewModel
-import com.attendanceapp2.users.facultyapp.viewmodel.QRGeneratorViewModel
 import com.attendanceapp2.viewmodel.AppViewModelProvider
 import kotlinx.coroutines.launch
 
 @Composable
-fun QRCode (
+fun QRGeneratorScreen (
     navController: NavHostController,
     viewModel: QRGeneratorViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {

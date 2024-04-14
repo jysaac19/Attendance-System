@@ -13,7 +13,7 @@ import com.attendanceapp2.universalviewmodel.ProfileViewModel
 import com.attendanceapp2.universalviewmodel.ScreenViewModel
 import com.attendanceapp2.universalviewmodel.SubjectViewModel
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
-import com.attendanceapp2.users.facultyapp.viewmodel.QRGeneratorViewModel
+import com.attendanceapp2.users.facultyapp.screens.mainscreen.qrscreen.QRGeneratorViewModel
 import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.ScannerViewModel
 import com.attendanceapp2.users.studentapp.viewmodel.StudentSubjectViewModel
 

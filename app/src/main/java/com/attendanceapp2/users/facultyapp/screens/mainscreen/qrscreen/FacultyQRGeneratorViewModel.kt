@@ -1,12 +1,10 @@
-package com.attendanceapp2.users.facultyapp.viewmodel
+package com.attendanceapp2.users.facultyapp.screens.mainscreen.qrscreen
 
 import android.graphics.Bitmap
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
-import com.attendanceapp2.data.repositories.attendancce.AttendanceRepository
 import com.attendanceapp2.data.repositories.subject.SubjectRepository
-import com.attendanceapp2.data.repositories.user.UserRepository
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.WriterException
@@ -14,11 +12,6 @@ import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
 import java.util.EnumMap
 
-data class QRCode (
-    val subjectCode : String,
-    val subjectName : String,
-    val date : String
-)
 class QRGeneratorViewModel(
     private val subjectRepo: SubjectRepository
 ) : ViewModel() {

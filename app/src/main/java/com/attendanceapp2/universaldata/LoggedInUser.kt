@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-
 data class LoggedInUser(
     val userId: Long,
     val firstname: String,

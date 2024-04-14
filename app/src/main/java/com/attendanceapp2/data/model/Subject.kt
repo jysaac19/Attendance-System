@@ -19,4 +19,3 @@ data class Subject(
     @ColumnInfo("end_time")
     val end : String
 )
-
