@@ -3,6 +3,9 @@ package com.attendanceapp2.users.studentapp.screens.mainscreens.scanner
 import android.graphics.ImageFormat
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
+import com.attendanceapp2.universaldata.ScannedQRCode
+import com.attendanceapp2.universaldata.ScannedQRCodeHolder
+import com.google.gson.Gson
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.BinaryBitmap
 import com.google.zxing.DecodeHintType
@@ -11,18 +14,28 @@ import com.google.zxing.PlanarYUVLuminanceSource
 import com.google.zxing.common.HybridBinarizer
 import java.nio.ByteBuffer
 
+// Analyzer for decoding QR codes from camera images
 class QRCodeAnalyzer(
-    private val onQRCodeScanned : (String) -> Unit
+    private val onQRCodeScanned: (ScannedQRCode) -> Unit
 ) : ImageAnalysis.Analyzer {
 
     private val supportedImageFormats = listOf (
         ImageFormat.YUV_420_888,
         ImageFormat.YUV_422_888,
         ImageFormat.YUV_444_888,
+        ImageFormat.FLEX_RGBA_8888,
+        ImageFormat.FLEX_RGB_888
     )
 
     override fun analyze(image: ImageProxy) {
-        if(image.format in supportedImageFormats) {
+        val scannedQRCode = ScannedQRCodeHolder.getScannedQRCode()
+        if (scannedQRCode != null) {
+            // Stop scanning if ScannedQRCode already has a value
+            image.close()
+            return
+        }
+
+        if (image.format in supportedImageFormats) {
             val bytes = image.planes.first().buffer.toByteArray()
 
             val source = PlanarYUVLuminanceSource (
@@ -43,14 +56,15 @@ class QRCodeAnalyzer(
                     setHints(
                         mapOf(
                             DecodeHintType.POSSIBLE_FORMATS to arrayListOf(
-                                BarcodeFormat.QR_CODE,
-                                //optional adding
+                                BarcodeFormat.QR_CODE
                             )
                         )
                     )
                 }.decode(binaryBitmap)
-                onQRCodeScanned(result.text)
-            } catch ( e:Exception ) {
+
+                val qrCodeData = Gson().fromJson(result.text, ScannedQRCode::class.java)
+                onQRCodeScanned(qrCodeData)
+            } catch ( e: Exception ) {
                 e.printStackTrace()
             } finally {
                 image.close()

@@ -8,9 +8,10 @@ import androidx.room.Query
 import androidx.room.Update
 import com.attendanceapp2.data.model.Attendance
 
+// Data Access Object (DAO) for attendance-related operations
 @Dao
 interface AttendanceDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(attendance: Attendance)
 
     @Update
@@ -20,4 +21,8 @@ interface AttendanceDao {
     suspend fun delete(attendance: Attendance)
     @Query("SELECT * FROM Attendance WHERE subjectId = :subjectId")
     suspend fun getAttendancesBySubjectId(subjectId: Long): List<Attendance>
+
+    @Query("SELECT * FROM Attendance WHERE subjectId = :subjectId AND userId = :userId AND date = :date")
+    suspend fun getAttendancesBySubjectIdAndUserId(subjectId: Long, userId: Long, date: String): List<Attendance>
+
 }

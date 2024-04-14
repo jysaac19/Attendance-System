@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
+// Data class representing a logged-in user
 data class LoggedInUser(
     val userId: Long,
     val firstname: String,
@@ -16,6 +17,7 @@ data class LoggedInUser(
     var department : String
 )
 
+// Object for managing the currently logged-in user
 object LoggedInUserHolder {
     private const val PREFS_NAME = "MyPrefs"
     private const val USER_KEY = "user"
