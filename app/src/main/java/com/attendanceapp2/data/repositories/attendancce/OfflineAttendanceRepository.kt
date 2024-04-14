@@ -2,8 +2,7 @@ package com.attendanceapp2.data.repositories.attendancce
 
 import com.attendanceapp2.data.interfaces.AttendanceDao
 import com.attendanceapp2.data.model.Attendance
-import com.attendanceapp2.data.model.User
-import com.attendanceapp2.universaldata.SelectedSubject
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -32,4 +31,7 @@ class OfflineAttendanceRepository(
     override fun filterAttendance(startDate: String, endDate: String, userId: Long, selectedSubject: String): Flow<List<Attendance>> {
         return attendanceDao.filterAttendance(startDate, endDate, userId, selectedSubject)
     }
+//    override suspend fun getAttendancesByUserIdSubjectIdAndDate(userId: Long, subjectId: Long, date: String): List<Attendance> {
+//        return attendanceDao.getAttendancesByUserIdSubjectIdAndDate(userId, subjectId, date)
+//    }
 }

@@ -17,53 +17,67 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.EnumMap
 
+
 /**
  * ViewModel for generating QR codes.
  */
 class FacultyQRGeneratorViewModel : ViewModel() {
 
     /**
-     * Generate a QR code bitmap for the selected subject with current date and time.
+     * Generate a QR code bitmap for the selected subject with current time and date.
      *
      * @param selectedSubject The selected subject.
      * @return The generated QR code bitmap.
      */
+
+    // Gson instance
+    private val gson = Gson()
+
     fun generateQrCodeBitmap(selectedSubject: SelectedSubject): Bitmap? {
-        val (date, time) = getCurrentTimeAndDateInPhilippines()
+        val currentDate = getCurrentDateInPhilippines()
+        val currentTime = getCurrentTimeInPhilippines()
         val qrData = QRCode(
             subjectId = selectedSubject.id,
             subjectName = selectedSubject.name,
             subjectCode = selectedSubject.code,
-            date = date,
-            time = time
+            date = currentDate,
+            time = currentTime
         )
-        return qrCodeGenerator(qrData)
+
+        // Convert QRCode object to JSON string
+        val qrCodeJson = gson.toJson(qrData)
+
+        return qrCodeGenerator(qrCodeJson)
+    }
+    /**
+     * Get the current date in the Philippines timezone in "MMM dd, yyyy" format.
+     *
+     * @return The current date in "MMM dd, yyyy" format.
+     */
+    private fun getCurrentDateInPhilippines(): String {
+        val zoneId = ZoneId.of("Asia/Manila")
+        val dateFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy")
+        return ZonedDateTime.now(zoneId).format(dateFormatter)
     }
 
     /**
-     * Get the current time and date in the Philippines timezone in "MMM dd, yyyy" and "hh:mm a" format.
+     * Get the current time in the Philippines timezone in "hh:mm a" format.
      *
-     * @return Pair of date and time strings.
+     * @return The current time in "hh:mm a" format.
      */
-    private fun getCurrentTimeAndDateInPhilippines(): Pair<String, String> {
+    private fun getCurrentTimeInPhilippines(): String {
         val zoneId = ZoneId.of("Asia/Manila")
-        val dateTimeFormatterDate = DateTimeFormatter.ofPattern("MMM dd, yyyy")
-        val dateTimeFormatterTime = DateTimeFormatter.ofPattern("hh:mm a")
-        val date = ZonedDateTime.now(zoneId).format(dateTimeFormatterDate)
-        val time = ZonedDateTime.now(zoneId).format(dateTimeFormatterTime)
-        return Pair(date, time)
+        val timeFormatter = DateTimeFormatter.ofPattern("hh:mm a")
+        return ZonedDateTime.now(zoneId).format(timeFormatter)
     }
-
     /**
      * Generate a QR code bitmap for the given data string.
      *
-     * @param qrCode The QR code data.
+     * @param data The data string for the QR code.
      * @return The generated QR code bitmap.
      */
-    private fun qrCodeGenerator(qrCode: QRCode): Bitmap? {
-        val gson = Gson()
-        val json = gson.toJson(qrCode)
-        if (json.isBlank()) {
+    private fun qrCodeGenerator(qrCodeJson: String): Bitmap? {
+        if (qrCodeJson.isBlank()) {
             return null
         }
 
@@ -72,10 +86,10 @@ class FacultyQRGeneratorViewModel : ViewModel() {
 
         val writer = QRCodeWriter()
         try {
-            val bitMatrix: BitMatrix = writer.encode(json, BarcodeFormat.QR_CODE, 600, 600, hints)
+            val bitMatrix: BitMatrix = writer.encode(qrCodeJson, BarcodeFormat.QR_CODE, 600, 600, hints)
             val width = bitMatrix.width
             val height = bitMatrix.height
-            val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
+            val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
             for (x in 0 until width) {
                 for (y in 0 until height) {
                     bmp.setPixel(

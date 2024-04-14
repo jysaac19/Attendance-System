@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AttendanceDao {
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(attendance: Attendance)
 
     @Update
@@ -20,10 +20,12 @@ interface AttendanceDao {
 
     @Delete
     suspend fun delete(attendance: Attendance)
+
     @Query("SELECT * FROM Attendance WHERE userId = :userId")
     fun getAttendancesByUserId(userId: Long): Flow<List<Attendance>>
 
     @Query("SELECT * FROM Attendance WHERE subjectCode = :selectedSubject AND userId = :userId AND date BETWEEN :startDate AND :endDate")
     fun filterAttendance(startDate: String, endDate: String, userId: Long, selectedSubject: String): Flow<List<Attendance>>
 }
+
 

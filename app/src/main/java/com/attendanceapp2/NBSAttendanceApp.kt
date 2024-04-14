@@ -1,13 +1,13 @@
 package com.attendanceapp2
 
 import android.app.Application
-import com.attendanceapp2.universaldata.LoggedInUserHolder
 import com.attendanceapp2.data.AppContainer
 import com.attendanceapp2.data.AppDataContainer
 import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.model.Subject
 import com.attendanceapp2.data.model.User
 import com.attendanceapp2.data.model.UserSubjectCrossRef
+import com.attendanceapp2.universaldata.LoggedInUserHolder
 
 class NBSAttendanceApp : Application() {
     /**
@@ -99,6 +99,7 @@ class NBSAttendanceApp : Application() {
 
 
         val embeddedAttendances = listOf(
+
             Attendance( userId = 101, firstname = "Firstname1", lastname = "Lastname1", subjectId = "CS101", subjectName = "Introduction to Computer Science", subjectCode = "CS101", date = "2024-04-01", time = "09:00 AM"),
             Attendance(102, "Firstname2", "Lastname2", "CS101", "Introduction to Computer Science", "CS101", "2024-04-01", "10:00 AM"),
             Attendance(103, "Firstname3", "Lastname3", "ENG201", "English Literature", "ENG201", "2024-04-02", "11:00 AM"),
@@ -139,8 +140,8 @@ class NBSAttendanceApp : Application() {
             Attendance( 106, "Firstname38", "Lastname38", "BIO601", "Biology", "BIO601", "2024-04-19", "02:00 PM"),
             Attendance( 107, "Firstname39", "Lastname39", "HIST701", "History", "HIST701", "2024-04-20", "03:00 PM"),
             Attendance( 108, "Firstname40", "Lastname40", "CS101", "Introduction to Computer Science", "CS101", "2024-04-20", "04:00 PM")
-        )
 
+        )
         LoggedInUserHolder.init(this)
         container = AppDataContainer(this, embeddedUsers, embeddedSubjects, embeddedAttendances, embeddedUserSubjectCrossRefs)
     }
