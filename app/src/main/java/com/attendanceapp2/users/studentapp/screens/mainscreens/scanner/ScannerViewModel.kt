@@ -26,8 +26,8 @@ class ScannerViewModel(
     var code by mutableStateOf("")
 
     suspend fun validateScannedQRCode(): AttendanceResult {
-        val loggedInUser = LoggedInUserHolder.getLoggedInUser()
         val scannedQRCode = ScannedQRCodeHolder.getScannedQRCode()
+        val loggedInUser = LoggedInUserHolder.getLoggedInUser()
         val currentDate = ZonedDateTime.now(ZoneId.of("Asia/Manila")).format(DateTimeFormatter.ofPattern("MMM dd, yyyy"))
         val currentTime = ZonedDateTime.now(ZoneId.of("Asia/Manila")).format(DateTimeFormatter.ofPattern("hh:mm a"))
 
