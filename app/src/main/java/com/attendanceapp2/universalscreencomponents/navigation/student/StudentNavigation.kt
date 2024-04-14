@@ -25,7 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.approutes.StudentMainRoute
 import com.attendanceapp2.universalscreencomponents.ProfileScreen
 import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.StudentAttendances
-import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.StudentScannerScreen
+import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.StudentScanner
 import com.attendanceapp2.users.studentapp.screens.mainscreens.subjects.StudentSubjects
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,7 +79,7 @@ fun StudentNavigation() {
                 }
 
                 composable(route = StudentMainRoute.Scanner.name) {
-                    StudentScannerScreen()
+                    StudentScanner()
                 }
 
                 composable(route = StudentMainRoute.Notifications.name) {

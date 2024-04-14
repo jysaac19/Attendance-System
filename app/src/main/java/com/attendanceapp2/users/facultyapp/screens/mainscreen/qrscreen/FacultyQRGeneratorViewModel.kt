@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
-import com.attendanceapp2.data.repositories.subject.SubjectRepository
 import com.attendanceapp2.universaldata.QRCode
 import com.attendanceapp2.universaldata.SelectedSubject
 import com.google.zxing.BarcodeFormat
@@ -30,24 +29,38 @@ class FacultyQRGeneratorViewModel : ViewModel() {
      * @return The generated QR code bitmap.
      */
     fun generateQrCodeBitmap(selectedSubject: SelectedSubject): Bitmap? {
+        val currentDate = getCurrentDateInPhilippines()
+        val currentTime = getCurrentTimeInPhilippines()
         val qrData = QRCode(
             subjectId = selectedSubject.id,
             subjectName = selectedSubject.name,
             subjectCode = selectedSubject.code,
-            dynamicFactor = getCurrentTimeAndDateInPhilippines() // Include dynamic factor (current time and date)
+            date = currentDate,
+            time = currentTime
         )
         return qrCodeGenerator(qrData)
     }
 
     /**
-     * Get the current time and date in the Philippines timezone in "hh:mm a, MMM dd, yyyy" format.
+     * Get the current date in the Philippines timezone in "MMM dd, yyyy" format.
      *
-     * @return The current time and date in "hh:mm a, MMM dd, yyyy" format.
+     * @return The current date in "MMM dd, yyyy" format.
      */
-    private fun getCurrentTimeAndDateInPhilippines(): String {
+    private fun getCurrentDateInPhilippines(): String {
         val zoneId = ZoneId.of("Asia/Manila")
-        val dateTimeFormatter = DateTimeFormatter.ofPattern("hh:mm a, MMM dd, yyyy")
-        return ZonedDateTime.now(zoneId).format(dateTimeFormatter)
+        val dateFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy")
+        return ZonedDateTime.now(zoneId).format(dateFormatter)
+    }
+
+    /**
+     * Get the current time in the Philippines timezone in "hh:mm a" format.
+     *
+     * @return The current time in "hh:mm a" format.
+     */
+    private fun getCurrentTimeInPhilippines(): String {
+        val zoneId = ZoneId.of("Asia/Manila")
+        val timeFormatter = DateTimeFormatter.ofPattern("hh:mm a")
+        return ZonedDateTime.now(zoneId).format(timeFormatter)
     }
 
     /**
@@ -57,7 +70,7 @@ class FacultyQRGeneratorViewModel : ViewModel() {
      * @return The generated QR code bitmap.
      */
     private fun qrCodeGenerator(qrCode: QRCode): Bitmap? {
-        val data = "${qrCode.subjectId},${qrCode.subjectName},${qrCode.subjectCode},${qrCode.dynamicFactor}"
+        val data = "${qrCode.subjectId},${qrCode.subjectName},${qrCode.subjectCode},${qrCode.date},${qrCode.time}"
         if (data.isBlank()) {
             return null
         }
