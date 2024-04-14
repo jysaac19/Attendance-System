@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val loggedInUser by LoggedInUserHolder.loggedInUser.collectAsState()
-            val navController: NavController = rememberNavController()
+//            val navController: NavController = rememberNavController()
 
 
             NBSCollegeTheme {
@@ -81,7 +81,7 @@ class MainActivity : ComponentActivity() {
                         is LoggedInUser -> {
                             when (user.usertype) {
                                 "Student" -> {
-                                    StudentNavigation()
+                                    StudentNavigation(user.userId)
                                 }
                                 "Faculty" -> {
                                     FacultyNavigation()
@@ -90,14 +90,15 @@ class MainActivity : ComponentActivity() {
                                     FacultyNavigation()
                                 }
                                 else -> {
-                                    AppNavigation()
+                                    AppNavigation(user.userId)
                                 }
                             }
                         }
                         else -> {
-                            AppNavigation()
+                            AppNavigation(userId = 101)
                         }
                     }
+//                    NBSAttendanceApp()
                 }
             }
         }

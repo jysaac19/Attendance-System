@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -22,20 +23,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.attendanceapp2.universalscreencomponents.attendancescreencomponents.AttendanceCard
 import com.attendanceapp2.universalscreencomponents.attendancescreencomponents.AttendanceColumnName
 import com.attendanceapp2.universalscreencomponents.attendancescreencomponents.CustomDatePicker
 import com.attendanceapp2.universalscreencomponents.attendancescreencomponents.SubjectDropdown
+import com.attendanceapp2.viewmodel.AppViewModelProvider
 import java.time.LocalDate
 
 @Composable
-fun StudentAttendances (navController : NavController) {
+fun StudentAttendances (
+    userId: Long,
+    navController : NavController,
+    viewModel : StudentAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory),
+
+) {
 
     var startdate by remember { mutableStateOf(LocalDate.now()) }
     var enddate by remember { mutableStateOf(LocalDate.now()) }
-    var selectedSubject by remember { mutableIntStateOf(0) }
-    val subjects = listOf("All", "Math", "Science", "History", "English", "Art")
-
+    var selectedSubject by remember { mutableStateOf("") }
+    val subjects = listOf("All", "MATH301", "CS101", "ENG201", "PHY401", "CHEM501", "BIO601", "HIST701")
+    val attendanceList = viewModel.getAttendancesByLoggedInUser(userId).collectAsState(initial = emptyList())
+    val filterAttendance = viewModel.filterAttendance(startdate.toString(),enddate.toString(), userId,selectedSubject).collectAsState(initial = emptyList())
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -111,8 +121,14 @@ fun StudentAttendances (navController : NavController) {
 
         AttendanceColumnName()
 
-        LazyColumn {
-
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            filterAttendance.value.forEachIndexed { index, attendance ->
+                item {
+                    AttendanceCard(attendance = attendance, index = index)
+                }
+            }
         }
     }
 }

@@ -14,6 +14,7 @@ import com.attendanceapp2.universalviewmodel.ScreenViewModel
 import com.attendanceapp2.universalviewmodel.SubjectViewModel
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.qrscreen.FacultyQRGeneratorViewModel
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
+import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.StudentAttendanceViewModel
 import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.ScannerViewModel
 import com.attendanceapp2.users.studentapp.viewmodel.StudentSubjectViewModel
 
@@ -92,6 +93,12 @@ object AppViewModelProvider {
         //Profile ViewModel
         initializer {
             ProfileViewModel()
+        }
+
+        initializer {
+            StudentAttendanceViewModel(
+                nbsAttendanceApplication().container.attendanceRepository
+            )
         }
     }
 }

@@ -26,8 +26,8 @@ import androidx.compose.ui.unit.dp
 fun SubjectDropdown (
     label: String,
     items : List<String>,
-    selectedItem: Int,
-    onItemSelected: (Int) -> Unit
+    selectedItem: String,
+    onItemSelected: (String) -> Unit
 ) {
     val context = LocalContext.current
     var expanded by remember { mutableStateOf(false) }
@@ -44,7 +44,7 @@ fun SubjectDropdown (
             }
         ) {
             OutlinedTextField(
-                value = items[selectedItem],
+                value = selectedItem,
                 onValueChange = {},
                 readOnly = true,
                 label = { Text(text = label) },
@@ -65,7 +65,7 @@ fun SubjectDropdown (
                     DropdownMenuItem(
                         text = { Text(text = item) },
                         onClick = {
-                            onItemSelected(index)
+                            onItemSelected(item)
                             expanded = false
                             Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
                         }

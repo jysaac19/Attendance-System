@@ -17,12 +17,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.approutes.StudentMainRoute
+import com.attendanceapp2.universaldata.LoggedInUser
 import com.attendanceapp2.universalscreencomponents.ProfileScreen
 import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.StudentAttendances
 import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.StudentQRScanner
@@ -30,8 +32,11 @@ import com.attendanceapp2.users.studentapp.screens.mainscreens.subjects.StudentS
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StudentNavigation() {
-    val navController: NavHostController = rememberNavController()
+fun StudentNavigation(
+    userId: Long,
+
+) {
+    val studNavController = rememberNavController()
     var open by remember {
         mutableStateOf(true)
     }
@@ -59,23 +64,23 @@ fun StudentNavigation() {
 
         Scaffold(
 
-            bottomBar = { StudentBottomNavBar(navController = navController) }
+            bottomBar = { StudentBottomNavBar(navController = studNavController) }
 
         ) {
 
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val navBackStackEntry by studNavController.currentBackStackEntryAsState()
 
             NavHost(
-                navController = navController,
+                navController = studNavController,
                 startDestination = StudentMainRoute.Subjects.name,
                 modifier = Modifier.padding(it)
             ) {
                 composable(route = StudentMainRoute.Subjects.name) {
-                    StudentSubjects(navController)
+                    StudentSubjects(studNavController)
                 }
 
                 composable(route = StudentMainRoute.Attendances.name) {
-                    StudentAttendances(navController)
+                    StudentAttendances(navController = studNavController, userId = userId)
                 }
 
                 composable(route = StudentMainRoute.Scanner.name) {

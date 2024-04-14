@@ -1,6 +1,8 @@
 package com.attendanceapp2.data.repositories.attendancce
 
 import com.attendanceapp2.data.model.Attendance
+import com.attendanceapp2.universaldata.SelectedSubject
+import kotlinx.coroutines.flow.Flow
 
 interface AttendanceRepository {
 
@@ -10,6 +12,7 @@ interface AttendanceRepository {
 
     suspend fun deleteAttendance(attendance : Attendance)
 
-    suspend fun getAttendancesBySubjectId(subjectId: Long): List<Attendance>
+    fun getAttendancesByUserId(userId: Long): Flow<List<Attendance>>
 
+    fun filterAttendance(startDate: String, endDate: String, userId: Long, selectedSubject: String): Flow<List<Attendance>>
 }

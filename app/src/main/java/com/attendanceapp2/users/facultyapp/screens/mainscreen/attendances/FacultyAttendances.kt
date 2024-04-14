@@ -33,8 +33,8 @@ fun FacultyAttendances (navController : NavController) {
 
     var startdate by remember { mutableStateOf(LocalDate.now()) }
     var enddate by remember { mutableStateOf(LocalDate.now()) }
-    var selectedSubject by remember { mutableIntStateOf(0) }
-    val subjects = listOf("All", "Math", "Science", "History", "English", "Art")
+    var selectedSubject by remember { mutableStateOf("") }
+    val subjects = listOf("All", "MATH301", "CS101", "ENG201", "PHY401", "CHEM501", "BIO601", "HIST701")
 
     Column(
         modifier = Modifier

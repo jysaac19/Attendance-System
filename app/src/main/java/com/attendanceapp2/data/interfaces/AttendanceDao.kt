@@ -7,6 +7,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.attendanceapp2.data.model.Attendance
+import com.attendanceapp2.universaldata.SelectedSubject
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AttendanceDao {
@@ -18,6 +20,10 @@ interface AttendanceDao {
 
     @Delete
     suspend fun delete(attendance: Attendance)
-    @Query("SELECT * FROM Attendance WHERE subjectId = :subjectId")
-    suspend fun getAttendancesBySubjectId(subjectId: Long): List<Attendance>
+    @Query("SELECT * FROM Attendance WHERE userId = :userId")
+    fun getAttendancesByUserId(userId: Long): Flow<List<Attendance>>
+
+    @Query("SELECT * FROM Attendance WHERE subjectCode = :selectedSubject AND userId = :userId AND date BETWEEN :startDate AND :endDate")
+    fun filterAttendance(startDate: String, endDate: String, userId: Long, selectedSubject: String): Flow<List<Attendance>>
 }
+

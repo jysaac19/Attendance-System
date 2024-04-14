@@ -19,7 +19,9 @@ import com.attendanceapp2.universalviewmodel.ScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppNavigation() {
+fun AppNavigation(
+    userId: Long
+) {
     val navController: NavHostController = rememberNavController()
     val screenViewModel: ScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 
@@ -33,7 +35,7 @@ fun AppNavigation() {
             }
         }
         composable(route = AppRoutes.STUDENT.name ) {
-            StudentNavigation()
+            StudentNavigation(userId = userId)
         }
         composable(route = AppRoutes.FACULTY.name ) {
             FacultyNavigation()
