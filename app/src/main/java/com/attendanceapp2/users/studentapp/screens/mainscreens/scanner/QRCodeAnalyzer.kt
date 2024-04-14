@@ -4,6 +4,7 @@ import android.graphics.ImageFormat
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.attendanceapp2.universaldata.ScannedQRCode
+import com.attendanceapp2.universaldata.ScannedQRCodeHolder
 import com.google.gson.Gson
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.BinaryBitmap
@@ -13,8 +14,9 @@ import com.google.zxing.PlanarYUVLuminanceSource
 import com.google.zxing.common.HybridBinarizer
 import java.nio.ByteBuffer
 
+// Analyzer for decoding QR codes from camera images
 class QRCodeAnalyzer(
-    private val onQRCodeScanned : (ScannedQRCode) -> Unit
+    private val onQRCodeScanned: (ScannedQRCode) -> Unit
 ) : ImageAnalysis.Analyzer {
 
     private val supportedImageFormats = listOf (
@@ -26,7 +28,14 @@ class QRCodeAnalyzer(
     )
 
     override fun analyze(image: ImageProxy) {
-        if(image.format in supportedImageFormats) {
+        val scannedQRCode = ScannedQRCodeHolder.getScannedQRCode()
+        if (scannedQRCode != null) {
+            // Stop scanning if ScannedQRCode already has a value
+            image.close()
+            return
+        }
+
+        if (image.format in supportedImageFormats) {
             val bytes = image.planes.first().buffer.toByteArray()
 
             val source = PlanarYUVLuminanceSource (
@@ -48,7 +57,6 @@ class QRCodeAnalyzer(
                         mapOf(
                             DecodeHintType.POSSIBLE_FORMATS to arrayListOf(
                                 BarcodeFormat.QR_CODE
-                                //optional adding
                             )
                         )
                     )
@@ -56,7 +64,7 @@ class QRCodeAnalyzer(
 
                 val qrCodeData = Gson().fromJson(result.text, ScannedQRCode::class.java)
                 onQRCodeScanned(qrCodeData)
-            } catch ( e:Exception ) {
+            } catch ( e: Exception ) {
                 e.printStackTrace()
             } finally {
                 image.close()

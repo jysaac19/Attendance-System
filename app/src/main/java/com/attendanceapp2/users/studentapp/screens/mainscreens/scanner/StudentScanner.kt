@@ -42,12 +42,16 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.attendanceapp2.universaldata.ScannedQRCodeHolder
 import com.attendanceapp2.viewmodel.AppViewModelProvider
 
+// Composable function for the student QR code scanner screen
 @Composable
-fun StudentQRScanner (viewModel: ScannerViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
-    var code by remember { mutableStateOf("") }
+fun StudentScanner (
+    navController: NavController,
+    viewModel: ScannerViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
@@ -136,7 +140,6 @@ fun StudentQRScanner (viewModel: ScannerViewModel = viewModel(factory = AppViewM
                                 ContextCompat.getMainExecutor(context),
                                 QRCodeAnalyzer { result ->
                                     viewModel.code = result.toString()
-                                    ScannedQRCodeHolder.setScannedQRCode(result)
                                     ScannedQRCodeHolder.setScannedQRCode(result)
                                     Log.d(
                                         "ScannedQRCode",

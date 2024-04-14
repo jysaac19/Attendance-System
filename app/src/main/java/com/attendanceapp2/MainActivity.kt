@@ -18,14 +18,14 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.attendanceapp2.theme.NBSCollegeTheme
 import com.attendanceapp2.universaldata.LoggedInUser
 import com.attendanceapp2.universaldata.LoggedInUserHolder
 import com.attendanceapp2.universalscreencomponents.navigation.AppNavigation
 import com.attendanceapp2.universalscreencomponents.navigation.faculty.FacultyNavigation
 import com.attendanceapp2.universalscreencomponents.navigation.student.StudentNavigation
-import com.attendanceapp2.theme.NBSCollegeTheme
-import com.attendanceapp2.viewmodel.AppViewModelProvider
 import com.attendanceapp2.universalviewmodel.ScreenViewModel
+import com.attendanceapp2.viewmodel.AppViewModelProvider
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

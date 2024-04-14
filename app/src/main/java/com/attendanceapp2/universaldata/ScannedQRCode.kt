@@ -11,6 +11,7 @@ data class ScannedQRCode(
     val time: String
 )
 
+// Data class representing scanned QR code information
 object ScannedQRCodeHolder {
     private val _scannedQRCode = MutableStateFlow<ScannedQRCode?>(null)
     val scannedQRCode = _scannedQRCode.asStateFlow()
