@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
 import com.attendanceapp2.universaldata.QRCode
 import com.attendanceapp2.universaldata.SelectedSubject
+import com.google.gson.Gson
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.WriterException
@@ -28,6 +29,8 @@ class FacultyQRGeneratorViewModel : ViewModel() {
      * @param selectedSubject The selected subject.
      * @return The generated QR code bitmap.
      */
+    private val gson = Gson()
+
     fun generateQrCodeBitmap(selectedSubject: SelectedSubject): Bitmap? {
         val currentDate = getCurrentDateInPhilippines()
         val currentTime = getCurrentTimeInPhilippines()
@@ -38,8 +41,13 @@ class FacultyQRGeneratorViewModel : ViewModel() {
             date = currentDate,
             time = currentTime
         )
-        return qrCodeGenerator(qrData)
+
+        // Convert QRCode object to JSON string
+        val qrCodeJson = gson.toJson(qrData)
+
+        return qrCodeGenerator(qrCodeJson)
     }
+
 
     /**
      * Get the current date in the Philippines timezone in "MMM dd, yyyy" format.
@@ -69,9 +77,8 @@ class FacultyQRGeneratorViewModel : ViewModel() {
      * @param data The data string for the QR code.
      * @return The generated QR code bitmap.
      */
-    private fun qrCodeGenerator(qrCode: QRCode): Bitmap? {
-        val data = "${qrCode.subjectId},${qrCode.subjectName},${qrCode.subjectCode},${qrCode.date},${qrCode.time}"
-        if (data.isBlank()) {
+    private fun qrCodeGenerator(qrCodeJson: String): Bitmap? {
+        if (qrCodeJson.isBlank()) {
             return null
         }
 
@@ -80,7 +87,7 @@ class FacultyQRGeneratorViewModel : ViewModel() {
 
         val writer = QRCodeWriter()
         try {
-            val bitMatrix: BitMatrix = writer.encode(data, BarcodeFormat.QR_CODE, 600, 600, hints)
+            val bitMatrix: BitMatrix = writer.encode(qrCodeJson, BarcodeFormat.QR_CODE, 600, 600, hints)
             val width = bitMatrix.width
             val height = bitMatrix.height
             val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
@@ -99,4 +106,5 @@ class FacultyQRGeneratorViewModel : ViewModel() {
         }
         return null
     }
+
 }
