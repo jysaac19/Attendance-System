@@ -5,6 +5,7 @@ import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.repositories.attendancce.AttendanceRepository
 import com.attendanceapp2.universaldata.LoggedInUserHolder
 import com.attendanceapp2.universaldata.ScannedQRCodeHolder
+import kotlinx.coroutines.flow.firstOrNull
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
@@ -40,12 +41,13 @@ class ScannerViewModel(
         }
 
         // Check if the user already has attendance
-        val existingAttendances = attendanceRepo.getAttendancesByUserIdSubjectIdAndDate(
+        val existingAttendancesList = attendanceRepo.getAttendancesByUserIdSubjectIdAndDate(
             loggedInUser.userId,
             scannedQRCode.subjectId,
             currentDate
-        )
-        if (existingAttendances.isNotEmpty()) {
+        ).firstOrNull() // Collect the flow to get the value synchronously or null if the flow is empty
+
+        if (!existingAttendancesList.isNullOrEmpty()) {
             return AttendanceResult.Error("Attendance Recorded Successfully")
         }
 
