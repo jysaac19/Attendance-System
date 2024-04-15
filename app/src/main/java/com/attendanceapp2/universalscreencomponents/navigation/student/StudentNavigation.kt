@@ -17,14 +17,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.attendanceapp2.approutes.StudentMainRoute
-import com.attendanceapp2.universaldata.LoggedInUser
+import androidx.navigation.navigation
+import com.attendanceapp2.approutes.faculty.FacultyMainRoute
+import com.attendanceapp2.approutes.student.StudentMainRoute
+import com.attendanceapp2.approutes.student.StudentSubjectsRoutes
 import com.attendanceapp2.universalscreencomponents.ProfileScreen
 import com.attendanceapp2.users.studentapp.screens.mainscreens.attendances.StudentAttendances
 import com.attendanceapp2.users.studentapp.screens.mainscreens.scanner.StudentScanner
@@ -37,6 +37,10 @@ fun StudentNavigation(
 
 ) {
     val studNavController = rememberNavController()
+    var centerItem by remember { mutableStateOf(true) }
+    var nonCenterItem by remember { mutableStateOf(true) }
+
+
     var open by remember {
         mutableStateOf(true)
     }
@@ -63,8 +67,13 @@ fun StudentNavigation(
 
 
         Scaffold(
-
-            bottomBar = { StudentBottomNavBar(navController = studNavController) }
+            bottomBar = {
+                StudentBottomNavBar(
+                    navController = studNavController,
+                    centerItem = centerItem,
+                    nonCenterItem = nonCenterItem
+                )
+            }
 
         ) {
 
@@ -77,14 +86,31 @@ fun StudentNavigation(
             ) {
                 composable(route = StudentMainRoute.Subjects.name) {
                     StudentSubjects(studNavController)
+                    centerItem = true
+                    nonCenterItem = true
                 }
+                navigation(startDestination = StudentMainRoute.Subjects.name, route = StudentSubjectsRoutes.StudentMainSubjectScreen.name) {
+                    composable(route = FacultyMainRoute.Subjects.name) {
+                        StudentSubjects(studNavController)
+                        centerItem = true
+                        nonCenterItem = true
+                    }
+                    composable(route = StudentSubjectsRoutes.StudentSubjectAttendances.name) {
 
+                        centerItem = true
+                        nonCenterItem = true
+                    }
+                }
                 composable(route = StudentMainRoute.Attendances.name) {
                     StudentAttendances(navController = studNavController, userId = userId)
+                    centerItem = true
+                    nonCenterItem = true
                 }
 
                 composable(route = StudentMainRoute.Scanner.name) {
                     StudentScanner()
+                    centerItem = true
+                    nonCenterItem = true
                 }
 
                 composable(route = StudentMainRoute.Notifications.name) {
@@ -93,6 +119,8 @@ fun StudentNavigation(
 
                 composable(route = StudentMainRoute.Profile.name) {
                     ProfileScreen()
+                    centerItem = true
+                    nonCenterItem = true
                 }
             }
 

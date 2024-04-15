@@ -17,7 +17,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.attendanceapp2.approutes.faculty.FacultyMainRoute
-import com.attendanceapp2.approutes.faculty.FacultySubjects
+import com.attendanceapp2.approutes.faculty.FacultySubjectsRoutes
 import com.attendanceapp2.universalscreencomponents.ProfileScreen
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.attendances.FacultyAttendances
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.qrscreen.QRGeneratorScreen
@@ -33,9 +33,7 @@ fun FacultyNavigation() {
     var nonCenterItem by remember { mutableStateOf(true) }
 
     Scaffold(
-
-        bottomBar = {
-            FacultyBottomNavBar(
+        bottomBar = { FacultyBottomNavBar(
                 navController = navController,
                 centerItem = centerItem,
                 nonCenterItem = nonCenterItem
@@ -55,16 +53,19 @@ fun FacultyNavigation() {
                     centerItem = true
                     nonCenterItem = true
                 }
-                navigation(startDestination = FacultyMainRoute.Subjects.name, route = FacultySubjects.MainSubjectScreen.name) {
+                navigation(startDestination = FacultyMainRoute.Subjects.name, route = FacultySubjectsRoutes.FacultyMainSubjectScreen.name) {
                     composable(route = FacultyMainRoute.Subjects.name) {
                         FacultySubjects(navController)
                         centerItem = true
                         nonCenterItem = true
                     }
-                    composable(route = FacultySubjects.SubjectAttendances.name) {
+                    composable(route = FacultySubjectsRoutes.FacultySubjectAttendances.name) {
                         FacultySubjectAttendances(navController)
                         centerItem = true
                         nonCenterItem = false
+                    }
+                    composable(route = FacultySubjectsRoutes.FacultySubjectQRScreen.name) {
+
                     }
                 }
                 composable(route = FacultyMainRoute.Attendances.name) {

@@ -196,6 +196,17 @@ fun StudentScanner (
                     textAlign = TextAlign.Center,
                     modifier = Modifier.width(250.dp)
                 )
+
+                //For debug purposes
+                Text(
+                    text = "${qrCode.subjectId}, ${qrCode.date}, ${qrCode.time}" ,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.width(250.dp)
+                )
+
                 // Display attendance result here
                 attendanceResult?.let {
                     val color = if (isSuccess) Color.Green else Color.Red

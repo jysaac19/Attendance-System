@@ -21,13 +21,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.attendanceapp2.approutes.faculty.FacultySubjects
+import com.attendanceapp2.approutes.faculty.FacultySubjectsRoutes
 import com.attendanceapp2.universaldata.SelectedSubject
 import com.attendanceapp2.universaldata.SelectedSubjectHolder
 import com.attendanceapp2.universalscreencomponents.subjectscreencomponents.SubjectCard
-import com.attendanceapp2.viewmodel.AppViewModelProvider
 import com.attendanceapp2.universalviewmodel.SubjectViewModel
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
+import com.attendanceapp2.viewmodel.AppViewModelProvider
 
 @Composable
 fun FacultySubjects (
@@ -85,7 +85,7 @@ fun FacultySubjects (
                         )
                     )
                     Log.d("SelectedSubject", "Selected subject: ${SelectedSubjectHolder.getSelectedSubject()}")
-                    navController.navigate(FacultySubjects.SubjectAttendances.name)
+                    navController.navigate(FacultySubjectsRoutes.FacultySubjectAttendances.name)
                 }
             }
         }

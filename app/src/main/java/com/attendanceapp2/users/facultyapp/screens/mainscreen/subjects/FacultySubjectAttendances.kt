@@ -23,12 +23,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.attendanceapp2.data.repositories.user.UserRepository
-import com.attendanceapp2.universaldata.LoggedInUserHolder
 import com.attendanceapp2.universaldata.SelectedSubjectHolder
 import com.attendanceapp2.universalscreencomponents.attendancescreencomponents.AttendanceColumnName
 import com.attendanceapp2.universalscreencomponents.attendancescreencomponents.CustomDatePicker
-import com.attendanceapp2.universalscreencomponents.attendancescreencomponents.SubjectDropdown
 import java.time.LocalDate
 
 @Composable

@@ -1,5 +1,6 @@
 package com.attendanceapp2.users.studentapp.screens.mainscreens.subjects
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,9 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.attendanceapp2.universaldata.SelectedSubject
+import com.attendanceapp2.universaldata.SelectedSubjectHolder
 import com.attendanceapp2.universalscreencomponents.subjectscreencomponents.SubjectCard
-import com.attendanceapp2.viewmodel.AppViewModelProvider
 import com.attendanceapp2.universalviewmodel.SubjectViewModel
+import com.attendanceapp2.viewmodel.AppViewModelProvider
 
 @Composable
 fun StudentSubjects (
@@ -66,7 +69,19 @@ fun StudentSubjects (
         ) {
             items(subjects) { subject ->
                 SubjectCard(subject = subject) {
-                    // Handle click action if needed
+                    SelectedSubjectHolder.setSelectedSubject(
+                        SelectedSubject(
+                            id = subject.id,
+                            code = subject.code,
+                            name = subject.name,
+                            room = subject.room,
+                            faculty = subject.faculty,
+                            day = subject.day,
+                            start = subject.start,
+                            end = subject.end
+                        )
+                    )
+                    Log.d("SelectedSubject", "Selected subject: ${SelectedSubjectHolder.getSelectedSubject()}")
                 }
             }
         }
