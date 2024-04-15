@@ -8,11 +8,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "Attendance")
 data class Attendance(
 
-    @PrimaryKey(autoGenerate = true)
     val userId : Long,
     val firstname : String,
     val lastname : String,
-    val subjectId : String,
+    val subjectId : Long,
     val subjectName : String,
     val subjectCode : String,
     val date: String,
