@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -23,9 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.attendanceapp2.universalscreencomponents.attendancescreencomponents.AttendanceColumnName
-import com.attendanceapp2.universalscreencomponents.attendancescreencomponents.CustomDatePicker
-import com.attendanceapp2.universalscreencomponents.attendancescreencomponents.SubjectDropdown
+import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.AttendanceColumnName
+import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.CustomDatePicker
+import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.SubjectDropdown
 import java.time.LocalDate
 
 @Composable

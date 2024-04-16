@@ -1,5 +1,6 @@
-package com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects
+package com.attendanceapp2.users.studentapp.screens.mainscreens
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,25 +22,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.attendanceapp2.approutes.faculty.FacultySubjectsRoutes
+import com.attendanceapp2.approutes.student.StudentSubjectsRoutes
+import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.universal.data.SelectedSubject
 import com.attendanceapp2.universal.data.SelectedSubjectHolder
 import com.attendanceapp2.universal.screencomponents.subjectscreencomponents.SubjectCard
 import com.attendanceapp2.universal.viewmodel.SubjectViewModel
-import com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
-import com.attendanceapp2.appviewmodel.AppViewModelProvider
 
+@SuppressLint("LogNotTimber")
 @Composable
-fun FacultySubjects (
+fun StudentSubjects (
     navController : NavController,
-    subjectVM: SubjectViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    facultySubjectAttendanceVM: FacultySubjectAttendancesViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: SubjectViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
 
-    val subjects by subjectVM.subjects.collectAsState()
+    val subjects by viewModel.subjects.collectAsState()
 
     LaunchedEffect(key1 = true) {
-        subjectVM.fetchSubjectsForLoggedInUser()
+        viewModel.fetchSubjectsForLoggedInUser()
     }
 
 
@@ -64,7 +64,7 @@ fun FacultySubjects (
         )
 
         Spacer(modifier = Modifier.width(16.dp))
-
+                
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 200.dp),
             modifier = Modifier
@@ -85,7 +85,7 @@ fun FacultySubjects (
                         )
                     )
                     Log.d("SelectedSubject", "Selected subject: ${SelectedSubjectHolder.getSelectedSubject()}")
-                    navController.navigate(FacultySubjectsRoutes.FacultySubjectAttendances.name)
+                    navController.navigate(StudentSubjectsRoutes.StudentSubjectAttendances.name)
                 }
             }
         }

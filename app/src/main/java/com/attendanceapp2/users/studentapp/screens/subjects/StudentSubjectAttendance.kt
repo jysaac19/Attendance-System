@@ -1,4 +1,5 @@
-package com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects
+package com.attendanceapp2.users.studentapp.screens.subjects
+
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -22,16 +24,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.universal.data.SelectedSubjectHolder
+import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.AttendanceCard
 import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.AttendanceColumnName
 import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.CustomDatePicker
+import com.attendanceapp2.users.studentapp.viewmodel.StudentSubjectAttendanceViewModel
 import java.time.LocalDate
 
 @Composable
-fun FacultySubjectAttendances (
+fun StudentSubjectAttendances (
     navController : NavController,
+    viewModel: StudentSubjectAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    // Collect the attendance list as state
+    val attendanceList by viewModel.attendanceList.collectAsState()
+
     val subjectInfo = SelectedSubjectHolder.getSelectedSubject()
 
     var startdate by remember { mutableStateOf(LocalDate.now()) }
@@ -104,7 +114,12 @@ fun FacultySubjectAttendances (
         AttendanceColumnName()
 
         LazyColumn {
-
+            items(attendanceList.size) { index ->
+                AttendanceCard(
+                    attendance = attendanceList[index],
+                    index = index
+                )
+            }
         }
     }
 }

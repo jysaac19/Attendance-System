@@ -4,8 +4,8 @@ import android.graphics.Bitmap
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
-import com.attendanceapp2.universaldata.QRCode
-import com.attendanceapp2.universaldata.SelectedSubject
+import com.attendanceapp2.universal.data.QRCode
+import com.attendanceapp2.universal.data.SelectedSubject
 import com.google.gson.Gson
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType

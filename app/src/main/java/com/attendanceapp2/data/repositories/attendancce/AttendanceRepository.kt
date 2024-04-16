@@ -19,4 +19,6 @@ interface AttendanceRepository {
 
     fun filterAttendance(startDate: String, endDate: String, userId: Long, selectedSubject: String): Flow<List<Attendance>>
 
+    fun getAttendancesByUserIdAndSubjectId(userId: Long, subjectId: Long): Flow<List<Attendance>>
+
 }

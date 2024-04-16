@@ -7,7 +7,7 @@ import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.model.Subject
 import com.attendanceapp2.data.model.User
 import com.attendanceapp2.data.model.UserSubjectCrossRef
-import com.attendanceapp2.universaldata.LoggedInUserHolder
+import com.attendanceapp2.universal.data.LoggedInUserHolder
 
 class NBSAttendanceApp : Application() {
     /**

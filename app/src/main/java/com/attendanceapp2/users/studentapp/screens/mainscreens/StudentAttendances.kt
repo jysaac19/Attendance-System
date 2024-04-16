@@ -1,4 +1,4 @@
-package com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects
+package com.attendanceapp2.users.studentapp.screens.mainscreens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -22,31 +22,38 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.attendanceapp2.universal.data.SelectedSubjectHolder
+import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.AttendanceCard
 import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.AttendanceColumnName
 import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.CustomDatePicker
+import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.SubjectDropdown
+import com.attendanceapp2.users.studentapp.viewmodel.StudentAttendanceViewModel
+import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import java.time.LocalDate
 
 @Composable
-fun FacultySubjectAttendances (
+fun StudentAttendances (
+    userId: Long,
     navController : NavController,
-) {
-    val subjectInfo = SelectedSubjectHolder.getSelectedSubject()
+    viewModel : StudentAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory),
+
+    ) {
 
     var startdate by remember { mutableStateOf(LocalDate.now()) }
     var enddate by remember { mutableStateOf(LocalDate.now()) }
-    var selectedSubject by remember { mutableIntStateOf(0) }
-    val subjects = listOf("All", "Math", "Science", "History", "English", "Art")
-
+    var selectedSubject by remember { mutableStateOf("") }
+    val subjects = listOf("All", "MATH301", "CS101", "ENG201", "PHY401", "CHEM501", "BIO601", "HIST701")
+    val attendanceList = viewModel.getAttendancesByLoggedInUser(userId).collectAsState(initial = emptyList())
+    val filterAttendance = viewModel.filterAttendance(startdate.toString(),enddate.toString(), userId,selectedSubject).collectAsState(initial = emptyList())
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 20.dp, start = 16.dp, end = 16.dp),
+            .padding(horizontal = 16.dp, vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = subjectInfo?.name ?: "Attendances",
+            "Attendances",
             fontSize = 35.sp,
             fontWeight = FontWeight.Bold
         )
@@ -101,10 +108,27 @@ fun FacultySubjectAttendances (
 
         Spacer(Modifier.height(8.dp))
 
+        SubjectDropdown(
+            label = "Subjects",
+            items = subjects,
+            selectedItem = selectedSubject,
+            onItemSelected = { selectedSubject = it }
+        )
+
+        Spacer(Modifier.height(8.dp))
+
+        Spacer(Modifier.height(8.dp))
+
         AttendanceColumnName()
 
-        LazyColumn {
-
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            filterAttendance.value.forEachIndexed { index, attendance ->
+                item {
+                    AttendanceCard(attendance = attendance, index = index)
+                }
+            }
         }
     }
 }

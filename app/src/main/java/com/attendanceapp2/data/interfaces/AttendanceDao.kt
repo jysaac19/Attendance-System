@@ -28,6 +28,10 @@ interface AttendanceDao {
 
     @Query("SELECT * FROM Attendance WHERE subjectCode = :selectedSubject AND userId = :userId AND date BETWEEN :startDate AND :endDate")
     fun filterAttendance(startDate: String, endDate: String, userId: Long, selectedSubject: String): Flow<List<Attendance>>
+
+    @Query("SELECT * FROM Attendance WHERE userId = :userId AND subjectId = :subjectId")
+    fun getAttendancesByUserIdAndSubjectId(userId: Long, subjectId: Long): Flow<List<Attendance>>
+
 }
 
 

@@ -33,4 +33,8 @@ class OfflineAttendanceRepository(
     override fun filterAttendance(startDate: String, endDate: String, userId: Long, selectedSubject: String): Flow<List<Attendance>> {
         return attendanceDao.filterAttendance(startDate, endDate, userId, selectedSubject)
     }
+
+    override fun getAttendancesByUserIdAndSubjectId(userId: Long, subjectId: Long): Flow<List<Attendance>> {
+        return attendanceDao.getAttendancesByUserIdAndSubjectId(userId, subjectId)
+    }
 }

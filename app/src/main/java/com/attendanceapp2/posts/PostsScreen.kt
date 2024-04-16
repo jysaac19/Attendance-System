@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.attendanceapp2.posts.viewmodel.PostViewModel
-import com.attendanceapp2.viewmodel.AppViewModelProvider
+import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import kotlinx.coroutines.launch
 
 @Composable

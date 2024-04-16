@@ -3,7 +3,7 @@ package com.attendanceapp2.users.studentapp.viewmodel
 import androidx.lifecycle.ViewModel
 import com.attendanceapp2.data.repositories.subject.SubjectRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.UserSubjectCrossRefRepository
-import com.attendanceapp2.universalviewmodel.SubjectViewModel
+import com.attendanceapp2.universal.viewmodel.SubjectViewModel
 
 
 class StudentSubjectViewModel (
