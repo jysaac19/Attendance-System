@@ -47,7 +47,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.R
-import com.attendanceapp2.approutes.AuthRoute
+import com.attendanceapp2.navigation.approutes.AuthRoute
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import kotlinx.coroutines.launch
 

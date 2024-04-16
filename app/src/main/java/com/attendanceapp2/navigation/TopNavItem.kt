@@ -1,4 +1,4 @@
-package com.attendanceapp2.universal.screencomponents.navigation
+package com.attendanceapp2.navigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

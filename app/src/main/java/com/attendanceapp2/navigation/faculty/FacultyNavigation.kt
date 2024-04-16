@@ -1,4 +1,4 @@
-package com.attendanceapp2.universal.screencomponents.navigation.faculty
+package com.attendanceapp2.navigation.faculty
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -16,8 +16,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.attendanceapp2.approutes.faculty.FacultyMainRoute
-import com.attendanceapp2.approutes.faculty.FacultySubjectsRoutes
+import com.attendanceapp2.navigation.approutes.faculty.FacultyMainRoute
+import com.attendanceapp2.navigation.approutes.faculty.FacultySubjectsRoutes
 import com.attendanceapp2.universal.screencomponents.ProfileScreen
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.attendances.FacultyAttendances
 import com.attendanceapp2.users.facultyapp.screens.mainscreen.qrscreen.QRGeneratorScreen

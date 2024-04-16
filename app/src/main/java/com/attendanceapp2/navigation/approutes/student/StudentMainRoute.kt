@@ -1,4 +1,4 @@
-package com.attendanceapp2.approutes.student
+package com.attendanceapp2.navigation.approutes.student
 
 enum class StudentMainRoute {
     Subjects,

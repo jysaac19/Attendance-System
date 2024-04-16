@@ -1,4 +1,4 @@
-package com.attendanceapp2.universal.screencomponents.navigation
+package com.attendanceapp2.navigation
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
@@ -8,13 +8,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.attendanceapp2.approutes.AppRoutes
-import com.attendanceapp2.approutes.AuthRoute
+import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.authentication.SignInScreen
 import com.attendanceapp2.authentication.SignUpScreen
-import com.attendanceapp2.universal.screencomponents.navigation.faculty.FacultyNavigation
-import com.attendanceapp2.universal.screencomponents.navigation.student.StudentNavigation
-import com.attendanceapp2.appviewmodel.AppViewModelProvider
+import com.attendanceapp2.navigation.approutes.AppRoutes
+import com.attendanceapp2.navigation.approutes.AuthRoute
+import com.attendanceapp2.navigation.faculty.FacultyNavigation
+import com.attendanceapp2.navigation.student.StudentNavigation
 import com.attendanceapp2.universal.viewmodel.ScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

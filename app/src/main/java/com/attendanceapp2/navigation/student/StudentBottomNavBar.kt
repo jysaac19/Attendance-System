@@ -1,4 +1,4 @@
-package com.attendanceapp2.universal.screencomponents.navigation.student
+package com.attendanceapp2.navigation.student
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -41,8 +41,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.attendanceapp2.approutes.student.StudentMainRoute
-import com.attendanceapp2.universal.screencomponents.navigation.BottomNavItem
+import com.attendanceapp2.navigation.approutes.student.StudentMainRoute
+import com.attendanceapp2.navigation.BottomNavItem
 
 
 @Composable

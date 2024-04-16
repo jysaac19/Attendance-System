@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.attendanceapp2.approutes.faculty.FacultySubjectsRoutes
+import com.attendanceapp2.navigation.approutes.faculty.FacultySubjectsRoutes
 import com.attendanceapp2.universal.data.SelectedSubject
 import com.attendanceapp2.universal.data.SelectedSubjectHolder
 import com.attendanceapp2.universal.screencomponents.subjectscreencomponents.SubjectCard

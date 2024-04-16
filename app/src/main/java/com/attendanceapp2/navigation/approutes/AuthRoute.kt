@@ -1,4 +1,4 @@
-package com.attendanceapp2.approutes
+package com.attendanceapp2.navigation.approutes
 
 enum class AuthRoute {
     SignUp,

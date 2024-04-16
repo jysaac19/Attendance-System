@@ -19,9 +19,9 @@ import androidx.lifecycle.lifecycleScope
 import com.attendanceapp2.theme.NBSCollegeTheme
 import com.attendanceapp2.universal.data.LoggedInUser
 import com.attendanceapp2.universal.data.LoggedInUserHolder
-import com.attendanceapp2.universal.screencomponents.navigation.AppNavigation
-import com.attendanceapp2.universal.screencomponents.navigation.faculty.FacultyNavigation
-import com.attendanceapp2.universal.screencomponents.navigation.student.StudentNavigation
+import com.attendanceapp2.navigation.AppNavigation
+import com.attendanceapp2.navigation.faculty.FacultyNavigation
+import com.attendanceapp2.navigation.student.StudentNavigation
 import com.attendanceapp2.universal.viewmodel.ScreenViewModel
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import kotlinx.coroutines.delay

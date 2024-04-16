@@ -1,4 +1,4 @@
-package com.attendanceapp2.approutes.faculty
+package com.attendanceapp2.navigation.approutes.faculty
 
 enum class FacultySubjectsRoutes {
     FacultyMainSubjectScreen,

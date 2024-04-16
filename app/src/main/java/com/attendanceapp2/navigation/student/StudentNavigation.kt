@@ -1,4 +1,4 @@
-package com.attendanceapp2.universal.screencomponents.navigation.student
+package com.attendanceapp2.navigation.student
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -22,9 +22,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.attendanceapp2.approutes.faculty.FacultyMainRoute
-import com.attendanceapp2.approutes.student.StudentMainRoute
-import com.attendanceapp2.approutes.student.StudentSubjectsRoutes
+import com.attendanceapp2.navigation.approutes.faculty.FacultyMainRoute
+import com.attendanceapp2.navigation.approutes.student.StudentMainRoute
+import com.attendanceapp2.navigation.approutes.student.StudentSubjectsRoutes
 import com.attendanceapp2.universal.screencomponents.ProfileScreen
 import com.attendanceapp2.users.studentapp.screens.mainscreens.StudentAttendances
 import com.attendanceapp2.users.studentapp.screens.mainscreens.StudentScanner
