@@ -19,17 +19,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.AttendanceCard
 import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.AttendanceColumnName
 import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.CustomDatePicker
 import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.SubjectDropdown
 import com.attendanceapp2.users.studentapp.viewmodel.StudentAttendanceViewModel
-import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import java.time.LocalDate
 
 @Composable
@@ -37,8 +38,7 @@ fun StudentAttendances (
     userId: Long,
     navController : NavController,
     viewModel : StudentAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory),
-
-    ) {
+) {
 
     var startdate by remember { mutableStateOf(LocalDate.now()) }
     var enddate by remember { mutableStateOf(LocalDate.now()) }
@@ -46,6 +46,7 @@ fun StudentAttendances (
     val subjects = listOf("All", "MATH301", "CS101", "ENG201", "PHY401", "CHEM501", "BIO601", "HIST701")
     val attendanceList = viewModel.getAttendancesByLoggedInUser(userId).collectAsState(initial = emptyList())
     val filterAttendance = viewModel.filterAttendance(startdate.toString(),enddate.toString(), userId,selectedSubject).collectAsState(initial = emptyList())
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -117,16 +118,17 @@ fun StudentAttendances (
 
         Spacer(Modifier.height(8.dp))
 
-        Spacer(Modifier.height(8.dp))
-
         AttendanceColumnName()
+
+        Spacer(Modifier.height(8.dp))
 
         LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
             filterAttendance.value.forEachIndexed { index, attendance ->
+                val backgroundColor = if (index % 2 == 0) Color.White else Color.Gray
                 item {
-                    AttendanceCard(attendance = attendance, index = index)
+                    AttendanceCard(attendance = attendance, backgroundColor = backgroundColor)
                 }
             }
         }

@@ -9,6 +9,7 @@ import com.attendanceapp2.authentication.SignInViewModel
 import com.attendanceapp2.authentication.SignUpViewModel
 import com.attendanceapp2.data.screen.subject.NewSubjectViewModel
 import com.attendanceapp2.posts.viewmodel.PostViewModel
+import com.attendanceapp2.universal.viewmodel.AttendanceViewModel
 import com.attendanceapp2.universal.viewmodel.ProfileViewModel
 import com.attendanceapp2.universal.viewmodel.ScreenViewModel
 import com.attendanceapp2.universal.viewmodel.SubjectViewModel
@@ -68,7 +69,9 @@ object AppViewModelProvider {
         initializer {
             StudentSubjectViewModel(
                 nbsAttendanceApplication().container.userSubjectCrossRefRepository,
-                nbsAttendanceApplication().container.subjectRepository, SubjectViewModel(
+                nbsAttendanceApplication().container.subjectRepository,
+                nbsAttendanceApplication().container.attendanceRepository,
+                SubjectViewModel(
                     nbsAttendanceApplication().container.userSubjectCrossRefRepository,
                     nbsAttendanceApplication().container.subjectRepository
                 )
@@ -96,9 +99,27 @@ object AppViewModelProvider {
             ProfileViewModel()
         }
 
+        //Attendance ViewModel
+        initializer {
+            AttendanceViewModel(
+                nbsAttendanceApplication().container.attendanceRepository,
+                SubjectViewModel(
+                    nbsAttendanceApplication().container.userSubjectCrossRefRepository,
+                    nbsAttendanceApplication().container.subjectRepository
+                )
+            )
+        }
+
         initializer {
             StudentAttendanceViewModel(
-                nbsAttendanceApplication().container.attendanceRepository
+                nbsAttendanceApplication().container.attendanceRepository,
+                AttendanceViewModel(
+                    nbsAttendanceApplication().container.attendanceRepository,
+                    SubjectViewModel(
+                        nbsAttendanceApplication().container.userSubjectCrossRefRepository,
+                        nbsAttendanceApplication().container.subjectRepository
+                    )
+                )
             )
         }
 

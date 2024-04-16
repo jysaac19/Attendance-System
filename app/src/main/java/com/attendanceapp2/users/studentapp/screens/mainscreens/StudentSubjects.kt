@@ -24,6 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.approutes.student.StudentSubjectsRoutes
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
+import com.attendanceapp2.universal.data.LoggedInUserHolder
 import com.attendanceapp2.universal.data.SelectedSubject
 import com.attendanceapp2.universal.data.SelectedSubjectHolder
 import com.attendanceapp2.universal.screencomponents.subjectscreencomponents.SubjectCard
@@ -38,10 +39,9 @@ fun StudentSubjects (
 
     val subjects by viewModel.subjects.collectAsState()
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(LoggedInUserHolder.getLoggedInUser()) {
         viewModel.fetchSubjectsForLoggedInUser()
     }
-
 
     Column(
         modifier = Modifier

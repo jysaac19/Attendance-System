@@ -11,16 +11,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,15 +38,16 @@ fun StudentSubjectAttendances (
     navController : NavController,
     viewModel: StudentSubjectAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    // Collect the attendance list as state
-    val attendanceList by viewModel.attendanceList.collectAsState()
+
+    LaunchedEffect(true) {
+        viewModel.fetchStudentSubjectAttendances()
+    }
 
     val subjectInfo = SelectedSubjectHolder.getSelectedSubject()
 
-    var startdate by remember { mutableStateOf(LocalDate.now()) }
-    var enddate by remember { mutableStateOf(LocalDate.now()) }
-    var selectedSubject by remember { mutableIntStateOf(0) }
-    val subjects = listOf("All", "Math", "Science", "History", "English", "Art")
+    // Collecting the start and end dates
+    val endDate by viewModel.endDate.collectAsState()
+    val startDate by viewModel.startDate.collectAsState()
 
     Column(
         modifier = Modifier
@@ -86,9 +86,9 @@ fun StudentSubjectAttendances (
                 ) {
                     CustomDatePicker(
                         label = "From",
-                        selectedDate = startdate,
+                        selectedDate = startDate ?: LocalDate.now(),
                         onDateSelected = { date ->
-                            startdate = date
+                            viewModel.setStartDate(date)
                         }
                     )
                 }
@@ -100,9 +100,9 @@ fun StudentSubjectAttendances (
                 ) {
                     CustomDatePicker(
                         label = "To",
-                        selectedDate = enddate,
+                        selectedDate = endDate ?: LocalDate.now(),
                         onDateSelected = { date ->
-                            enddate = date
+                            viewModel.setEndDate(date)
                         }
                     )
                 }
@@ -114,10 +114,11 @@ fun StudentSubjectAttendances (
         AttendanceColumnName()
 
         LazyColumn {
-            items(attendanceList.size) { index ->
+            itemsIndexed(viewModel.studentSubjectAttendances.value) { index, attendance ->
+                val backgroundColor = if (index % 2 == 0) Color.White else Color.Gray
                 AttendanceCard(
-                    attendance = attendanceList[index],
-                    index = index
+                    attendance = attendance,
+                    backgroundColor = backgroundColor // Set your desired background color here
                 )
             }
         }

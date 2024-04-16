@@ -24,14 +24,23 @@ class OfflineAttendanceRepository(
 
     override suspend fun deleteAttendance(attendance: Attendance) = attendanceDao.delete(attendance)
 
-    override fun getAttendancesByUserId(userId: Long): Flow<List<Attendance>> {
-        return attendanceDao.getAttendancesByUserId(userId)
-    }
     override fun getAttendancesByUserIdSubjectIdAndDate(userId: Long, subjectId: Long, date: String): Flow<List<Attendance>> {
         return attendanceDao.getAttendancesByUserIdSubjectIdAndDate(userId, subjectId, date)
     }
-    override fun filterAttendance(startDate: String, endDate: String, userId: Long, selectedSubject: String): Flow<List<Attendance>> {
-        return attendanceDao.filterAttendance(startDate, endDate, userId, selectedSubject)
+    override fun filterAttendance(startDate: String, endDate: String, userId: Long, subjectCode: String): Flow<List<Attendance>> {
+        return attendanceDao.filterAttendance(startDate, endDate, userId, subjectCode)
+    }
+
+    override fun getAttendancesByUserId(userId: Long): Flow<List<Attendance>> {
+        return attendanceDao.getAttendancesByUserId(userId)
+    }
+
+    override fun getAttendancesByUserIds(userIds: List<Long>): Flow<List<Attendance>> {
+        return attendanceDao.getAttendancesByUserIds(userIds)
+    }
+
+    override fun getAttendancesBySubjectIds(subjectIds: List<Long>): Flow<List<Attendance>> {
+        return attendanceDao.getAttendancesBySubjectIds(subjectIds)
     }
 
     override fun getAttendancesByUserIdAndSubjectId(userId: Long, subjectId: Long): Flow<List<Attendance>> {

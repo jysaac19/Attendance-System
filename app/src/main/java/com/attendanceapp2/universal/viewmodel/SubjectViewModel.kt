@@ -2,10 +2,10 @@ package com.attendanceapp2.universal.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.attendanceapp2.universal.data.LoggedInUserHolder
 import com.attendanceapp2.data.model.Subject
 import com.attendanceapp2.data.repositories.subject.SubjectRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.UserSubjectCrossRefRepository
+import com.attendanceapp2.universal.data.LoggedInUserHolder
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -40,5 +40,10 @@ class SubjectViewModel(
                 } ?: println("Failed to fetch subjects.")
             }
         }
+    }
+
+    // Function to get the list of subject IDs
+    fun getSubjectIds(): List<Long> {
+        return _subjects.value.map { it.id }
     }
 }

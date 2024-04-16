@@ -19,18 +19,22 @@ import androidx.compose.ui.unit.dp
 import com.attendanceapp2.data.model.Attendance
 
 @Composable
-fun AttendanceCard(attendance: Attendance, index: Int) {
+fun AttendanceCard(
+    attendance: Attendance,
+    backgroundColor: Color,
+) {
     Card(
-        colors = CardDefaults.cardColors(
-            if (index % 2 == 0) Color.Transparent else Color.Gray
-        ),
         modifier = Modifier
             .fillMaxWidth()
+            .padding(vertical = 2.dp)
             .height(50.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = backgroundColor
+        ),
         shape = RoundedCornerShape(20.dp)
     ) {
-        Column(modifier = Modifier
-            .fillMaxWidth(),
+        Column(
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -43,11 +47,6 @@ fun AttendanceCard(attendance: Attendance, index: Int) {
             ) {
                 Text(
                     attendance.subjectCode,
-                    modifier = Modifier.weight(1f),
-                    textAlign = TextAlign.Center
-                )
-                Text(
-                    attendance.subjectName,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center
                 )

@@ -42,12 +42,7 @@ fun AttendanceColumnName () {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    "Subject Code",
-                    modifier = Modifier.weight(1f),
-                    textAlign = TextAlign.Center
-                )
-                Text(
-                    "Subject Name",
+                    "SubCode",
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center
                 )
