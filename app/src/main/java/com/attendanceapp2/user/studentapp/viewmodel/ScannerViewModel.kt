@@ -5,6 +5,7 @@ import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.repositories.attendancce.AttendanceRepository
 import com.attendanceapp2.universal.data.LoggedInUserHolder
 import com.attendanceapp2.universal.data.ScannedQRCodeHolder
+import com.attendanceapp2.universal.viewmodel.AttendanceViewModel
 import kotlinx.coroutines.flow.firstOrNull
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -16,8 +17,14 @@ sealed class AttendanceResult {
 }
 
 class ScannerViewModel(
-    private val attendanceRepo: AttendanceRepository
+    private val attendanceRepo: AttendanceRepository,
+    private val attendanceViewModel: AttendanceViewModel
 ) : ViewModel() {
+
+    // Function to fetch student attendances using LoggedInUserId
+    private suspend fun fetchStudentAttendances() {
+        attendanceViewModel.fetchStudentAttendances()
+    }
 
     suspend fun validateAndInsertAttendance(): AttendanceResult {
         val currentDate = getCurrentDateInPhilippines()
@@ -25,6 +32,9 @@ class ScannerViewModel(
 
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
         val scannedQRCode = ScannedQRCodeHolder.getScannedQRCode()
+
+        // Fetch student attendances to update the list
+        fetchStudentAttendances()
 
         if (loggedInUser == null || scannedQRCode == null) {
             return AttendanceResult.Error("User or QR code information is missing.")
@@ -48,7 +58,7 @@ class ScannerViewModel(
         ).firstOrNull() // Collect the flow to get the value synchronously or null if the flow is empty
 
         if (!existingAttendancesList.isNullOrEmpty()) {
-            return AttendanceResult.Error("Attendance Recorded Successfully")
+            return AttendanceResult.Success("Attendance already recorded for today.")
         }
 
         // Insert attendance
@@ -65,8 +75,12 @@ class ScannerViewModel(
 
         attendanceRepo.insertAttendance(attendance)
 
+        // Clear the scanned QR code
+        ScannedQRCodeHolder.clearScannedQRCode()
+
         return AttendanceResult.Success("Attendance recorded successfully.")
     }
+
 
     private fun isValidTime(qrTime: String, currentTime: String): Boolean {
         val qrFormattedTime = SimpleDateFormat("hh:mm a").parse(qrTime)
@@ -79,7 +93,7 @@ class ScannerViewModel(
     }
 
     private fun getCurrentDateInPhilippines(): String {
-        val dateFormat = SimpleDateFormat("MMM dd, yyyy")
+        val dateFormat = SimpleDateFormat("yyyy-dd-MM")
         dateFormat.timeZone = TimeZone.getTimeZone("Asia/Manila")
         return dateFormat.format(Date())
     }

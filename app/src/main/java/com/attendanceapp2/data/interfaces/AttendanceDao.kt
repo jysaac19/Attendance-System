@@ -20,7 +20,7 @@ interface AttendanceDao {
     @Delete
     suspend fun delete(attendance: Attendance)
 
-    @Query("SELECT * FROM Attendance WHERE userId = :userId || subjectId = :subjectId || date = :date")
+    @Query("SELECT * FROM Attendance WHERE userId = :userId AND subjectId = :subjectId AND date = :date")
     fun getAttendancesByUserIdSubjectIdAndDate(userId: Long, subjectId : Long, date : String): Flow<List<Attendance>>
 
     @Query("SELECT * FROM Attendance WHERE subjectCode = :subjectCode AND userId = :userId AND date BETWEEN :startDate AND :endDate")

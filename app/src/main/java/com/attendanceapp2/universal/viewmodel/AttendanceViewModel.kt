@@ -2,12 +2,14 @@ package com.attendanceapp2.universal.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.repositories.attendancce.AttendanceRepository
 import com.attendanceapp2.universal.data.LoggedInUserHolder
 import com.attendanceapp2.universal.data.SelectedSubjectHolder
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 
 class AttendanceViewModel(
@@ -29,9 +31,11 @@ class AttendanceViewModel(
     suspend fun fetchStudentAttendances() {
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
         loggedInUser?.let { user ->
-            attendanceRepo.getAttendancesByUserId(user.userId).collect { attendances ->
-                _studentAttendances.value = attendances
-                Log.d("AttendanceViewModel", "Student Attendances: $attendances")
+            viewModelScope.launch {
+                attendanceRepo.getAttendancesByUserId(user.userId).collect { attendances ->
+                    _studentAttendances.value = attendances
+//                    Log.d("AttendanceViewModel", "Student Attendances: $attendances")
+                }
             }
         }
     }
@@ -41,9 +45,11 @@ class AttendanceViewModel(
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
         loggedInUser?.let { user ->
             val subjectIds = subjectViewModel.getSubjectIds() // Call getSubjectIds() from SubjectViewModel
-            attendanceRepo.getAttendancesBySubjectIds(subjectIds).collect { attendances ->
-                _facultyAttendances.value = attendances
-                Log.d("AttendanceViewModel", "Faculty Attendances: $attendances")
+            viewModelScope.launch {
+                attendanceRepo.getAttendancesBySubjectIds(subjectIds).collect { attendances ->
+                    _facultyAttendances.value = attendances
+                    Log.d("AttendanceViewModel", "Faculty Attendances: $attendances")
+                }
             }
         }
     }
@@ -54,9 +60,11 @@ class AttendanceViewModel(
         val selectedSubject = SelectedSubjectHolder.getSelectedSubject()
         loggedInUser?.let { user ->
             selectedSubject?.let { subject ->
-                attendanceRepo.getAttendancesByUserIdAndSubjectId(user.userId, subject.id).collect { attendances ->
-                    _studentSubjectAttendances.value = attendances
-                    Log.d("AttendanceViewModel", "Student Subject Attendances: $attendances")
+                viewModelScope.launch {
+                    attendanceRepo.getAttendancesByUserIdAndSubjectId(user.userId, subject.id).collect { attendances ->
+                        _studentSubjectAttendances.value = attendances
+                        Log.d("AttendanceViewModel", "Student Subject Attendances: $attendances")
+                    }
                 }
             }
         }
@@ -66,9 +74,11 @@ class AttendanceViewModel(
     suspend fun fetchFacultySubjectAttendances() {
         val selectedSubject = SelectedSubjectHolder.getSelectedSubject()
         selectedSubject?.let { subject ->
-            val attendances = attendanceRepo.getAttendancesBySubjectIds(listOf(subject.id)).collect { attendances ->
-                _facultySubjectAttendances.value = attendances
-                Log.d("AttendanceViewModel", "Faculty Subject Attendances: $attendances")
+            viewModelScope.launch {
+                val attendances = attendanceRepo.getAttendancesBySubjectIds(listOf(subject.id)).collect { attendances ->
+                    _facultySubjectAttendances.value = attendances
+                    Log.d("AttendanceViewModel", "Faculty Subject Attendances: $attendances")
+                }
             }
         }
     }

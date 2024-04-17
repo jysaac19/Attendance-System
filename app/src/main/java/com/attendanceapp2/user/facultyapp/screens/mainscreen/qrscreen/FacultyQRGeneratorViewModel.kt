@@ -56,7 +56,7 @@ class FacultyQRGeneratorViewModel : ViewModel() {
      */
     private fun getCurrentDateInPhilippines(): String {
         val zoneId = ZoneId.of("Asia/Manila")
-        val dateFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy")
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-dd-MM")
         return ZonedDateTime.now(zoneId).format(dateFormatter)
     }
 

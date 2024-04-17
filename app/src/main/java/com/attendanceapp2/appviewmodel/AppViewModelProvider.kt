@@ -33,7 +33,16 @@ object AppViewModelProvider {
 
         // ScannerViewModel
         initializer {
-            ScannerViewModel(nbsAttendanceApplication().container.attendanceRepository)
+            ScannerViewModel(
+                nbsAttendanceApplication().container.attendanceRepository,
+                AttendanceViewModel(
+                    nbsAttendanceApplication().container.attendanceRepository,
+                    SubjectViewModel(
+                        nbsAttendanceApplication().container.userSubjectCrossRefRepository,
+                        nbsAttendanceApplication().container.subjectRepository
+                    )
+                )
+            )
         }
 
         //QR Generator ViewModel

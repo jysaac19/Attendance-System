@@ -42,18 +42,18 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.universal.data.ScannedQRCodeHolder
 import com.attendanceapp2.user.studentapp.viewmodel.AttendanceResult
 import com.attendanceapp2.user.studentapp.viewmodel.QRCodeAnalyzer
 import com.attendanceapp2.user.studentapp.viewmodel.ScannerViewModel
-import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 @OptIn(DelicateCoroutinesApi::class)
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun StudentScanner (
-    viewModel: ScannerViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: ScannerViewModel = viewModel(factory = AppViewModelProvider.Factory),
 ) {
     var attendanceResult by remember { mutableStateOf<String?>(null) }
     var isSuccess by remember { mutableStateOf(false) }
