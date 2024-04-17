@@ -3,6 +3,7 @@ package com.attendanceapp2.universal.screencomponents.attendancescreencomponents
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 
 @Composable
@@ -25,8 +27,7 @@ fun AttendanceColumnName () {
             containerColor = Color.Gray
         ),
         modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp),
+            .fillMaxWidth(),
         shape = RoundedCornerShape(20.dp)
     ) {
         Column(modifier = Modifier
@@ -37,7 +38,7 @@ fun AttendanceColumnName () {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -63,6 +64,44 @@ fun AttendanceColumnName () {
                 )
                 Text(
                     "Time",
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            Spacer(modifier = Modifier.height(2.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 1.dp, bottom = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    "(Code)",
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.Center,
+                    fontSize = 8.sp
+                )
+                Text(
+                    "",
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    "",
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    "(YYYY/MM/DD)",
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.Center,
+                    fontSize = 8.sp
+                )
+                Text(
+                    "",
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center
                 )
