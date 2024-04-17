@@ -13,12 +13,12 @@ import com.attendanceapp2.universal.viewmodel.AttendanceViewModel
 import com.attendanceapp2.universal.viewmodel.ProfileViewModel
 import com.attendanceapp2.universal.viewmodel.ScreenViewModel
 import com.attendanceapp2.universal.viewmodel.SubjectViewModel
-import com.attendanceapp2.users.facultyapp.screens.mainscreen.qrscreen.FacultyQRGeneratorViewModel
-import com.attendanceapp2.users.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
-import com.attendanceapp2.users.studentapp.viewmodel.ScannerViewModel
-import com.attendanceapp2.users.studentapp.viewmodel.StudentAttendanceViewModel
-import com.attendanceapp2.users.studentapp.viewmodel.StudentSubjectAttendanceViewModel
-import com.attendanceapp2.users.studentapp.viewmodel.StudentSubjectViewModel
+import com.attendanceapp2.user.facultyapp.screens.mainscreen.qrscreen.FacultyQRGeneratorViewModel
+import com.attendanceapp2.user.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
+import com.attendanceapp2.user.studentapp.viewmodel.ScannerViewModel
+import com.attendanceapp2.user.studentapp.viewmodel.StudentAttendanceViewModel
+import com.attendanceapp2.user.studentapp.viewmodel.StudentSubjectAttendanceViewModel
+import com.attendanceapp2.user.studentapp.viewmodel.StudentSubjectViewModel
 
 /**
  * Provides Factory to create instance of ViewModel for the entire Inventory app

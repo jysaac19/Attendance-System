@@ -25,7 +25,7 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp, horizontal = 8.dp),
+            .padding(vertical = 4.dp, horizontal = 4.dp),
         colors = CardDefaults.cardColors(),
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(

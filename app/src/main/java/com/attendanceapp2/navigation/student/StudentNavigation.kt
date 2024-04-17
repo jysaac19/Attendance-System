@@ -22,14 +22,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.attendanceapp2.navigation.BottomNavBar
 import com.attendanceapp2.navigation.approutes.faculty.FacultyMainRoute
 import com.attendanceapp2.navigation.approutes.student.StudentMainRoute
 import com.attendanceapp2.navigation.approutes.student.StudentSubjectsRoutes
 import com.attendanceapp2.universal.screencomponents.ProfileScreen
-import com.attendanceapp2.users.studentapp.screens.mainscreens.StudentAttendances
-import com.attendanceapp2.users.studentapp.screens.mainscreens.StudentScanner
-import com.attendanceapp2.users.studentapp.screens.mainscreens.StudentSubjects
-import com.attendanceapp2.users.studentapp.screens.subjects.StudentSubjectAttendances
+import com.attendanceapp2.user.studentapp.screens.mainscreens.StudentAttendances
+import com.attendanceapp2.user.studentapp.screens.mainscreens.StudentScanner
+import com.attendanceapp2.user.studentapp.screens.mainscreens.StudentSubjects
+import com.attendanceapp2.user.studentapp.screens.subjects.StudentSubjectAttendances
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -69,7 +70,7 @@ fun StudentNavigation(
 
         Scaffold(
             bottomBar = {
-                StudentBottomNavBar(
+                BottomNavBar(
                     navController = navController,
                     centerItem = centerItem,
                     nonCenterItem = nonCenterItem
