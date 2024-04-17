@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -58,7 +59,8 @@ fun StudentSubjectAttendances (
         Text(
             text = subjectInfo?.name ?: "Attendances",
             fontSize = 35.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.width(16.dp))
@@ -115,7 +117,7 @@ fun StudentSubjectAttendances (
 
         LazyColumn {
             itemsIndexed(viewModel.studentSubjectAttendances.value) { index, attendance ->
-                val backgroundColor = if (index % 2 == 0) Color.White else Color.Gray
+                val backgroundColor = if (index % 2 == 0) Color.Transparent else Color.Gray
                 AttendanceCard(
                     attendance = attendance,
                     backgroundColor = backgroundColor // Set your desired background color here

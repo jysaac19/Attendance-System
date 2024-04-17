@@ -126,7 +126,7 @@ fun StudentAttendances (
             modifier = Modifier.fillMaxSize()
         ) {
             filterAttendance.value.forEachIndexed { index, attendance ->
-                val backgroundColor = if (index % 2 == 0) Color.White else Color.Gray
+                val backgroundColor = if (index % 2 == 0) Color.Transparent else Color.Gray
                 item {
                     AttendanceCard(attendance = attendance, backgroundColor = backgroundColor)
                 }

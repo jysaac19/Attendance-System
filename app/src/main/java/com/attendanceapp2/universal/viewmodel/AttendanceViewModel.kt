@@ -8,6 +8,7 @@ import com.attendanceapp2.data.repositories.attendancce.AttendanceRepository
 import com.attendanceapp2.universal.data.LoggedInUserHolder
 import com.attendanceapp2.universal.data.SelectedSubjectHolder
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -24,7 +25,7 @@ class AttendanceViewModel(
 
     val studentAttendances = _studentAttendances.asStateFlow()
     val facultyAttendances = _facultyAttendances.asStateFlow()
-    val studentSubjectAttendances = _studentSubjectAttendances.asStateFlow()
+    val studentSubjectAttendances: StateFlow<List<Attendance>> = _studentSubjectAttendances
     val facultySubjectAttendances = _facultySubjectAttendances.asStateFlow()
 
     // Function to fetch student attendances using LoggedInUserId
@@ -60,11 +61,9 @@ class AttendanceViewModel(
         val selectedSubject = SelectedSubjectHolder.getSelectedSubject()
         loggedInUser?.let { user ->
             selectedSubject?.let { subject ->
-                viewModelScope.launch {
-                    attendanceRepo.getAttendancesByUserIdAndSubjectId(user.userId, subject.id).collect { attendances ->
-                        _studentSubjectAttendances.value = attendances
-                        Log.d("AttendanceViewModel", "Student Subject Attendances: $attendances")
-                    }
+                attendanceRepo.getAttendancesByUserIdAndSubjectId(user.userId, subject.id).collect { attendances ->
+                    _studentSubjectAttendances.value = attendances
+                    Log.d("AttendanceViewModel", "Student Subject Attendances: $attendances")
                 }
             }
         }

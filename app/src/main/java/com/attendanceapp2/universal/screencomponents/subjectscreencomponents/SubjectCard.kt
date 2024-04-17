@@ -25,7 +25,7 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp, horizontal = 4.dp),
+            .padding(vertical = 4.dp, horizontal = 8.dp),
         colors = CardDefaults.cardColors(),
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(
@@ -36,8 +36,7 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(110.dp)
-                .padding(vertical = 8.dp, horizontal = 16.dp),
+                .padding(vertical = 16.dp, horizontal = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -54,23 +53,23 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
                 text = "Prof. ${subject.faculty}",
                 fontSize = 20.sp
             )
-
-            Spacer(modifier = Modifier.height(8.dp))
         }
 
         Card(
             modifier = Modifier
                 .fillMaxWidth(),
             colors = CardDefaults.cardColors(
-                Color.Red
+                Color.Red.copy(alpha = 0.5f)
             ),
             shape = RoundedCornerShape(20.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
+            elevation = CardDefaults.cardElevation(
+//                defaultElevation = 4.dp
+            )
         ) {
 
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .padding(vertical = 8.dp)
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
