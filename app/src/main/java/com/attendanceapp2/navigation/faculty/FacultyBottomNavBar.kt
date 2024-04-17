@@ -1,4 +1,4 @@
-package com.attendanceapp2.navigation
+package com.attendanceapp2.navigation.faculty
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -40,11 +40,12 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.attendanceapp2.navigation.approutes.student.StudentMainRoute
+import com.attendanceapp2.navigation.BottomNavItem
+import com.attendanceapp2.navigation.approutes.faculty.FacultyMainRoute
 
 
 @Composable
-fun BottomNavBar(
+fun FacultyBottomNavBar(
     navController: NavController,
     centerItem: Boolean,
     nonCenterItem: Boolean
@@ -54,31 +55,31 @@ fun BottomNavBar(
             "Subjects",
             Icons.Default.Folder,
             Icons.Default.FolderOpen,
-            StudentMainRoute.Subjects.name
+            FacultyMainRoute.Subjects.name
         ),
         BottomNavItem(
             "Attendances",
             Icons.Filled.PieChart,
             Icons.Outlined.PieChart,
-            StudentMainRoute.Attendances.name
+            FacultyMainRoute.Attendances.name
         ),
         BottomNavItem(
             "Scanner",
             Icons.Filled.QrCode2,
             Icons.Outlined.QrCode2,
-            StudentMainRoute.Scanner.name
+            FacultyMainRoute.Code.name
         ),
         BottomNavItem(
             "Notifications",
             Icons.Filled.Notifications,
             Icons.Outlined.Notifications,
-            StudentMainRoute.Notifications.name
+            FacultyMainRoute.Notifications.name
         ),
         BottomNavItem(
             "Profile",
             Icons.Filled.Person,
             Icons.Outlined.Person,
-            StudentMainRoute.Profile.name
+            FacultyMainRoute.Profile.name
         )
     )
 

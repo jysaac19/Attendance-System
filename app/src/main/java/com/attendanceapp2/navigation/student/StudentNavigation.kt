@@ -22,7 +22,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.attendanceapp2.navigation.BottomNavBar
 import com.attendanceapp2.navigation.approutes.faculty.FacultyMainRoute
 import com.attendanceapp2.navigation.approutes.student.StudentMainRoute
 import com.attendanceapp2.navigation.approutes.student.StudentSubjectsRoutes
@@ -70,7 +69,7 @@ fun StudentNavigation(
 
         Scaffold(
             bottomBar = {
-                BottomNavBar(
+                StudentBottomNavBar(
                     navController = navController,
                     centerItem = centerItem,
                     nonCenterItem = nonCenterItem

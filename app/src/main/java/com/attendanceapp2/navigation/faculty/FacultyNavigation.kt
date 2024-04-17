@@ -16,7 +16,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.attendanceapp2.navigation.BottomNavBar
 import com.attendanceapp2.navigation.approutes.faculty.FacultyMainRoute
 import com.attendanceapp2.navigation.approutes.faculty.FacultySubjectsRoutes
 import com.attendanceapp2.universal.screencomponents.ProfileScreen
@@ -34,7 +33,7 @@ fun FacultyNavigation() {
     var nonCenterItem by remember { mutableStateOf(true) }
 
     Scaffold(
-        bottomBar = { BottomNavBar(
+        bottomBar = { FacultyBottomNavBar(
                 navController = navController,
                 centerItem = centerItem,
                 nonCenterItem = nonCenterItem
