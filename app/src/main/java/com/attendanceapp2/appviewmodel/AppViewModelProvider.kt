@@ -34,9 +34,9 @@ object AppViewModelProvider {
         // ScannerViewModel
         initializer {
             ScannerViewModel(
-                nbsAttendanceApplication().container.attendanceRepository,
+                nbsAttendanceApplication().container.offlineAttendanceRepository,
                 AttendanceViewModel(
-                    nbsAttendanceApplication().container.attendanceRepository,
+                    nbsAttendanceApplication().container.offlineAttendanceRepository,
                     SubjectViewModel(
                         nbsAttendanceApplication().container.userSubjectCrossRefRepository,
                         nbsAttendanceApplication().container.subjectRepository
@@ -79,7 +79,7 @@ object AppViewModelProvider {
             StudentSubjectViewModel(
                 nbsAttendanceApplication().container.userSubjectCrossRefRepository,
                 nbsAttendanceApplication().container.subjectRepository,
-                nbsAttendanceApplication().container.attendanceRepository,
+                nbsAttendanceApplication().container.offlineAttendanceRepository,
                 SubjectViewModel(
                     nbsAttendanceApplication().container.userSubjectCrossRefRepository,
                     nbsAttendanceApplication().container.subjectRepository
@@ -88,7 +88,7 @@ object AppViewModelProvider {
         }
 
         initializer {
-            FacultySubjectAttendancesViewModel(nbsAttendanceApplication().container.attendanceRepository)
+            FacultySubjectAttendancesViewModel(nbsAttendanceApplication().container.offlineAttendanceRepository)
         }
 
         //Posts ViewModel [sample ktor implementation]
@@ -111,7 +111,7 @@ object AppViewModelProvider {
         //Attendance ViewModel
         initializer {
             AttendanceViewModel(
-                nbsAttendanceApplication().container.attendanceRepository,
+                nbsAttendanceApplication().container.offlineAttendanceRepository,
                 SubjectViewModel(
                     nbsAttendanceApplication().container.userSubjectCrossRefRepository,
                     nbsAttendanceApplication().container.subjectRepository
@@ -121,9 +121,9 @@ object AppViewModelProvider {
 
         initializer {
             StudentAttendanceViewModel(
-                nbsAttendanceApplication().container.attendanceRepository,
+                nbsAttendanceApplication().container.offlineAttendanceRepository,
                 AttendanceViewModel(
-                    nbsAttendanceApplication().container.attendanceRepository,
+                    nbsAttendanceApplication().container.offlineAttendanceRepository,
                     SubjectViewModel(
                         nbsAttendanceApplication().container.userSubjectCrossRefRepository,
                         nbsAttendanceApplication().container.subjectRepository
@@ -134,7 +134,7 @@ object AppViewModelProvider {
 
         initializer {
             StudentSubjectAttendanceViewModel(
-                nbsAttendanceApplication().container.attendanceRepository
+                nbsAttendanceApplication().container.offlineAttendanceRepository
             )
         }
     }

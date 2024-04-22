@@ -202,8 +202,8 @@ fun StudentScanner (
 
                 //For debug purposes
                 Text(
-                    text = "${qrCode.subjectId}, ${qrCode.date}, ${qrCode.time}" ,
-                    fontSize = 20.sp,
+                    text = "Sub ID: ${qrCode.subjectId}, QR Date: ${qrCode.date}, QR Time: ${qrCode.time}" ,
+                    fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
                     textAlign = TextAlign.Center,

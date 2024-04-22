@@ -3,6 +3,7 @@ package com.attendanceapp2.user.studentapp.viewmodel
 import androidx.lifecycle.ViewModel
 import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.repositories.attendancce.AttendanceRepository
+import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
 import com.attendanceapp2.universal.data.LoggedInUserHolder
 import com.attendanceapp2.universal.data.ScannedQRCodeHolder
 import com.attendanceapp2.universal.viewmodel.AttendanceViewModel
@@ -17,7 +18,7 @@ sealed class AttendanceResult {
 }
 
 class ScannerViewModel(
-    private val attendanceRepo: AttendanceRepository,
+    private val offlineAttendanceRepository: OfflineAttendanceRepository,
     private val attendanceViewModel: AttendanceViewModel
 ) : ViewModel() {
 
@@ -51,7 +52,7 @@ class ScannerViewModel(
         }
 
         // Check if the user already has attendance
-        val existingAttendancesList = attendanceRepo.getAttendancesByUserIdSubjectIdAndDate(
+        val existingAttendancesList = offlineAttendanceRepository.getAttendancesByUserIdSubjectIdAndDate(
             loggedInUser.userId,
             scannedQRCode.subjectId,
             currentDate
@@ -73,7 +74,7 @@ class ScannerViewModel(
             time = currentTime
         )
 
-        attendanceRepo.insertAttendance(attendance)
+        offlineAttendanceRepository.insertAttendance(attendance)
 
         // Clear the scanned QR code
         ScannedQRCodeHolder.clearScannedQRCode()

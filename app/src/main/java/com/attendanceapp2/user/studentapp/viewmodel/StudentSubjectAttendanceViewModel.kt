@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.repositories.attendancce.AttendanceRepository
+import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
 import com.attendanceapp2.universal.data.LoggedInUserHolder
 import com.attendanceapp2.universal.data.SelectedSubjectHolder
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class StudentSubjectAttendanceViewModel (
-    private val attendanceRepo: AttendanceRepository
+    private val offlineAttendanceRepository: OfflineAttendanceRepository
 ) : ViewModel() {
 
     private val _studentSubjectAttendances = MutableStateFlow<List<Attendance>>(emptyList())
@@ -46,7 +47,7 @@ class StudentSubjectAttendanceViewModel (
         val selectedSubject = SelectedSubjectHolder.getSelectedSubject()
         loggedInUser?.let { user ->
             selectedSubject?.let { subject ->
-                attendanceRepo.getAttendancesByUserIdAndSubjectId(user.userId, subject.id).collect { attendances ->
+                offlineAttendanceRepository.getAttendancesByUserIdAndSubjectId(user.userId, subject.id).collect { attendances ->
                     _studentSubjectAttendances.value = attendances
                     Log.d("StudentSubjectAttendanceViewModel", "Student Subject Attendances: $attendances")
                 }

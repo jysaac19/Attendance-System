@@ -21,7 +21,7 @@ interface AppContainer {
     val onlinePostRepository: OnlinePostRepository
     val subjectRepository: SubjectRepository
     val userRepository: UserRepository
-    val attendanceRepository: AttendanceRepository
+    val offlineAttendanceRepository: OfflineAttendanceRepository
     val scheduleRepository: ScheduleRepository
     val userSubjectCrossRefRepository: UserSubjectCrossRefRepository
 }
@@ -62,9 +62,9 @@ class AppDataContainer(
     }
 
     /**
-     * Implementation for [attendanceRepository]
+     * Implementation for [offlineAttendanceRepository]
      */
-    override val attendanceRepository: AttendanceRepository by lazy {
+    override val offlineAttendanceRepository: OfflineAttendanceRepository by lazy {
         OfflineAttendanceRepository(AttendanceAppDatabase.getDatabase(context).attendanceDao(), embeddedAttendances)
     }
 
