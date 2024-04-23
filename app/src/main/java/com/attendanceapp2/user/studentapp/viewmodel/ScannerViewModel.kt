@@ -1,12 +1,12 @@
 package com.attendanceapp2.user.studentapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.repositories.attendancce.AttendanceRepository
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
 import com.attendanceapp2.universal.data.LoggedInUserHolder
 import com.attendanceapp2.universal.data.ScannedQRCodeHolder
-import com.attendanceapp2.universal.viewmodel.AttendanceViewModel
 import kotlinx.coroutines.flow.firstOrNull
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -18,13 +18,14 @@ sealed class AttendanceResult {
 }
 
 class ScannerViewModel(
-    private val offlineAttendanceRepository: OfflineAttendanceRepository,
-    private val attendanceViewModel: AttendanceViewModel
+    private val offlineAttendanceRepository: OfflineAttendanceRepository
 ) : ViewModel() {
 
-    // Function to fetch student attendances using LoggedInUserId
-    private suspend fun fetchStudentAttendances() {
-        attendanceViewModel.fetchStudentAttendances()
+    private suspend fun fetchAttendances() {
+        // Fetch attendances for all subjects
+        offlineAttendanceRepository.getAllAttendances().collect { attendances ->
+            Log.d("StudentSubjectAttendanceViewModel", "Student Subject Attendances: $attendances")
+        }
     }
 
     suspend fun validateAndInsertAttendance(): AttendanceResult {
@@ -35,7 +36,7 @@ class ScannerViewModel(
         val scannedQRCode = ScannedQRCodeHolder.getScannedQRCode()
 
         // Fetch student attendances to update the list
-        fetchStudentAttendances()
+        fetchAttendances()
 
         if (loggedInUser == null || scannedQRCode == null) {
             return AttendanceResult.Error("User or QR code information is missing.")

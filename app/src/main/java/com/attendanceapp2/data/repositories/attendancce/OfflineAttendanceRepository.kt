@@ -31,19 +31,18 @@ class OfflineAttendanceRepository(
         return attendanceDao.filterAttendance(startDate, endDate, userId, subjectCode)
     }
 
+    fun filterFacultyAttendance(startDate: String, endDate: String, subjectCode: String): Flow<List<Attendance>> {
+        return attendanceDao.filterFacultyAttendance(startDate, endDate, subjectCode)
+    }
+
     fun getAttendancesByUserId(userId: Long): Flow<List<Attendance>> {
         return attendanceDao.getAttendancesByUserId(userId)
     }
 
-    fun getAttendancesByUserIds(userIds: List<Long>): Flow<List<Attendance>> {
-        return attendanceDao.getAttendancesByUserIds(userIds)
+    fun getAllAttendances() : Flow<List<Attendance>> {
+        return attendanceDao.getAttendances()
     }
-
-    fun getAttendancesBySubjectIds(subjectIds: List<Long>): Flow<List<Attendance>> {
+    fun getAttendancesBySubjectIds(subjectIds: List<Long>) : Flow<List<Attendance>> {
         return attendanceDao.getAttendancesBySubjectIds(subjectIds)
-    }
-
-    fun getAttendancesByUserIdAndSubjectId(userId: Long, subjectId: Long): Flow<List<Attendance>> {
-        return attendanceDao.getAttendancesByUserIdAndSubjectId(userId, subjectId)
     }
 }

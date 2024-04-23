@@ -10,30 +10,59 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.attendanceapp2.appviewmodel.AppViewModelProvider
+import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.AttendanceCard
 import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.AttendanceColumnName
 import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.CustomDatePicker
 import com.attendanceapp2.universal.screencomponents.attendancescreencomponents.SubjectDropdown
+import com.attendanceapp2.user.facultyapp.viewmodel.FacultyAttendanceViewModel
+import com.attendanceapp2.user.studentapp.viewmodel.StudentAttendanceViewModel
 import java.time.LocalDate
 
 @Composable
-fun FacultyAttendances (navController : NavController) {
+fun FacultyAttendances (
+    navController : NavController,
+    viewModel : FacultyAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
+    // Get the current year
+    val currentYear = LocalDate.now().year
 
-    var startdate by remember { mutableStateOf(LocalDate.now()) }
-    var enddate by remember { mutableStateOf(LocalDate.now()) }
-    var selectedSubject by remember { mutableStateOf("") }
-    val subjects = listOf("All", "MATH301", "CS101", "ENG201", "PHY401", "CHEM501", "BIO601", "HIST701")
+    // Default start date and end date
+    val defaultEndDate = LocalDate.now()
+    val defaultStartDate = LocalDate.of(currentYear, 1, 1) // January 1st of the current year
+
+    // Collecting the start and end dates with default values
+    var startDate by remember { mutableStateOf(defaultStartDate) }
+    var endDate by remember { mutableStateOf(defaultEndDate) }
+
+    var selectedSubject by remember { mutableStateOf("All") }
+    val subjects by viewModel.subjects.collectAsState()
+
+    // Collect attendances and sort them by date in descending order (most recent first)
+    val attendances by viewModel.facultyAttendances.collectAsState()
+    val sortedAttendances = attendances.sortedByDescending { LocalDate.parse(it.date) }
+
+    // Function to fetch attendances whenever selectedSubject, start date or end date changes
+    LaunchedEffect(selectedSubject, startDate, endDate) {
+        viewModel.fetchFacultyAttendances(selectedSubject, startDate, endDate)
+    }
 
     Column(
         modifier = Modifier
@@ -72,9 +101,9 @@ fun FacultyAttendances (navController : NavController) {
                 ) {
                     CustomDatePicker(
                         label = "From",
-                        selectedDate = startdate,
+                        selectedDate = startDate,
                         onDateSelected = { date ->
-                            startdate = date
+                            startDate = date
                         }
                     )
                 }
@@ -86,9 +115,9 @@ fun FacultyAttendances (navController : NavController) {
                 ) {
                     CustomDatePicker(
                         label = "To",
-                        selectedDate = enddate,
+                        selectedDate = endDate,
                         onDateSelected = { date ->
-                            enddate = date
+                            endDate = date
                         }
                     )
                 }
@@ -111,7 +140,13 @@ fun FacultyAttendances (navController : NavController) {
         AttendanceColumnName()
 
         LazyColumn {
-
+            itemsIndexed(sortedAttendances) { index, attendance ->
+                val backgroundColor = if (index % 2 == 0) Color.Transparent else Color.Gray
+                AttendanceCard(
+                    attendance = attendance,
+                    backgroundColor = backgroundColor // Set your desired background color here
+                )
+            }
         }
     }
 }

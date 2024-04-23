@@ -1,4 +1,4 @@
-package com.attendanceapp2.user.studentapp.viewmodel
+package com.attendanceapp2.user.facultyapp.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -8,19 +8,21 @@ import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceReposit
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.UserSubjectCrossRefRepository
 import com.attendanceapp2.universal.data.LoggedInUserHolder
+import com.attendanceapp2.universal.data.SelectedSubjectHolder
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
-class StudentAttendanceViewModel(
+
+class FacultySubjectAttendanceViewModel (
     private val userSubjectCrossRefRepo: UserSubjectCrossRefRepository,
     private val offlineAttendanceRepository: OfflineAttendanceRepository,
     private val offlineSubjectRepository: OfflineSubjectRepository
 ) : ViewModel() {
 
-    private val _studentSubjectAttendances = MutableStateFlow<List<Attendance>>(emptyList())
-    val studentSubjectAttendances = _studentSubjectAttendances.asStateFlow()
+    private val _facultySubjectAttendances = MutableStateFlow<List<Attendance>>(emptyList())
+    val facultySubjectAttendances = _facultySubjectAttendances.asStateFlow()
 
     // Use MutableStateFlow for subjects
     private val _subjects = MutableStateFlow<List<String>>(emptyList())
@@ -53,21 +55,12 @@ class StudentAttendanceViewModel(
     }
 
     // Function to fetch student subject attendances using the userId of the loggedInUser and subjectId of the selectedSubject
-    suspend fun fetchStudentSubjectAttendances(selectedSubject: String, startDate: LocalDate, endDate: LocalDate) {
-        val loggedInUser = LoggedInUserHolder.getLoggedInUser()
-        loggedInUser?.let { user ->
-            if (selectedSubject == "All") {
-                // Fetch attendances for all subjects
-                offlineAttendanceRepository.getAttendancesByUserId(loggedInUser.userId).collect { attendances ->
-                    _studentSubjectAttendances.value = attendances
-                    Log.d("StudentSubjectAttendanceViewModel", "Student Subject Attendances: $attendances")
-                }
-            } else {
-                // Fetch attendances for the selected subject
-                offlineAttendanceRepository.filterAttendance(startDate.toString(), endDate.toString(), user.userId, selectedSubject).collect { attendances ->
-                    _studentSubjectAttendances.value = attendances
-                    Log.d("StudentSubjectAttendanceViewModel", "Student Subject Attendances: $attendances")
-                }
+    suspend fun fetchFacultySubjectAttendances(startDate: LocalDate, endDate: LocalDate) {
+        val selectedSubject = SelectedSubjectHolder.getSelectedSubject()
+        selectedSubject?.let { subject ->
+            offlineAttendanceRepository.filterFacultyAttendance(startDate.toString(), endDate.toString(), subject.code).collect { attendances ->
+                _facultySubjectAttendances.value = attendances
+                Log.d("StudentSubjectAttendanceViewModel", "Student Subject Attendances: $attendances")
             }
         }
     }
