@@ -103,7 +103,7 @@ fun StudentNavigation(
                     }
                 }
                 composable(route = StudentMainRoute.Attendances.name) {
-                    StudentAttendances(navController = navController, userId = userId)
+                    StudentAttendances(navController = navController)
                     centerItem = true
                     nonCenterItem = true
                 }

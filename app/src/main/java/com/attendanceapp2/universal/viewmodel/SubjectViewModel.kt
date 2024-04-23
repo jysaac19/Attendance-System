@@ -3,6 +3,7 @@ package com.attendanceapp2.universal.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.Subject
+import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import com.attendanceapp2.data.repositories.subject.SubjectRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.UserSubjectCrossRefRepository
 import com.attendanceapp2.universal.data.LoggedInUserHolder
@@ -12,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class SubjectViewModel(
     private val userSubjectCrossRefRepo: UserSubjectCrossRefRepository,
-    private val subjectRepo: SubjectRepository
+    private val offlineSubjectRepository: OfflineSubjectRepository
 ) : ViewModel() {
 
     private val _subjects = MutableStateFlow<List<Subject>>(emptyList()) // LiveData or StateFlow for subjects
@@ -24,10 +25,10 @@ class SubjectViewModel(
         loggedInUser?.let { user ->
             viewModelScope.launch {
                 val userId = user.userId
-                val subjectIds = userSubjectCrossRefRepo.getSubjectIdsForUser(userId)
+                    val subjectIds = userSubjectCrossRefRepo.getSubjectIdsForUser(userId)
 
                 // Fetch subjects using subjectIds
-                val subjects = subjectRepo.getSubjectsByIds(subjectIds)
+                val subjects = offlineSubjectRepository.getSubjectsByIds(subjectIds)
                 _subjects.value = subjects ?: emptyList()
 
                 // Log the fetched subjects

@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,17 +37,32 @@ import java.time.LocalDate
 
 @Composable
 fun StudentAttendances (
-    userId: Long,
     navController : NavController,
     viewModel : StudentAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory),
 ) {
 
-    var startdate by remember { mutableStateOf(LocalDate.now()) }
-    var enddate by remember { mutableStateOf(LocalDate.now()) }
-    var selectedSubject by remember { mutableStateOf("") }
-    val subjects = listOf("All", "MATH301", "CS101", "ENG201", "PHY401", "CHEM501", "BIO601", "HIST701")
-    val attendanceList = viewModel.getAttendancesByLoggedInUser(userId).collectAsState(initial = emptyList())
-    val filterAttendance = viewModel.filterAttendance(startdate.toString(),enddate.toString(), userId,selectedSubject).collectAsState(initial = emptyList())
+    // Get the current year
+    val currentYear = LocalDate.now().year
+
+    // Default start date and end date
+    val defaultEndDate = LocalDate.now()
+    val defaultStartDate = LocalDate.of(currentYear, 1, 1) // January 1st of the current year
+
+    // Collecting the start and end dates with default values
+    var startDate by remember { mutableStateOf(defaultStartDate) }
+    var endDate by remember { mutableStateOf(defaultEndDate) }
+
+    var selectedSubject by remember { mutableStateOf("All") }
+    val subjects by viewModel.subjects.collectAsState()
+
+    // Collect attendances and sort them by date in descending order (most recent first)
+    val attendances by viewModel.studentSubjectAttendances.collectAsState()
+    val sortedAttendances = attendances.sortedByDescending { LocalDate.parse(it.date) }
+
+    // Function to fetch attendances whenever selectedSubject, start date or end date changes
+    LaunchedEffect(selectedSubject, startDate, endDate) {
+        viewModel.fetchStudentSubjectAttendances(selectedSubject, startDate, endDate)
+    }
 
     Column(
         modifier = Modifier
@@ -84,9 +101,9 @@ fun StudentAttendances (
                 ) {
                     CustomDatePicker(
                         label = "From",
-                        selectedDate = startdate,
+                        selectedDate = startDate,
                         onDateSelected = { date ->
-                            startdate = date
+                            startDate = date
                         }
                     )
                 }
@@ -98,9 +115,9 @@ fun StudentAttendances (
                 ) {
                     CustomDatePicker(
                         label = "To",
-                        selectedDate = enddate,
+                        selectedDate = endDate,
                         onDateSelected = { date ->
-                            enddate = date
+                            endDate = date
                         }
                     )
                 }
@@ -122,14 +139,13 @@ fun StudentAttendances (
 
         Spacer(Modifier.height(8.dp))
 
-        LazyColumn(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            filterAttendance.value.forEachIndexed { index, attendance ->
+        LazyColumn {
+            itemsIndexed(sortedAttendances) { index, attendance ->
                 val backgroundColor = if (index % 2 == 0) Color.Transparent else Color.Gray
-                item {
-                    AttendanceCard(attendance = attendance, backgroundColor = backgroundColor)
-                }
+                AttendanceCard(
+                    attendance = attendance,
+                    backgroundColor = backgroundColor // Set your desired background color here
+                )
             }
         }
     }

@@ -19,7 +19,7 @@ import com.attendanceapp2.posts.repository.OnlinePostRepository
 
 interface AppContainer {
     val onlinePostRepository: OnlinePostRepository
-    val subjectRepository: SubjectRepository
+    val offlineSubjectRepository: OfflineSubjectRepository
     val userRepository: UserRepository
     val offlineAttendanceRepository: OfflineAttendanceRepository
     val scheduleRepository: ScheduleRepository
@@ -43,7 +43,7 @@ class AppDataContainer(
     /**
      * Implementation for [subjectRepository]
      */
-    override val subjectRepository: SubjectRepository by lazy {
+    override val offlineSubjectRepository: OfflineSubjectRepository by lazy {
         OfflineSubjectRepository(AttendanceAppDatabase.getDatabase(context).subjectDao(), embeddedSubjects)
     }
 
