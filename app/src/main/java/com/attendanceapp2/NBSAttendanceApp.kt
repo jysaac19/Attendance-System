@@ -68,7 +68,7 @@ class NBSAttendanceApp : Application() {
             Attendance(7, 101, "Je", "Ysaac", 1, "Introduction to Computer Science", "CS101", "2024-04-18", "09:00 AM"),
             Attendance(8, 101, "Je", "Ysaac", 1, "Introduction to Computer Science", "CS101", "2024-04-24", "09:00 AM"),
             Attendance(9, 101, "Je", "Ysaac", 1, "Introduction to Computer Science", "CS101", "2024-04-28", "09:00 AM"),
-            Attendance(10, 101, "Je", "Ysaac", 1, "Introduction to Computer Science", "CS101", "2024-04-31", "09:00 AM"),
+            Attendance(10, 101, "Je", "Ysaac", 1, "Introduction to Computer Science", "CS101", "2024-04-30", "09:00 AM"),
 
             // English Literature
             Attendance(11, 101, "Je", "Ysaac", 2, "English Literature", "ENG201", "2024-04-02", "10:00 AM"),

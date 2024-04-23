@@ -17,6 +17,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,15 +43,27 @@ fun StudentSubjectAttendances (
     viewModel: StudentSubjectAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
 
-    LaunchedEffect(true) {
-        viewModel.fetchStudentSubjectAttendances()
-    }
-
     val subjectInfo = SelectedSubjectHolder.getSelectedSubject()
 
-    // Collecting the start and end dates
-    val endDate by viewModel.endDate.collectAsState()
-    val startDate by viewModel.startDate.collectAsState()
+    // Get the current year
+    val currentYear = LocalDate.now().year
+
+    // Default start date and end date
+    val defaultEndDate = LocalDate.now()
+    val defaultStartDate = LocalDate.of(currentYear, 1, 1) // January 1st of the current year
+
+    // Collecting the start and end dates with default values
+    var startDate by remember { mutableStateOf(defaultStartDate) }
+    var endDate by remember { mutableStateOf(defaultEndDate) }
+
+    // Collect attendances and sort them by date in descending order (most recent first)
+    val attendances by viewModel.studentSubjectAttendances.collectAsState()
+    val sortedAttendances = attendances.sortedByDescending { LocalDate.parse(it.date) }
+
+    // Function to fetch attendances whenever start date or end date changes
+    LaunchedEffect(startDate, endDate) {
+        viewModel.fetchStudentSubjectAttendances(startDate, endDate)
+    }
 
     Column(
         modifier = Modifier
@@ -88,23 +103,24 @@ fun StudentSubjectAttendances (
                 ) {
                     CustomDatePicker(
                         label = "From",
-                        selectedDate = startDate ?: LocalDate.now(),
+                        selectedDate = startDate,
                         onDateSelected = { date ->
-                            viewModel.setStartDate(date)
+                            startDate = date
                         }
                     )
                 }
 
                 Spacer(modifier = Modifier.width(16.dp))
 
+                // CustomDatePicker for selecting end date
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
                     CustomDatePicker(
                         label = "To",
-                        selectedDate = endDate ?: LocalDate.now(),
+                        selectedDate = endDate,
                         onDateSelected = { date ->
-                            viewModel.setEndDate(date)
+                            endDate = date
                         }
                     )
                 }
@@ -116,7 +132,7 @@ fun StudentSubjectAttendances (
         AttendanceColumnName()
 
         LazyColumn {
-            itemsIndexed(viewModel.studentSubjectAttendances.value) { index, attendance ->
+            itemsIndexed(sortedAttendances) { index, attendance ->
                 val backgroundColor = if (index % 2 == 0) Color.Transparent else Color.Gray
                 AttendanceCard(
                     attendance = attendance,
