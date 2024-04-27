@@ -8,6 +8,9 @@ import com.attendanceapp2.data.model.LoggedInUserHolder
 import com.attendanceapp2.data.model.ScannedQRCodeHolder
 import kotlinx.coroutines.flow.firstOrNull
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.TimeZone
 
@@ -28,8 +31,8 @@ class ScannerViewModel(
     }
 
     suspend fun validateAndInsertAttendance(): AttendanceResult {
-        val currentDate = getCurrentDateInPhilippines()
-        val currentTime = getCurrentTimeInPhilippines()
+        val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-dd-MM"))
+        val currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm a"))
 
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
         val scannedQRCode = ScannedQRCodeHolder.getScannedQRCode()
@@ -91,17 +94,5 @@ class ScannerViewModel(
         val differenceInMinutes = differenceInMillis / (1000 * 60)
 
         return differenceInMinutes <= 5
-    }
-
-    private fun getCurrentDateInPhilippines(): String {
-        val dateFormat = SimpleDateFormat("yyyy-dd-MM")
-        dateFormat.timeZone = TimeZone.getTimeZone("Asia/Manila")
-        return dateFormat.format(Date())
-    }
-
-    private fun getCurrentTimeInPhilippines(): String {
-        val timeFormat = SimpleDateFormat("hh:mm a")
-        timeFormat.timeZone = TimeZone.getTimeZone("Asia/Manila")
-        return timeFormat.format(Date())
     }
 }
