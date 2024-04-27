@@ -25,11 +25,11 @@ import androidx.navigation.navigation
 import com.attendanceapp2.navigation.approutes.faculty.FacultyMainRoute
 import com.attendanceapp2.navigation.approutes.student.StudentMainRoute
 import com.attendanceapp2.navigation.approutes.student.StudentSubjectsRoutes
-import com.attendanceapp2.universal.screencomponents.ProfileScreen
-import com.attendanceapp2.user.studentapp.screens.mainscreens.StudentAttendances
-import com.attendanceapp2.user.studentapp.screens.mainscreens.StudentScanner
-import com.attendanceapp2.user.studentapp.screens.mainscreens.StudentSubjects
-import com.attendanceapp2.user.studentapp.screens.subjects.StudentSubjectAttendances
+import facultyapp.screens.mainscreen.profile.ProfileScreen
+import studentapp.screens.mainscreens.StudentAttendances
+import studentapp.screens.mainscreens.StudentScanner
+import studentapp.screens.mainscreens.StudentSubjects
+import studentapp.screens.subjects.StudentSubjectAttendances
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

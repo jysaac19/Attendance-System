@@ -15,7 +15,7 @@ import com.attendanceapp2.navigation.approutes.AppRoutes
 import com.attendanceapp2.navigation.approutes.AuthRoute
 import com.attendanceapp2.navigation.faculty.FacultyNavigation
 import com.attendanceapp2.navigation.student.StudentNavigation
-import com.attendanceapp2.universal.viewmodel.ScreenViewModel
+import com.attendanceapp2.appviewmodel.screenviewmodel.ScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

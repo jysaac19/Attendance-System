@@ -9,17 +9,17 @@ import com.attendanceapp2.authentication.SignInViewModel
 import com.attendanceapp2.authentication.SignUpViewModel
 import com.attendanceapp2.data.screen.subject.NewSubjectViewModel
 import com.attendanceapp2.posts.viewmodel.PostViewModel
-import com.attendanceapp2.universal.viewmodel.ProfileViewModel
-import com.attendanceapp2.universal.viewmodel.ScreenViewModel
-import com.attendanceapp2.universal.viewmodel.SubjectViewModel
-import com.attendanceapp2.user.facultyapp.screens.mainscreen.qrscreen.FacultyQRGeneratorViewModel
-import com.attendanceapp2.user.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
-import com.attendanceapp2.user.facultyapp.viewmodel.FacultyAttendanceViewModel
-import com.attendanceapp2.user.facultyapp.viewmodel.FacultySubjectAttendanceViewModel
-import com.attendanceapp2.user.studentapp.viewmodel.ScannerViewModel
-import com.attendanceapp2.user.studentapp.viewmodel.StudentAttendanceViewModel
-import com.attendanceapp2.user.studentapp.viewmodel.StudentSubjectAttendanceViewModel
-import com.attendanceapp2.user.studentapp.viewmodel.StudentSubjectViewModel
+import com.attendanceapp2.appviewmodel.screenviewmodel.ProfileViewModel
+import com.attendanceapp2.appviewmodel.screenviewmodel.ScreenViewModel
+import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
+import facultyapp.screens.mainscreen.qrscreen.FacultyQRGeneratorViewModel
+import facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
+import facultyapp.viewmodel.FacultyAttendanceViewModel
+import facultyapp.viewmodel.FacultySubjectAttendanceViewModel
+import studentapp.viewmodel.ScannerViewModel
+import studentapp.viewmodel.StudentAttendanceViewModel
+import studentapp.viewmodel.StudentSubjectAttendanceViewModel
+import studentapp.viewmodel.StudentSubjectViewModel
 
 /**
  * Provides Factory to create instance of ViewModel for the entire Inventory app

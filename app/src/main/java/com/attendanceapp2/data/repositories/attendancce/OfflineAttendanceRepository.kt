@@ -43,7 +43,8 @@ class OfflineAttendanceRepository(
     fun getAllAttendances() : Flow<List<Attendance>> {
         return attendanceDao.getAttendances()
     }
-    fun getAttendancesBySubjectIds(subjectIds: List<Long>) : Flow<List<Attendance>> {
+
+    fun getAttendancesForFaculty(subjectIds : List<Long>): Flow<List<Attendance>> {
         return attendanceDao.getAttendancesBySubjectIds(subjectIds)
     }
 }

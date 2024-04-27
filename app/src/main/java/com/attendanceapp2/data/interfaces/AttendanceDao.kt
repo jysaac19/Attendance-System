@@ -41,7 +41,7 @@ interface AttendanceDao {
     @Query("SELECT * FROM Attendance WHERE userId = :userId AND subjectId = :subjectId")
     fun getAttendancesByUserIdAndSubjectId(userId: Long, subjectId: Long): Flow<List<Attendance>>
 
-    @Query("SELECT * FROM Attendance WHERE userId IN (:subjectIds)")
+    @Query("SELECT * FROM Attendance WHERE subjectId IN (:subjectIds)")
     fun getAttendancesBySubjectIds(subjectIds: List<Long>): Flow<List<Attendance>>
 }
 

@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.attendanceapp2.R
-import com.attendanceapp2.universal.viewmodel.ScreenViewModel
+import com.attendanceapp2.appviewmodel.screenviewmodel.ScreenViewModel
 
 @Composable
 fun SplashScreen(

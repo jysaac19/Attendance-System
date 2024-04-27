@@ -17,12 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.attendanceapp2.theme.NBSCollegeTheme
-import com.attendanceapp2.universal.data.LoggedInUser
-import com.attendanceapp2.universal.data.LoggedInUserHolder
+import com.attendanceapp2.data.model.LoggedInUser
+import com.attendanceapp2.data.model.LoggedInUserHolder
 import com.attendanceapp2.navigation.AppNavigation
 import com.attendanceapp2.navigation.faculty.FacultyNavigation
 import com.attendanceapp2.navigation.student.StudentNavigation
-import com.attendanceapp2.universal.viewmodel.ScreenViewModel
+import com.attendanceapp2.appviewmodel.screenviewmodel.ScreenViewModel
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
