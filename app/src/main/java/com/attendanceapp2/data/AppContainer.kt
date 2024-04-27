@@ -22,8 +22,8 @@ interface AppContainer {
     val offlineSubjectRepository: OfflineSubjectRepository
     val userRepository: UserRepository
     val offlineAttendanceRepository: OfflineAttendanceRepository
-    val scheduleRepository: ScheduleRepository
-    val userSubjectCrossRefRepository: UserSubjectCrossRefRepository
+    val offlineScheduleRepository: OfflineScheduleRepository
+    val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository
 }
 
 /**
@@ -50,7 +50,7 @@ class AppDataContainer(
     /**
      * Implementation for [scheduleRepository]
      */
-    override val scheduleRepository: ScheduleRepository by lazy {
+    override val offlineScheduleRepository: OfflineScheduleRepository by lazy {
         OfflineScheduleRepository(AttendanceAppDatabase.getDatabase(context).scheduleDao())
     }
 
@@ -71,7 +71,7 @@ class AppDataContainer(
     /**
      * Implementation for [userSubjectCrossRefRepository]
      */
-    override val userSubjectCrossRefRepository: UserSubjectCrossRefRepository by lazy {
+    override val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository by lazy {
         OfflineUserSubjectCrossRefRepository(AttendanceAppDatabase.getDatabase(context).userSubjectCrossRefDao(), embeddedUserSubjectCrossRefs)
     }
 }

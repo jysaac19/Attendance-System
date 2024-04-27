@@ -19,9 +19,9 @@ class NBSAttendanceApp : Application() {
         super.onCreate()
         // Define your list of embedded users here
         val embeddedUsers = listOf(
-            User(101, "Je", "Ysaac", "k", "123", "Student", "ComSci"),
-            User(201, "Admin", "Ysaac", "j", "123", "Admin", "ComSci"),
-            User(301, "Faculty", "Ysaac", "s", "123", "Faculty", "ComSci")
+            User(101, "JE", "YSAAC", "k", "123", "Student", "ComSci"),
+            User(201, "KARA", "COLUMBA", "j", "123", "Admin", "ComSci"),
+            User(301, "KENNETH", "BONAAGUA", "s", "123", "Faculty", "ComSci")
         )
 
         val embeddedSubjects = listOf(
@@ -59,40 +59,40 @@ class NBSAttendanceApp : Application() {
         )
 
         val embeddedAttendances = listOf(
-            Attendance(1, 101, "Je", "Ysaac", 1, "Introduction to Computer Science", "CS101", "2024-04-01", "09:00 AM"),
-            Attendance(2, 102, "Shin", "Kenzaki", 1, "Introduction to Computer Science", "CS101", "2024-04-02", "09:00 AM"),
-            Attendance(3, 103, "Kara", "Rabanal", 1, "Introduction to Computer Science", "CS101", "2024-04-05", "09:00 AM"),
-            Attendance(4, 101, "Je", "Ysaac", 1, "Introduction to Computer Science", "CS101", "2024-04-07", "09:00 AM"),
-            Attendance(5, 102, "Shin", "Kenzaki", 1, "Introduction to Computer Science", "CS101", "2024-04-08", "09:00 AM"),
-            Attendance(6, 101, "Je", "Ysaac", 1, "Introduction to Computer Science", "CS101", "2024-04-15", "09:00 AM"),
-            Attendance(7, 103, "Kara", "Rabanal", 1, "Introduction to Computer Science", "CS101", "2024-04-18", "09:00 AM"),
-            Attendance(8, 102, "Shin", "Kenzaki", 1, "Introduction to Computer Science", "CS101", "2024-04-24", "09:00 AM"),
-            Attendance(9, 101, "Je", "Ysaac", 1, "Introduction to Computer Science", "CS101", "2024-04-28", "09:00 AM"),
-            Attendance(10, 102, "Shin", "Kenzaki", 1, "Introduction to Computer Science", "CS101", "2024-04-30", "09:00 AM"),
+            Attendance(1, 101, "JE", "YSAAC", 1, "Introduction to Computer Science", "CS101", "2024-04-01", "09:00 AM"),
+            Attendance(2, 301, "KENNETH", "BONAAGUA", 1, "Introduction to Computer Science", "CS101", "2024-04-02", "09:00 AM"),
+            Attendance(3, 201, "KARA", "COLUMBA", 1, "Introduction to Computer Science", "CS101", "2024-04-05", "09:00 AM"),
+            Attendance(4, 101, "JE", "YSAAC", 1, "Introduction to Computer Science", "CS101", "2024-04-07", "09:00 AM"),
+            Attendance(5, 301, "KENNETH", "BONAAGUA", 1, "Introduction to Computer Science", "CS101", "2024-04-08", "09:00 AM"),
+            Attendance(6, 101, "JE", "YSAAC", 1, "Introduction to Computer Science", "CS101", "2024-04-15", "09:00 AM"),
+            Attendance(7, 201, "KARA", "COLUMBA", 1, "Introduction to Computer Science", "CS101", "2024-04-18", "09:00 AM"),
+            Attendance(8, 301, "KENNETH", "BONAAGUA", 1, "Introduction to Computer Science", "CS101", "2024-04-24", "09:00 AM"),
+            Attendance(9, 101, "JE", "Ysaac", 1, "Introduction to Computer Science", "CS101", "2024-04-28", "09:00 AM"),
+            Attendance(10, 301, "KENNETH", "BONAAGUA", 1, "Introduction to Computer Science", "CS101", "2024-04-30", "09:00 AM"),
 
             // English Literature
-            Attendance(11, 101, "Je", "Ysaac", 2, "English Literature", "ENG201", "2024-04-02", "10:00 AM"),
-            Attendance(12, 102, "Shin", "Kenzaki", 2, "English Literature", "ENG201", "2024-04-03", "10:00 AM"),
-            Attendance(13, 102, "Shin", "Kenzaki", 2, "English Literature", "ENG201", "2024-04-08", "10:00 AM"),
-            Attendance(14, 103, "Kara", "Rabanal", 2, "English Literature", "ENG201", "2024-04-10", "10:00 AM"),
-            Attendance(15, 101, "Je", "Ysaac", 2, "English Literature", "ENG201", "2024-04-11", "10:00 AM"),
-            Attendance(16, 103, "Kara", "Rabanal", 2, "English Literature", "ENG201", "2024-04-18", "10:00 AM"),
-            Attendance(17, 101, "Je", "Ysaac", 2, "English Literature", "ENG201", "2024-04-21", "10:00 AM"),
-            Attendance(18, 102, "Shin", "Kenzaki", 2, "English Literature", "ENG201", "2024-04-25", "10:00 AM"),
-            Attendance(19, 101, "Je", "Ysaac", 2, "English Literature", "ENG201", "2024-04-29", "10:00 AM"),
-            Attendance(20, 101, "Je", "Ysaac", 2, "English Literature", "ENG201", "2024-04-30", "10:00 AM"),
+            Attendance(11, 101, "JE", "YSAAC", 2, "English Literature", "ENG201", "2024-04-02", "10:00 AM"),
+            Attendance(12, 301, "KENNETH", "BONAAGUA", 2, "English Literature", "ENG201", "2024-04-03", "10:00 AM"),
+            Attendance(13, 301, "KENNETH", "BONAAGUA", 2, "English Literature", "ENG201", "2024-04-08", "10:00 AM"),
+            Attendance(14, 201, "KARA", "COLUMBA", 2, "English Literature", "ENG201", "2024-04-10", "10:00 AM"),
+            Attendance(15, 101, "JE", "YSAAC", 2, "English Literature", "ENG201", "2024-04-11", "10:00 AM"),
+            Attendance(16, 201, "KARA", "COLUMBA", 2, "English Literature", "ENG201", "2024-04-18", "10:00 AM"),
+            Attendance(17, 101, "JE", "YSAAC", 2, "English Literature", "ENG201", "2024-04-21", "10:00 AM"),
+            Attendance(18, 301, "KENNETH", "BONAAGUA", 2, "English Literature", "ENG201", "2024-04-25", "10:00 AM"),
+            Attendance(19, 101, "JE", "YSAAC", 2, "English Literature", "ENG201", "2024-04-29", "10:00 AM"),
+            Attendance(20, 101, "JE", "YSAAC", 2, "English Literature", "ENG201", "2024-04-30", "10:00 AM"),
 
             // Advanced Mathematics
-            Attendance(21, 101, "Je", "Ysaac", 3, "Advanced Mathematics", "MATH301", "2024-04-06", "11:00 AM"),
-            Attendance(22, 102, "Shin", "Kenzaki", 3, "Advanced Mathematics", "MATH301", "2024-04-08", "11:00 AM"),
-            Attendance(23, 102, "Shin", "Kenzaki", 3, "Advanced Mathematics", "MATH301", "2024-04-10", "11:00 AM"),
-            Attendance(24, 101, "Je", "Ysaac", 3, "Advanced Mathematics", "MATH301", "2024-04-12", "11:00 AM"),
-            Attendance(25, 101, "Kara", "Rabanal", 3, "Advanced Mathematics", "MATH301", "2024-04-13", "11:00 AM"),
-            Attendance(26, 102, "Shin", "Kenzaki", 3, "Advanced Mathematics", "MATH301", "2024-04-26", "11:00 AM"),
-            Attendance(27, 101, "Je", "Ysaac", 3, "Advanced Mathematics", "MATH301", "2024-04-27", "11:00 AM"),
-            Attendance(28, 102, "Shin", "Kenzaki", 3, "Advanced Mathematics", "MATH301", "2024-04-28", "11:00 AM"),
-            Attendance(29, 101, "Kara", "Rabanal", 3, "Advanced Mathematics", "MATH301", "2024-04-29", "11:00 AM"),
-            Attendance(30, 101, "Je", "Ysaac", 3, "Advanced Mathematics", "MATH301", "2024-04-30", "11:00 AM"),
+            Attendance(21, 101, "JE", "YSAAC", 3, "Advanced Mathematics", "MATH301", "2024-04-06", "11:00 AM"),
+            Attendance(22, 301, "KENNETH", "BONAAGUA", 3, "Advanced Mathematics", "MATH301", "2024-04-08", "11:00 AM"),
+            Attendance(23, 301, "KENNETH", "BONAAGUA", 3, "Advanced Mathematics", "MATH301", "2024-04-10", "11:00 AM"),
+            Attendance(24, 101, "JE", "YSAAC", 3, "Advanced Mathematics", "MATH301", "2024-04-12", "11:00 AM"),
+            Attendance(25, 201, "KARA", "COLUMBA", 3, "Advanced Mathematics", "MATH301", "2024-04-13", "11:00 AM"),
+            Attendance(26, 301, "KENNETH", "BONAAGUA", 3, "Advanced Mathematics", "MATH301", "2024-04-26", "11:00 AM"),
+            Attendance(27, 101, "JE", "YSAAC", 3, "Advanced Mathematics", "MATH301", "2024-04-27", "11:00 AM"),
+            Attendance(28, 301, "KENNETH", "BONAAGUA", 3, "Advanced Mathematics", "MATH301", "2024-04-28", "11:00 AM"),
+            Attendance(29, 201, "KARA", "COLUMBA", 3, "Advanced Mathematics", "MATH301", "2024-04-29", "11:00 AM"),
+            Attendance(30, 101, "JE", "YSAAC", 3, "Advanced Mathematics", "MATH301", "2024-04-30", "11:00 AM"),
         )
 
         LoggedInUserHolder.init(this)

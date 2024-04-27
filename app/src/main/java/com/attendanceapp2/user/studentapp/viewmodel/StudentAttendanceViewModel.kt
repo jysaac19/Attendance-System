@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
+import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.UserSubjectCrossRefRepository
 import com.attendanceapp2.universal.data.LoggedInUserHolder
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class StudentAttendanceViewModel(
-    private val userSubjectCrossRefRepo: UserSubjectCrossRefRepository,
+    private val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository,
     private val offlineAttendanceRepository: OfflineAttendanceRepository,
     private val offlineSubjectRepository: OfflineSubjectRepository
 ) : ViewModel() {
@@ -38,7 +39,7 @@ class StudentAttendanceViewModel(
             viewModelScope.launch {
                 val userId = user.userId
                 // Retrieve subject IDs for the user
-                val subjectIds = userSubjectCrossRefRepo.getSubjectIdsForUser(userId)
+                val subjectIds = offlineUserSubjectCrossRefRepository.getSubjectIdsForUser(userId)
                 if (subjectIds.isNotEmpty()) {
                     // Fetch subject codes using subject IDs
                     val subjects = offlineSubjectRepository.getSubjectsByIds(subjectIds)
@@ -64,7 +65,12 @@ class StudentAttendanceViewModel(
                 }
             } else {
                 // Fetch attendances for the selected subject
-                offlineAttendanceRepository.filterAttendance(startDate.toString(), endDate.toString(), user.userId, selectedSubject).collect { attendances ->
+                offlineAttendanceRepository.filterStudentAttendance(
+                    "$startDate",
+                    "$endDate",
+                    user.userId,
+                    selectedSubject
+                ).collect { attendances ->
                     _studentSubjectAttendances.value = attendances
                     Log.d("StudentSubjectAttendanceViewModel", "Student Subject Attendances: $attendances")
                 }

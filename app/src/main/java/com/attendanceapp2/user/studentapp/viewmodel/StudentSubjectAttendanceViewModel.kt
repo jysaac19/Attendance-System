@@ -29,7 +29,12 @@ class StudentSubjectAttendanceViewModel (
         val selectedSubject = SelectedSubjectHolder.getSelectedSubject()
         loggedInUser?.let { user ->
             selectedSubject?.let { subject ->
-                offlineAttendanceRepository.filterAttendance(startDate.toString(), endDate.toString(), user.userId, subject.code).collect { attendances ->
+                offlineAttendanceRepository.filterStudentAttendance(
+                    startDate.toString(),
+                    endDate.toString(),
+                    user.userId,
+                    subject.code
+                ).collect { attendances ->
                     _studentSubjectAttendances.value = attendances
                     Log.d("StudentSubjectAttendanceViewModel", "Student Subject Attendances: $attendances")
                 }

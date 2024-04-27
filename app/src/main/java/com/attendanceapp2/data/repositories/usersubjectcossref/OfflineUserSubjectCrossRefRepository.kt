@@ -7,7 +7,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class OfflineUserSubjectCrossRefRepository(private val userSubjectCrossRefDao: UserSubjectCrossRefDao, private val userSubjectCrossRefs: List<UserSubjectCrossRef>) : UserSubjectCrossRefRepository {
+class OfflineUserSubjectCrossRefRepository(
+    private val userSubjectCrossRefDao: UserSubjectCrossRefDao,
+    private val userSubjectCrossRefs: List<UserSubjectCrossRef>
+) {
 
     init {
         // Initialize the database with the list of users
@@ -16,19 +19,19 @@ class OfflineUserSubjectCrossRefRepository(private val userSubjectCrossRefDao: U
         }
     }
 
-    override suspend fun insert(userSubjectCrossRef: UserSubjectCrossRef) {
+    suspend fun insert(userSubjectCrossRef: UserSubjectCrossRef) {
         userSubjectCrossRefDao.insert(userSubjectCrossRef)
     }
 
-    override suspend fun update(userSubjectCrossRef: UserSubjectCrossRef) {
+    suspend fun update(userSubjectCrossRef: UserSubjectCrossRef) {
         userSubjectCrossRefDao.update(userSubjectCrossRef)
     }
 
-    override suspend fun delete(userSubjectCrossRef: UserSubjectCrossRef) {
+    suspend fun delete(userSubjectCrossRef: UserSubjectCrossRef) {
         userSubjectCrossRefDao.delete(userSubjectCrossRef)
     }
 
-    override suspend fun getSubjectIdsForUser(userId: Long): List<Long> {
+    suspend fun getSubjectIdsForUser(userId: Long): List<Long> {
         return userSubjectCrossRefDao.getSubjectIdsForUser(userId)
     }
 }

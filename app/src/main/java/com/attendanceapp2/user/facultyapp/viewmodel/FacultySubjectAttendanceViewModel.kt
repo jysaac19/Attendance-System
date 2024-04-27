@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
+import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.UserSubjectCrossRefRepository
 import com.attendanceapp2.universal.data.LoggedInUserHolder
 import com.attendanceapp2.universal.data.SelectedSubjectHolder
@@ -16,7 +17,7 @@ import java.time.LocalDate
 
 
 class FacultySubjectAttendanceViewModel (
-    private val userSubjectCrossRefRepo: UserSubjectCrossRefRepository,
+    private val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository,
     private val offlineAttendanceRepository: OfflineAttendanceRepository,
     private val offlineSubjectRepository: OfflineSubjectRepository
 ) : ViewModel() {
@@ -40,7 +41,7 @@ class FacultySubjectAttendanceViewModel (
             viewModelScope.launch {
                 val userId = user.userId
                 // Retrieve subject IDs for the user
-                val subjectIds = userSubjectCrossRefRepo.getSubjectIdsForUser(userId)
+                val subjectIds = offlineUserSubjectCrossRefRepository.getSubjectIdsForUser(userId)
                 if (subjectIds.isNotEmpty()) {
                     // Fetch subject codes using subject IDs
                     val subjects = offlineSubjectRepository.getSubjectsByIds(subjectIds)

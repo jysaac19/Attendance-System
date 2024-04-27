@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
+import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.UserSubjectCrossRefRepository
 import com.attendanceapp2.universal.data.LoggedInUserHolder
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class FacultyAttendanceViewModel(
-    private val userSubjectCrossRefRepo: UserSubjectCrossRefRepository,
+    private val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository,
     private val offlineAttendanceRepository: OfflineAttendanceRepository,
     private val offlineSubjectRepository: OfflineSubjectRepository
 ) : ViewModel() {
@@ -38,7 +39,7 @@ class FacultyAttendanceViewModel(
             viewModelScope.launch {
                 val userId = user.userId
                 // Retrieve subject IDs for the user
-                val subjectIds = userSubjectCrossRefRepo.getSubjectIdsForUser(userId)
+                val subjectIds = offlineUserSubjectCrossRefRepository.getSubjectIdsForUser(userId)
                 if (subjectIds.isNotEmpty()) {
                     // Fetch subject codes using subject IDs
                     val subjects = offlineSubjectRepository.getSubjectsByIds(subjectIds)
@@ -58,7 +59,7 @@ class FacultyAttendanceViewModel(
         // Retrieve subject IDs for the user
         loggedInUser?.let { user ->
             // Retrieve subject IDs for the user
-            val subjectIds = userSubjectCrossRefRepo.getSubjectIdsForUser(user.userId)
+            val subjectIds = offlineUserSubjectCrossRefRepository.getSubjectIdsForUser(user.userId)
             if (selectedSubject == "All") {
                 // Fetch attendances for all subjects
                 offlineAttendanceRepository.getAttendancesBySubjectIds(subjectIds).collect { attendances ->
@@ -67,7 +68,11 @@ class FacultyAttendanceViewModel(
                 }
             } else {
                 // Fetch attendances for the selected subject
-                offlineAttendanceRepository.filterAttendance(startDate.toString(), endDate.toString(), user.userId, selectedSubject).collect { attendances ->
+                offlineAttendanceRepository.filterFacultyAttendance(
+                    startDate.toString(),
+                    endDate.toString(),
+                    selectedSubject
+                ).collect { attendances ->
                     _facultyAttendances.value = attendances
                     Log.d("FacultyAttendanceViewModel", "Student Subject Attendances: $attendances")
                 }
