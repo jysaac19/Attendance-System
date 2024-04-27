@@ -23,7 +23,7 @@ class ScannerViewModel(
     private suspend fun fetchAttendances() {
         // Fetch attendances for all subjects
         offlineAttendanceRepository.getAllAttendances().collect { attendances ->
-            Log.d("StudentSubjectAttendanceViewModel", "Student Subject Attendances: $attendances")
+//            Log.d("StudentSubjectAttendanceViewModel", "Student Subject Attendances: $attendances")
         }
     }
 
@@ -33,9 +33,6 @@ class ScannerViewModel(
 
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
         val scannedQRCode = ScannedQRCodeHolder.getScannedQRCode()
-
-        // Fetch student attendances to update the list
-        fetchAttendances()
 
         if (loggedInUser == null || scannedQRCode == null) {
             return AttendanceResult.Error("User or QR code information is missing.")
@@ -75,6 +72,9 @@ class ScannerViewModel(
         )
 
         offlineAttendanceRepository.insertAttendance(attendance)
+
+        // Fetch student attendances to update the list
+        fetchAttendances()
 
         // Clear the scanned QR code
         ScannedQRCodeHolder.clearScannedQRCode()
