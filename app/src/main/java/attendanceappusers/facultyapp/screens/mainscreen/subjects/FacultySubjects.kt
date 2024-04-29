@@ -78,10 +78,7 @@ fun FacultySubjects (
                             code = subject.code,
                             name = subject.name,
                             room = subject.room,
-                            faculty = subject.faculty,
-                            day = subject.day,
-                            start = subject.start,
-                            end = subject.end
+                            faculty = subject.faculty
                         )
                     )
                     Log.d("SelectedSubject", "Selected subject: ${SelectedSubjectHolder.getSelectedSubject()}")

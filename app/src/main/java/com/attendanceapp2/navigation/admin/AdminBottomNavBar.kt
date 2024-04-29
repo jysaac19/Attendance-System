@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PieChart
 import androidx.compose.material.icons.filled.QrCode2
+import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
@@ -53,10 +54,16 @@ fun AdminBottomNavBar(
 ) {
     val items = listOf(
         BottomNavItem(
-            "Subjects",
+            "Home",
             Icons.Default.Home,
             Icons.Outlined.Home,
             AdminMainRoute.HomeScreen.name
+        ),
+        BottomNavItem(
+            "Subjects",
+            Icons.Filled.Folder,
+            Icons.Outlined.Folder,
+            AdminMainRoute.Subjects.name
         ),
         BottomNavItem(
             "Attendances",

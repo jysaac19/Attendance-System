@@ -31,4 +31,10 @@ class OfflineSubjectRepository(
             subjectDao.getSubjectsByIds(subjectIds)
         }
     }
+
+    suspend fun getAllSubjects(): List<Subject> {
+        return withContext(Dispatchers.IO) {
+            subjectDao.getAllSubjects()
+        }
+    }
 }

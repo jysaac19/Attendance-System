@@ -32,7 +32,7 @@ import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceCard
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnName
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.CustomDatePicker
-import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.SubjectDropdown
+import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.UniversalDropDownMenu
 import java.time.LocalDate
 
 @Composable
@@ -126,7 +126,7 @@ fun StudentAttendances (
 
         Spacer(Modifier.height(8.dp))
 
-        SubjectDropdown(
+        UniversalDropDownMenu(
             label = "Subjects",
             items = subjects,
             selectedItem = selectedSubject,

@@ -31,4 +31,8 @@ class OfflineUserRepository(
     suspend fun getUserByEmail(email: String): User? {
         return userDao.getUserByEmail(email)
     }
+
+    fun getUsersByUserType(userType: String): Flow<List<User>> {
+        return userDao.getUsersByUserType(userType)
+    }
 }

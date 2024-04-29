@@ -15,8 +15,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import attendanceappusers.adminapp.attendance.AdminAttendanceList
+import attendanceappusers.adminapp.homescreen.HomeScreen
+import attendanceappusers.adminapp.homescreen.addsubject.AddSubjectScreen
+import attendanceappusers.adminapp.homescreen.adduser.AddUserScreen
 import attendanceappusers.adminapp.profile.AdminProfileScreen
+import attendanceappusers.adminapp.subject.AdminSubjectScreen
+import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.navigation.approutes.admin.AdminMainRoute
 import com.attendanceapp2.navigation.faculty.FacultyBottomNavBar
 
@@ -40,10 +46,16 @@ fun AdminNavigation() {
                 startDestination = AdminMainRoute.HomeScreen.name
             ) {
                 composable(route = AdminMainRoute.HomeScreen.name) {
-
+                    HomeScreen(navController)
+                }
+                composable(route = AdminHomeScreen.AddSubject.name) {
+                    AddSubjectScreen(navController)
+                }
+                composable(route = AdminHomeScreen.AddUser.name) {
+                    AddUserScreen(navController)
                 }
                 composable(route = AdminMainRoute.Subjects.name) {
-
+                    AdminSubjectScreen(navController)
                 }
                 composable(route = AdminMainRoute.Attendances.name) {
                     AdminAttendanceList(navController)

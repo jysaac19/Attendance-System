@@ -11,6 +11,6 @@ data class User(
     val lastname : String,
     val email : String, //should be @student.nbscollege.edu.ph
     val password : String,
-    val usertype : String, //ADMIN, STUDENT, FACULTY
+    val usertype : String, //Admin, Student, Faculty
     val department : String //BSCS, BSA, BSE, BSAIS, BSTM
 )

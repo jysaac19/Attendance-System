@@ -8,10 +8,7 @@ data class SelectedSubject(
     val code : String,
     val name : String,
     val room : String,
-    val faculty : String,
-    val day : String,
-    val start : String,
-    val end : String
+    val faculty : String
 )
 
 object SelectedSubjectHolder {

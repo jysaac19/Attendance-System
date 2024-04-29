@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import attendanceappusers.adminapp.adduser.AddUserViewModel
+import attendanceappusers.adminapp.homescreen.adduser.AddUserViewModel
 import attendanceappusers.adminapp.attendance.AdminAttendanceViewModel
+import attendanceappusers.adminapp.homescreen.addsubject.AddSubjectViewModel
 import attendanceappusers.adminapp.profile.AdminProfileViewModel
+import attendanceappusers.adminapp.subject.AdminSubjectListViewModel
 import attendanceappusers.facultyapp.screens.mainscreen.qrscreen.FacultyQRGeneratorViewModel
 import attendanceappusers.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
 import attendanceappusers.facultyapp.viewmodel.FacultyAttendanceViewModel
@@ -148,7 +150,25 @@ object AppViewModelProvider {
         }
 
         initializer {
-            AddUserViewModel()
+            AddSubjectViewModel(
+                nbsAttendanceApplication().container.offlineUserRepository,
+                nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository,
+                nbsAttendanceApplication().container.offlineSubjectRepository
+            )
+        }
+
+        initializer {
+            AddUserViewModel(
+                nbsAttendanceApplication().container.offlineUserRepository,
+                nbsAttendanceApplication().container.offlineSubjectRepository,
+                nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository
+            )
+        }
+
+        initializer {
+            AdminSubjectListViewModel(
+                nbsAttendanceApplication().container.offlineSubjectRepository
+            )
         }
     }
 }

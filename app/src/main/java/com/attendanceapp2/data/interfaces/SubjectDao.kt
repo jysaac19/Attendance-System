@@ -22,4 +22,7 @@ interface SubjectDao {
 
     @Query("SELECT * FROM Subject WHERE id IN (:subjectIds)")
     suspend fun getSubjectsByIds(subjectIds: List<Long>): List<Subject>
+
+    @Query("SELECT * FROM Subject")
+    suspend fun getAllSubjects(): List<Subject>
 }
