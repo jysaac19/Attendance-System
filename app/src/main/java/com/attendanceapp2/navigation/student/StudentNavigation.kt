@@ -22,21 +22,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import attendanceappusers.facultyapp.screens.mainscreen.profile.ProfileScreen
+import attendanceappusers.studentapp.screens.mainscreens.StudentAttendances
+import attendanceappusers.studentapp.screens.mainscreens.StudentScanner
+import attendanceappusers.studentapp.screens.mainscreens.StudentSubjects
+import attendanceappusers.studentapp.screens.subjects.StudentSubjectAttendances
 import com.attendanceapp2.navigation.approutes.faculty.FacultyMainRoute
 import com.attendanceapp2.navigation.approutes.student.StudentMainRoute
 import com.attendanceapp2.navigation.approutes.student.StudentSubjectsRoutes
-import facultyapp.screens.mainscreen.profile.ProfileScreen
-import studentapp.screens.mainscreens.StudentAttendances
-import studentapp.screens.mainscreens.StudentScanner
-import studentapp.screens.mainscreens.StudentSubjects
-import studentapp.screens.subjects.StudentSubjectAttendances
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StudentNavigation(
-    userId: Long,
-
-) {
+fun StudentNavigation() {
     val navController = rememberNavController()
     var centerItem by remember { mutableStateOf(true) }
     var nonCenterItem by remember { mutableStateOf(true) }

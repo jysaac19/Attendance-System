@@ -16,4 +16,5 @@ data class Attendance(
     val subjectCode : String,
     val date: String,
     val time: String,
+    val status: String
 )

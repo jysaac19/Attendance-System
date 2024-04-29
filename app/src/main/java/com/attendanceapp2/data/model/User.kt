@@ -9,8 +9,8 @@ data class User(
     val id : Long,
     val firstname : String,
     val lastname : String,
-    val email : String,
+    val email : String, //should be @student.nbscollege.edu.ph
     val password : String,
-    val usertype : String,
-    val department : String
+    val usertype : String, //ADMIN, STUDENT, FACULTY
+    val department : String //BSCS, BSA, BSE, BSAIS, BSTM
 )

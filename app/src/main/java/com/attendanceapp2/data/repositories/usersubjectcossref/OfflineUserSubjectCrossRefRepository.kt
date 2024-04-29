@@ -1,7 +1,6 @@
 package com.attendanceapp2.data.repositories.usersubjectcossref
 
 import com.attendanceapp2.data.interfaces.UserSubjectCrossRefDao
-import com.attendanceapp2.data.model.User
 import com.attendanceapp2.data.model.UserSubjectCrossRef
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,5 +32,9 @@ class OfflineUserSubjectCrossRefRepository(
 
     suspend fun getSubjectIdsForUser(userId: Long): List<Long> {
         return userSubjectCrossRefDao.getSubjectIdsForUser(userId)
+    }
+
+    suspend fun getAllSubjects(): List<Long> {
+        return userSubjectCrossRefDao.getAllSubjectIds()
     }
 }

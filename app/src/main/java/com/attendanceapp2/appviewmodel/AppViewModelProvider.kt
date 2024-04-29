@@ -4,6 +4,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import attendanceappusers.adminapp.adduser.AddUserViewModel
+import attendanceappusers.adminapp.attendance.AdminAttendanceViewModel
+import attendanceappusers.adminapp.profile.AdminProfileViewModel
+import attendanceappusers.facultyapp.screens.mainscreen.qrscreen.FacultyQRGeneratorViewModel
+import attendanceappusers.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
+import attendanceappusers.facultyapp.viewmodel.FacultyAttendanceViewModel
+import attendanceappusers.facultyapp.viewmodel.FacultySubjectAttendanceViewModel
+import attendanceappusers.studentapp.viewmodel.ScannerViewModel
+import attendanceappusers.studentapp.viewmodel.StudentAttendanceViewModel
+import attendanceappusers.studentapp.viewmodel.StudentSubjectAttendanceViewModel
+import attendanceappusers.studentapp.viewmodel.StudentSubjectViewModel
 import com.attendanceapp2.NBSAttendanceApp
 import com.attendanceapp2.authentication.SignInViewModel
 import com.attendanceapp2.authentication.SignUpViewModel
@@ -12,14 +23,6 @@ import com.attendanceapp2.posts.viewmodel.PostViewModel
 import com.attendanceapp2.appviewmodel.screenviewmodel.ProfileViewModel
 import com.attendanceapp2.appviewmodel.screenviewmodel.ScreenViewModel
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
-import facultyapp.screens.mainscreen.qrscreen.FacultyQRGeneratorViewModel
-import facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
-import facultyapp.viewmodel.FacultyAttendanceViewModel
-import facultyapp.viewmodel.FacultySubjectAttendanceViewModel
-import studentapp.viewmodel.ScannerViewModel
-import studentapp.viewmodel.StudentAttendanceViewModel
-import studentapp.viewmodel.StudentSubjectAttendanceViewModel
-import studentapp.viewmodel.StudentSubjectViewModel
 
 /**
  * Provides Factory to create instance of ViewModel for the entire Inventory app
@@ -47,7 +50,7 @@ object AppViewModelProvider {
         //Sign In ViewModel
         initializer {
             SignInViewModel(
-                nbsAttendanceApplication().container.userRepository,
+                nbsAttendanceApplication().container.offlineUserRepository,
                 SubjectViewModel(
                     nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository,
                     nbsAttendanceApplication().container.offlineSubjectRepository
@@ -57,7 +60,7 @@ object AppViewModelProvider {
 
         //Sign Up ViewModel
         initializer {
-            SignUpViewModel(nbsAttendanceApplication().container.userRepository)
+            SignUpViewModel(nbsAttendanceApplication().container.offlineUserRepository)
         }
 
         //Subject ViewModel
@@ -103,6 +106,10 @@ object AppViewModelProvider {
         }
 
         initializer {
+            AdminProfileViewModel()
+        }
+
+        initializer {
             StudentAttendanceViewModel(
                 nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository,
                 nbsAttendanceApplication().container.offlineAttendanceRepository,
@@ -130,6 +137,18 @@ object AppViewModelProvider {
                 nbsAttendanceApplication().container.offlineAttendanceRepository,
                 nbsAttendanceApplication().container.offlineSubjectRepository
             )
+        }
+
+        initializer {
+            AdminAttendanceViewModel(
+                nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository,
+                nbsAttendanceApplication().container.offlineAttendanceRepository,
+                nbsAttendanceApplication().container.offlineSubjectRepository
+            )
+        }
+
+        initializer {
+            AddUserViewModel()
         }
     }
 }

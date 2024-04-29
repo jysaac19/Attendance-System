@@ -6,17 +6,18 @@ import com.attendanceapp2.data.repositories.user.UserRepository
 import com.attendanceapp2.data.model.LoggedInUser
 import com.attendanceapp2.data.model.LoggedInUserHolder
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
+import com.attendanceapp2.data.repositories.user.OfflineUserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SignInViewModel(
-    private val userRepo: UserRepository,
+    private val offlineUserRepository: OfflineUserRepository,
     private val subjectViewModel: SubjectViewModel
 ) : ViewModel() {
 
     suspend fun validateSignIn(email: String, password: String): Login {
-        val user = userRepo.getUserByEmailAndPassword(email, password)
+        val user = offlineUserRepository.getUserByEmailAndPassword(email, password)
         return if (user != null) {
             val loggedInUser = LoggedInUser(
                 userId = user.id,

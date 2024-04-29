@@ -16,12 +16,11 @@ import com.attendanceapp2.navigation.approutes.AuthRoute
 import com.attendanceapp2.navigation.faculty.FacultyNavigation
 import com.attendanceapp2.navigation.student.StudentNavigation
 import com.attendanceapp2.appviewmodel.screenviewmodel.ScreenViewModel
+import com.attendanceapp2.navigation.admin.AdminNavigation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppNavigation(
-    userId: Long
-) {
+fun AppNavigation() {
     val navController: NavHostController = rememberNavController()
     val screenViewModel: ScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 
@@ -35,13 +34,13 @@ fun AppNavigation(
             }
         }
         composable(route = AppRoutes.STUDENT.name ) {
-            StudentNavigation(userId = userId)
+            StudentNavigation()
         }
         composable(route = AppRoutes.FACULTY.name ) {
             FacultyNavigation()
         }
         composable(route = AppRoutes.ADMIN.name ) {
-            FacultyNavigation()
+            AdminNavigation()
         }
     }
 }

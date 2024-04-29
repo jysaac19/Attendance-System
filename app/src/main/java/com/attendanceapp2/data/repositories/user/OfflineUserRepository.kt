@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 class OfflineUserRepository(
     private val userDao: UserDao,
     private val users: List<User>
-) : UserRepository {
+) {
     init {
         // Initialize the database with the list of users
         CoroutineScope(Dispatchers.IO).launch {
@@ -18,17 +18,17 @@ class OfflineUserRepository(
         }
     }
 
-    override suspend fun insertStudent(user : User) = userDao.insert(user)
+    suspend fun insertStudent(user : User) = userDao.insert(user)
 
-    override suspend fun updateStudent(user : User) = userDao.update(user)
+    suspend fun updateStudent(user : User) = userDao.update(user)
 
-    override suspend fun deleteStudent(user : User) = userDao.delete(user)
+    suspend fun deleteStudent(user : User) = userDao.delete(user)
 
-    override suspend fun getUserByEmailAndPassword(email: String, password: String): User? {
+    suspend fun getUserByEmailAndPassword(email: String, password: String): User? {
         return userDao.getUserByEmailAndPassword(email, password)
     }
 
-    override suspend fun getUserByEmail(email: String): User? {
+    suspend fun getUserByEmail(email: String): User? {
         return userDao.getUserByEmail(email)
     }
 }

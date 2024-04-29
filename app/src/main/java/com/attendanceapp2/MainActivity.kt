@@ -26,6 +26,7 @@ import com.attendanceapp2.appviewmodel.screenviewmodel.ScreenViewModel
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.attendanceapp2.navigation.admin.AdminNavigation
 
 class MainActivity : ComponentActivity() {
     private val screenViewModel: ScreenViewModel by viewModels {
@@ -74,29 +75,27 @@ class MainActivity : ComponentActivity() {
                         .wrapContentWidth(Alignment.CenterHorizontally)
                         .wrapContentHeight(Alignment.CenterVertically)
                 ) {
-//                    NewSchedule(navController)
                     when (val user = loggedInUser) {
                         is LoggedInUser -> {
                             when (user.usertype) {
                                 "Student" -> {
-                                    StudentNavigation(user.userId)
+                                    StudentNavigation()
                                 }
                                 "Faculty" -> {
                                     FacultyNavigation()
                                 }
                                 "Admin" -> {
-                                    FacultyNavigation()
+                                    AdminNavigation()
                                 }
                                 else -> {
-                                    AppNavigation(user.userId)
+                                    AppNavigation()
                                 }
                             }
                         }
                         else -> {
-                            AppNavigation(userId = 101)
+                            AppNavigation()
                         }
                     }
-//                    NBSAttendanceApp()
                 }
             }
         }

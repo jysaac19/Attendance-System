@@ -16,13 +16,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import attendanceappusers.facultyapp.screens.mainscreen.attendances.FacultyAttendances
+import attendanceappusers.facultyapp.screens.mainscreen.profile.ProfileScreen
+import attendanceappusers.facultyapp.screens.mainscreen.qrscreen.QRGeneratorScreen
+import attendanceappusers.facultyapp.screens.mainscreen.subjects.FacultySubjectAttendances
+import attendanceappusers.facultyapp.screens.mainscreen.subjects.FacultySubjects
 import com.attendanceapp2.navigation.approutes.faculty.FacultyMainRoute
 import com.attendanceapp2.navigation.approutes.faculty.FacultySubjectsRoutes
-import facultyapp.screens.mainscreen.profile.ProfileScreen
-import facultyapp.screens.mainscreen.attendances.FacultyAttendances
-import facultyapp.screens.mainscreen.qrscreen.QRGeneratorScreen
-import facultyapp.screens.mainscreen.subjects.FacultySubjectAttendances
-import facultyapp.screens.mainscreen.subjects.FacultySubjects
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -5,22 +5,17 @@ import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.model.Subject
 import com.attendanceapp2.data.model.User
 import com.attendanceapp2.data.model.UserSubjectCrossRef
-import com.attendanceapp2.data.repositories.attendancce.AttendanceRepository
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
 import com.attendanceapp2.data.repositories.schedule.OfflineScheduleRepository
-import com.attendanceapp2.data.repositories.schedule.ScheduleRepository
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
-import com.attendanceapp2.data.repositories.subject.SubjectRepository
 import com.attendanceapp2.data.repositories.user.OfflineUserRepository
-import com.attendanceapp2.data.repositories.user.UserRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
-import com.attendanceapp2.data.repositories.usersubjectcossref.UserSubjectCrossRefRepository
 import com.attendanceapp2.posts.repository.OnlinePostRepository
 
 interface AppContainer {
     val onlinePostRepository: OnlinePostRepository
     val offlineSubjectRepository: OfflineSubjectRepository
-    val userRepository: UserRepository
+    val offlineUserRepository: OfflineUserRepository
     val offlineAttendanceRepository: OfflineAttendanceRepository
     val offlineScheduleRepository: OfflineScheduleRepository
     val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository
@@ -57,7 +52,7 @@ class AppDataContainer(
     /**
      * Implementation for [userRepository]
      */
-    override val userRepository: UserRepository by lazy {
+    override val offlineUserRepository: OfflineUserRepository by lazy {
         OfflineUserRepository(AttendanceAppDatabase.getDatabase(context).userDao(), embeddedUsers)
     }
 
