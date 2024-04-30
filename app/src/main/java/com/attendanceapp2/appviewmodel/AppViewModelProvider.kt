@@ -8,7 +8,9 @@ import attendanceappusers.adminapp.homescreen.adduser.AddUserViewModel
 import attendanceappusers.adminapp.attendance.AdminAttendanceViewModel
 import attendanceappusers.adminapp.homescreen.addsubject.AddSubjectViewModel
 import attendanceappusers.adminapp.profile.AdminProfileViewModel
-import attendanceappusers.adminapp.subject.AdminSubjectListViewModel
+import attendanceappusers.adminapp.subject.addschedule.AddScheduleViewModel
+import attendanceappusers.adminapp.subject.adminsubjectlist.AdminSubjectListViewModel
+import attendanceappusers.adminapp.subject.adminsubject.AdminSubjectViewModel
 import attendanceappusers.facultyapp.screens.mainscreen.qrscreen.FacultyQRGeneratorViewModel
 import attendanceappusers.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
 import attendanceappusers.facultyapp.viewmodel.FacultyAttendanceViewModel
@@ -168,6 +170,20 @@ object AppViewModelProvider {
         initializer {
             AdminSubjectListViewModel(
                 nbsAttendanceApplication().container.offlineSubjectRepository
+            )
+        }
+
+        initializer {
+            AdminSubjectViewModel(
+                nbsAttendanceApplication().container.offlineAttendanceRepository,
+                nbsAttendanceApplication().container.offlineScheduleRepository,
+                nbsAttendanceApplication().container.offlineSubjectRepository
+            )
+        }
+
+        initializer {
+            AddScheduleViewModel(
+                nbsAttendanceApplication().container.offlineScheduleRepository
             )
         }
     }

@@ -139,9 +139,7 @@ fun AddUserScreen(
                 onClick = { navController.popBackStack() },
                 modifier = Modifier
                     .padding(8.dp)
-                    .weight(1f),
-                containerColor = Color.DarkGray,
-                contentColor = Color.White
+                    .weight(1f)
             ) {
                 Icon(Icons.Filled.Close, contentDescription = "Cancel")
             }
@@ -150,9 +148,7 @@ fun AddUserScreen(
                 onClick = { /* Handle Save action */ },
                 modifier = Modifier
                     .padding(8.dp)
-                    .weight(1f),
-                containerColor = Color.DarkGray,
-                contentColor = Color.White
+                    .weight(1f)
             ) {
                 Icon(Icons.Filled.Check, contentDescription = "Save")
             }

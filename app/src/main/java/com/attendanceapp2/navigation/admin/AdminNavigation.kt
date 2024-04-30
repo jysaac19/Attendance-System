@@ -15,16 +15,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
 import attendanceappusers.adminapp.attendance.AdminAttendanceList
 import attendanceappusers.adminapp.homescreen.HomeScreen
 import attendanceappusers.adminapp.homescreen.addsubject.AddSubjectScreen
 import attendanceappusers.adminapp.homescreen.adduser.AddUserScreen
 import attendanceappusers.adminapp.profile.AdminProfileScreen
-import attendanceappusers.adminapp.subject.AdminSubjectScreen
+import attendanceappusers.adminapp.subject.addschedule.AddScheduleScreen
+import attendanceappusers.adminapp.subject.adminsubjectlist.AdminSubjectListScreen
+import attendanceappusers.adminapp.subject.adminsubject.AdminSubjectScreen
 import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.navigation.approutes.admin.AdminMainRoute
-import com.attendanceapp2.navigation.faculty.FacultyBottomNavBar
+import com.attendanceapp2.navigation.approutes.admin.AdminSubject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,17 +46,12 @@ fun AdminNavigation() {
                 navController = navController,
                 startDestination = AdminMainRoute.HomeScreen.name
             ) {
+                //Scope: MainScreens
                 composable(route = AdminMainRoute.HomeScreen.name) {
                     HomeScreen(navController)
                 }
-                composable(route = AdminHomeScreen.AddSubject.name) {
-                    AddSubjectScreen(navController)
-                }
-                composable(route = AdminHomeScreen.AddUser.name) {
-                    AddUserScreen(navController)
-                }
                 composable(route = AdminMainRoute.Subjects.name) {
-                    AdminSubjectScreen(navController)
+                    AdminSubjectListScreen(navController)
                 }
                 composable(route = AdminMainRoute.Attendances.name) {
                     AdminAttendanceList(navController)
@@ -65,6 +61,22 @@ fun AdminNavigation() {
                 }
                 composable(route = AdminMainRoute.Profile.name) {
                     AdminProfileScreen()
+                }
+
+                //Scope: User/Subject Registry
+                composable(route = AdminHomeScreen.AddSubject.name) {
+                    AddSubjectScreen(navController)
+                }
+                composable(route = AdminHomeScreen.AddUser.name) {
+                    AddUserScreen(navController)
+                }
+
+                //Scope : Subjects
+                composable(route = AdminSubject.SubjectScreen.name) {
+                    AdminSubjectScreen(navController)
+                }
+                composable(route = AdminSubject.AddSchedule.name) {
+                    AddScheduleScreen(navController)
                 }
             }
         }

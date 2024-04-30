@@ -15,4 +15,7 @@ class OfflineScheduleRepository(
 
     suspend fun deleteSchedule(schedule: Schedule) = scheduleDao.delete(schedule)
 
+    suspend fun getSchedulesForSubject(subjectId: Long): List<Schedule> {
+        return scheduleDao.getSchedulesForSubject(subjectId)
+    }
 }
