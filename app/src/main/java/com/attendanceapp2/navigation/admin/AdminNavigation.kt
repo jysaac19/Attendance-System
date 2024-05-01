@@ -23,6 +23,7 @@ import attendanceappusers.adminapp.profile.AdminProfileScreen
 import attendanceappusers.adminapp.subject.addschedule.AddScheduleScreen
 import attendanceappusers.adminapp.subject.adminsubjectlist.AdminSubjectListScreen
 import attendanceappusers.adminapp.subject.adminsubject.AdminSubjectScreen
+import attendanceappusers.adminapp.subject.adminsubjectattendacne.AdminSubjectAttendanceScreen
 import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.navigation.approutes.admin.AdminMainRoute
 import com.attendanceapp2.navigation.approutes.admin.AdminSubject
@@ -77,6 +78,9 @@ fun AdminNavigation() {
                 }
                 composable(route = AdminSubject.AddSchedule.name) {
                     AddScheduleScreen(navController)
+                }
+                composable(route = AdminSubject.SubjectAttendance.name) {
+                    AdminSubjectAttendanceScreen(navController)
                 }
             }
         }

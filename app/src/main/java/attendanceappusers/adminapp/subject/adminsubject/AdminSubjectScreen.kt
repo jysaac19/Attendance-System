@@ -123,7 +123,7 @@ fun AdminSubjectScreen (
             horizontalArrangement = Arrangement.Center
         ) {
             FloatingActionButton(
-                onClick = {  },
+                onClick = { navController.navigate(AdminSubject.SubjectAttendance.name) },
                 modifier = Modifier
                     .padding(8.dp)
                     .width(300.dp)

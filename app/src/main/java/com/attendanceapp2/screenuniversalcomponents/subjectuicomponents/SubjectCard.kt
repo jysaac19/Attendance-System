@@ -16,16 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.attendanceapp2.data.model.Subject
-
 @Composable
 fun SubjectCard(subject: Subject, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp, horizontal = 8.dp),
+            .padding(8.dp),
         colors = CardDefaults.cardColors(),
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(
@@ -43,15 +43,17 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
 
             Text(
                 text = subject.name,
-                fontSize = 24.sp,
+                fontSize = 18.sp,
                 textAlign = TextAlign.Center,
+                maxLines = 1, // Limit to 2 lines
+                overflow = TextOverflow.Ellipsis // Add ellipsis for overflow
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = "Prof. ${subject.faculty}",
-                fontSize = 20.sp
+                fontSize = 12.sp
             )
         }
 
@@ -59,7 +61,7 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth(),
             colors = CardDefaults.cardColors(
-                Color.Red.copy(alpha = 0.5f)
+                Color.Red.copy(alpha = 0.8f)
             ),
             shape = RoundedCornerShape(20.dp),
             elevation = CardDefaults.cardElevation(
@@ -77,7 +79,7 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
 
                 Text(
                     text = subject.code,
-                    fontSize = 30.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Center,
                     color = Color.White

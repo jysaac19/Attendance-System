@@ -3,14 +3,22 @@ package attendanceappusers.adminapp.subject.adminsubjectlist
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
@@ -26,31 +34,47 @@ fun AdminSubjectListScreen (
 ) {
     val subjects = viewModel.subjects
 
-
     Column(
-        modifier = Modifier.fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 20.dp, start = 16.dp, end = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LazyColumn {
+        Text(
+            "Subjects",
+            fontSize = 35.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Text(
+            "S.Y. 2023 - 2024",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(minSize = 200.dp),
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
             items(subjects) { subject ->
-                SubjectCard(
-                    subject = subject,
-                    onClick = {
-                        SelectedSubjectHolder.setSelectedSubject(
-                            SelectedSubject(
-                                id = subject.id,
-                                code = subject.code,
-                                name = subject.name,
-                                room = subject.room,
-                                faculty = subject.faculty
-                            )
+                SubjectCard(subject = subject) {
+                    SelectedSubjectHolder.setSelectedSubject(
+                        SelectedSubject(
+                            id = subject.id,
+                            code = subject.code,
+                            name = subject.name,
+                            room = subject.room,
+                            faculty = subject.faculty
                         )
-                        Log.d("SelectedSubject", "Selected subject: ${SelectedSubjectHolder.getSelectedSubject()}")
-                        navController.navigate(  AdminSubject.SubjectScreen.name )
-                    }
-                )
+                    )
+                    Log.d("SelectedSubject", "Selected subject: ${SelectedSubjectHolder.getSelectedSubject()}")
+                    navController.navigate(  AdminSubject.SubjectScreen.name )
+                }
             }
         }
     }

@@ -35,13 +35,11 @@ fun FacultySubjects (
     subjectVM: SubjectViewModel = viewModel(factory = AppViewModelProvider.Factory),
     facultySubjectAttendanceVM: FacultySubjectAttendancesViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-
     val subjects by subjectVM.subjects.collectAsState()
 
     LaunchedEffect(key1 = true) {
         subjectVM.fetchSubjectsForLoggedInUser()
     }
-
 
     Column(
         modifier = Modifier

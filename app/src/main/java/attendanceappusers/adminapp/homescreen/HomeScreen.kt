@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,7 +34,7 @@ fun HomeScreen(
         Card(
             onClick = { navController.navigate(AdminHomeScreen.AddUser.name) },
             modifier = Modifier
-                .size(200.dp, 120.dp)
+                .size(300.dp, 120.dp)
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -45,6 +46,7 @@ fun HomeScreen(
                 Text(
                     "Add User",
                     fontSize = 24.sp,
+                    fontWeight = FontWeight.SemiBold
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
@@ -59,7 +61,7 @@ fun HomeScreen(
         Card(
             onClick = { navController.navigate(AdminHomeScreen.AddSubject.name) },
             modifier = Modifier
-                .size(200.dp, 120.dp)
+                .size(300.dp, 120.dp)
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -71,6 +73,7 @@ fun HomeScreen(
                 Text(
                     "Add Subject",
                     fontSize = 24.sp,
+                    fontWeight = FontWeight.SemiBold
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
