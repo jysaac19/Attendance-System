@@ -19,6 +19,7 @@ import attendanceappusers.adminapp.attendance.AdminAttendanceList
 import attendanceappusers.adminapp.homescreen.HomeScreen
 import attendanceappusers.adminapp.homescreen.addsubject.AddSubjectScreen
 import attendanceappusers.adminapp.homescreen.adduser.AddUserScreen
+import attendanceappusers.adminapp.homescreen.usermanagement.UserManagementScreen
 import attendanceappusers.adminapp.profile.AdminProfileScreen
 import attendanceappusers.adminapp.subject.addschedule.AddScheduleScreen
 import attendanceappusers.adminapp.subject.adminsubjectlist.AdminSubjectListScreen
@@ -64,12 +65,15 @@ fun AdminNavigation() {
                     AdminProfileScreen()
                 }
 
-                //Scope: User/Subject Registry
+                //Scope: HomeScreen
                 composable(route = AdminHomeScreen.AddSubject.name) {
                     AddSubjectScreen(navController)
                 }
                 composable(route = AdminHomeScreen.AddUser.name) {
                     AddUserScreen(navController)
+                }
+                composable(route = AdminHomeScreen.UserManagement.name) {
+                    UserManagementScreen(navController)
                 }
 
                 //Scope : Subjects

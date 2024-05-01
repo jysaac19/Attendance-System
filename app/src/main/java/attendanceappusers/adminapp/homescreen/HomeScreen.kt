@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -78,6 +79,33 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     "Navigate to Add Subject screen\nAdd new subjects to the system",
+                    fontSize = 12.sp,
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.size(16.dp))
+
+        Card(
+            onClick = { navController.navigate( AdminHomeScreen.UserManagement.name ) },
+            modifier = Modifier
+                .size(300.dp, 120.dp)
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxSize()
+            ) {
+                Text(
+                    "Manage Users",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    "Navigate to Manage Users screen\nManage existing users in the system",
                     fontSize = 12.sp,
                 )
             }
