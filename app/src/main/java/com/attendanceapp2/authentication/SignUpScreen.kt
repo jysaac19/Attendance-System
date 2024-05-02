@@ -309,31 +309,31 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Button(
-                onClick = {  },
-                shape = RoundedCornerShape(50.dp),
-                modifier = Modifier
-                    .size(width = 350.dp,height = 50.dp),
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = "Sign Up with Google",
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Normal
-                    )
-                    Spacer(modifier = Modifier.width(20.dp))
-                    Icon(
-                        imageVector = Icons.Default.Mail,
-                        contentDescription = "Email",
-                        tint = Color.White,
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
+//            Button(
+//                onClick = {  },
+//                shape = RoundedCornerShape(50.dp),
+//                modifier = Modifier
+//                    .size(width = 350.dp,height = 50.dp),
+//            ) {
+//                Row(
+//                    verticalAlignment = Alignment.CenterVertically,
+//                    horizontalArrangement = Arrangement.Center
+//                ) {
+//                    Text(
+//                        text = "Sign Up with Google",
+//                        color = Color.White,
+//                        fontSize = 20.sp,
+//                        fontWeight = FontWeight.Normal
+//                    )
+//                    Spacer(modifier = Modifier.width(20.dp))
+//                    Icon(
+//                        imageVector = Icons.Default.Mail,
+//                        contentDescription = "Email",
+//                        tint = Color.White,
+//                        modifier = Modifier.size(24.dp)
+//                    )
+//                }
+//            }
 
             Spacer(modifier = Modifier.height(8.dp))
 
