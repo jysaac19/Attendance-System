@@ -30,4 +30,7 @@ interface UserDao {
 
     @Query("SELECT * FROM User WHERE usertype = :userType")
     fun getUsersByUserType(userType: String): Flow<List<User>>
+
+    @Query("SELECT * FROM User")
+    fun getUsers(): Flow<List<User>>
 }

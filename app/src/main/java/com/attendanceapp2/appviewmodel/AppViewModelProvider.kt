@@ -7,6 +7,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import attendanceappusers.adminapp.homescreen.adduser.AddUserViewModel
 import attendanceappusers.adminapp.attendance.AdminAttendanceViewModel
 import attendanceappusers.adminapp.homescreen.addsubject.AddSubjectViewModel
+import attendanceappusers.adminapp.homescreen.attendancemanagement.AttendanceManagementViewModel
+import attendanceappusers.adminapp.homescreen.usermanagement.UserManagementViewModel
 import attendanceappusers.adminapp.profile.AdminProfileViewModel
 import attendanceappusers.adminapp.subject.addschedule.AddScheduleViewModel
 import attendanceappusers.adminapp.subject.adminsubjectlist.AdminSubjectListViewModel
@@ -188,6 +190,18 @@ object AppViewModelProvider {
 
         initializer {
             AdminSubjectAttendanceViewModel(
+                nbsAttendanceApplication().container.offlineAttendanceRepository
+            )
+        }
+
+        initializer {
+            UserManagementViewModel(
+                nbsAttendanceApplication().container.offlineUserRepository
+            )
+        }
+
+        initializer {
+            AttendanceManagementViewModel(
                 nbsAttendanceApplication().container.offlineAttendanceRepository
             )
         }

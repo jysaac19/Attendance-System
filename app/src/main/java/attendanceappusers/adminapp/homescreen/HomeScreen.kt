@@ -45,7 +45,7 @@ fun HomeScreen(
                     .fillMaxSize()
             ) {
                 Text(
-                    "Add User",
+                    "Create New User",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -72,7 +72,7 @@ fun HomeScreen(
                     .fillMaxSize()
             ) {
                 Text(
-                    "Add Subject",
+                    "Create Subject",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -99,13 +99,40 @@ fun HomeScreen(
                     .fillMaxSize()
             ) {
                 Text(
-                    "Manage Users",
+                    "User Management",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.SemiBold
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     "Navigate to Manage Users screen\nManage existing users in the system",
+                    fontSize = 12.sp,
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.size(16.dp))
+
+        Card(
+            onClick = { navController.navigate( AdminHomeScreen.AttendanceManagement.name) },
+            modifier = Modifier
+                .size(300.dp, 120.dp)
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxSize()
+            ) {
+                Text(
+                    "Attendance Management",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    "Navigate to Attendance Management screen\nManage attendance records",
                     fontSize = 12.sp,
                 )
             }

@@ -1,7 +1,12 @@
-package attendanceappusers.adminapp.homescreen.usermanagement
+package attendanceappusers.adminapp.homescreen.attendancemanagement
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,8 +14,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -19,7 +22,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
@@ -38,31 +46,33 @@ import com.attendanceapp2.appviewmodel.AppViewModelProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserManagementScreen(
+fun AttendanceManagementScreen (
     navController: NavController,
-    viewModel: UserManagementViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: AttendanceManagementViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val context = LocalContext.current
-    val users by viewModel.users.collectAsState()
-
     var searchText by remember { mutableStateOf(TextFieldValue()) }
 
-    var selectedUserType by remember { mutableStateOf("All") }
-    val userType = listOf("All", "Admin", "Student", "Faculty")
+    var selectedRole by remember { mutableStateOf("Admin") }
+    val userType = listOf("Admin", "Student", "Faculty")
     var expanded by remember { mutableStateOf(false) }
+    var selectedUserType by remember { mutableStateOf(userType[0]) }
+
+    val attendances by viewModel.attendances.collectAsState()
 
     Column(
         modifier = Modifier
-            .padding(top = 20.dp, start = 16.dp, end = 16.dp)
-            .fillMaxSize(),
+            .padding(top = 20.dp, start = 16.dp, end = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         Text(
-            "User Management",
+            "Attendance Management",
             fontSize = 35.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 16.dp)
+            fontWeight = FontWeight.Bold
         )
+
+        Spacer(modifier = Modifier.width(16.dp))
 
         OutlinedTextField(
             value = searchText,
@@ -90,7 +100,7 @@ fun UserManagementScreen(
         ) {
             OutlinedTextField(
                 value = selectedUserType,
-                onValueChange = { },
+                onValueChange = {  },
                 readOnly = true,
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                 modifier = Modifier
@@ -116,21 +126,16 @@ fun UserManagementScreen(
             }
         }
 
+
         Spacer(modifier = Modifier.height(16.dp))
 
+        // LazyColumn to display attendances
         LazyColumn {
-            items(users) { user ->
-                UserCard(
-                    user = user,
-                    onDeleteClick = {
-                        // Handle delete action
-                    },
-                    onDeactivateClick = {
-                        // Handle deactivate action
-                    },
-                    onUpdateClick = {
-                        // Handle update action
-                    }
+            items(attendances) { attendance ->
+                AttendanceCard(
+                    attendance = attendance,
+                    onDelete = {  },
+                    onUpdate = {  }
                 )
             }
         }

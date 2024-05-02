@@ -35,4 +35,8 @@ class OfflineUserRepository(
     fun getUsersByUserType(userType: String): Flow<List<User>> {
         return userDao.getUsersByUserType(userType)
     }
+
+    fun getUsers(): Flow<List<User>> {
+        return userDao.getUsers()
+    }
 }
