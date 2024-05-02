@@ -2,6 +2,7 @@ package attendanceappusers.adminapp.homescreen.usermanagement
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.attendanceapp2.data.model.Attendance
 import com.attendanceapp2.data.model.User
 import com.attendanceapp2.data.repositories.user.OfflineUserRepository
 import kotlinx.coroutines.flow.Flow
@@ -20,6 +21,34 @@ class UserManagementViewModel(
     init {
         // Load users when ViewModel is initialized
         fetchUsersForAdmin()
+    }
+
+    fun filterUsersByAdmin(
+        userId: String,
+        userType: String
+    ) {
+        viewModelScope.launch {
+            if (userId.isEmpty() && userType == "All") {
+                // If search text is empty and userType is "All", fetch all users
+                fetchUsersForAdmin()
+            } else if (userId.isNotEmpty() && userType == "All") {
+                // If search text is not empty and userType is "All", filter users by starting userId
+                val userIdPrefix = "$userId%"
+                offlineUserRepository.filterUsersByStartingUserId(userIdPrefix).collect { users ->
+                    // Update the StateFlow with the filtered users
+                    _users.value = users
+                }
+            } else {
+                // Call the repository function to filter users by userType and/or userId
+                offlineUserRepository.filterUsersByAdmin(
+                    userId,
+                    userType
+                ).collect { users ->
+                    // Update the StateFlow with the filtered users
+                    _users.value = users
+                }
+            }
+        }
     }
 
     // Function to get all users for the admin

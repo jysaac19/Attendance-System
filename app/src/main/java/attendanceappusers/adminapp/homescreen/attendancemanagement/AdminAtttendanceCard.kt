@@ -44,7 +44,6 @@ fun AttendanceCard(
             Text(text = "Time: ${attendance.time}")
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = "Status: ${attendance.status}")
-            Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End

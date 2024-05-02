@@ -1,7 +1,9 @@
 package attendanceappusers.adminapp.homescreen.attendancemanagement
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,6 +26,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,6 +40,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -43,6 +48,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
+import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.CustomDatePicker
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,15 +57,23 @@ fun AttendanceManagementScreen (
     navController: NavController,
     viewModel: AttendanceManagementViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+
+    // Get the current year
+    val currentYear = LocalDate.now().year
+
+    // Default start date and end date
+    val defaultEndDate = LocalDate.now()
+    val defaultStartDate = LocalDate.of(currentYear, 1, 1) // January 1st of the current year
+
+    // Collecting the start and end dates with default values
+    var startDate by remember { mutableStateOf(defaultStartDate) }
+    var endDate by remember { mutableStateOf(defaultEndDate) }
+
     val context = LocalContext.current
     var searchText by remember { mutableStateOf(TextFieldValue()) }
 
-    var selectedRole by remember { mutableStateOf("Admin") }
-    val userType = listOf("Admin", "Student", "Faculty")
-    var expanded by remember { mutableStateOf(false) }
-    var selectedUserType by remember { mutableStateOf(userType[0]) }
-
     val attendances by viewModel.attendances.collectAsState()
+    val sortedAttendances = attendances.sortedByDescending { LocalDate.parse(it.date) }
 
     Column(
         modifier = Modifier
@@ -76,7 +91,9 @@ fun AttendanceManagementScreen (
 
         OutlinedTextField(
             value = searchText,
-            onValueChange = { searchText = it },
+            onValueChange = {
+                searchText = it
+            },
             label = { Text("Search") },
             singleLine = true,
             trailingIcon = {
@@ -85,53 +102,50 @@ fun AttendanceManagementScreen (
                 }
             },
             shape = RoundedCornerShape(20.dp),
-            modifier = Modifier
-                .fillMaxWidth(),
-            placeholder = {Text("Enter User ID")}
+            modifier = Modifier.fillMaxWidth(),
+            placeholder = { Text("Enter User ID") },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = {
-                expanded = !expanded
-            }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            OutlinedTextField(
-                value = selectedUserType,
-                onValueChange = {  },
-                readOnly = true,
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                modifier = Modifier
-                    .menuAnchor(),
-                shape = RoundedCornerShape(20.dp),
-                textStyle = TextStyle(textAlign = TextAlign.Center)
-            )
-
-            ExposedDropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false }
+            Column(
+                modifier = Modifier.weight(1f)
             ) {
-                userType.forEach { item ->
-                    DropdownMenuItem(
-                        text = { Text(text = item) },
-                        onClick = {
-                            selectedUserType = item
-                            expanded = false
-                            Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
-                        }
-                    )
-                }
+                CustomDatePicker(
+                    label = "From",
+                    selectedDate = startDate,
+                    onDateSelected = { date ->
+                        startDate = date
+                    }
+                )
+            }
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                CustomDatePicker(
+                    label = "To",
+                    selectedDate = endDate,
+                    onDateSelected = { date ->
+                        endDate = date
+                    }
+                )
             }
         }
-
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // LazyColumn to display attendances
         LazyColumn {
-            items(attendances) { attendance ->
+            items(sortedAttendances) { attendance ->
                 AttendanceCard(
                     attendance = attendance,
                     onDelete = {  },
@@ -139,5 +153,16 @@ fun AttendanceManagementScreen (
                 )
             }
         }
+    }
+
+    LaunchedEffect(searchText, startDate, endDate) {
+        val userId = searchText.text.trim()
+        val startDateString = startDate.toString()
+        val endDateString = endDate.toString()
+        viewModel.filterAttendancesByAdmin(
+            userId,
+            startDateString,
+            endDateString
+        )
     }
 }

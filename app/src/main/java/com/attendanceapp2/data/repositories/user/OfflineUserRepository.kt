@@ -39,4 +39,12 @@ class OfflineUserRepository(
     fun getUsers(): Flow<List<User>> {
         return userDao.getUsers()
     }
+
+    fun filterUsersByAdmin (userId: String, usertype: String): Flow<List<User>> {
+        return userDao.filterUsersByAdmin(userId, usertype)
+    }
+
+    fun filterUsersByStartingUserId(userIdPrefix: String): Flow<List<User>> {
+        return userDao.filterUsersByStartingUserId(userIdPrefix)
+    }
 }

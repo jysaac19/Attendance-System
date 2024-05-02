@@ -43,6 +43,13 @@ interface AttendanceDao {
 
     @Query("SELECT * FROM Attendance WHERE subjectId IN (:subjectIds)")
     fun getAttendancesBySubjectIds(subjectIds: List<Long>): Flow<List<Attendance>>
+
+    // Inside AttendanceDao interface
+
+    @Query("SELECT * FROM Attendance WHERE userId LIKE '%' || :userId || '%' AND date BETWEEN :startDate AND :endDate")
+    fun filterAttendancesByAdmin(
+        userId: String,
+        startDate: String,
+        endDate: String
+    ): Flow<List<Attendance>>
 }
-
-

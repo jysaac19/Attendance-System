@@ -40,7 +40,6 @@ fun AdminAttendanceList (
     viewModel : AdminAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
 
-
     // Get the current year
     val currentYear = LocalDate.now().year
 

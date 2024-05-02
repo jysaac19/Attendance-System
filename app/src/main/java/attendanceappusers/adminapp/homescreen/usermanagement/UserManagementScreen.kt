@@ -66,7 +66,9 @@ fun UserManagementScreen(
 
         OutlinedTextField(
             value = searchText,
-            onValueChange = { searchText = it },
+            onValueChange = {
+                searchText = it
+            },
             label = { Text("Search") },
             singleLine = true,
             trailingIcon = {
@@ -134,5 +136,13 @@ fun UserManagementScreen(
                 )
             }
         }
+    }
+
+    LaunchedEffect(searchText, selectedUserType) {
+        val userId = searchText.text.trim()
+        viewModel.filterUsersByAdmin(
+            userId,
+            selectedUserType
+        )
     }
 }
