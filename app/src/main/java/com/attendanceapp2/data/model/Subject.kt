@@ -12,5 +12,6 @@ data class Subject(
     val name : String,
     val room : String,
     @ColumnInfo("faculty_name")
-    val faculty : String
+    val faculty : String,
+    val subjectStatus: String
 )

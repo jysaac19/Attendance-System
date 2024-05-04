@@ -10,6 +10,7 @@ import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -76,6 +77,32 @@ class AdminAttendanceViewModel(
                     Log.d("AdminAttendanceViewModel", "Subject Attendances: $attendances")
                 }
             }
+        }
+    }
+
+    fun filterAttendanceList(
+        userId: String,
+        subjectCode: String,
+        startDate: String,
+        endDate: String
+    ) {
+        viewModelScope.launch {
+            val filteredAttendances = if (subjectCode == "All") {
+                offlineAttendanceRepository.filterAttendancesByAdmin(
+                    userId,
+                    startDate,
+                    endDate
+                )
+            } else {
+                offlineAttendanceRepository.filterStudentAttendance(
+                    startDate,
+                    endDate,
+                    userId.toLong(),
+                    subjectCode
+                )
+            }.first() // Assuming Flow emits a single list
+
+            _adminAttendanceList.value = filteredAttendances
         }
     }
 }

@@ -1,4 +1,4 @@
-package attendanceappusers.adminapp.homescreen.adduser
+package attendanceappusers.adminapp.homescreen.usermanagement.adduser
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

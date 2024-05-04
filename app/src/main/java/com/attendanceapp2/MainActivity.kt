@@ -16,6 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import attendanceappusers.adminapp.homescreen.addattendance.AddAttendanceScreen
 import com.attendanceapp2.theme.NBSCollegeTheme
 import com.attendanceapp2.data.model.LoggedInUser
 import com.attendanceapp2.data.model.LoggedInUserHolder
@@ -65,7 +68,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val loggedInUser by LoggedInUserHolder.loggedInUser.collectAsState()
-//            val navController: NavController = rememberNavController()
+            val navController: NavController = rememberNavController()
 
 
             NBSCollegeTheme {
@@ -75,6 +78,7 @@ class MainActivity : ComponentActivity() {
                         .wrapContentWidth(Alignment.CenterHorizontally)
                         .wrapContentHeight(Alignment.CenterVertically)
                 ) {
+//                    AddAttendanceScreen(navController)
                     when (val user = loggedInUser) {
                         is LoggedInUser -> {
                             when (user.usertype) {

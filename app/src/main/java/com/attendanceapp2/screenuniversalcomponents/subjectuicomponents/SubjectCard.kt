@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.attendanceapp2.data.model.Subject
+
 @Composable
 fun SubjectCard(subject: Subject, onClick: () -> Unit) {
     Card(
@@ -36,7 +37,7 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp, horizontal = 8.dp),
+                .padding(start = 8.dp, end = 8.dp, bottom = 8.dp, top = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

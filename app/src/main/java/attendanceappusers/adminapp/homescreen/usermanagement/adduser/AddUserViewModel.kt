@@ -1,4 +1,4 @@
-package attendanceappusers.adminapp.homescreen.adduser
+package attendanceappusers.adminapp.homescreen.usermanagement.adduser
 
 import androidx.lifecycle.ViewModel
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository

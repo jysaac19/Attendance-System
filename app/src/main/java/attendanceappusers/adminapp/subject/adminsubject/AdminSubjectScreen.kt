@@ -7,10 +7,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.filled.Update
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -49,7 +53,7 @@ fun AdminSubjectScreen (
             .fillMaxWidth()
     ) {
         Card(
-            onClick = {  },
+            onClick = { },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
@@ -71,6 +75,34 @@ fun AdminSubjectScreen (
                     Text(text = "Code/Name:            ${selectedSubject.code} - ${selectedSubject.name}")
                     Text(text = "Faculty:                    ${selectedSubject.faculty}")
                     Text(text = "Room:                       ${selectedSubject.room}")
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        FloatingActionButton(
+                            onClick = { /* Handle Update action */ },
+                            modifier = Modifier.padding(8.dp)
+                        ) {
+                            Icon(Icons.Default.Update, contentDescription = "Update")
+                        }
+
+                        FloatingActionButton(
+                            onClick = { /* Handle Delete action */ },
+                            modifier = Modifier.padding(8.dp)
+                        ) {
+                            Icon(Icons.Default.Delete, contentDescription = "Delete")
+                        }
+
+                        FloatingActionButton(
+                            onClick = { /* Handle Archive action */ },
+                            modifier = Modifier.padding(8.dp)
+                        ) {
+                            Icon(Icons.Filled.Archive, contentDescription = "Archive")
+                        }
+                    }
                 } else {
                     Text(text = "No subject selected")
                 }
@@ -128,7 +160,7 @@ fun AdminSubjectScreen (
                     .padding(8.dp)
                     .width(300.dp)
             ) {
-                Row (
+                Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -138,7 +170,10 @@ fun AdminSubjectScreen (
                         fontWeight = FontWeight.SemiBold
                     )
 
-                    Icon(Icons.Default.ArrowForward, contentDescription = "Go To Subject Attendances")
+                    Icon(
+                        Icons.Default.ArrowForward,
+                        contentDescription = "Go To Subject Attendances"
+                    )
                 }
             }
         }

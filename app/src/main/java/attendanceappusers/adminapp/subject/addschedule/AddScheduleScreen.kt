@@ -213,7 +213,7 @@ fun AddScheduleScreen (
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "View Attendances",
+                            text = "Add New Schedule",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.SemiBold
                         )

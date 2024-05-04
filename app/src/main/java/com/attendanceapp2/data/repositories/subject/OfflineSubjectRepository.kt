@@ -5,6 +5,7 @@ import com.attendanceapp2.data.model.Subject
 import com.attendanceapp2.data.model.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -36,5 +37,9 @@ class OfflineSubjectRepository(
         return withContext(Dispatchers.IO) {
             subjectDao.getAllSubjects()
         }
+    }
+
+    fun filterSubjectList(subjectCode: String): Flow<List<Subject>> {
+        return subjectDao.filterSubjectList(subjectCode)
     }
 }

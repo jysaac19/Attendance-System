@@ -4,10 +4,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import attendanceappusers.adminapp.homescreen.adduser.AddUserViewModel
+import attendanceappusers.adminapp.homescreen.usermanagement.adduser.AddUserViewModel
 import attendanceappusers.adminapp.attendance.AdminAttendanceViewModel
+import attendanceappusers.adminapp.homescreen.addattendance.AddAttendanceViewModel
 import attendanceappusers.adminapp.homescreen.addsubject.AddSubjectViewModel
 import attendanceappusers.adminapp.homescreen.attendancemanagement.AttendanceManagementViewModel
+import attendanceappusers.adminapp.homescreen.subjectmanagement.SubjectManagementViewModel
 import attendanceappusers.adminapp.homescreen.usermanagement.UserManagementViewModel
 import attendanceappusers.adminapp.profile.AdminProfileViewModel
 import attendanceappusers.adminapp.subject.addschedule.AddScheduleViewModel
@@ -169,6 +171,15 @@ object AppViewModelProvider {
         }
 
         initializer {
+            AddAttendanceViewModel(
+                nbsAttendanceApplication().container.offlineAttendanceRepository,
+                nbsAttendanceApplication().container.offlineSubjectRepository,
+                nbsAttendanceApplication().container.offlineUserRepository,
+                nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository
+            )
+        }
+
+        initializer {
             AdminSubjectListViewModel(
                 nbsAttendanceApplication().container.offlineSubjectRepository
             )
@@ -203,6 +214,12 @@ object AppViewModelProvider {
         initializer {
             AttendanceManagementViewModel(
                 nbsAttendanceApplication().container.offlineAttendanceRepository
+            )
+        }
+
+        initializer {
+            SubjectManagementViewModel(
+                nbsAttendanceApplication().container.offlineSubjectRepository
             )
         }
     }

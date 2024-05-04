@@ -11,6 +11,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,6 +30,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -58,8 +67,22 @@ fun AdminAttendanceList (
     val attendances by viewModel.adminAttendanceList.collectAsState()
     val sortedAttendances = attendances.sortedByDescending { LocalDate.parse(it.date) }
 
+    var searchText by remember { mutableStateOf(TextFieldValue()) }
+
     LaunchedEffect(selectedSubject, startDate, endDate) {
         viewModel.fetchAllAttendance(selectedSubject, startDate, endDate)
+    }
+
+    LaunchedEffect(searchText, startDate, endDate) {
+        val userId = searchText.text.trim()
+        val startDateString = startDate.toString()
+        val endDateString = endDate.toString()
+        viewModel.filterAttendanceList(
+            userId,
+            selectedSubject,
+            startDateString,
+            endDateString
+        )
     }
 
     Column(
@@ -89,6 +112,24 @@ fun AdminAttendanceList (
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            OutlinedTextField(
+                value = searchText,
+                onValueChange = {
+                    searchText = it
+                },
+                label = { Text("Search") },
+                singleLine = true,
+                trailingIcon = {
+                    IconButton(onClick = { /* TODO: Handle search action */ }) {
+                        Icon(Icons.Default.Search, contentDescription = "Search")
+                    }
+                },
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = { Text("Enter User ID") },
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+            )
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
@@ -122,16 +163,12 @@ fun AdminAttendanceList (
             }
         }
 
-        Spacer(Modifier.height(8.dp))
-
         UniversalDropDownMenu(
             label = "Subjects",
             items = subjects,
             selectedItem = selectedSubject,
             onItemSelected = { selectedSubject = it }
         )
-
-        Spacer(Modifier.height(8.dp))
 
         Spacer(Modifier.height(8.dp))
 

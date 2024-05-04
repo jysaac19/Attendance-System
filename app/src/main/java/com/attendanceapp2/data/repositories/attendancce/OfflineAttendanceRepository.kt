@@ -48,11 +48,11 @@ class OfflineAttendanceRepository(
         return attendanceDao.getAttendancesBySubjectIds(subjectIds)
     }
 
-    fun filterAttendancesByAdmin(
-        userId: String,
-        startDate: String,
-        endDate: String
-    ): Flow<List<Attendance>> {
+    fun filterAttendancesByAdmin(userId: String, startDate: String, endDate: String): Flow<List<Attendance>> {
         return attendanceDao.filterAttendancesByAdmin(userId, startDate, endDate)
+    }
+
+    fun filterAdminAttendanceList(userId: String, subjectCode: String, startDate: String, endDate: String): Flow<List<Attendance>> {
+        return attendanceDao.filterAdminAttendanceList(userId, subjectCode, startDate, endDate)
     }
 }

@@ -25,13 +25,13 @@ class NBSAttendanceApp : Application() {
         )
 
         val embeddedSubjects = listOf(
-            Subject(id = 1, code = "CS101", name = "Introduction to Computer Science", room = "Room A", faculty = "John Doe"),
-            Subject(id = 2, code = "ENG201", name = "English Literature", room = "Room B", faculty = "Jane Smith"),
-            Subject(id = 3, code = "MATH301", name = "Advanced Mathematics", room = "Room C", faculty = "Alice Johnson"),
-            Subject(id = 4, code = "PHY401", name = "Physics", room = "Room D", faculty = "Robert Brown"),
-            Subject(id = 5, code = "CHEM501", name = "Chemistry", room = "Room E", faculty = "Emily Wilson"),
-            Subject(id = 6, code = "BIO601", name = "Biology", room = "Room F", faculty = "Michael Johnson"),
-            Subject(id = 7, code = "HIST701", name = "History", room = "Room G", faculty = "Sarah Adams")
+            Subject(id = 1, code = "CS101", name = "Introduction to Computer Science", room = "Room A", faculty = "John Doe", "Active"),
+            Subject(id = 2, code = "ENG201", name = "English Literature", room = "Room B", faculty = "Jane Smith", "Active"),
+            Subject(id = 3, code = "MATH301", name = "Advanced Mathematics", room = "Room C", faculty = "Alice Johnson", "Active"),
+            Subject(id = 4, code = "PHY401", name = "Physics", room = "Room D", faculty = "Robert Brown", "Active"),
+            Subject(id = 5, code = "CHEM501", name = "Chemistry", room = "Room E", faculty = "Emily Wilson", "Active"),
+            Subject(id = 6, code = "BIO601", name = "Biology", room = "Room F", faculty = "Michael Johnson", "Active"),
+            Subject(id = 7, code = "HIST701", name = "History", room = "Room G", faculty = "Sarah Adams", "Archive")
         )
 
         val embeddedUserSubjectCrossRefs = listOf(
