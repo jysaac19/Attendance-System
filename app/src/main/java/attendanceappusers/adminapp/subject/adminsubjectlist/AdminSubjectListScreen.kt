@@ -65,11 +65,12 @@ fun AdminSubjectListScreen (
                 SubjectCard(subject = subject) {
                     SelectedSubjectHolder.setSelectedSubject(
                         SelectedSubject(
-                            id = subject.id,
-                            code = subject.code,
-                            name = subject.name,
-                            room = subject.room,
-                            faculty = subject.faculty
+                            subject.id,
+                            subject.code,
+                            subject.name,
+                            subject.room,
+                            subject.faculty,
+                            subject.joinCode
                         )
                     )
                     Log.d("SelectedSubject", "Selected subject: ${SelectedSubjectHolder.getSelectedSubject()}")

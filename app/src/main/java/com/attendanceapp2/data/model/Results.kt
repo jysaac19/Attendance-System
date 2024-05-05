@@ -5,4 +5,9 @@ sealed class Results {
         val failureMessage: String? = null,
         val successMessage: String? = null
     ) : Results()
+
+    data class JoinSubjectResult (
+        val failureMessage: String? = null,
+        val successMessage: String? = null
+    )
 }

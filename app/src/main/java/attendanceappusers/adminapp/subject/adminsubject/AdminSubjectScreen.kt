@@ -73,9 +73,65 @@ fun AdminSubjectScreen (
                     modifier = Modifier.fillMaxWidth()
                 )
                 if (selectedSubject != null) {
-                    Text(text = "Code/Name:            ${selectedSubject.code} - ${selectedSubject.name}")
-                    Text(text = "Faculty:                    ${selectedSubject.faculty}")
-                    Text(text = "Room:                       ${selectedSubject.room}")
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = "Code/Name:",
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Text(
+                            text = "${selectedSubject.code} - ${selectedSubject.name}",
+                            modifier = Modifier.weight(3f)
+                        )
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = "Faculty:",
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Text(
+                            text = selectedSubject.faculty,
+                            modifier = Modifier.weight(3f)
+                        )
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = "Room:",
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Text(
+                            text = selectedSubject.room,
+                            modifier = Modifier.weight(3f)
+                        )
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = "Join Code:",
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Text(
+                            text = selectedSubject.joinCode,
+                            modifier = Modifier.weight(3f)
+                        )
+                    }
 
                     Row(
                         modifier = Modifier

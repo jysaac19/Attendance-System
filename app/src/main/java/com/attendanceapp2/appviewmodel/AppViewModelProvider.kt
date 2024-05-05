@@ -20,6 +20,7 @@ import attendanceappusers.facultyapp.screens.mainscreen.qrscreen.FacultyQRGenera
 import attendanceappusers.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
 import attendanceappusers.facultyapp.viewmodel.FacultyAttendanceViewModel
 import attendanceappusers.facultyapp.viewmodel.FacultySubjectAttendanceViewModel
+import attendanceappusers.studentapp.screens.subjects.joinsubject.JoinSubjectViewModel
 import attendanceappusers.studentapp.viewmodel.ScannerViewModel
 import attendanceappusers.studentapp.viewmodel.StudentAttendanceViewModel
 import attendanceappusers.studentapp.viewmodel.StudentSubjectAttendanceViewModel
@@ -42,6 +43,13 @@ object AppViewModelProvider {
         // ScreenViewModel
         initializer {
             ScreenViewModel()
+        }
+
+        initializer {
+            JoinSubjectViewModel(
+                nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository,
+                nbsAttendanceApplication().container.offlineSubjectRepository
+            )
         }
 
         // ScannerViewModel

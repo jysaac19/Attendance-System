@@ -156,11 +156,12 @@ fun SubjectManagementScreen (
                         coroutineScope.launch {
                             // Convert Subject to SelectedSubject
                             val selectedSubject = SelectedSubject(
-                                id = subject.id,
-                                code = subject.code,
-                                name = subject.name,
-                                room = subject.room,
-                                faculty = subject.faculty
+                                subject.id,
+                                subject.code,
+                                subject.name,
+                                subject.room,
+                                subject.faculty,
+                                subject.joinCode
                             )
                             // Set the selected subject
                             SelectedSubjectHolder.setSelectedSubject(selectedSubject)

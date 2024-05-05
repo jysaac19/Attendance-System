@@ -62,7 +62,7 @@ fun FacultyNavigation() {
                     composable(route = FacultySubjectsRoutes.FacultySubjectAttendances.name) {
                         FacultySubjectAttendances(navController)
                         centerItem = true
-                        nonCenterItem = false
+                        nonCenterItem = true
                     }
                     composable(route = FacultySubjectsRoutes.FacultySubjectQRScreen.name) {
 
