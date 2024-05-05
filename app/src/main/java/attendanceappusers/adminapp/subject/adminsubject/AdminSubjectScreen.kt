@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Archive
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
@@ -151,14 +152,39 @@ fun AdminSubjectScreen (
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp),
-            horizontalArrangement = Arrangement.Center
+                .padding(vertical = 8.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
+            FloatingActionButton(
+                onClick = { navController.navigateUp() },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .weight(1f)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        Icons.Default.ArrowBack,
+                        contentDescription = "Back"
+                    )
+
+                    Text(
+                        text = "Back",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+            }
+
+
             FloatingActionButton(
                 onClick = { navController.navigate(AdminSubject.SubjectAttendance.name) },
                 modifier = Modifier
                     .padding(8.dp)
-                    .width(300.dp)
+                    .weight(1f)
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),

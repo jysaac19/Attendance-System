@@ -1,4 +1,4 @@
-package attendanceappusers.adminapp.homescreen.addattendance
+package attendanceappusers.adminapp.homescreen.attendancemanagement.addattendance
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

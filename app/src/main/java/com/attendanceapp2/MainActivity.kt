@@ -18,18 +18,17 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import attendanceappusers.adminapp.homescreen.addattendance.AddAttendanceScreen
-import com.attendanceapp2.theme.NBSCollegeTheme
+import com.attendanceapp2.appviewmodel.AppViewModelProvider
+import com.attendanceapp2.appviewmodel.screenviewmodel.ScreenViewModel
 import com.attendanceapp2.data.model.LoggedInUser
 import com.attendanceapp2.data.model.LoggedInUserHolder
 import com.attendanceapp2.navigation.AppNavigation
+import com.attendanceapp2.navigation.admin.AdminNavigation
 import com.attendanceapp2.navigation.faculty.FacultyNavigation
 import com.attendanceapp2.navigation.student.StudentNavigation
-import com.attendanceapp2.appviewmodel.screenviewmodel.ScreenViewModel
-import com.attendanceapp2.appviewmodel.AppViewModelProvider
+import com.attendanceapp2.theme.NBSCollegeTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import com.attendanceapp2.navigation.admin.AdminNavigation
 
 class MainActivity : ComponentActivity() {
     private val screenViewModel: ScreenViewModel by viewModels {
@@ -78,7 +77,6 @@ class MainActivity : ComponentActivity() {
                         .wrapContentWidth(Alignment.CenterHorizontally)
                         .wrapContentHeight(Alignment.CenterVertically)
                 ) {
-//                    AddAttendanceScreen(navController)
                     when (val user = loggedInUser) {
                         is LoggedInUser -> {
                             when (user.usertype) {

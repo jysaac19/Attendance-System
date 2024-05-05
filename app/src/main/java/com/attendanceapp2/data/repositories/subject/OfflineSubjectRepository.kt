@@ -42,4 +42,18 @@ class OfflineSubjectRepository(
     fun filterSubjectList(subjectCode: String): Flow<List<Subject>> {
         return subjectDao.filterSubjectList(subjectCode)
     }
+
+    suspend fun getSubjectByJoinCode(joinCode: String): Subject? {
+        return withContext(Dispatchers.IO) {
+            subjectDao.getSubjectByJoinCode(joinCode)
+        }
+    }
+
+    suspend fun getActiveSubjectByCode(subjectCode: String): Subject? {
+        return subjectDao.getActiveSubjectByCode(subjectCode)
+    }
+
+    suspend fun getActiveSubjectByName(subjectName: String): Subject? {
+        return subjectDao.getActiveSubjectByName(subjectName)
+    }
 }

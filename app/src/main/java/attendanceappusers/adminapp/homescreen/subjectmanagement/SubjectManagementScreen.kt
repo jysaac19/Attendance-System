@@ -2,6 +2,7 @@ package attendanceappusers.adminapp.homescreen.subjectmanagement
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +14,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -89,7 +93,56 @@ fun SubjectManagementScreen (
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Row(
+            modifier = Modifier
+                .padding(vertical = 8.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            FloatingActionButton(
+                onClick = { navController.navigateUp() },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .weight(1f)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        Icons.Default.ArrowBack,
+                        contentDescription = "Back to Home"
+                    )
+
+                    Text(
+                        text = "Back to Home",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+            }
+
+            FloatingActionButton(
+                onClick = { navController.navigate(AdminHomeScreen.AddSubject.name) },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .weight(1f)
+            ) {
+                Row (
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Add New Subject",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+
+                    Icon(Icons.Default.Add, contentDescription = "Go To Add New Subject Screen")
+                }
+            }
+        }
 
         // Display the list of subjects
         LazyColumn(

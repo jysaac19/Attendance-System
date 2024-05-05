@@ -1,4 +1,4 @@
-package attendanceappusers.adminapp.homescreen.addattendance
+package attendanceappusers.adminapp.homescreen.attendancemanagement.addattendance
 
 import androidx.lifecycle.ViewModel
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository

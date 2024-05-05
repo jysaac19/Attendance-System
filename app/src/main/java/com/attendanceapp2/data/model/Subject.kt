@@ -13,5 +13,6 @@ data class Subject(
     val room : String,
     @ColumnInfo("faculty_name")
     val faculty : String,
-    val subjectStatus: String
+    val subjectStatus: String, //Active, Archived
+    val joinCode: String
 )

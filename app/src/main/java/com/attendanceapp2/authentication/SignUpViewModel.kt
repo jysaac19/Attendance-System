@@ -12,7 +12,7 @@ sealed class SignUpResult {
 
 class SignUpViewModel(private val offlineUserRepository: OfflineUserRepository) : ViewModel() {
 
-    suspend fun signUp(firstName: String, lastName: String, email: String, password: String, reEnterPassword: String, userType: String, department: String): SignUpResult {
+    suspend fun signUp(firstName: String, lastName: String, email: String, password: String, reEnterPassword: String, userType: String, department: String, status: String): SignUpResult {
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || reEnterPassword.isEmpty()) {
             return SignUpResult.Error("Please fill in all fields")
         }
@@ -30,7 +30,7 @@ class SignUpViewModel(private val offlineUserRepository: OfflineUserRepository) 
             return SignUpResult.Error("Email already exists")
         }
 
-        val newUser = User(0, firstName, lastName, email, password, userType, department)
+        val newUser = User(0, firstName, lastName, email, password, userType, department, status)
         offlineUserRepository.insertStudent(newUser)
 
         return SignUpResult.Success(newUser)

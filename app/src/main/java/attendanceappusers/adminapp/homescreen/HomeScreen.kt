@@ -32,33 +32,6 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Card(
-            onClick = { navController.navigate(AdminHomeScreen.AddSubject.name) },
-            modifier = Modifier
-                .size(300.dp, 120.dp)
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxSize()
-            ) {
-                Text(
-                    "Create Subject",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    "Navigate to Add Subject screen\nAdd new subjects to the system",
-                    fontSize = 12.sp,
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.size(16.dp))
-
-        Card(
             onClick = { navController.navigate( AdminHomeScreen.UserManagement.name ) },
             modifier = Modifier
                 .size(300.dp, 120.dp)

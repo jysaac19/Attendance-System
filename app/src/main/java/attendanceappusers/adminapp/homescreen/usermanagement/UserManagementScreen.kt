@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -131,10 +132,30 @@ fun UserManagementScreen(
             horizontalArrangement = Arrangement.Center
         ) {
             FloatingActionButton(
+                onClick = { navController.navigateUp() },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .weight(1f)
+            ) {
+                Row (
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Back to Home")
+
+                    Text(
+                        text = "Back",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+            }
+
+            FloatingActionButton(
                 onClick = { navController.navigate(AdminHomeScreen.AddUser.name) },
                 modifier = Modifier
                     .padding(8.dp)
-                    .width(300.dp)
+                    .weight(1f)
             ) {
                 Row (
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -150,8 +171,6 @@ fun UserManagementScreen(
                 }
             }
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn {
             items(users) { user ->

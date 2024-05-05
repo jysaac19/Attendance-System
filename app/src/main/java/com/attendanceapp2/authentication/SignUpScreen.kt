@@ -275,7 +275,8 @@ fun SignUpScreen(
                             password,
                             reEnterPassword,
                             selectedUserType,
-                            selectedDepartment
+                            selectedDepartment,
+                            status = "Active"
                         )
                         when (result) {
                             is SignUpResult.Success -> {

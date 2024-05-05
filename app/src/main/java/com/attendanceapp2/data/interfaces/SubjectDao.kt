@@ -30,4 +30,13 @@ interface SubjectDao {
 
     @Query("SELECT * FROM Subject WHERE code LIKE '%' || :subjectCode || '%'")
     fun filterSubjectList(subjectCode: String): Flow<List<Subject>>
+
+    @Query("SELECT * FROM Subject WHERE joinCode = :joinCode")
+    suspend fun getSubjectByJoinCode(joinCode: String): Subject?
+
+    @Query("SELECT * FROM Subject WHERE code = :subjectCode AND subjectStatus = 'Active'")
+    suspend fun getActiveSubjectByCode(subjectCode: String): Subject?
+
+    @Query("SELECT * FROM Subject WHERE name = :subjectName AND subjectStatus = 'Active'")
+    suspend fun getActiveSubjectByName(subjectName: String): Subject?
 }

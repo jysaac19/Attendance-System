@@ -62,6 +62,7 @@ class ScannerViewModel(
             return AttendanceResult.Success("Attendance already recorded for today.")
         }
 
+
         // Insert attendance
         val attendance = Attendance(
             userId = loggedInUser.userId,

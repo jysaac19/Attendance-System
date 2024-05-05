@@ -19,19 +19,19 @@ class NBSAttendanceApp : Application() {
         super.onCreate()
         // Define your list of embedded users here
         val embeddedUsers = listOf(
-            User(101, "JE", "YSAAC", "k", "123", "Student", "ComSci"),
-            User(201, "KARA", "COLUMBA", "j", "123", "Admin", "ComSci"),
-            User(301, "KENNETH", "BONAAGUA", "s", "123", "Faculty", "ComSci")
+            User(101, "JE", "YSAAC", "k", "123", "Student", "ComSci", "Active"),
+            User(201, "KARA", "COLUMBA", "j", "123", "Admin", "ComSci", "Active"),
+            User(301, "KENNETH", "BONAAGUA", "s", "123", "Faculty", "ComSci", "Active")
         )
 
         val embeddedSubjects = listOf(
-            Subject(id = 1, code = "CS101", name = "Introduction to Computer Science", room = "Room A", faculty = "John Doe", "Active"),
-            Subject(id = 2, code = "ENG201", name = "English Literature", room = "Room B", faculty = "Jane Smith", "Active"),
-            Subject(id = 3, code = "MATH301", name = "Advanced Mathematics", room = "Room C", faculty = "Alice Johnson", "Active"),
-            Subject(id = 4, code = "PHY401", name = "Physics", room = "Room D", faculty = "Robert Brown", "Active"),
-            Subject(id = 5, code = "CHEM501", name = "Chemistry", room = "Room E", faculty = "Emily Wilson", "Active"),
-            Subject(id = 6, code = "BIO601", name = "Biology", room = "Room F", faculty = "Michael Johnson", "Active"),
-            Subject(id = 7, code = "HIST701", name = "History", room = "Room G", faculty = "Sarah Adams", "Archive")
+            Subject(id = 1, code = "CS101", name = "Introduction to Computer Science", room = "Room A", faculty = "John Doe", "Active", "CS101AB1"),
+            Subject(id = 2, code = "ENG201", name = "English Literature", room = "Room B", faculty = "Jane Smith", "Active", "ENG201CD2"),
+            Subject(id = 3, code = "MATH301", name = "Advanced Mathematics", room = "Room C", faculty = "Alice Johnson", "Active", "MATH301EF3"),
+            Subject(id = 4, code = "PHY401", name = "Physics", room = "Room D", faculty = "Robert Brown", "Active", "PHY401GH4"),
+            Subject(id = 5, code = "CHEM501", name = "Chemistry", room = "Room E", faculty = "Emily Wilson", "Active", "CHEM501IJ5"),
+            Subject(id = 6, code = "BIO601", name = "Biology", room = "Room F", faculty = "Michael Johnson", "Active", "BIO601KL6"),
+            Subject(id = 7, code = "HIST701", name = "History", room = "Room G", faculty = "Sarah Adams", "Archive", "HIST701MN7")
         )
 
         val embeddedUserSubjectCrossRefs = listOf(
