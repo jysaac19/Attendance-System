@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.attendanceapp2.data.model.Subject
+import com.attendanceapp2.data.model.subject.Subject
 
 @Composable
 fun SubjectCard(subject: Subject, onClick: () -> Unit) {

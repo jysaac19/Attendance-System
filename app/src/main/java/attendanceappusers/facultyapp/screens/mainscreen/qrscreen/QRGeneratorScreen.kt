@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.attendanceapp2.data.model.SelectedSubjectHolder
+import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import kotlinx.coroutines.delay

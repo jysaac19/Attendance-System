@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,20 +34,35 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import attendanceappusers.adminapp.homescreen.ConfirmDialog
 import com.attendanceapp2.R
+import com.attendanceapp2.appviewmodel.AppViewModelProvider
+import com.attendanceapp2.data.model.Results
+import com.attendanceapp2.data.model.user.User
+import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.UniversalDropDownMenu
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddUserScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: AddUserViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
     var firstname by remember { mutableStateOf("") }
     var lastname by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var selectedRoom by remember { mutableStateOf("BSCS") }
     var selectedFaculty by remember { mutableStateOf("Student") }
+
+    var showDialog by remember { mutableStateOf(false) }
+    var result by remember { mutableStateOf(Results.AddUserResult()) }
 
     val department = listOf("BSCS", "BSA", "BSAIS", "BSE", "BSTM")
     val usertype = listOf("Student", "Faculty", "Admin")
@@ -80,7 +96,7 @@ fun AddUserScreen(
         item {
             OutlinedTextField(
                 value = firstname,
-                onValueChange = { firstname = it },
+                onValueChange = { firstname = it.uppercase() }, // Convert to uppercase
                 singleLine = true,
                 label = { Text("First Name") },
                 modifier = Modifier.fillMaxWidth(),
@@ -91,7 +107,7 @@ fun AddUserScreen(
         item {
             OutlinedTextField(
                 value = lastname,
-                onValueChange = { lastname = it },
+                onValueChange = { lastname = it.uppercase() }, // Convert to uppercase
                 singleLine = true,
                 label = { Text("Last Name") },
                 modifier = Modifier.fillMaxWidth(),
@@ -138,6 +154,18 @@ fun AddUserScreen(
             )
         }
 
+
+        item {
+            result.failureMessage?.let {
+                Text(
+                    text = it,
+                    color = Color.Red,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
+        }
+
         item {
             Row(
                 verticalAlignment = Alignment.Bottom,
@@ -147,7 +175,9 @@ fun AddUserScreen(
                     .padding(bottom = 50.dp)
             ) {
                 FloatingActionButton(
-                    onClick = { navController.popBackStack() },
+                    onClick = {
+                        navController.navigate(AdminHomeScreen.UserManagement.name)
+                    },
                     modifier = Modifier
                         .padding(8.dp)
                         .weight(1f)
@@ -170,7 +200,14 @@ fun AddUserScreen(
                 }
 
                 FloatingActionButton(
-                    onClick = { /* Handle Save action */ },
+                    onClick = {
+                        coroutineScope.launch {
+                            result = viewModel.registerUser(firstname, lastname, email, password, selectedFaculty, selectedRoom, "Active")
+                            if (result.successMessage != null) {
+                                showDialog = true
+                            }
+                        }
+                    },
                     modifier = Modifier
                         .padding(8.dp)
                         .weight(1f)
@@ -193,5 +230,23 @@ fun AddUserScreen(
                 }
             }
         }
+    }
+
+
+    if (showDialog) {
+        ConfirmDialog(
+            title = "Confirmation",
+            message = "Are you sure you want to save the user?",
+            onConfirm = {
+                coroutineScope.launch {
+                    result = viewModel.registerUser(firstname, lastname, email, password, selectedFaculty, selectedRoom, "Active")
+                    navController.navigate(AdminHomeScreen.UserManagement.name)
+                }
+            },
+            onDismiss = {
+                showDialog = false
+            },
+            showDialog = showDialog
+        )
     }
 }

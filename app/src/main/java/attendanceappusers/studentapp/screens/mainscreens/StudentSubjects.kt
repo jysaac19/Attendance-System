@@ -37,13 +37,12 @@ import attendanceappusers.studentapp.screens.subjects.joinsubject.JoinSubjectDia
 import attendanceappusers.studentapp.screens.subjects.joinsubject.JoinSubjectViewModel
 import com.attendanceapp2.navigation.approutes.student.StudentSubjectsRoutes
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
-import com.attendanceapp2.data.model.LoggedInUserHolder
-import com.attendanceapp2.data.model.SelectedSubject
-import com.attendanceapp2.data.model.SelectedSubjectHolder
+import com.attendanceapp2.data.model.user.LoggedInUserHolder
+import com.attendanceapp2.data.model.subject.SelectedSubject
+import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.screenuniversalcomponents.subjectuicomponents.SubjectCard
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
 import com.attendanceapp2.data.model.Results
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @SuppressLint("LogNotTimber")

@@ -9,11 +9,11 @@ import com.attendanceapp2.data.interfaces.ScheduleDao
 import com.attendanceapp2.data.interfaces.SubjectDao
 import com.attendanceapp2.data.interfaces.UserDao
 import com.attendanceapp2.data.interfaces.UserSubjectCrossRefDao
-import com.attendanceapp2.data.model.Attendance
-import com.attendanceapp2.data.model.Schedule
-import com.attendanceapp2.data.model.Subject
-import com.attendanceapp2.data.model.User
-import com.attendanceapp2.data.model.UserSubjectCrossRef
+import com.attendanceapp2.data.model.attendance.Attendance
+import com.attendanceapp2.data.model.subject.Schedule
+import com.attendanceapp2.data.model.subject.Subject
+import com.attendanceapp2.data.model.user.User
+import com.attendanceapp2.data.model.subject.UserSubjectCrossRef
 
 /**
  * Database class with a singleton Instance object.

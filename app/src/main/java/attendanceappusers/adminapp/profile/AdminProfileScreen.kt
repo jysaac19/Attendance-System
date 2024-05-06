@@ -22,11 +22,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.appviewmodel.screenviewmodel.ProfileViewModel
 
 @Composable
 fun AdminProfileScreen (
+    navController: NavController,
     viewModel: AdminProfileViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     Column(

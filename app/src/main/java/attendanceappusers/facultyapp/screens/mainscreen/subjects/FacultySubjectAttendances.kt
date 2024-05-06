@@ -30,7 +30,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import attendanceappusers.facultyapp.viewmodel.FacultySubjectAttendanceViewModel
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
-import com.attendanceapp2.data.model.SelectedSubjectHolder
+import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceCard
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnName
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.CustomDatePicker

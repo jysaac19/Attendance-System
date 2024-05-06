@@ -18,12 +18,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 
 @Composable
 fun HomeScreen(
     navController: NavController
 ) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()

@@ -17,7 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.attendanceapp2.data.model.Attendance
+import com.attendanceapp2.data.model.attendance.Attendance
 
 @Composable
 fun AttendanceCard(

@@ -36,12 +36,12 @@ import attendanceappusers.facultyapp.screens.mainscreen.subjects.viewmodel.Facul
 import attendanceappusers.studentapp.screens.subjects.joinsubject.JoinSubjectDialog
 import attendanceappusers.studentapp.screens.subjects.joinsubject.JoinSubjectViewModel
 import com.attendanceapp2.navigation.approutes.faculty.FacultySubjectsRoutes
-import com.attendanceapp2.data.model.SelectedSubject
-import com.attendanceapp2.data.model.SelectedSubjectHolder
+import com.attendanceapp2.data.model.subject.SelectedSubject
+import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.screenuniversalcomponents.subjectuicomponents.SubjectCard
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
-import com.attendanceapp2.data.model.LoggedInUserHolder
+import com.attendanceapp2.data.model.user.LoggedInUserHolder
 import com.attendanceapp2.data.model.Results
 import kotlinx.coroutines.launch
 

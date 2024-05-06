@@ -1,6 +1,5 @@
 package attendanceappusers.adminapp.homescreen.subjectmanagement
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.attendanceapp2.data.model.Subject
+import com.attendanceapp2.data.model.subject.Subject
 
 @Composable
 fun SubjectItem(subject: Subject, onClick: () -> Unit) {

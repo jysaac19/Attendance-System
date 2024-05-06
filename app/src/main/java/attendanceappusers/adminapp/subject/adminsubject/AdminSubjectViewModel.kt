@@ -1,7 +1,7 @@
 package attendanceappusers.adminapp.subject.adminsubject
 
 import androidx.lifecycle.ViewModel
-import com.attendanceapp2.data.model.Schedule
+import com.attendanceapp2.data.model.subject.Schedule
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
 import com.attendanceapp2.data.repositories.schedule.OfflineScheduleRepository
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository

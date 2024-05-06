@@ -1,9 +1,8 @@
 package attendanceappusers.studentapp.screens.subjects.joinsubject
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.attendanceapp2.data.model.Results
-import com.attendanceapp2.data.model.UserSubjectCrossRef
+import com.attendanceapp2.data.model.subject.UserSubjectCrossRef
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
 

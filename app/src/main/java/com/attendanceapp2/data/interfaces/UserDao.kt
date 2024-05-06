@@ -6,8 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.attendanceapp2.data.model.Attendance
-import com.attendanceapp2.data.model.User
+import com.attendanceapp2.data.model.user.User
 import kotlinx.coroutines.flow.Flow
 
 
@@ -44,4 +43,6 @@ interface UserDao {
     @Query("SELECT * FROM User WHERE id LIKE :userIdPrefix || '%'")
     fun filterUsersByStartingUserId(userIdPrefix: String): Flow<List<User>>
 
+    @Query("SELECT * FROM User WHERE firstname = :firstname AND lastname = :lastname")
+    suspend fun getUserByFullName(firstname: String, lastname: String): User?
 }

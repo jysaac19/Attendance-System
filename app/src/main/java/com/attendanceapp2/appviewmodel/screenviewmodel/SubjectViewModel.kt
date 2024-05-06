@@ -2,10 +2,10 @@ package com.attendanceapp2.appviewmodel.screenviewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.attendanceapp2.data.model.Subject
+import com.attendanceapp2.data.model.subject.Subject
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
-import com.attendanceapp2.data.model.LoggedInUserHolder
+import com.attendanceapp2.data.model.user.LoggedInUserHolder
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

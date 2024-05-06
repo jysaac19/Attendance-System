@@ -10,12 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -42,7 +40,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.R
 import com.attendanceapp2.navigation.approutes.AuthRoute
-import com.attendanceapp2.data.model.LoggedInUserHolder
+import com.attendanceapp2.data.model.user.LoggedInUserHolder
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
 import kotlinx.coroutines.launch

@@ -1,9 +1,7 @@
 package com.attendanceapp2.data.repositories.schedule
 
-import com.attendanceapp2.data.interfaces.AttendanceDao
 import com.attendanceapp2.data.interfaces.ScheduleDao
-import com.attendanceapp2.data.model.Attendance
-import com.attendanceapp2.data.model.Schedule
+import com.attendanceapp2.data.model.subject.Schedule
 
 class OfflineScheduleRepository(
     private val scheduleDao: ScheduleDao

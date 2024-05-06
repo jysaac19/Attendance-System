@@ -3,8 +3,8 @@ package attendanceappusers.adminapp.homescreen.subjectmanagement.addsubject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.Results
-import com.attendanceapp2.data.model.Subject
-import com.attendanceapp2.data.model.User
+import com.attendanceapp2.data.model.subject.Subject
+import com.attendanceapp2.data.model.user.User
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import com.attendanceapp2.data.repositories.user.OfflineUserRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository

@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DoNotDisturb
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Update
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
@@ -23,13 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.attendanceapp2.data.model.User
+import com.attendanceapp2.data.model.user.User
 
 @Composable
 fun UserCard(
     user: User,
     onDeleteClick: () -> Unit,
     onDeactivateClick: () -> Unit,
+    onReactivateClick: () -> Unit,
     onUpdateClick: () -> Unit
 ) {
     Card(
@@ -66,22 +67,41 @@ fun UserCard(
                     },
                     modifier = Modifier.weight(1f),
                 )
-                FloatingActionButton(
-                    onClick = onDeactivateClick,
-                    shape = RoundedCornerShape(10.dp),
-                    contentColor = LocalContentColor.current,
-                    content = {
-                        Column (
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Icon(Icons.Default.DoNotDisturb, contentDescription = "Deactivate")
-                            Text(text = "Deactivate",
-                                fontSize = 10.sp)
-                        }
-                    },
-                    modifier = Modifier.weight(1f),
-                )
+                if (user.status == "Active") {
+                    FloatingActionButton(
+                        onClick = onDeactivateClick,
+                        shape = RoundedCornerShape(10.dp),
+                        contentColor = LocalContentColor.current,
+                        content = {
+                            Column (
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Icon(Icons.Default.DoNotDisturb, contentDescription = "Deactivate")
+                                Text(text = "Deactivate",
+                                    fontSize = 10.sp)
+                            }
+                        },
+                        modifier = Modifier.weight(1f),
+                    )
+                } else {
+                    FloatingActionButton(
+                        onClick = onReactivateClick,
+                        shape = RoundedCornerShape(10.dp),
+                        contentColor = LocalContentColor.current,
+                        content = {
+                            Column (
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Icon(Icons.Default.Refresh, contentDescription = "Reactivate")
+                                Text(text = "Reactivate",
+                                    fontSize = 10.sp)
+                            }
+                        },
+                        modifier = Modifier.weight(1f),
+                    )
+                }
                 FloatingActionButton(
                     onClick = onUpdateClick,
                     shape = RoundedCornerShape(10.dp),

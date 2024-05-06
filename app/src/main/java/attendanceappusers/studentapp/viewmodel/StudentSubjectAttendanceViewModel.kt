@@ -2,10 +2,10 @@ package attendanceappusers.studentapp.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.attendanceapp2.data.model.Attendance
+import com.attendanceapp2.data.model.attendance.Attendance
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
-import com.attendanceapp2.data.model.LoggedInUserHolder
-import com.attendanceapp2.data.model.SelectedSubjectHolder
+import com.attendanceapp2.data.model.user.LoggedInUserHolder
+import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.time.LocalDate

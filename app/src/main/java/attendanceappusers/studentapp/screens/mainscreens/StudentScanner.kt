@@ -46,7 +46,7 @@ import attendanceappusers.studentapp.viewmodel.AttendanceResult
 import attendanceappusers.studentapp.viewmodel.QRCodeAnalyzer
 import attendanceappusers.studentapp.viewmodel.ScannerViewModel
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
-import com.attendanceapp2.data.model.ScannedQRCodeHolder
+import com.attendanceapp2.data.model.attendance.ScannedQRCodeHolder
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 @OptIn(DelicateCoroutinesApi::class)

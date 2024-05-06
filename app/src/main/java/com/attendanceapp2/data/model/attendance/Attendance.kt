@@ -1,4 +1,4 @@
-package com.attendanceapp2.data.model
+package com.attendanceapp2.data.model.attendance
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -6,8 +6,18 @@ sealed class Results {
         val successMessage: String? = null
     ) : Results()
 
+    data class AddUserResult (
+        val failureMessage: String? = null,
+        val successMessage: String? = null
+    ) : Results()
+
     data class JoinSubjectResult (
         val failureMessage: String? = null,
         val successMessage: String? = null
     )
+
+    data class UpdateUserResult (
+        val failureMessage: String? = null,
+        val successMessage: String? = null
+    ) : Results()
 }

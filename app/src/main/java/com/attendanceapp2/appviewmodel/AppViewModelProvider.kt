@@ -11,6 +11,7 @@ import attendanceappusers.adminapp.homescreen.subjectmanagement.addsubject.AddSu
 import attendanceappusers.adminapp.homescreen.attendancemanagement.AttendanceManagementViewModel
 import attendanceappusers.adminapp.homescreen.subjectmanagement.SubjectManagementViewModel
 import attendanceappusers.adminapp.homescreen.usermanagement.UserManagementViewModel
+import attendanceappusers.adminapp.homescreen.usermanagement.updateuser.UpdateUserViewModel
 import attendanceappusers.adminapp.profile.AdminProfileViewModel
 import attendanceappusers.adminapp.subject.addschedule.AddScheduleViewModel
 import attendanceappusers.adminapp.subject.adminsubjectlist.AdminSubjectListViewModel
@@ -154,6 +155,8 @@ object AppViewModelProvider {
             )
         }
 
+
+        //Scope: Admin
         initializer {
             AdminAttendanceViewModel(
                 nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository,
@@ -172,9 +175,7 @@ object AppViewModelProvider {
 
         initializer {
             AddUserViewModel(
-                nbsAttendanceApplication().container.offlineUserRepository,
-                nbsAttendanceApplication().container.offlineSubjectRepository,
-                nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository
+                nbsAttendanceApplication().container.offlineUserRepository
             )
         }
 
@@ -184,6 +185,12 @@ object AppViewModelProvider {
                 nbsAttendanceApplication().container.offlineSubjectRepository,
                 nbsAttendanceApplication().container.offlineUserRepository,
                 nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository
+            )
+        }
+
+        initializer {
+            UpdateUserViewModel(
+                nbsAttendanceApplication().container.offlineUserRepository
             )
         }
 

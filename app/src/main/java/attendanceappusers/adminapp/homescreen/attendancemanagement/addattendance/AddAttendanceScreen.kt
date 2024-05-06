@@ -24,8 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
-import com.attendanceapp2.data.model.User
+import com.attendanceapp2.data.model.user.User
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,6 +35,7 @@ fun AddAttendanceScreen(
     navController: NavController,
     viewModel: AddAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+
     var selectedUsers by remember { mutableStateOf<List<User>>(emptyList()) }
     var searchResults by remember { mutableStateOf<List<User>>(emptyList()) }
     var searchQuery by remember { mutableStateOf("") }

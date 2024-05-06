@@ -1,10 +1,10 @@
 package com.attendanceapp2.data
 
 import android.content.Context
-import com.attendanceapp2.data.model.Attendance
-import com.attendanceapp2.data.model.Subject
-import com.attendanceapp2.data.model.User
-import com.attendanceapp2.data.model.UserSubjectCrossRef
+import com.attendanceapp2.data.model.attendance.Attendance
+import com.attendanceapp2.data.model.subject.Subject
+import com.attendanceapp2.data.model.user.User
+import com.attendanceapp2.data.model.subject.UserSubjectCrossRef
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
 import com.attendanceapp2.data.repositories.schedule.OfflineScheduleRepository
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository

@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.attendanceapp2.data.model.UserSubjectCrossRef
+import com.attendanceapp2.data.model.subject.UserSubjectCrossRef
 
 @Dao
 interface UserSubjectCrossRefDao {

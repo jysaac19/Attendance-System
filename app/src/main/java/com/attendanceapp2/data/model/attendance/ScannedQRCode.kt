@@ -1,4 +1,4 @@
-package com.attendanceapp2.data.model
+package com.attendanceapp2.data.model.attendance
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

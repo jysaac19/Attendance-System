@@ -1,7 +1,7 @@
 package com.attendanceapp2.data.repositories.usersubjectcossref
 
 import com.attendanceapp2.data.interfaces.UserSubjectCrossRefDao
-import com.attendanceapp2.data.model.UserSubjectCrossRef
+import com.attendanceapp2.data.model.subject.UserSubjectCrossRef
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

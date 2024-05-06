@@ -1,8 +1,7 @@
 package com.attendanceapp2.data.repositories.subject
 
 import com.attendanceapp2.data.interfaces.SubjectDao
-import com.attendanceapp2.data.model.Subject
-import com.attendanceapp2.data.model.User
+import com.attendanceapp2.data.model.subject.Subject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

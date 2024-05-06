@@ -1,18 +1,15 @@
 package attendanceappusers.studentapp.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.attendanceapp2.data.model.Attendance
+import com.attendanceapp2.data.model.attendance.Attendance
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
-import com.attendanceapp2.data.model.LoggedInUserHolder
-import com.attendanceapp2.data.model.ScannedQRCodeHolder
+import com.attendanceapp2.data.model.user.LoggedInUserHolder
+import com.attendanceapp2.data.model.attendance.ScannedQRCodeHolder
 import kotlinx.coroutines.flow.firstOrNull
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-import java.util.Date
-import java.util.TimeZone
 
 sealed class AttendanceResult {
     data class Success(val message: String) : AttendanceResult()

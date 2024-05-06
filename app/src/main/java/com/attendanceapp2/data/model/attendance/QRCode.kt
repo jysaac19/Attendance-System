@@ -1,4 +1,4 @@
-package com.attendanceapp2.data.model
+package com.attendanceapp2.data.model.attendance
 
 data class QRCode(
     val subjectId: Long,

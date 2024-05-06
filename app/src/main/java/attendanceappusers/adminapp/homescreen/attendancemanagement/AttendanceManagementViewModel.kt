@@ -2,13 +2,10 @@ package attendanceappusers.adminapp.homescreen.attendancemanagement
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.attendanceapp2.data.model.Attendance
-import com.attendanceapp2.data.model.User
+import com.attendanceapp2.data.model.attendance.Attendance
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class AttendanceManagementViewModel(

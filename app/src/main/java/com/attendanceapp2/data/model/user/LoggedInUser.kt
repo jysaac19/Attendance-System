@@ -1,4 +1,4 @@
-package com.attendanceapp2.data.model
+package com.attendanceapp2.data.model.user
 
 import android.content.Context
 import android.content.SharedPreferences

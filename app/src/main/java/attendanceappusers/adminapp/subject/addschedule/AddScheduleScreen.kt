@@ -1,10 +1,8 @@
 package attendanceappusers.adminapp.subject.addschedule
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -14,7 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Card
@@ -39,9 +36,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
-import com.attendanceapp2.data.model.Schedule
-import com.attendanceapp2.data.model.SelectedSubjectHolder
+import com.attendanceapp2.data.model.subject.Schedule
+import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.data.screen.schedule.Clock
 import kotlinx.coroutines.launch
 
@@ -62,14 +61,16 @@ fun AddScheduleScreen (
     fun addSchedule() {
         coroutineScope.launch {
             if (subjectInfo!= null) {
-                schedules.add(Schedule(
+                schedules.add(
+                    Schedule(
                     subjectId = subjectInfo.id,
                     subjectCode = subjectInfo.code,
                     subjectName = subjectInfo.name,
                     day = "",
                     start = "",
                     end = ""
-                )) // Add an empty schedule
+                )
+                ) // Add an empty schedule
                 cardCount++ // Increment the card count
             }
         }

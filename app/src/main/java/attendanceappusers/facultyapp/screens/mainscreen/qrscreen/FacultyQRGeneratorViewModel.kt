@@ -4,8 +4,8 @@ import android.graphics.Bitmap
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
-import com.attendanceapp2.data.model.QRCode
-import com.attendanceapp2.data.model.SelectedSubject
+import com.attendanceapp2.data.model.attendance.QRCode
+import com.attendanceapp2.data.model.subject.SelectedSubject
 import com.google.gson.Gson
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
@@ -14,8 +14,6 @@ import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.ZoneId
-import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.EnumMap
 

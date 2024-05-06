@@ -1,9 +1,8 @@
 package com.attendanceapp2.authentication
 
 import androidx.lifecycle.ViewModel
-import com.attendanceapp2.data.model.User
+import com.attendanceapp2.data.model.user.User
 import com.attendanceapp2.data.repositories.user.OfflineUserRepository
-import com.attendanceapp2.data.repositories.user.UserRepository
 
 sealed class SignUpResult {
     data class Success(val user: User) : SignUpResult()

@@ -20,8 +20,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.appviewmodel.screenviewmodel.ScreenViewModel
-import com.attendanceapp2.data.model.LoggedInUser
-import com.attendanceapp2.data.model.LoggedInUserHolder
+import com.attendanceapp2.data.model.user.LoggedInUser
+import com.attendanceapp2.data.model.user.LoggedInUserHolder
 import com.attendanceapp2.navigation.AppNavigation
 import com.attendanceapp2.navigation.admin.AdminNavigation
 import com.attendanceapp2.navigation.faculty.FacultyNavigation

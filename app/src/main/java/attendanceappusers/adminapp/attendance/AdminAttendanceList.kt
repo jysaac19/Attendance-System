@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceCard
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnName
@@ -45,10 +47,10 @@ import java.time.LocalDate
 
 @Composable
 fun AdminAttendanceList (
-    navController : NavController,
+    navController: NavController,
     viewModel : AdminAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-
+    val navController: NavHostController = rememberNavController()
     // Get the current year
     val currentYear = LocalDate.now().year
 

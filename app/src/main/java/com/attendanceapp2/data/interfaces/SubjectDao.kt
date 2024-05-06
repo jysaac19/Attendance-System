@@ -6,8 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.attendanceapp2.data.model.Attendance
-import com.attendanceapp2.data.model.Subject
+import com.attendanceapp2.data.model.subject.Subject
 import kotlinx.coroutines.flow.Flow
 
 @Dao

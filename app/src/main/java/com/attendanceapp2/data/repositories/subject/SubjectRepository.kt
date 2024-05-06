@@ -1,6 +1,6 @@
 package com.attendanceapp2.data.repositories.subject
 
-import com.attendanceapp2.data.model.Subject
+import com.attendanceapp2.data.model.subject.Subject
 
 
 interface SubjectRepository {

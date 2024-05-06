@@ -1,7 +1,6 @@
 package com.attendanceapp2.data.repositories.user
 
-import com.attendanceapp2.data.model.User
-import kotlinx.coroutines.flow.Flow
+import com.attendanceapp2.data.model.user.User
 
 interface UserRepository {
 
