@@ -37,4 +37,8 @@ class OfflineUserSubjectCrossRefRepository(
     suspend fun getAllSubjects(): List<Long> {
         return userSubjectCrossRefDao.getAllSubjectIds()
     }
+
+    suspend fun getUserSubjectCrossRefBySubjectAndUser(subjectId: Long, userId: Long): UserSubjectCrossRef? {
+        return userSubjectCrossRefDao.getUserSubjectCrossRefBySubjectAndUser(subjectId, userId)
+    }
 }

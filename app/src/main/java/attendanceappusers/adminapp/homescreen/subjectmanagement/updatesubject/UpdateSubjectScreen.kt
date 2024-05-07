@@ -37,6 +37,7 @@ import attendanceappusers.adminapp.homescreen.subjectmanagement.SubjectManagemen
 import com.attendanceapp2.R
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.Results
+import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.data.model.subject.Subject
 import com.attendanceapp2.data.model.subject.UpdateSubject
 import com.attendanceapp2.data.model.subject.UpdatingSubjectHolder
@@ -203,6 +204,7 @@ fun UpdateSubjectScreen(
         onConfirm = {
             // If confirmed, proceed with updating the subject
             coroutineScope.launch {
+                val oldFaculty = SelectedSubjectHolder.getSelectedSubject()?.faculty ?: ""
                 viewModel.updateSubject(
                     Subject(
                         updateSubject.id,
@@ -212,7 +214,8 @@ fun UpdateSubjectScreen(
                         updateSubject.faculty,
                         updateSubject.subjectStatus,
                         updateSubject.joinCode
-                    )
+                    ),
+                    oldFaculty
                 )
                 navController.navigate(AdminHomeScreen.SubjectManagement.name)
             }

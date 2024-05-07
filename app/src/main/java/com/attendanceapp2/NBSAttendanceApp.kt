@@ -21,7 +21,8 @@ class NBSAttendanceApp : Application() {
         val embeddedUsers = listOf(
             User(101, "JE", "YSAAC", "k", "123", "Student", "ComSci", "Active"),
             User(201, "KARA", "COLUMBA", "j", "123", "Admin", "ComSci", "Active"),
-            User(301, "KENNETH", "BONAAGUA", "s", "123", "Faculty", "ComSci", "Active")
+            User(301, "KENNETH", "BONAAGUA", "s", "123", "Faculty", "ComSci", "Active"),
+            User(605, "VINCENT", "DAIS", "n", "123", "Faculty", "ComSci", "Active")
         )
 
         val embeddedSubjects = listOf(

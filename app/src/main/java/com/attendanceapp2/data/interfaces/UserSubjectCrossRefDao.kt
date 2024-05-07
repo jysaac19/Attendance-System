@@ -25,4 +25,7 @@ interface UserSubjectCrossRefDao {
 
     @Query("SELECT subjectId FROM UserSubjectCrossRef")
     suspend fun getAllSubjectIds(): List<Long>
+
+    @Query("SELECT * FROM UserSubjectCrossRef WHERE subjectId = :subjectId AND userId = :userId")
+    suspend fun getUserSubjectCrossRefBySubjectAndUser(subjectId: Long, userId: Long): UserSubjectCrossRef?
 }

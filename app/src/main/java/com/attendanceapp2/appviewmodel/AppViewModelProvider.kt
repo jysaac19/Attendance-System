@@ -198,7 +198,8 @@ object AppViewModelProvider {
         initializer {
             UpdateSubjectViewModel(
                 nbsAttendanceApplication().container.offlineUserRepository,
-                nbsAttendanceApplication().container.offlineSubjectRepository
+                nbsAttendanceApplication().container.offlineSubjectRepository,
+                nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository
             )
         }
 

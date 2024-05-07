@@ -188,6 +188,18 @@ fun SubjectManagementScreen (
                         },
                         onUpdateClick = {
                             coroutineScope.launch {
+                                SelectedSubjectHolder.setSelectedSubject(
+                                    SelectedSubject(
+                                        subject.id,
+                                        subject.code,
+                                        subject.name,
+                                        subject.room,
+                                        subject.faculty,
+                                        subject.subjectStatus,
+                                        subject.joinCode
+                                    )
+                                )
+
                                 UpdatingSubjectHolder.setSelectedSubject(
                                     UpdateSubject(
                                         subject.id,
