@@ -3,13 +3,14 @@ package com.attendanceapp2.navigation.approutes.admin
 enum class AdminHomeScreen {
     HomeScreen,
 
-    AddSubject,
+    UserManagement,
+    SubjectManagement,
+    AttendanceManagement,
+
     AddUser,
+    AddSubject,
     AddAttendance,
 
     UpdateUser,
-
-    UserManagement,
-    AttendanceManagement,
-    SubjectManagement
+    UpdateSubject,
 }

@@ -29,12 +29,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import attendanceappusers.adminapp.homescreen.ConfirmDialog
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.Results
-import com.attendanceapp2.data.model.user.SelectedUser
+import com.attendanceapp2.data.model.user.UpdateUser
 import com.attendanceapp2.data.model.user.UpdatingUserHolder
 import com.attendanceapp2.data.model.user.User
 import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
@@ -47,9 +45,9 @@ fun UpdateUserScreen(
  viewModel: UpdateUserViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
  val coroutineScope = rememberCoroutineScope()
- var selectedUser by remember { mutableStateOf(UpdatingUserHolder.getSelectedUser() ?: SelectedUser(0, "", "", "", "", "", "", "")) }
+ var updateUser by remember { mutableStateOf(UpdatingUserHolder.getSelectedUser() ?: UpdateUser(0, "", "", "", "", "", "", "")) }
  var showDialog by remember { mutableStateOf(false) }
- var validationResult by remember { mutableStateOf(Results.UpdateUserResult()) }
+ var result by remember { mutableStateOf(Results.UpdateUserResult()) }
 
  Column(
   modifier = Modifier
@@ -72,8 +70,8 @@ fun UpdateUserScreen(
 
    item {
     OutlinedTextField(
-     value = selectedUser.firstname,
-     onValueChange = { selectedUser = selectedUser.copy(firstname = it.toUpperCase()) },
+     value = updateUser.firstname,
+     onValueChange = { updateUser = updateUser.copy(firstname = it.toUpperCase()) },
      singleLine = true,
      label = { Text("First Name") },
      modifier = Modifier.fillMaxWidth(),
@@ -83,8 +81,8 @@ fun UpdateUserScreen(
 
    item {
     OutlinedTextField(
-     value = selectedUser.lastname,
-     onValueChange = { selectedUser = selectedUser.copy(lastname = it.toUpperCase()) },
+     value = updateUser.lastname,
+     onValueChange = { updateUser = updateUser.copy(lastname = it.toUpperCase()) },
      singleLine = true,
      label = { Text("Last Name") },
      modifier = Modifier.fillMaxWidth(),
@@ -94,8 +92,8 @@ fun UpdateUserScreen(
 
    item {
     OutlinedTextField(
-     value = selectedUser.email,
-     onValueChange = { selectedUser = selectedUser.copy(email = it) },
+     value = updateUser.email,
+     onValueChange = { updateUser = updateUser.copy(email = it) },
      singleLine = true,
      label = { Text("Email") },
      modifier = Modifier.fillMaxWidth(),
@@ -105,8 +103,8 @@ fun UpdateUserScreen(
 
    item {
     OutlinedTextField(
-     value = selectedUser.password,
-     onValueChange = { selectedUser = selectedUser.copy(password = it) },
+     value = updateUser.password,
+     onValueChange = { updateUser = updateUser.copy(password = it) },
      singleLine = true,
      label = { Text("Password") },
      modifier = Modifier.fillMaxWidth(),
@@ -119,8 +117,8 @@ fun UpdateUserScreen(
     UniversalDropDownMenu(
      label = "User Type",
      items = listOf("Admin", "Student", "Faculty"),
-     selectedItem = selectedUser.usertype,
-     onItemSelected = { selectedUser = selectedUser.copy(usertype = it) }
+     selectedItem = updateUser.usertype,
+     onItemSelected = { updateUser = updateUser.copy(usertype = it) }
     )
    }
 
@@ -129,8 +127,8 @@ fun UpdateUserScreen(
     UniversalDropDownMenu(
      label = "Department",
      items = listOf("BSCS", "BSA", "BSE", "BSAIS", "BSTM"),
-     selectedItem = selectedUser.department,
-     onItemSelected = { selectedUser = selectedUser.copy(department = it) }
+     selectedItem = updateUser.department,
+     onItemSelected = { updateUser = updateUser.copy(department = it) }
     )
    }
 
@@ -139,14 +137,14 @@ fun UpdateUserScreen(
     UniversalDropDownMenu(
      label = "Status",
      items = listOf("Active", "Inactive"),
-     selectedItem = selectedUser.status,
-     onItemSelected = { selectedUser = selectedUser.copy(status = it) }
+     selectedItem = updateUser.status,
+     onItemSelected = { updateUser = updateUser.copy(status = it) }
     )
    }
 
    item {
     Text(
-     text = validationResult.failureMessage ?: "",
+     text = result.failureMessage ?: "",
      color = Color.Red,
      fontSize = 12.sp,
      modifier = Modifier.padding(bottom = 8.dp)
@@ -188,19 +186,19 @@ fun UpdateUserScreen(
 
      FloatingActionButton(
       onClick = {
-       validationResult = viewModel.validateFields(
+       result = viewModel.validateFields(
         User(
-         selectedUser.id,
-         selectedUser.firstname,
-         selectedUser.lastname,
-         selectedUser.email,
-         selectedUser.password,
-         selectedUser.usertype,
-         selectedUser.department,
-         selectedUser.status
+         updateUser.id,
+         updateUser.firstname,
+         updateUser.lastname,
+         updateUser.email,
+         updateUser.password,
+         updateUser.usertype,
+         updateUser.department,
+         updateUser.status
         )
        )
-       if (validationResult.failureMessage == null) {
+       if (result.failureMessage == null) {
         coroutineScope.launch {
          showDialog = true
         }
@@ -239,14 +237,14 @@ fun UpdateUserScreen(
     coroutineScope.launch {
      viewModel.updateUser(
       User(
-       selectedUser.id,
-       selectedUser.firstname,
-       selectedUser.lastname,
-       selectedUser.email,
-       selectedUser.password,
-       selectedUser.usertype,
-       selectedUser.department,
-       selectedUser.status
+       updateUser.id,
+       updateUser.firstname,
+       updateUser.lastname,
+       updateUser.email,
+       updateUser.password,
+       updateUser.usertype,
+       updateUser.department,
+       updateUser.status
       )
      )
      navController.navigate(AdminHomeScreen.UserManagement.name)

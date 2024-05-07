@@ -1,27 +1,17 @@
-package attendanceappusers.adminapp.homescreen.subjectmanagement.addsubject
+package attendanceappusers.adminapp.homescreen.subjectmanagement.updatesubject
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -35,59 +25,39 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import attendanceappusers.adminapp.homescreen.ConfirmDialog
 import attendanceappusers.adminapp.homescreen.subjectmanagement.SubjectManagementViewModel
 import com.attendanceapp2.R
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.Results
+import com.attendanceapp2.data.model.subject.Subject
+import com.attendanceapp2.data.model.subject.UpdateSubject
+import com.attendanceapp2.data.model.subject.UpdatingSubjectHolder
+import com.attendanceapp2.data.model.user.UpdateUser
+import com.attendanceapp2.data.model.user.UpdatingUserHolder
+import com.attendanceapp2.data.model.user.User
 import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.UniversalDropDownMenu
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @Composable
-fun AddSubjectScreen(
+fun UpdateSubjectScreen(
     navController: NavController,
-    viewModel: AddSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    subjectManagement : SubjectManagementViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: UpdateSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
-    var subjectCode by remember { mutableStateOf("") }
-    var subjectName by remember { mutableStateOf("") }
-    var selectedRoom by remember { mutableStateOf("") }
-    var selectedFaculty by remember { mutableStateOf("") }
+    var updateSubject by remember { mutableStateOf(UpdatingSubjectHolder.getSelectedSubject() ?: UpdateSubject(0, "", "", "", "", "", "")) }
 
-    var result by remember { mutableStateOf(Results.AddSubjectResult()) }
+    var result by remember { mutableStateOf(Results.UpdateSubjectResult()) }
 
     var showDialog by remember { mutableStateOf(false) }
-
-    val rooms = listOf(
-        "RM401",
-        "RM402",
-        "RM403",
-        "RM404",
-        "RM405",
-        "RM406",
-        "RM407",
-        "RM408",
-        "RM409",
-        "RM410",
-        "RM411"
-    )
 
     val facultyList by viewModel.facultyList.collectAsState(initial = emptyList())
 
@@ -107,22 +77,9 @@ fun AddSubjectScreen(
         }
 
         item {
-            Text(
-                "Welcome to the Add Subject Screen",
-                fontSize = 24.sp,
-                modifier = Modifier.padding(16.dp)
-            )
-            Text(
-                "Use this screen to add a new subject to the system.",
-                fontSize = 16.sp,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-        }
-
-        item {
             OutlinedTextField(
-                value = subjectCode,
-                onValueChange = { subjectCode = it.uppercase() },
+                value = updateSubject.code,
+                onValueChange = { updateSubject = updateSubject.copy(code = it.toUpperCase()) },
                 singleLine = true,
                 label = { Text("Subject Code") },
                 modifier = Modifier.fillMaxWidth(),
@@ -132,8 +89,8 @@ fun AddSubjectScreen(
 
         item {
             OutlinedTextField(
-                value = subjectName,
-                onValueChange = { subjectName = it.uppercase() }, // Convert to uppercase
+                value = updateSubject.name,
+                onValueChange = { updateSubject = updateSubject.copy(name = it.toUpperCase()) }, // Convert to uppercase
                 label = { Text("Subject Name") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp)
@@ -142,16 +99,16 @@ fun AddSubjectScreen(
         item {
             UniversalDropDownMenu(
                 label = "Room",
-                items = rooms,
-                selectedItem = selectedRoom,
-                onItemSelected = { selectedRoom = it }
+                items = listOf("RM401", "RM402", "RM403", "RM404", "RM405", "RM406", "RM407", "RM408", "RM409", "RM410", "RM411"),
+                selectedItem = updateSubject.room,
+                onItemSelected = { updateSubject = updateSubject.copy(room = it) }
             )
 
             UniversalDropDownMenu(
                 label = "Faculty",
                 items = facultyList.map { "${it.firstname} ${it.lastname}" },
-                selectedItem = selectedFaculty,
-                onItemSelected = { selectedFaculty = it }
+                selectedItem = updateSubject.faculty,
+                onItemSelected = { updateSubject = updateSubject.copy(faculty = it) }
             )
         }
 
@@ -199,14 +156,19 @@ fun AddSubjectScreen(
 
                 FloatingActionButton(
                     onClick = {
-                        coroutineScope.launch {
-                            result = viewModel.saveSubject(
-                                subjectCode,
-                                subjectName,
-                                selectedRoom,
-                                selectedFaculty
+                        result = viewModel.validateFields(
+                            Subject(
+                                updateSubject.id,
+                                updateSubject.code,
+                                updateSubject.name,
+                                updateSubject.room,
+                                updateSubject.faculty,
+                                updateSubject.subjectStatus,
+                                updateSubject.joinCode
                             )
-                            if (result.successMessage != null) {
+                        )
+                        if (result.failureMessage == null) {
+                            coroutineScope.launch {
                                 showDialog = true
                             }
                         }
@@ -237,19 +199,23 @@ fun AddSubjectScreen(
 
     ConfirmDialog(
         title = "Confirmation",
-        message = "Are you sure you want to save this subject?",
+        message = "Are you sure you want to update this subject?",
         onConfirm = {
-            // If confirmed, proceed with saving the subject
+            // If confirmed, proceed with updating the subject
             coroutineScope.launch {
-                viewModel.saveSubject(
-                    subjectCode,
-                    subjectName,
-                    selectedRoom,
-                    selectedFaculty
+                viewModel.updateSubject(
+                    Subject(
+                        updateSubject.id,
+                        updateSubject.code,
+                        updateSubject.name,
+                        updateSubject.room,
+                        updateSubject.faculty,
+                        updateSubject.subjectStatus,
+                        updateSubject.joinCode
+                    )
                 )
-                subjectManagement.getAllSubjects()
+                navController.navigate(AdminHomeScreen.SubjectManagement.name)
             }
-            navController.navigate(AdminHomeScreen.SubjectManagement.name)
         },
         onDismiss = {
             // If dismissed, set the showDialog flag to false

@@ -44,11 +44,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import attendanceappusers.adminapp.homescreen.ConfirmDialog
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
-import com.attendanceapp2.data.model.user.SelectedUser
+import com.attendanceapp2.data.model.user.UpdateUser
 import com.attendanceapp2.data.model.user.UpdatingUserHolder
 import com.attendanceapp2.data.model.user.User
 import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
@@ -78,7 +76,6 @@ fun UserManagementScreen(
     var showReactivateDialog by remember { mutableStateOf(false) }
     var userToReactivate: User? by remember { mutableStateOf(null) }
 
-// Function to handle reactivate action
     val handleReactivateAction: () -> Unit = {
         userToReactivate?.let { user ->
             coroutineScope.launch {
@@ -180,7 +177,7 @@ fun UserManagementScreen(
             horizontalArrangement = Arrangement.Center
         ) {
             FloatingActionButton(
-                onClick = { navController.navigateUp() },
+                onClick = { navController.navigate(AdminHomeScreen.HomeScreen.name) },
                 modifier = Modifier
                     .padding(8.dp)
                     .weight(1f)
@@ -239,7 +236,7 @@ fun UserManagementScreen(
                     onUpdateClick = {
                         coroutineScope.launch {
                             UpdatingUserHolder.setSelectedUser(
-                                SelectedUser(
+                                UpdateUser(
                                     user.id,
                                     user.firstname,
                                     user.lastname,

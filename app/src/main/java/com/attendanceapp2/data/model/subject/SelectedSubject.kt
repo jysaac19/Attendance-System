@@ -1,15 +1,17 @@
 package com.attendanceapp2.data.model.subject
 
+import androidx.room.ColumnInfo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 data class SelectedSubject(
-    val id : Long,
+    val id : Long = 0,
     val code : String,
     val name : String,
     val room : String,
     val faculty : String,
-    val joinCode : String
+    val subjectStatus: String, //Active, Archived
+    val joinCode: String
 )
 
 object SelectedSubjectHolder {

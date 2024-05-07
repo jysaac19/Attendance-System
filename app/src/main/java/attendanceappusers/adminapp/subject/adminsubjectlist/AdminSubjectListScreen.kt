@@ -69,6 +69,7 @@ fun AdminSubjectListScreen (
                             subject.name,
                             subject.room,
                             subject.faculty,
+                            subject.subjectStatus,
                             subject.joinCode
                         )
                     )

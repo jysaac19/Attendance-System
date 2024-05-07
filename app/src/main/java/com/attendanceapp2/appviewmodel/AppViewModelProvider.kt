@@ -10,6 +10,7 @@ import attendanceappusers.adminapp.homescreen.attendancemanagement.addattendance
 import attendanceappusers.adminapp.homescreen.subjectmanagement.addsubject.AddSubjectViewModel
 import attendanceappusers.adminapp.homescreen.attendancemanagement.AttendanceManagementViewModel
 import attendanceappusers.adminapp.homescreen.subjectmanagement.SubjectManagementViewModel
+import attendanceappusers.adminapp.homescreen.subjectmanagement.updatesubject.UpdateSubjectViewModel
 import attendanceappusers.adminapp.homescreen.usermanagement.UserManagementViewModel
 import attendanceappusers.adminapp.homescreen.usermanagement.updateuser.UpdateUserViewModel
 import attendanceappusers.adminapp.profile.AdminProfileViewModel
@@ -191,6 +192,13 @@ object AppViewModelProvider {
         initializer {
             UpdateUserViewModel(
                 nbsAttendanceApplication().container.offlineUserRepository
+            )
+        }
+
+        initializer {
+            UpdateSubjectViewModel(
+                nbsAttendanceApplication().container.offlineUserRepository,
+                nbsAttendanceApplication().container.offlineSubjectRepository
             )
         }
 

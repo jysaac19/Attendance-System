@@ -1,5 +1,7 @@
 package attendanceappusers.adminapp.homescreen.subjectmanagement
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.subject.Subject
@@ -11,14 +13,14 @@ class SubjectManagementViewModel(
     private val offlineSubjectRepository: OfflineSubjectRepository
 ): ViewModel() {
 
-    private val _subjectList: MutableStateFlow<List<Subject>> = MutableStateFlow(emptyList())
-    val subjectList: MutableStateFlow<List<Subject>> get() = _subjectList
+    private val _subjectList: MutableLiveData<List<Subject>> = MutableLiveData(emptyList())
+    val subjectList: LiveData<List<Subject>> get() = _subjectList
 
     init {
         getAllSubjects()
     }
 
-    private fun getAllSubjects() {
+    fun getAllSubjects() {
         viewModelScope.launch {
             _subjectList.value = offlineSubjectRepository.getAllSubjects()
         }
@@ -34,6 +36,20 @@ class SubjectManagementViewModel(
                 // If the search query is empty, reset to all subjects
                 getAllSubjects()
             }
+        }
+    }
+
+    fun deleteSubject(subject: Subject) {
+        viewModelScope.launch {
+            offlineSubjectRepository.deleteSubject(subject)
+        }
+    }
+
+    fun archiveSubject(subject: Subject) {
+        viewModelScope.launch {
+            // Update the subject status to "Archived"
+            val archivedSubject = subject.copy(subjectStatus = "Archived")
+            offlineSubjectRepository.updateSubject(archivedSubject)
         }
     }
 }

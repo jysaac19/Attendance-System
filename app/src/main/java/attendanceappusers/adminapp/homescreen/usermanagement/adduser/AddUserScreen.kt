@@ -236,7 +236,7 @@ fun AddUserScreen(
     if (showDialog) {
         ConfirmDialog(
             title = "Confirmation",
-            message = "Are you sure you want to save the user?",
+            message = "Are you sure you want to save this user?",
             onConfirm = {
                 coroutineScope.launch {
                     result = viewModel.registerUser(firstname, lastname, email, password, selectedFaculty, selectedRoom, "Active")

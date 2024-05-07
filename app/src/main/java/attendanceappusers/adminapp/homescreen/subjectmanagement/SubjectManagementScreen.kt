@@ -14,6 +14,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -38,9 +41,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import attendanceappusers.adminapp.homescreen.ConfirmDialog
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.subject.SelectedSubject
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
+import com.attendanceapp2.data.model.subject.Subject
+import com.attendanceapp2.data.model.subject.UpdateSubject
+import com.attendanceapp2.data.model.subject.UpdatingSubjectHolder
 import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.navigation.approutes.admin.AdminSubject
 import kotlinx.coroutines.launch
@@ -52,7 +59,13 @@ fun SubjectManagementScreen (
 ) {
     val coroutineScope = rememberCoroutineScope()
     var searchText by remember { mutableStateOf(TextFieldValue()) }
-    val subjectList by viewModel.subjectList.collectAsState()
+    val subjectList by viewModel.subjectList.observeAsState()
+
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var showArchiveDialog by remember { mutableStateOf(false) }
+
+    var subjectToDelete by remember { mutableStateOf<Subject?>(null) }
+    var subjectToArchive by remember { mutableStateOf<Subject?>(null) }
 
     // Launch search when searchText changes
     LaunchedEffect(searchText.text) {
@@ -99,7 +112,7 @@ fun SubjectManagementScreen (
             verticalAlignment = Alignment.CenterVertically
         ) {
             FloatingActionButton(
-                onClick = { navController.navigateUp() },
+                onClick = { navController.navigate(AdminHomeScreen.HomeScreen.name) },
                 modifier = Modifier
                     .padding(8.dp)
                     .weight(1f)
@@ -143,32 +156,97 @@ fun SubjectManagementScreen (
         }
 
         // Display the list of subjects
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(subjectList) { subject ->
-                SubjectItem(
-                    subject = subject,
-                    onClick = {
-                        coroutineScope.launch {
-                            // Convert Subject to SelectedSubject
-                            val selectedSubject = SelectedSubject(
-                                subject.id,
-                                subject.code,
-                                subject.name,
-                                subject.room,
-                                subject.faculty,
-                                subject.joinCode
-                            )
-                            // Set the selected subject
-                            SelectedSubjectHolder.setSelectedSubject(selectedSubject)
-                            // Navigate to the subject screen
-                            navController.navigate(AdminSubject.SubjectScreen.name)
+        subjectList?.let { subjects ->
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(subjects) { subject ->
+                    SubjectItem(
+                        subject = subject,
+                        onClick = {
+                            coroutineScope.launch {
+                                // Convert Subject to SelectedSubject
+                                val selectedSubject = SelectedSubject(
+                                    subject.id,
+                                    subject.code,
+                                    subject.name,
+                                    subject.room,
+                                    subject.faculty,
+                                    subject.subjectStatus,
+                                    subject.joinCode
+                                )
+                                // Set the selected subject
+                                SelectedSubjectHolder.setSelectedSubject(selectedSubject)
+                                // Navigate to the subject screen
+                                navController.navigate(AdminSubject.SubjectScreen.name)
+                            }
+                        },
+                        onDeleteClick = {
+                            subjectToDelete = subject
+                            showDeleteDialog = true
+                        },
+                        onUpdateClick = {
+                            coroutineScope.launch {
+                                UpdatingSubjectHolder.setSelectedSubject(
+                                    UpdateSubject(
+                                        subject.id,
+                                        subject.code,
+                                        subject.name,
+                                        subject.room,
+                                        subject.faculty,
+                                        subject.subjectStatus,
+                                        subject.joinCode
+                                    )
+                                )
+                                navController.navigate(AdminHomeScreen.UpdateSubject.name)
+                            }
+
+                        },
+                        onArchiveClick = {
+                            subjectToArchive = subject
+                            showArchiveDialog = true
                         }
-                    }
-                )
+                    )
+                }
             }
         }
     }
+
+    // Confirmation dialogs for deleting and archiving subjects
+    ConfirmDialog(
+        title = "Delete Confirmation",
+        message = "Are you sure you want to delete this subject?",
+        onConfirm = {
+            subjectToDelete?.let { subject ->
+                viewModel.deleteSubject(subject)
+                showDeleteDialog = false
+                subjectToDelete = null
+            }
+            viewModel.getAllSubjects()
+        },
+        onDismiss = {
+            showDeleteDialog = false
+            subjectToDelete = null
+        },
+        showDialog = showDeleteDialog
+    )
+
+    ConfirmDialog(
+        title = "Archive Confirmation",
+        message = "Are you sure you want to archive this subject?",
+        onConfirm = {
+            subjectToArchive?.let { subject ->
+                viewModel.archiveSubject(subject)
+                showArchiveDialog = false
+                subjectToArchive = null
+            }
+            viewModel.getAllSubjects()
+        },
+        onDismiss = {
+            showArchiveDialog = false
+            subjectToArchive = null
+        },
+        showDialog = showArchiveDialog
+    )
 }
