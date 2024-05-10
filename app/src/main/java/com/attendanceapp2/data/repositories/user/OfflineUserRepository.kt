@@ -36,20 +36,20 @@ class OfflineUserRepository(
         return userDao.getUsersByUserType(userType)
     }
 
-    fun getUsers(): Flow<List<User>> {
-        return userDao.getUsers()
+    fun getAllUsers(): Flow<List<User>> {
+        return userDao.getAllUsers()
     }
 
     fun getStudents(): Flow<List<User>> {
         return userDao.getStudents()
     }
 
-    fun filterUsersByAdmin (query: String, usertype: String): Flow<List<User>> {
-        return userDao.filterUsersByAdmin(query, usertype)
+    fun filterUsersByQueryAndUserType (query: String, usertype: String): Flow<List<User>> {
+        return userDao.filterUsersByQueryAndUserType(query, usertype)
     }
 
-    fun filterUsersByStartingUserId(query: String): Flow<List<User>> {
-        return userDao.filterUsersByStartingUserId(query)
+    fun filterUsersByQuery(query: String): Flow<List<User>> {
+        return userDao.filterUsersByQuery(query)
     }
 
     fun filterUsersByUserType(userType: String): Flow<List<User>> {

@@ -2,7 +2,6 @@ package attendanceappusers.adminapp.homescreen.attendancemanagement.searchsubjec
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import attendanceappusers.studentapp.viewmodel.AttendanceResult
 import com.attendanceapp2.data.model.Results
 import com.attendanceapp2.data.model.attendance.Attendance
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
@@ -33,11 +32,11 @@ class SearchSubjectViewModel(
 
     fun searchSubjects(query: String): Flow<List<Subject>> {
         viewModelScope.launch {
-            offlineSubjectRepository.searchSubjects(query).collect { subjects ->
+            offlineSubjectRepository.searchSubject(query).collect { subjects ->
                 _subjects.value = subjects
             }
         }
-        return offlineSubjectRepository.searchSubjects(query)
+        return offlineSubjectRepository.searchSubject(query)
     }
 
     private fun fetchSubjects() {

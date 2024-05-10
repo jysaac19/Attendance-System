@@ -64,6 +64,7 @@ import com.attendanceapp2.data.model.subject.Subject
 import com.attendanceapp2.data.model.user.SelectedStudentHolder.selectedStudent
 import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.CustomDatePicker
+import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.UniversalDropDownMenu
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
@@ -83,15 +84,16 @@ fun AttendanceManagementScreen (
     val defaultEndDate = LocalDate.now()
     val defaultStartDate = LocalDate.of(currentYear, 1, 1) // January 1st of the current year
 
-    var query by remember { mutableStateOf(TextFieldValue()) }
+    var query by remember { mutableStateOf("") }
     var startDate by remember { mutableStateOf(defaultStartDate) }
     var endDate by remember { mutableStateOf(defaultEndDate) }
 
     val context = LocalContext.current
 
     val attendances by viewModel.attendances.collectAsState()
+    val formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy")
     val sortedAttendances = attendances.sortedByDescending { attendance ->
-        LocalDate.parse(attendance.date, DateTimeFormatter.ofPattern("MM-dd-yyyy"))
+        LocalDate.parse(attendance.date, formatter)
     }
 
     var showDeleteDialog by remember { mutableStateOf(false) }
@@ -100,29 +102,14 @@ fun AttendanceManagementScreen (
     var attendanceToDelete by remember { mutableStateOf<Attendance?>(null) }
     var attendanceToUpdate by remember { mutableStateOf<Attendance?>(null) }
     var selectedStatus by remember { mutableStateOf(attendanceToUpdate?.status ?: "") }
-
-
     var result by remember { mutableStateOf(Results.UpdateAttendanceResult()) }
 
-    LaunchedEffect(true){
-        val startDateString = startDate.toString()
-        val endDateString = endDate.toString()
-        viewModel.filterAttendancesByAdmin(
-            query.text.trim(),
-            startDateString,
-            endDateString
-        )
-    }
+    var selectedSubjectCode by remember { mutableStateOf("All") }
+    val subjects by viewModel.subjects.collectAsState()
 
-    LaunchedEffect(query, startDate, endDate) {
-        val startDateString = startDate.toString()
-        val endDateString = endDate.toString()
-        viewModel.filterAttendancesByAdmin(
-            query.text.trim(),
-            startDateString,
-            endDateString
-        )
-    }
+    var selectedUserType by remember { mutableStateOf("All") }
+    val userType = listOf("All", "Admin", "Student", "Faculty")
+    var expanded by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -156,7 +143,6 @@ fun AttendanceManagementScreen (
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
         )
 
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
@@ -186,6 +172,50 @@ fun AttendanceManagementScreen (
                         endDate = date
                     }
                 )
+            }
+        }
+
+        UniversalDropDownMenu(
+            label = "Subject",
+            items = subjects,
+            selectedItem = selectedSubjectCode,
+            onItemSelected = { selectedSubjectCode = it }
+        )
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = {
+                expanded = !expanded
+            }
+        ) {
+            OutlinedTextField(
+                value = selectedUserType,
+                label = { Text("User Type") },
+                onValueChange = { },
+                readOnly = true,
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                modifier = Modifier
+                    .menuAnchor()
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                textStyle = TextStyle(textAlign = TextAlign.Center)
+            )
+
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                userType.forEach { item ->
+                    DropdownMenuItem(
+                        text = { Text(text = item) },
+                        onClick = {
+                            selectedUserType = item
+                            expanded = false
+                        }
+                    )
+                }
             }
         }
 
@@ -297,7 +327,8 @@ fun AttendanceManagementScreen (
                             attendance.subjectCode,
                             attendance.date,
                             attendance.time,
-                            selectedStatus.toString()
+                            selectedStatus.toString(),
+                            attendance.usertype
                         )
                     )
                     viewModel.fetchAttendances()
@@ -313,4 +344,23 @@ fun AttendanceManagementScreen (
         onStatusSelected = { newStatus -> selectedStatus = newStatus },
         showDialog = showUpdateDialog
     )
+
+    LaunchedEffect(query, startDate, endDate, selectedSubjectCode, selectedUserType) {
+        val startDateString = startDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format start date
+        val endDateString = endDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format end date
+
+        println("Query: $query")
+        println("Start Date: $startDateString")
+        println("End Date: $endDateString")
+        println("Selected Subject Code: $selectedSubjectCode")
+        println("Selected Status: $selectedUserType")
+
+        viewModel.filterAttendancesByAdmin(
+            searchQuery = query,
+            subjectCode = selectedSubjectCode,
+            usertype = selectedUserType,
+            startDate = startDateString,
+            endDate = endDateString
+        )
+    }
 }

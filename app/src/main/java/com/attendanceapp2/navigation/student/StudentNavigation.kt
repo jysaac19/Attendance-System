@@ -23,7 +23,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import attendanceappusers.facultyapp.screens.mainscreen.profile.ProfileScreen
-import attendanceappusers.studentapp.screens.mainscreens.StudentAttendances
+import attendanceappusers.studentapp.screens.mainscreens.attendance.StudentAttendances
 import attendanceappusers.studentapp.screens.mainscreens.StudentScanner
 import attendanceappusers.studentapp.screens.mainscreens.StudentSubjects
 import attendanceappusers.studentapp.screens.subjects.StudentSubjectAttendances

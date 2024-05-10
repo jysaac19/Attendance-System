@@ -14,6 +14,10 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -28,8 +32,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -42,6 +48,7 @@ import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.Unive
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdminAttendanceList (
     navController: NavController,
@@ -68,7 +75,11 @@ fun AdminAttendanceList (
         LocalDate.parse(attendance.date, formatter)
     }
 
-    var query by remember { mutableStateOf(TextFieldValue()) }
+    var query by remember { mutableStateOf("") }
+
+    var selectedUserType by remember { mutableStateOf("All") }
+    val userType = listOf("All", "Admin", "Student", "Faculty")
+    var expanded by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -148,13 +159,50 @@ fun AdminAttendanceList (
         }
 
         UniversalDropDownMenu(
-            label = "Subjects",
+            label = "Subject",
             items = subjects,
             selectedItem = selectedSubjectCode,
             onItemSelected = { selectedSubjectCode = it }
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
+
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = {
+                expanded = !expanded
+            }
+        ) {
+            OutlinedTextField(
+                value = selectedUserType,
+                label = { Text("User Type") },
+                onValueChange = { },
+                readOnly = true,
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                modifier = Modifier
+                    .menuAnchor()
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                textStyle = TextStyle(textAlign = TextAlign.Center)
+            )
+
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                userType.forEach { item ->
+                    DropdownMenuItem(
+                        text = { Text(text = item) },
+                        onClick = {
+                            selectedUserType = item
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(4.dp))
 
         AttendanceColumnName()
 
@@ -169,13 +217,22 @@ fun AdminAttendanceList (
         }
     }
 
-    LaunchedEffect(query, startDate, endDate) {
+    LaunchedEffect(query, startDate, endDate, selectedSubjectCode, selectedUserType) {
         val startDateString = startDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format start date
         val endDateString = endDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format end date
+
+        println("Query: $query")
+        println("Start Date: $startDateString")
+        println("End Date: $endDateString")
+        println("Selected Subject Code: $selectedSubjectCode")
+        println("Selected Status: $selectedUserType")
+
         viewModel.filterAttendancesByAdmin(
-            query.text.trim(),
-            startDateString,
-            endDateString
+            searchQuery = query,
+            subjectCode = selectedSubjectCode,
+            usertype = selectedUserType,
+            startDate = startDateString,
+            endDate = endDateString
         )
     }
 }

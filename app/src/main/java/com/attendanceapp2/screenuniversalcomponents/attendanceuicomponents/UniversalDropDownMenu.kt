@@ -19,6 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,7 +53,8 @@ fun UniversalDropDownMenu (
             colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(
                 focusedBorderColor = Color.Red, // Remove focus border color
                 focusedLabelColor = Color.Gray,
-            )
+            ),
+            textStyle = TextStyle(textAlign = TextAlign.Center)
         )
 
         ExposedDropdownMenu(

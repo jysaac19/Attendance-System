@@ -2,7 +2,6 @@ package com.attendanceapp2.data.repositories.subject
 
 import com.attendanceapp2.data.interfaces.SubjectDao
 import com.attendanceapp2.data.model.subject.Subject
-import com.attendanceapp2.data.model.user.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -55,7 +54,7 @@ class OfflineSubjectRepository(
         return subjectDao.getActiveSubjectByName(subjectName)
     }
 
-    fun searchSubjects(query: String): Flow<List<Subject>> {
-        return subjectDao.searchSubjects(query)
+    fun searchSubject(query: String): Flow<List<Subject>> {
+        return subjectDao.searchSubject(query)
     }
 }

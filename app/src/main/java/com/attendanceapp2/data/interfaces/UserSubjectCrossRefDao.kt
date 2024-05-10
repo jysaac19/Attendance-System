@@ -21,7 +21,7 @@ interface UserSubjectCrossRefDao {
     suspend fun delete(userSubjectCrossRef: UserSubjectCrossRef)
 
     @Query("SELECT subjectId FROM UserSubjectCrossRef WHERE userId = :userId")
-    suspend fun getSubjectIdsForUser(userId: Long): List<Long>
+    suspend fun getJoinedSubjectsForFaculty(userId: Long): List<Long>
 
     @Query("SELECT subjectId FROM UserSubjectCrossRef")
     suspend fun getAllSubjectIds(): List<Long>

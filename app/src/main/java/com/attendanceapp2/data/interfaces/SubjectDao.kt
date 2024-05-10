@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.attendanceapp2.data.model.subject.Subject
-import com.attendanceapp2.data.model.user.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -40,6 +39,6 @@ interface SubjectDao {
     @Query("SELECT * FROM Subject WHERE name = :subjectName AND subjectStatus = 'Active'")
     suspend fun getActiveSubjectByName(subjectName: String): Subject?
 
-    @Query("SELECT * FROM Subject WHERE code LIKE '%' || :query || '%' OR name LIKE '%' || :query || '%'")
-    fun searchSubjects(query: String): Flow<List<Subject>>
+    @Query("SELECT * FROM Subject WHERE (id LIKE '%' || :query || '%' OR code LIKE '%' || :query || '%' OR name LIKE '%' || :query || '%')")
+    fun searchSubject(query: String): Flow<List<Subject>>
 }

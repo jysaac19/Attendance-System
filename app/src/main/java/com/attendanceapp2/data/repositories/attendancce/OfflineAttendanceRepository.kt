@@ -28,12 +28,15 @@ class OfflineAttendanceRepository(
         return attendanceDao.getAttendancesByUserIdSubjectIdAndDate(userId, subjectId, date)
     }
 
-    fun filterStudentAttendance(startDate: String, endDate: String, userId: Long, subjectCode: String): Flow<List<Attendance>> {
-        return attendanceDao.filterStudentAttendance(startDate, endDate, userId, subjectCode)
+    fun filterStudentAttendanceBySubjectCodeAndDateRange(startDate: String, endDate: String, userId: Long, subjectCode: String): Flow<List<Attendance>> {
+        return attendanceDao.filterStudentAttendanceBySubjectCodeAndDateRange(startDate, endDate, userId, subjectCode)
     }
 
-    fun filterAttendance(startDate: String, endDate: String, subjectCode: String): Flow<List<Attendance>> {
-        return attendanceDao.filterFacultyAttendance(startDate, endDate, subjectCode)
+    fun filterStudentAttendanceByDateRange(startDate: String, endDate: String, userId: Long): Flow<List<Attendance>>{
+        return attendanceDao.filterStudentAttendanceByDateRange(startDate, endDate, userId)
+    }
+    fun filterAttendancesBySubjectCodeAndDateRange(startDate: String, endDate: String, subjectCode: String): Flow<List<Attendance>> {
+        return attendanceDao.filterAttendancesBySubjectCodeAndDateRange(startDate, endDate, subjectCode)
     }
 
     fun getAttendancesByUserId(userId: Long): Flow<List<Attendance>> {
@@ -41,18 +44,70 @@ class OfflineAttendanceRepository(
     }
 
     fun getAllAttendances() : Flow<List<Attendance>> {
-        return attendanceDao.getAttendances()
+        return attendanceDao.getAllAttendances()
     }
 
-    fun getAttendances(subjectIds : List<Long>): Flow<List<Attendance>> {
-        return attendanceDao.getAttendancesBySubjectIds(subjectIds)
+    fun filterAttendancesBySubjectIdsAndDateRange(subjectIds : List<Long>, startDate: String, endDate: String): Flow<List<Attendance>> {
+        return attendanceDao.filterAttendancesBySubjectIdsAndDateRange(subjectIds, startDate, endDate)
     }
 
-    fun filterAttendancesByAdmin(userId: String, startDate: String, endDate: String): Flow<List<Attendance>> {
-        return attendanceDao.filterAttendancesByAdmin(userId, startDate, endDate)
+    fun filterAttendancesByQueryAndDateRange(query: String, startDate: String, endDate: String): Flow<List<Attendance>> {
+        return attendanceDao.filterAttendancesByQueryAndDateRange(
+            query = query,
+            startDate = startDate,
+            endDate = endDate
+        )
     }
 
-    fun filterAdminAttendanceList(userId: String, subjectCode: String, startDate: String, endDate: String): Flow<List<Attendance>> {
-        return attendanceDao.filterAdminAttendanceList(userId, subjectCode, startDate, endDate)
+    fun filterAttendancesByQuerySubjectCodeAndDateRange(query: String, subjectCode: String, startDate: String, endDate: String): Flow<List<Attendance>> {
+        return attendanceDao.filterAttendancesByQuerySubjectCodeAndDateRange(
+            query = query,
+            subjectCode = subjectCode,
+            startDate = startDate,
+            endDate = endDate
+        )
+    }
+
+    fun filterAttendanceByDateRange(startDate: String, endDate: String): Flow<List<Attendance>> {
+        return attendanceDao.filterAttendanceByDateRange(
+            startDate = startDate,
+            endDate = endDate
+        )
+    }
+
+    fun filterAttendancesBySubjectCodeUserTypeAndDateRange(subjectCode: String, userType: String, startDate: String, endDate: String): Flow<List<Attendance>> {
+        return attendanceDao.filterAttendancesBySubjectCodeUserTypeAndDateRange(
+            subjectCode = subjectCode,
+            userType = userType,
+            startDate = startDate,
+            endDate = endDate
+        )
+    }
+
+    fun filterAttendancesByUserTypeAndDateRange (userType: String, startDate: String, endDate: String): Flow<List<Attendance>> {
+        return attendanceDao.filterAttendancesByUserTypeAndDateRange(
+            userType = userType,
+            startDate = startDate,
+            endDate = endDate
+        )
+    }
+
+    fun filterAttendancesByQuerySubjectCodeUserTypeAndDateRange (query: String, subjectCode: String, userType: String, startDate: String, endDate: String): Flow<List<Attendance>> {
+        return attendanceDao.filterAttendancesByQuerySubjectCodeUserTypeAndDateRange(
+            query = query,
+            subjectCode = subjectCode,
+            userType = userType,
+            startDate = startDate,
+            endDate = endDate
+        )
+    }
+
+    fun filterAttendancesByQueryUserTypeAndDateRange (query: String, userType: String, startDate: String, endDate: String): Flow<List<Attendance>> {
+        return attendanceDao.filterAttendancesByQueryUserTypeAndDateRange(
+            query = query,
+            userType = userType,
+            startDate = startDate,
+            endDate = endDate
+        )
     }
 }

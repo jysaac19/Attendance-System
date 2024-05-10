@@ -16,5 +16,6 @@ data class Attendance(
     val subjectCode : String,
     val date: String,
     val time: String,
-    val status: String //Present, Absent, Late
+    val status: String, //Present, Absent, Late
+    val usertype : String //Student, Teacher
 )

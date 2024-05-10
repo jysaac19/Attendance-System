@@ -1,15 +1,11 @@
 package attendanceappusers.adminapp.homescreen.subjectmanagement
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.attendanceapp2.data.model.attendance.Attendance
 import com.attendanceapp2.data.model.subject.Subject
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class SubjectManagementViewModel(
@@ -34,12 +30,11 @@ class SubjectManagementViewModel(
 
     fun searchSubjectsByCode(subjectCode: String) {
         viewModelScope.launch {
-            if (subjectCode.isNotBlank()) {
-                offlineSubjectRepository.searchSubjects(subjectCode).collect { subjects ->
+            if (subjectCode.isNotEmpty()) {
+                offlineSubjectRepository.searchSubject(subjectCode).collect { subjects ->
                     _subjects.value = subjects
                 }
-            } else {
-                // If the search query is empty, reset to all subjects
+            } else if (subjectCode.isEmpty()) {
                 getAllSubjects()
             }
         }

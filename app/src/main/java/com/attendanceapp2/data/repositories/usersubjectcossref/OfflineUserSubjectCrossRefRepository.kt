@@ -30,8 +30,8 @@ class OfflineUserSubjectCrossRefRepository(
         userSubjectCrossRefDao.delete(userSubjectCrossRef)
     }
 
-    suspend fun getSubjectIdsForUser(userId: Long): List<Long> {
-        return userSubjectCrossRefDao.getSubjectIdsForUser(userId)
+    suspend fun getJoinedSubjectsForFaculty(userId: Long): List<Long> {
+        return userSubjectCrossRefDao.getJoinedSubjectsForFaculty(userId)
     }
 
     suspend fun getAllSubjects(): List<Long> {

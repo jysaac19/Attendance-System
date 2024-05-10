@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import attendanceappusers.facultyapp.viewmodel.FacultySubjectAttendanceViewModel
+import attendanceappusers.facultyapp.screens.mainscreen.subjects.facultysubjectattendances.FacultySubjectAttendanceViewModel
 import attendanceappusers.studentapp.screens.subjects.joinsubject.JoinSubjectDialog
 import attendanceappusers.studentapp.screens.subjects.joinsubject.JoinSubjectViewModel
 import com.attendanceapp2.navigation.approutes.faculty.FacultySubjectsRoutes

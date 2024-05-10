@@ -203,7 +203,8 @@ fun SearchSubjectScreen(
                                 subjectCode = subject.code,
                                 date = currentDate,
                                 time = currentTime,
-                                status = selectedStatus
+                                status = selectedStatus,
+                                usertype = student.usertype,
                             )
                         )
                         showDialog = false

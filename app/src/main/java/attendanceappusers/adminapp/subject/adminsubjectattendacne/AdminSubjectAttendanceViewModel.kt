@@ -20,13 +20,12 @@ class AdminSubjectAttendanceViewModel(
 
 
     // Function to fetch student subject attendances using the userId of the loggedInUser and subjectId of the selectedSubject
-    suspend fun fetchAdminSubjectAttendances(startDate: LocalDate, endDate: LocalDate) {
-        val selectedSubject = SelectedSubjectHolder.getSelectedSubject()
-        selectedSubject?.let { subject ->
-            offlineAttendanceRepository.filterAttendance(startDate.toString(), endDate.toString(), subject.code).collect { attendances ->
-                _adminSubjectAttendances.value = attendances
-                Log.d("AdmiinSubjectAttendanceViewModel", "Student Subject Attendances: $attendances")
-            }
+    suspend fun fetchAdminSubjectAttendances(startDate: String, endDate: String) {
+        offlineAttendanceRepository.filterAttendancesBySubjectCodeAndDateRange(startDate, endDate,
+            SelectedSubjectHolder.getSelectedSubject()?.code ?: "",
+        ).collect { attendances ->
+            _adminSubjectAttendances.value = attendances
+            println("Student Subject Attendances: $attendances")
         }
     }
 }

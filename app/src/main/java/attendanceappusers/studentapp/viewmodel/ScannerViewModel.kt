@@ -70,7 +70,8 @@ class ScannerViewModel(
             subjectCode = scannedQRCode.subjectCode,
             date = currentDate,
             time = currentTime,
-            status = "Present"
+            status = "Present",
+            usertype = loggedInUser.usertype
         )
 
         offlineAttendanceRepository.insertAttendance(attendance)

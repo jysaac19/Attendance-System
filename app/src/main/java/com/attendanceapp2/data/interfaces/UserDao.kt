@@ -32,18 +32,18 @@ interface UserDao {
     fun getUsersByUserType(userType: String): Flow<List<User>>
 
     @Query("SELECT * FROM User")
-    fun getUsers(): Flow<List<User>>
+    fun getAllUsers(): Flow<List<User>>
 
     @Query("SELECT * FROM User WHERE usertype = 'Student'")
     fun getStudents(): Flow<List<User>>
 
     @Query("SELECT * FROM User WHERE firstname LIKE '%' || :query || '%' OR lastname LIKE '%' || :query || '%' OR id LIKE '%' || :query || '%' AND usertype = :usertype")
-    fun filterUsersByAdmin(query: String, usertype: String): Flow<List<User>>
+    fun filterUsersByQueryAndUserType(query: String, usertype: String): Flow<List<User>>
 
     @Query("SELECT * FROM User WHERE usertype = :usertype")
     fun filterUsersByUserType(usertype: String): Flow<List<User>>
     @Query("SELECT * FROM User WHERE firstname LIKE '%' || :query || '%' OR lastname LIKE '%' || :query || '%' OR id LIKE '%' || :query || '%'")
-    fun filterUsersByStartingUserId(query: String): Flow<List<User>>
+    fun filterUsersByQuery(query: String): Flow<List<User>>
 
     @Query("SELECT * FROM User WHERE firstname = :firstname AND lastname = :lastname")
     suspend fun getUserByFullName(firstname: String, lastname: String): User?

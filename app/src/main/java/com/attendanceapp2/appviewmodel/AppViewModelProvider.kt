@@ -20,12 +20,12 @@ import attendanceappusers.adminapp.subject.adminsubject.AdminSubjectViewModel
 import attendanceappusers.adminapp.subject.adminsubjectattendacne.AdminSubjectAttendanceViewModel
 import attendanceappusers.adminapp.subject.adminsubjectlist.AdminSubjectListViewModel
 import attendanceappusers.facultyapp.screens.mainscreen.qrscreen.FacultyQRGeneratorViewModel
-import attendanceappusers.facultyapp.viewmodel.FacultyAttendanceViewModel
-import attendanceappusers.facultyapp.viewmodel.FacultySubjectAttendanceViewModel
+import attendanceappusers.facultyapp.screens.mainscreen.attendances.FacultyAttendanceViewModel
+import attendanceappusers.facultyapp.screens.mainscreen.subjects.facultysubjectattendances.FacultySubjectAttendanceViewModel
 import attendanceappusers.studentapp.screens.subjects.joinsubject.JoinSubjectViewModel
 import attendanceappusers.studentapp.viewmodel.ScannerViewModel
-import attendanceappusers.studentapp.viewmodel.StudentAttendanceViewModel
-import attendanceappusers.studentapp.viewmodel.StudentSubjectAttendanceViewModel
+import attendanceappusers.studentapp.screens.mainscreens.attendance.StudentAttendanceViewModel
+import attendanceappusers.studentapp.screens.subjects.StudentSubjectAttendanceViewModel
 import attendanceappusers.studentapp.viewmodel.StudentSubjectViewModel
 import com.attendanceapp2.NBSAttendanceApp
 import com.attendanceapp2.appviewmodel.screenviewmodel.ProfileViewModel
@@ -236,7 +236,8 @@ object AppViewModelProvider {
 
         initializer {
             AttendanceManagementViewModel(
-                nbsAttendanceApplication().container.offlineAttendanceRepository
+                nbsAttendanceApplication().container.offlineAttendanceRepository,
+                nbsAttendanceApplication().container.offlineSubjectRepository
             )
         }
 

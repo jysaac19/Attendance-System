@@ -31,14 +31,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceCard
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnName
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.CustomDatePicker
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun AdminSubjectAttendanceScreen (
@@ -60,11 +59,19 @@ fun AdminSubjectAttendanceScreen (
 
     // Collect attendances and sort them by date in descending order (most recent first)
     val attendances by viewModel.adminSubjectAttendances.collectAsState()
-    val sortedAttendances = attendances.sortedByDescending { LocalDate.parse(it.date) }
+    val formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy")
+    val sortedAttendances = attendances.sortedByDescending { attendance ->
+        LocalDate.parse(attendance.date, formatter)
+    }
 
     // Function to fetch attendances whenever start date or end date changes
     LaunchedEffect(startDate, endDate) {
-        viewModel.fetchAdminSubjectAttendances(startDate, endDate)
+        val startDateString = startDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format start date
+        val endDateString = endDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format end date
+
+        println("Start Date: $startDateString")
+        println("End Date: $endDateString")
+        viewModel.fetchAdminSubjectAttendances(startDateString, endDateString)
     }
 
     Column(

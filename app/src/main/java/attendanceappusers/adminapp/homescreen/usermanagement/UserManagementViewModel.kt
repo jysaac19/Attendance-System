@@ -18,36 +18,26 @@ class UserManagementViewModel(
 
     init {
         // Load users when ViewModel is initialized
-        fetchUsersForAdmin()
+        fetchAllUsers()
     }
 
     fun filterUsersByAdmin(
-        userId: String,
+        searchQuery: String,
         userType: String
     ) {
         viewModelScope.launch {
-            if (userId.isEmpty() && userType == "All") {
-                // If search text is empty and userType is "All", fetch all users
-                fetchUsersForAdmin()
-            } else if (userId.isNotEmpty() && userType == "All") {
-                // If search text is not empty and userType is "All", filter users by starting userId
-                val userIdPrefix = "$userId%"
-                offlineUserRepository.filterUsersByStartingUserId(userIdPrefix).collect { users ->
-                    // Update the StateFlow with the filtered users
-                    _users.value = users
-                }
-            } else if (userId.isEmpty() && userType != "All") {
+            if (searchQuery.isEmpty() && userType == "All") {
+                fetchAllUsers()
+            } else if (searchQuery.isEmpty() && userType != "All") {
                 offlineUserRepository.filterUsersByUserType(userType).collect { users ->
-                    // Update the StateFlow with the filtered users
                     _users.value = users
                 }
-            } else {
-                // Call the repository function to filter users by userType and/or userId
-                offlineUserRepository.filterUsersByAdmin(
-                    userId,
-                    userType
-                ).collect { users ->
-                    // Update the StateFlow with the filtered users
+            } else if (searchQuery.isNotEmpty() && userType == "All") {
+                offlineUserRepository.filterUsersByQuery(searchQuery).collect { users ->
+                    _users.value = users
+                }
+            } else if (searchQuery.isNotEmpty() && userType != "All") {
+                offlineUserRepository.filterUsersByQueryAndUserType(searchQuery, userType).collect { users ->
                     _users.value = users
                 }
             }
@@ -55,9 +45,9 @@ class UserManagementViewModel(
     }
 
     // Function to get all users for the admin
-    private fun fetchUsersForAdmin() {
+    private fun fetchAllUsers() {
         viewModelScope.launch {
-            offlineUserRepository.getUsers().collect { users ->
+            offlineUserRepository.getAllUsers().collect { users ->
                 _users.value = users
             }
         }
@@ -68,7 +58,7 @@ class UserManagementViewModel(
         viewModelScope.launch {
             offlineUserRepository.deleteStudent(user)
             // Optionally, you can reload the user list after deletion
-            fetchUsersForAdmin()
+            fetchAllUsers()
         }
     }
 
@@ -78,7 +68,7 @@ class UserManagementViewModel(
             val updatedUser = user.copy(status = "Inactive")
             offlineUserRepository.updateStudent(updatedUser)
             // Optionally, you can reload the user list after updating status
-            fetchUsersForAdmin()
+            fetchAllUsers()
         }
     }
 
@@ -88,7 +78,7 @@ class UserManagementViewModel(
             val updatedUser = user.copy(status = "Active")
             offlineUserRepository.updateStudent(updatedUser)
             // Optionally, you can reload the user list after updating status
-            fetchUsersForAdmin()
+            fetchAllUsers()
         }
     }
 }

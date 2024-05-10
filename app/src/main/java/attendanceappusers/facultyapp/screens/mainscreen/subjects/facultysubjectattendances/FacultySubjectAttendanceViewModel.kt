@@ -1,6 +1,5 @@
-package attendanceappusers.facultyapp.viewmodel
+package attendanceappusers.facultyapp.screens.mainscreen.subjects.facultysubjectattendances
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.attendanceapp2.data.model.attendance.Attendance
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
@@ -21,9 +20,9 @@ class FacultySubjectAttendanceViewModel (
     suspend fun fetchFacultySubjectAttendances(startDate: LocalDate, endDate: LocalDate) {
         val selectedSubject = SelectedSubjectHolder.getSelectedSubject()
         selectedSubject?.let { subject ->
-            offlineAttendanceRepository.filterAttendance(startDate.toString(), endDate.toString(), subject.code).collect { attendances ->
+            offlineAttendanceRepository.filterAttendancesBySubjectCodeAndDateRange(startDate.toString(), endDate.toString(), subject.code).collect { attendances ->
                 _facultySubjectAttendances.value = attendances
-                Log.d("FacultySubjectAttendanceViewModel", "Faculty Subject Attendances: $attendances")
+                println("Faculty Subject Attendances: $attendances")
             }
         }
     }

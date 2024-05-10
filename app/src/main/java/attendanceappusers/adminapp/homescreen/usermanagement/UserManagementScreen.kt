@@ -63,7 +63,7 @@ fun UserManagementScreen(
     val context = LocalContext.current
     val users by viewModel.users.collectAsState()
 
-    var searchText by remember { mutableStateOf(TextFieldValue()) }
+    var query by remember { mutableStateOf("") }
 
     var selectedUserType by remember { mutableStateOf("All") }
     val userType = listOf("All", "Admin", "Student", "Faculty")
@@ -116,9 +116,9 @@ fun UserManagementScreen(
         )
 
         OutlinedTextField(
-            value = searchText,
+            value = query,
             onValueChange = {
-                searchText = it
+                query = it
             },
             label = { Text("Search") },
             singleLine = true,
@@ -147,7 +147,8 @@ fun UserManagementScreen(
                 readOnly = true,
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                 modifier = Modifier
-                    .menuAnchor(),
+                    .menuAnchor()
+                    .fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
                 textStyle = TextStyle(textAlign = TextAlign.Center)
             )
@@ -288,10 +289,10 @@ fun UserManagementScreen(
         showDialog = showReactivateDialog
     )
 
-    LaunchedEffect(searchText, selectedUserType) {
+    LaunchedEffect(query, selectedUserType) {
         viewModel.filterUsersByAdmin(
-            searchText.text,
-            selectedUserType
+            searchQuery = query,
+            userType = selectedUserType
         )
     }
 }
