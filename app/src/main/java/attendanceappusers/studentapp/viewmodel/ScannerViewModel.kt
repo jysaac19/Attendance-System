@@ -28,7 +28,7 @@ class ScannerViewModel(
     }
 
     suspend fun validateAndInsertAttendance(): AttendanceResult {
-        val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-dd-MM"))
+        val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))
         val currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm a"))
 
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()

@@ -33,13 +33,13 @@ fun CustomDatePicker(
     selectedDate: LocalDate,
     onDateSelected: (LocalDate) -> Unit
 ) {
-    val date = remember { mutableStateOf(selectedDate)}
-    val isOpen = remember { mutableStateOf(false)}
+    val date = remember { mutableStateOf(selectedDate) }
+    val isOpen = remember { mutableStateOf(false) }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
         OutlinedTextField(
             readOnly = true,
-            value = date.value.format(DateTimeFormatter.ISO_DATE),
+            value = date.value.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), // Format date
             label = { Text(label) },
             onValueChange = {},
             trailingIcon = {

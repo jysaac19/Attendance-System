@@ -16,12 +16,6 @@ class AttendanceManagementViewModel(
     private val _attendances: MutableStateFlow<List<Attendance>> = MutableStateFlow(emptyList())
     val attendances: StateFlow<List<Attendance>> = _attendances
 
-    init {
-        // Load attendances when ViewModel is initialized
-        fetchAttendances()
-    }
-
-
     fun filterAttendancesByAdmin(
         userId: String,
         startDate: String,
@@ -29,26 +23,45 @@ class AttendanceManagementViewModel(
     ) {
         viewModelScope.launch {
             // Call the repository function to filter attendances
-            offlineAttendanceRepository.filterAttendancesByAdmin(
-                userId,
-                startDate,
-                endDate
-            ).collect() { attendances ->
-                // Update the StateFlow with the filtered attendances
-                _attendances.value = attendances
+            if (userId.isEmpty()) {
+                fetchAttendances()
+            } else {
+                offlineAttendanceRepository.filterAttendancesByAdmin(
+                    userId,
+                    startDate,
+                    endDate
+                ).collect() { attendances ->
+                    // Update the StateFlow with the filtered attendances
+                    _attendances.value = attendances
+                }
             }
         }
     }
 
 
     // Function to fetch all attendances
-    private fun fetchAttendances() {
+    fun fetchAttendances() {
         viewModelScope.launch {
             // Call the repository function to get all attendances
             offlineAttendanceRepository.getAllAttendances().collect() { attendances ->
                 // Update the StateFlow with the fetched attendances
                 _attendances.value = attendances
             }
+        }
+    }
+
+
+    fun deleteAttendance(attendance: Attendance){
+        viewModelScope.launch {
+            offlineAttendanceRepository.deleteAttendance(attendance)
+        }
+    }
+
+    fun updateAttendance(attendance: Attendance){
+        viewModelScope.launch {
+
+
+            offlineAttendanceRepository.updateAttendance(attendance)
         }
     }
 }

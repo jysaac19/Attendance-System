@@ -2,6 +2,7 @@ package com.attendanceapp2.data.repositories.subject
 
 import com.attendanceapp2.data.interfaces.SubjectDao
 import com.attendanceapp2.data.model.subject.Subject
+import com.attendanceapp2.data.model.user.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -32,10 +33,8 @@ class OfflineSubjectRepository(
         }
     }
 
-    suspend fun getAllSubjects(): List<Subject> {
-        return withContext(Dispatchers.IO) {
-            subjectDao.getAllSubjects()
-        }
+    fun getAllSubjects(): Flow<List<Subject>> {
+        return subjectDao.getAllSubjects()
     }
 
     fun filterSubjectList(subjectCode: String): Flow<List<Subject>> {
@@ -54,5 +53,9 @@ class OfflineSubjectRepository(
 
     suspend fun getActiveSubjectByName(subjectName: String): Subject? {
         return subjectDao.getActiveSubjectByName(subjectName)
+    }
+
+    fun searchSubjects(query: String): Flow<List<Subject>> {
+        return subjectDao.searchSubjects(query)
     }
 }

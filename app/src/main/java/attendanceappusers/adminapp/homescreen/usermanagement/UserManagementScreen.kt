@@ -130,7 +130,7 @@ fun UserManagementScreen(
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier
                 .fillMaxWidth(),
-            placeholder = {Text("Enter User ID")}
+            placeholder = {Text("Enter User ID or Name")}
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -162,7 +162,6 @@ fun UserManagementScreen(
                         onClick = {
                             selectedUserType = item
                             expanded = false
-                            Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
                         }
                     )
                 }
@@ -290,9 +289,8 @@ fun UserManagementScreen(
     )
 
     LaunchedEffect(searchText, selectedUserType) {
-        val userId = searchText.text.trim()
         viewModel.filterUsersByAdmin(
-            userId,
+            searchText.text,
             selectedUserType
         )
     }

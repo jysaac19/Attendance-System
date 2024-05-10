@@ -34,15 +34,20 @@ interface UserDao {
     @Query("SELECT * FROM User")
     fun getUsers(): Flow<List<User>>
 
-    @Query("SELECT * FROM User WHERE id LIKE :userId || '%' AND usertype = :usertype")
-    fun filterUsersByAdmin(
-        userId: String,
-        usertype: String
-    ): Flow<List<User>>
+    @Query("SELECT * FROM User WHERE usertype = 'Student'")
+    fun getStudents(): Flow<List<User>>
 
-    @Query("SELECT * FROM User WHERE id LIKE :userIdPrefix || '%'")
-    fun filterUsersByStartingUserId(userIdPrefix: String): Flow<List<User>>
+    @Query("SELECT * FROM User WHERE firstname LIKE '%' || :query || '%' OR lastname LIKE '%' || :query || '%' OR id LIKE '%' || :query || '%' AND usertype = :usertype")
+    fun filterUsersByAdmin(query: String, usertype: String): Flow<List<User>>
+
+    @Query("SELECT * FROM User WHERE usertype = :usertype")
+    fun filterUsersByUserType(usertype: String): Flow<List<User>>
+    @Query("SELECT * FROM User WHERE firstname LIKE '%' || :query || '%' OR lastname LIKE '%' || :query || '%' OR id LIKE '%' || :query || '%'")
+    fun filterUsersByStartingUserId(query: String): Flow<List<User>>
 
     @Query("SELECT * FROM User WHERE firstname = :firstname AND lastname = :lastname")
     suspend fun getUserByFullName(firstname: String, lastname: String): User?
+
+    @Query("SELECT * FROM User WHERE firstname LIKE '%' || :query || '%' OR lastname LIKE '%' || :query || '%' OR id LIKE '%' || :query || '%' AND usertype = 'Student'")
+    fun searchStudents(query: String): Flow<List<User>>
 }

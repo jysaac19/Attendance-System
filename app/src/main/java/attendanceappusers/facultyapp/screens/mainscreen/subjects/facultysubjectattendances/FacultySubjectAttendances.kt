@@ -1,4 +1,4 @@
-package attendanceappusers.facultyapp.screens.mainscreen.subjects
+package attendanceappusers.facultyapp.screens.mainscreen.subjects.facultysubjectattendances
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

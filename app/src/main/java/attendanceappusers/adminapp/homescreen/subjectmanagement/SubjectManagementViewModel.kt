@@ -4,17 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.attendanceapp2.data.model.attendance.Attendance
 import com.attendanceapp2.data.model.subject.Subject
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class SubjectManagementViewModel(
     private val offlineSubjectRepository: OfflineSubjectRepository
 ): ViewModel() {
 
-    private val _subjectList: MutableLiveData<List<Subject>> = MutableLiveData(emptyList())
-    val subjectList: LiveData<List<Subject>> get() = _subjectList
+    private val _subjects: MutableStateFlow<List<Subject>> = MutableStateFlow(emptyList())
+    val subjects: StateFlow<List<Subject>> = _subjects
+
 
     init {
         getAllSubjects()
@@ -22,15 +26,17 @@ class SubjectManagementViewModel(
 
     fun getAllSubjects() {
         viewModelScope.launch {
-            _subjectList.value = offlineSubjectRepository.getAllSubjects()
+            offlineSubjectRepository.getAllSubjects().collect { subjects ->
+                _subjects.value = subjects
+            }
         }
     }
 
     fun searchSubjectsByCode(subjectCode: String) {
         viewModelScope.launch {
             if (subjectCode.isNotBlank()) {
-                offlineSubjectRepository.filterSubjectList(subjectCode).collect { subjects ->
-                    _subjectList.value = subjects
+                offlineSubjectRepository.searchSubjects(subjectCode).collect { subjects ->
+                    _subjects.value = subjects
                 }
             } else {
                 // If the search query is empty, reset to all subjects

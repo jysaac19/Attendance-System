@@ -36,6 +36,11 @@ class UserManagementViewModel(
                     // Update the StateFlow with the filtered users
                     _users.value = users
                 }
+            } else if (userId.isEmpty() && userType != "All") {
+                offlineUserRepository.filterUsersByUserType(userType).collect { users ->
+                    // Update the StateFlow with the filtered users
+                    _users.value = users
+                }
             } else {
                 // Call the repository function to filter users by userType and/or userId
                 offlineUserRepository.filterUsersByAdmin(

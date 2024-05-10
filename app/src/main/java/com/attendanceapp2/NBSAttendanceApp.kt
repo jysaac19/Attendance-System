@@ -60,15 +60,15 @@ class NBSAttendanceApp : Application() {
         )
 
         val embeddedAttendances = listOf(
-            Attendance(1, 101, "JE", "YSAAC", 1, "Introduction to Computer Science", "CS101", "2024-04-01", "09:00 AM", "Present"),
+            Attendance(1, 101, "JE", "YSAAC", 1, "Introduction to Computer Science", "CS101", "04-01-2024", "09:00 AM", "Present"),
 //            Attendance(2, 301, "KENNETH", "BONAAGUA", 1, "Introduction to Computer Science", "CS101", "2024-04-02", "09:00 AM", "Present"),
 //            Attendance(3, 201, "KARA", "COLUMBA", 1, "Introduction to Computer Science", "CS101", "2024-04-05", "09:00 AM","Present"),
-            Attendance(4, 101, "JE", "YSAAC", 1, "Introduction to Computer Science", "CS101", "2024-04-07", "09:00 AM","Present"),
+            Attendance(4, 101, "JE", "YSAAC", 1, "Introduction to Computer Science", "CS101", "04-07-2024", "09:00 AM","Present"),
 //            Attendance(5, 301, "KENNETH", "BONAAGUA", 1, "Introduction to Computer Science", "CS101", "2024-04-08", "09:00 AM","Present"),
-            Attendance(6, 101, "JE", "YSAAC", 1, "Introduction to Computer Science", "CS101", "2024-04-15", "09:00 AM","Present"),
+            Attendance(6, 101, "JE", "YSAAC", 1, "Introduction to Computer Science", "CS101", "04-15-2024", "09:00 AM","Present"),
 //            Attendance(7, 201, "KARA", "COLUMBA", 1, "Introduction to Computer Science", "CS101", "2024-04-18", "09:00 AM","Present"),
 //            Attendance(8, 301, "KENNETH", "BONAAGUA", 1, "Introduction to Computer Science", "CS101", "2024-04-24", "09:00 AM","Present"),
-            Attendance(9, 101, "JE", "Ysaac", 1, "Introduction to Computer Science", "CS101", "2024-04-28", "09:00 AM","Present"),
+            Attendance(9, 101, "JE", "Ysaac", 1, "Introduction to Computer Science", "CS101", "04-28-2024", "09:00 AM","Present"),
 //            Attendance(10, 301, "KENNETH", "BONAAGUA", 1, "Introduction to Computer Science", "CS101", "2024-04-30", "09:00 AM","Present"),
 //
 //            // English Literature

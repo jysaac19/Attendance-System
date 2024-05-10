@@ -1,4 +1,4 @@
-package attendanceappusers.facultyapp.screens.mainscreen.subjects
+package attendanceappusers.facultyapp.screens.mainscreen.subjects.facultysubjetctlist
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import attendanceappusers.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
+import attendanceappusers.facultyapp.viewmodel.FacultySubjectAttendanceViewModel
 import attendanceappusers.studentapp.screens.subjects.joinsubject.JoinSubjectDialog
 import attendanceappusers.studentapp.screens.subjects.joinsubject.JoinSubjectViewModel
 import com.attendanceapp2.navigation.approutes.faculty.FacultySubjectsRoutes
@@ -49,7 +49,7 @@ import kotlinx.coroutines.launch
 fun FacultySubjects (
     navController : NavController,
     subjectVM: SubjectViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    facultySubjectAttendanceVM: FacultySubjectAttendancesViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    facultySubjectAttendanceVM: FacultySubjectAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory),
     joinSubjectViewModel: JoinSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()

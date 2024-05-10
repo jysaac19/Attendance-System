@@ -4,22 +4,22 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import attendanceappusers.adminapp.homescreen.usermanagement.adduser.AddUserViewModel
 import attendanceappusers.adminapp.attendance.AdminAttendanceViewModel
-import attendanceappusers.adminapp.homescreen.attendancemanagement.addattendance.AddAttendanceViewModel
-import attendanceappusers.adminapp.homescreen.subjectmanagement.addsubject.AddSubjectViewModel
 import attendanceappusers.adminapp.homescreen.attendancemanagement.AttendanceManagementViewModel
+import attendanceappusers.adminapp.homescreen.attendancemanagement.searchstudent.SearchStudentViewModel
+import attendanceappusers.adminapp.homescreen.attendancemanagement.searchsubject.SearchSubjectViewModel
 import attendanceappusers.adminapp.homescreen.subjectmanagement.SubjectManagementViewModel
+import attendanceappusers.adminapp.homescreen.subjectmanagement.addsubject.AddSubjectViewModel
 import attendanceappusers.adminapp.homescreen.subjectmanagement.updatesubject.UpdateSubjectViewModel
 import attendanceappusers.adminapp.homescreen.usermanagement.UserManagementViewModel
+import attendanceappusers.adminapp.homescreen.usermanagement.adduser.AddUserViewModel
 import attendanceappusers.adminapp.homescreen.usermanagement.updateuser.UpdateUserViewModel
 import attendanceappusers.adminapp.profile.AdminProfileViewModel
 import attendanceappusers.adminapp.subject.addschedule.AddScheduleViewModel
-import attendanceappusers.adminapp.subject.adminsubjectlist.AdminSubjectListViewModel
 import attendanceappusers.adminapp.subject.adminsubject.AdminSubjectViewModel
 import attendanceappusers.adminapp.subject.adminsubjectattendacne.AdminSubjectAttendanceViewModel
+import attendanceappusers.adminapp.subject.adminsubjectlist.AdminSubjectListViewModel
 import attendanceappusers.facultyapp.screens.mainscreen.qrscreen.FacultyQRGeneratorViewModel
-import attendanceappusers.facultyapp.screens.mainscreen.subjects.viewmodel.FacultySubjectAttendancesViewModel
 import attendanceappusers.facultyapp.viewmodel.FacultyAttendanceViewModel
 import attendanceappusers.facultyapp.viewmodel.FacultySubjectAttendanceViewModel
 import attendanceappusers.studentapp.screens.subjects.joinsubject.JoinSubjectViewModel
@@ -28,13 +28,13 @@ import attendanceappusers.studentapp.viewmodel.StudentAttendanceViewModel
 import attendanceappusers.studentapp.viewmodel.StudentSubjectAttendanceViewModel
 import attendanceappusers.studentapp.viewmodel.StudentSubjectViewModel
 import com.attendanceapp2.NBSAttendanceApp
+import com.attendanceapp2.appviewmodel.screenviewmodel.ProfileViewModel
+import com.attendanceapp2.appviewmodel.screenviewmodel.ScreenViewModel
+import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
 import com.attendanceapp2.authentication.SignInViewModel
 import com.attendanceapp2.authentication.SignUpViewModel
 import com.attendanceapp2.data.screen.subject.NewSubjectViewModel
 import com.attendanceapp2.posts.viewmodel.PostViewModel
-import com.attendanceapp2.appviewmodel.screenviewmodel.ProfileViewModel
-import com.attendanceapp2.appviewmodel.screenviewmodel.ScreenViewModel
-import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
 
 /**
  * Provides Factory to create instance of ViewModel for the entire Inventory app
@@ -103,10 +103,6 @@ object AppViewModelProvider {
             )
         }
 
-        initializer {
-            FacultySubjectAttendancesViewModel(nbsAttendanceApplication().container.offlineAttendanceRepository)
-        }
-
         //Posts ViewModel [sample ktor implementation]
         initializer {
             PostViewModel(nbsAttendanceApplication().container.onlinePostRepository)
@@ -160,7 +156,6 @@ object AppViewModelProvider {
         //Scope: Admin
         initializer {
             AdminAttendanceViewModel(
-                nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository,
                 nbsAttendanceApplication().container.offlineAttendanceRepository,
                 nbsAttendanceApplication().container.offlineSubjectRepository
             )
@@ -181,11 +176,15 @@ object AppViewModelProvider {
         }
 
         initializer {
-            AddAttendanceViewModel(
+            SearchSubjectViewModel(
                 nbsAttendanceApplication().container.offlineAttendanceRepository,
-                nbsAttendanceApplication().container.offlineSubjectRepository,
-                nbsAttendanceApplication().container.offlineUserRepository,
-                nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository
+                nbsAttendanceApplication().container.offlineSubjectRepository
+            )
+        }
+
+        initializer {
+            SearchStudentViewModel(
+                nbsAttendanceApplication().container.offlineUserRepository
             )
         }
 

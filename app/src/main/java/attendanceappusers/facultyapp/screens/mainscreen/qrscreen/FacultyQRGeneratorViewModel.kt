@@ -34,7 +34,7 @@ class FacultyQRGeneratorViewModel : ViewModel() {
     private val gson = Gson()
 
     fun generateQrCodeBitmap(selectedSubject: SelectedSubject): Bitmap? {
-        val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-dd-MM"))
+        val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))
         val currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm a"))
         val qrData = QRCode(
             subjectId = selectedSubject.id,

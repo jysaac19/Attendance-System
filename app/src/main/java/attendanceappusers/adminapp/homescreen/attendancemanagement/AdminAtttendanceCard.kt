@@ -35,7 +35,7 @@ fun AttendanceCard(
                 .padding(16.dp),
         ) {
             // Display attendance information
-            Text(text = "User ID: ${attendance.userId}")
+            Text(text = "Name: ${attendance.firstname} ${attendance.lastname}")
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = "Subject: ${attendance.subjectName}")
             Spacer(modifier = Modifier.height(4.dp))

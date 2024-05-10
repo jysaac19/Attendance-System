@@ -19,8 +19,8 @@ import androidx.navigation.navigation
 import attendanceappusers.facultyapp.screens.mainscreen.attendances.FacultyAttendances
 import attendanceappusers.facultyapp.screens.mainscreen.profile.ProfileScreen
 import attendanceappusers.facultyapp.screens.mainscreen.qrscreen.QRGeneratorScreen
-import attendanceappusers.facultyapp.screens.mainscreen.subjects.FacultySubjectAttendances
-import attendanceappusers.facultyapp.screens.mainscreen.subjects.FacultySubjects
+import attendanceappusers.facultyapp.screens.mainscreen.subjects.facultysubjectattendances.FacultySubjectAttendances
+import attendanceappusers.facultyapp.screens.mainscreen.subjects.facultysubjetctlist.FacultySubjects
 import com.attendanceapp2.navigation.approutes.faculty.FacultyMainRoute
 import com.attendanceapp2.navigation.approutes.faculty.FacultySubjectsRoutes
 

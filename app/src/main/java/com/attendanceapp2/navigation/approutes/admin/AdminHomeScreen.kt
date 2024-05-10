@@ -9,7 +9,9 @@ enum class AdminHomeScreen {
 
     AddUser,
     AddSubject,
-    AddAttendance,
+    SearchSubject,
+
+    SearchStudent,
 
     UpdateUser,
     UpdateSubject,

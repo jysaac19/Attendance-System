@@ -20,7 +20,8 @@ import attendanceappusers.adminapp.attendance.AdminAttendanceList
 import attendanceappusers.adminapp.homescreen.HomeScreen
 import attendanceappusers.adminapp.homescreen.usermanagement.adduser.AddUserScreen
 import attendanceappusers.adminapp.homescreen.attendancemanagement.AttendanceManagementScreen
-import attendanceappusers.adminapp.homescreen.attendancemanagement.addattendance.AddAttendanceScreen
+import attendanceappusers.adminapp.homescreen.attendancemanagement.searchsubject.SearchSubjectScreen
+import attendanceappusers.adminapp.homescreen.attendancemanagement.searchstudent.SearchStudentScreen
 import attendanceappusers.adminapp.homescreen.subjectmanagement.SubjectManagementScreen
 import attendanceappusers.adminapp.homescreen.subjectmanagement.addsubject.AddSubjectScreen
 import attendanceappusers.adminapp.homescreen.subjectmanagement.updatesubject.UpdateSubjectScreen
@@ -76,8 +77,12 @@ fun AdminNavigation() {
                     composable(route = AdminHomeScreen.AddUser.name) {
                         AddUserScreen(navController)
                     }
-                    composable(route = AdminHomeScreen.AddAttendance.name) {
-                        AddAttendanceScreen(navController)
+
+                    composable(route = AdminHomeScreen.SearchSubject.name) {
+                        SearchSubjectScreen(navController)
+                    }
+                    composable(route = AdminHomeScreen.SearchStudent.name) {
+                        SearchStudentScreen(navController)
                     }
 
                     composable(route = AdminHomeScreen.UpdateUser.name) {

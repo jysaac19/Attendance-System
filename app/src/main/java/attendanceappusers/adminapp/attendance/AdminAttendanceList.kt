@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -30,27 +29,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceCard
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnName
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.CustomDatePicker
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.UniversalDropDownMenu
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun AdminAttendanceList (
     navController: NavController,
     viewModel : AdminAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val navController: NavHostController = rememberNavController()
     // Get the current year
     val currentYear = LocalDate.now().year
 
@@ -62,30 +58,17 @@ fun AdminAttendanceList (
     var startDate by remember { mutableStateOf(defaultStartDate) }
     var endDate by remember { mutableStateOf(defaultEndDate) }
 
-    var selectedSubject by remember { mutableStateOf("All") }
+    var selectedSubjectCode by remember { mutableStateOf("All") }
     val subjects by viewModel.subjects.collectAsState()
 
     // Collect attendances and sort them by date in descending order (most recent first)
-    val attendances by viewModel.adminAttendanceList.collectAsState()
-    val sortedAttendances = attendances.sortedByDescending { LocalDate.parse(it.date) }
-
-    var searchText by remember { mutableStateOf(TextFieldValue()) }
-
-    LaunchedEffect(selectedSubject, startDate, endDate) {
-        viewModel.fetchAllAttendance(selectedSubject, startDate, endDate)
+    val attendances by viewModel.attendances.collectAsState()
+    val formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy")
+    val sortedAttendances = attendances.sortedByDescending { attendance ->
+        LocalDate.parse(attendance.date, formatter)
     }
 
-    LaunchedEffect(searchText, startDate, endDate) {
-        val userId = searchText.text.trim()
-        val startDateString = startDate.toString()
-        val endDateString = endDate.toString()
-        viewModel.filterAttendanceList(
-            userId,
-            selectedSubject,
-            startDateString,
-            endDateString
-        )
-    }
+    var query by remember { mutableStateOf(TextFieldValue()) }
 
     Column(
         modifier = Modifier
@@ -115,9 +98,9 @@ fun AdminAttendanceList (
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
-                value = searchText,
+                value = query,
                 onValueChange = {
-                    searchText = it
+                    query = it
                 },
                 label = { Text("Search") },
                 singleLine = true,
@@ -128,8 +111,7 @@ fun AdminAttendanceList (
                 },
                 shape = RoundedCornerShape(20.dp),
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("Enter User ID") },
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                placeholder = { Text("Enter User ID") }
             )
 
             Row(
@@ -168,8 +150,8 @@ fun AdminAttendanceList (
         UniversalDropDownMenu(
             label = "Subjects",
             items = subjects,
-            selectedItem = selectedSubject,
-            onItemSelected = { selectedSubject = it }
+            selectedItem = selectedSubjectCode,
+            onItemSelected = { selectedSubjectCode = it }
         )
 
         Spacer(Modifier.height(8.dp))
@@ -185,5 +167,15 @@ fun AdminAttendanceList (
                 )
             }
         }
+    }
+
+    LaunchedEffect(query, startDate, endDate) {
+        val startDateString = startDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format start date
+        val endDateString = endDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format end date
+        viewModel.filterAttendancesByAdmin(
+            query.text.trim(),
+            startDateString,
+            endDateString
+        )
     }
 }

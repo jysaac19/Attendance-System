@@ -59,7 +59,7 @@ fun SubjectManagementScreen (
 ) {
     val coroutineScope = rememberCoroutineScope()
     var searchText by remember { mutableStateOf(TextFieldValue()) }
-    val subjectList by viewModel.subjectList.observeAsState()
+    val subjectList by viewModel.subjects.collectAsState()
 
     var showDeleteDialog by remember { mutableStateOf(false) }
     var showArchiveDialog by remember { mutableStateOf(false) }
@@ -156,7 +156,7 @@ fun SubjectManagementScreen (
         }
 
         // Display the list of subjects
-        subjectList?.let { subjects ->
+        subjectList.let { subjects ->
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -225,7 +225,6 @@ fun SubjectManagementScreen (
         }
     }
 
-    // Confirmation dialogs for deleting and archiving subjects
     ConfirmDialog(
         title = "Delete Confirmation",
         message = "Are you sure you want to delete this subject?",
