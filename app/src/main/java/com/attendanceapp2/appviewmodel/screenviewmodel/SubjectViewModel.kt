@@ -15,35 +15,27 @@ class SubjectViewModel(
     private val offlineSubjectRepository: OfflineSubjectRepository
 ) : ViewModel() {
 
-    private val _subjects = MutableStateFlow<List<Subject>>(emptyList()) // LiveData or StateFlow for subjects
+    private val _subjects = MutableStateFlow<List<Subject>>(emptyList())
     val subjects = _subjects.asStateFlow()
 
-    // Function to fetch subjects associated with the logged-in user
     fun fetchSubjectsForLoggedInUser() {
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
-        loggedInUser?.let { user ->
-            viewModelScope.launch {
-                val userId = user.userId
-                    val subjectIds = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForFaculty(userId)
+        viewModelScope.launch {
+            val userId = loggedInUser!!.userId
 
-                // Fetch subjects using subjectIds
-                val subjects = offlineSubjectRepository.getSubjectsByIds(subjectIds)
-                _subjects.value = subjects ?: emptyList()
+            val userSubjectCrossRefs = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForUser(userId)
 
-                // Log the fetched subjects
-                subjects?.let {
-                    if (it.isNotEmpty()) {
-                        println("Fetched subjects: $subjects")
-                    } else {
-                        println("No subjects fetched.")
-                    }
-                } ?: println("Failed to fetch subjects.")
+            val subjectIds = userSubjectCrossRefs.map { it.subjectId }
+
+            val subjects = offlineSubjectRepository.getSubjectsByIds(subjectIds)
+
+            _subjects.value = subjects
+
+            if (subjects.isNotEmpty()) {
+                println("Fetched subjects: $subjects")
+            } else {
+                println("No subjects fetched.")
             }
         }
-    }
-
-    // Function to get the list of subject IDs
-    fun getSubjectIds(): List<Long> {
-        return _subjects.value.map { it.id }
     }
 }

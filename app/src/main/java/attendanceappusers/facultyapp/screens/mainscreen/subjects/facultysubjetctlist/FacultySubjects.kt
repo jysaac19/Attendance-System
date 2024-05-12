@@ -1,6 +1,7 @@
 package attendanceappusers.facultyapp.screens.mainscreen.subjects.facultysubjetctlist
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,6 +28,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,16 +52,14 @@ fun FacultySubjects (
     navController : NavController,
     subjectVM: SubjectViewModel = viewModel(factory = AppViewModelProvider.Factory),
     facultySubjectAttendanceVM: FacultySubjectAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    joinSubjectViewModel: JoinSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    joinViewModel: JoinSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     var showDialog by remember { mutableStateOf(false) }
     val loggedInUser = LoggedInUserHolder.getLoggedInUser()
 
     val subjects by subjectVM.subjects.collectAsState()
-
-    // Remember mutable state variable for joinSubjectResult
-    var joinSubjectResult by remember { mutableStateOf<Results.JoinSubjectResult?>(null) }
 
     LaunchedEffect(key1 = true) {
         subjectVM.fetchSubjectsForLoggedInUser()
@@ -143,12 +143,16 @@ fun FacultySubjects (
         JoinSubjectDialog(
             showDialog = showDialog,
             onDismiss = { showDialog = false },
-            joinSubjectResult = joinSubjectResult,
             onJoinSubject = { subjectCode ->
                 coroutineScope.launch {
-                    // Call join subject function in the view model
                     loggedInUser?.let { user ->
-                        joinSubjectResult = joinSubjectViewModel.joinSubjectByCode(user.userId, subjectCode)
+                        val joinResult = joinViewModel.joinSubjectByCode(user.userId, subjectCode)
+                        joinResult.successMessage?.let { message ->
+                            showDialog = false
+                        }
+                        joinResult.failureMessage?.let { message ->
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                        }
                     }
                     subjectVM.fetchSubjectsForLoggedInUser()
                     showDialog = false

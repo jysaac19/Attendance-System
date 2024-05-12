@@ -22,11 +22,10 @@ import com.attendanceapp2.data.model.Results
 fun JoinSubjectDialog(
     showDialog: Boolean,
     onDismiss: () -> Unit,
-    joinSubjectResult: Results.JoinSubjectResult?,
     onJoinSubject: (String) -> Unit
 ) {
     if (showDialog) {
-        var subjectCode by remember { mutableStateOf(TextFieldValue()) }
+        var subjectCode by remember { mutableStateOf("") }
 
         AlertDialog(
             onDismissRequest = onDismiss,
@@ -36,26 +35,17 @@ fun JoinSubjectDialog(
                     OutlinedTextField(
                         value = subjectCode,
                         onValueChange = {
-                            subjectCode = it
+                            subjectCode = it.uppercase()
                         },
                         label = { Text("Join Code") },
                         shape = RoundedCornerShape(20.dp)
                     )
-                    // Display success or failure message
-                    joinSubjectResult?.let { result ->
-                        result.successMessage?.let { message ->
-                            Text(text = message, color = Color.Green)
-                        }
-                        result.failureMessage?.let { message ->
-                            Text(text = message, color = Color.Red)
-                        }
-                    }
                 }
             },
             confirmButton = {
                 Button(
                     onClick = {
-                        onJoinSubject(subjectCode.text)
+                        onJoinSubject(subjectCode)
                         onDismiss()
                     },
                 ) {

@@ -12,14 +12,11 @@ class JoinSubjectViewModel (
 ) : ViewModel() {
 
     suspend fun joinSubjectByCode(userId: Long, joinCode: String): Results.JoinSubjectResult {
-        // Retrieve subject with the provided join code
         val subject = offlineSubjectRepository.getSubjectByJoinCode(joinCode)
         return if (subject != null) {
-            // If subject found, create user-subject cross-reference
             offlineUserSubjectCrossRefRepository.insert(UserSubjectCrossRef(userId, subject.id))
             Results.JoinSubjectResult(successMessage = "Successfully joined the subject.")
         } else {
-            // Handle case where no subject is found with the provided join code
             Results.JoinSubjectResult(failureMessage = "No subject found with the provided join code.")
         }
     }

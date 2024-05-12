@@ -54,11 +54,18 @@ class StudentAttendanceViewModel(
     private fun fetchSubjectsForLoggedInUser() {
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
         viewModelScope.launch {
-            val subjectIds = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForFaculty(loggedInUser!!.userId)
-            if (subjectIds.isNotEmpty()) {
-                val subjects = offlineSubjectRepository.getSubjectsByIds(subjectIds)
-                    .map { it.code }
-                _subjects.value = listOf("All") + subjects
+            val userId = loggedInUser!!.userId
+
+            val userSubjectCrossRefs = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForUser(userId)
+
+            val subjectIds = userSubjectCrossRefs.map { it.subjectId }
+
+            val subjects = offlineSubjectRepository.getSubjectsByIds(subjectIds)
+
+            val subjectCodes = subjects.map { it.code }
+
+            if (subjectCodes.isNotEmpty()) {
+                _subjects.value = listOf("All") + subjectCodes
             } else {
                 _subjects.value = emptyList()
             }

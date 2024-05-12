@@ -27,9 +27,7 @@ class OfflineSubjectRepository(
     suspend fun deleteSubject(subject : Subject) = subjectDao.delete(subject)
 
     suspend fun getSubjectsByIds(subjectIds: List<Long>): List<Subject> {
-        return withContext(Dispatchers.IO) {
-            subjectDao.getSubjectsByIds(subjectIds)
-        }
+        return subjectDao.getSubjectsByIds(subjectIds)
     }
 
     fun getAllSubjects(): Flow<List<Subject>> {

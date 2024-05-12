@@ -44,8 +44,8 @@ interface AttendanceDao {
     @Query("SELECT * FROM Attendance WHERE userId = :userId AND subjectId = :subjectId")
     fun getAttendancesByUserIdAndSubjectId(userId: Long, subjectId: Long): Flow<List<Attendance>>
 
-    @Query("SELECT * FROM Attendance WHERE subjectId IN (:subjectIds) AND date BETWEEN :startDate AND :endDate")
-    fun filterAttendancesBySubjectIdsAndDateRange(subjectIds: List<Long>, startDate: String, endDate: String): Flow<List<Attendance>>
+    @Query("SELECT * FROM Attendance WHERE subjectCode IN (:subjectCodes) AND date BETWEEN :startDate AND :endDate")
+    fun filterAttendancesBySubjectCodesAndDateRange(subjectCodes: List<String>, startDate: String, endDate: String): Flow<List<Attendance>>
 
     @Query("SELECT * FROM Attendance WHERE (userId LIKE '%' || :query || '%' OR firstName LIKE '%' || :query || '%' OR lastName LIKE '%' || :query || '%') AND date BETWEEN :startDate AND :endDate")
     fun filterAttendancesByQueryAndDateRange(query: String, startDate: String, endDate: String): Flow<List<Attendance>>

@@ -31,27 +31,40 @@ class FacultyAttendanceViewModel(
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
         viewModelScope.launch {
             val userId = loggedInUser!!.userId
-            val subjectIds = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForFaculty(userId)
-            if (subjectIds.isNotEmpty()) {
-                val subjects = offlineSubjectRepository.getSubjectsByIds(subjectIds)
-                    .map { it.code }
-                _subjects.value = listOf("All") + subjects
+
+            val userSubjectCrossRefs = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForUser(userId)
+
+            val subjectIds = userSubjectCrossRefs.map { it.subjectId }
+
+            val subjects = offlineSubjectRepository.getSubjectsByIds(subjectIds)
+
+            val subjectCodes = subjects.map { it.code }
+
+            if (subjectCodes.isNotEmpty()) {
+                _subjects.value = listOf("All") + subjectCodes
+            } else {
+                _subjects.value = emptyList()
             }
         }
     }
 
-    suspend fun filterAttendance(
-        selectedSubject: String,
-        startDate: String,
-        endDate: String
-    ) {
+    suspend fun filterAttendance(selectedSubject: String, startDate: String, endDate: String) {
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
         if (selectedSubject == "All") {
-            val subjectIds = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForFaculty(loggedInUser!!.userId)
-            offlineAttendanceRepository.filterAttendancesBySubjectIdsAndDateRange(subjectIds, startDate, endDate).collect { attendances ->
+            val userId = loggedInUser!!.userId
+
+            val userSubjectCrossRefs = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForUser(userId)
+
+            val subjectIds = userSubjectCrossRefs.map { it.subjectId }
+
+            val subjects = offlineSubjectRepository.getSubjectsByIds(subjectIds)
+
+            val subjectCodes = subjects.map { it.code }
+
+            offlineAttendanceRepository.filterAttendancesBySubjectIdsAndDateRange(subjectCodes, startDate, endDate).collect { attendances ->
                 _attendances.value = attendances
             }
-        } else if (selectedSubject != "All") {
+        } else {
             offlineAttendanceRepository.filterAttendancesBySubjectCodeAndDateRange(
                 startDate = startDate,
                 endDate = endDate,

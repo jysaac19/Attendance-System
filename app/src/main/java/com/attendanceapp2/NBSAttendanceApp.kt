@@ -36,13 +36,6 @@ class NBSAttendanceApp : Application() {
         )
 
         val embeddedUserSubjectCrossRefs = listOf(
-            UserSubjectCrossRef(101, 1),
-            UserSubjectCrossRef(101, 2),
-            UserSubjectCrossRef(101, 3),
-            UserSubjectCrossRef(101, 4),
-            UserSubjectCrossRef(101, 5),
-            UserSubjectCrossRef(101, 6),
-            UserSubjectCrossRef(101, 7),
             UserSubjectCrossRef(201, 1),
             UserSubjectCrossRef(201, 2),
             UserSubjectCrossRef(201, 3),
@@ -50,13 +43,6 @@ class NBSAttendanceApp : Application() {
             UserSubjectCrossRef(201, 5),
             UserSubjectCrossRef(201, 6),
             UserSubjectCrossRef(201, 7),
-            UserSubjectCrossRef(301, 1),
-            UserSubjectCrossRef(301, 2),
-            UserSubjectCrossRef(301, 3),
-            UserSubjectCrossRef(301, 4),
-            UserSubjectCrossRef(301, 5),
-            UserSubjectCrossRef(301, 6),
-            UserSubjectCrossRef(301, 7)
         )
 
         val embeddedAttendances = listOf(Attendance(

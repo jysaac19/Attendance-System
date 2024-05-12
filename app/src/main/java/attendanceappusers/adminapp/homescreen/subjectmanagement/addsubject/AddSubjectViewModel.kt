@@ -28,7 +28,7 @@ class AddSubjectViewModel(
             .joinToString("")
     }
 
-    suspend fun getFacultyUserId(fullName: String): Long? {
+    private suspend fun getFacultyUserId(fullName: String): Long? {
         val names = fullName.split(" ")
         val firstName = names.firstOrNull() ?: ""
         val lastName = names.drop(1).joinToString(" ")
@@ -36,7 +36,7 @@ class AddSubjectViewModel(
         return faculty?.id
     }
 
-    suspend fun insertUserSubjectCrossRef(userId: Long, subjectId: Long) {
+    private suspend fun insertUserSubjectCrossRef(userId: Long, subjectId: Long) {
         userSubjectCrossRefRepository.insert(UserSubjectCrossRef(userId, subjectId))
     }
 
@@ -89,15 +89,6 @@ class AddSubjectViewModel(
 
         // Return success message with subjectId
         return Results.AddSubjectResult(successMessage = "Subject added successfully. SubjectId: $subjectId")
-    }
-
-
-    private suspend fun generateUniqueSubjectCode(): String {
-        var generatedJoinCode = generateRandomCode()
-        while (subjectRepository.getSubjectByJoinCode(generatedJoinCode) != null) {
-            generatedJoinCode = generateRandomCode()
-        }
-        return generatedJoinCode
     }
 
     private fun generateRandomCode(): String {
