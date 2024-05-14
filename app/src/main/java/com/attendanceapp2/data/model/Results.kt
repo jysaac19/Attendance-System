@@ -35,6 +35,11 @@ sealed class Results {
         val failureMessage: String? = null,
         val successMessage: String? = null
     ) : Results()
+
+    data class LoginResult(
+        val failureMessage: String? = null,
+        val successMessage: String? = null
+    ) : Results()
 }
 
 object ResultsManager {

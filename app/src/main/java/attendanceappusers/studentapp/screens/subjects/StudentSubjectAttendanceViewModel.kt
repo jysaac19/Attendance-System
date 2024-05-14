@@ -22,7 +22,7 @@ class StudentSubjectAttendanceViewModel (
         offlineAttendanceRepository.filterStudentAttendanceBySubjectCodeAndDateRange(
             startDate = startDate,
             endDate = endDate,
-            userId = loggedInUser!!.userId,
+            userId = loggedInUser!!.id,
             subjectCode = selectedSubject!!.code
         ).collect { attendances ->
             _attendances.value = attendances

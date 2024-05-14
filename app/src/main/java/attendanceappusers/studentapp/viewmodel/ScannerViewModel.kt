@@ -50,7 +50,7 @@ class ScannerViewModel(
 
         // Check if the user already has attendance
         val existingAttendancesList = offlineAttendanceRepository.getAttendancesByUserIdSubjectIdAndDate(
-            loggedInUser.userId,
+            loggedInUser.id,
             scannedQRCode.subjectId,
             currentDate
         ).firstOrNull() // Collect the flow to get the value synchronously or null if the flow is empty
@@ -62,7 +62,7 @@ class ScannerViewModel(
 
         // Insert attendance
         val attendance = Attendance(
-            userId = loggedInUser.userId,
+            userId = loggedInUser.id,
             firstname = loggedInUser.firstname,
             lastname = loggedInUser.lastname,
             subjectId = scannedQRCode.subjectId,

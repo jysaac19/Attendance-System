@@ -27,7 +27,7 @@ class StudentAttendanceViewModel(
                 offlineAttendanceRepository.filterStudentAttendanceByDateRange(
                     startDate,
                     endDate,
-                    loggedInUser!!.userId
+                    loggedInUser!!.id
                 ).collect { attendances ->
                     _attendances.value = attendances
                 }
@@ -35,7 +35,7 @@ class StudentAttendanceViewModel(
                 offlineAttendanceRepository.filterStudentAttendanceBySubjectCodeAndDateRange(
                     startDate,
                     endDate,
-                    loggedInUser!!.userId,
+                    loggedInUser!!.id,
                     subjectCode
                 ).collect { attendances ->
                     _attendances.value = attendances
@@ -54,7 +54,7 @@ class StudentAttendanceViewModel(
     private fun fetchSubjectsForLoggedInUser() {
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
         viewModelScope.launch {
-            val userId = loggedInUser!!.userId
+            val userId = loggedInUser!!.id
 
             val userSubjectCrossRefs = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForUser(userId)
 

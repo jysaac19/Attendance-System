@@ -30,7 +30,7 @@ class FacultyAttendanceViewModel(
     private fun fetchSubjectsForLoggedInUser() {
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
         viewModelScope.launch {
-            val userId = loggedInUser!!.userId
+            val userId = loggedInUser!!.id
 
             val userSubjectCrossRefs = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForUser(userId)
 
@@ -51,7 +51,7 @@ class FacultyAttendanceViewModel(
     suspend fun filterAttendance(selectedSubject: String, startDate: String, endDate: String) {
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
         if (selectedSubject == "All") {
-            val userId = loggedInUser!!.userId
+            val userId = loggedInUser!!.id
 
             val userSubjectCrossRefs = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForUser(userId)
 

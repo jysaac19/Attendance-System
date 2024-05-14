@@ -3,8 +3,10 @@ package attendanceappusers.adminapp.homescreen.subjectmanagement
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,6 +22,8 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,6 +36,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -59,13 +65,19 @@ fun SubjectManagementScreen (
 ) {
     val coroutineScope = rememberCoroutineScope()
     var searchText by remember { mutableStateOf(TextFieldValue()) }
-    val subjectList by viewModel.subjects.collectAsState()
+    val activeSubjects by viewModel.activeSubjects.collectAsState()
+    val archivedSubjects by viewModel.archivedSubjects.collectAsState()
 
     var showDeleteDialog by remember { mutableStateOf(false) }
     var showArchiveDialog by remember { mutableStateOf(false) }
+    var showUnarchiveDialog by remember { mutableStateOf(false) }
 
     var subjectToDelete by remember { mutableStateOf<Subject?>(null) }
     var subjectToArchive by remember { mutableStateOf<Subject?>(null) }
+    var subjectToUnarchive by remember { mutableStateOf<Subject?>(null) }
+
+    var selectedTabIndex by remember { mutableStateOf(0) }
+    val mainSubjectList = if (selectedTabIndex == 0) activeSubjects else archivedSubjects
 
     // Launch search when searchText changes
     LaunchedEffect(searchText.text) {
@@ -155,8 +167,37 @@ fun SubjectManagementScreen (
             }
         }
 
-        // Display the list of subjects
-        subjectList.let { subjects ->
+        TabRow(
+            selectedTabIndex = selectedTabIndex,
+            containerColor = Color.Transparent,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Tab(
+                selected = selectedTabIndex == 0,
+                onClick = { selectedTabIndex = 0 },
+                modifier = Modifier
+                    .weight(1f)
+                    .height(45.dp)
+                    .clip(RoundedCornerShape(topStart = 10.dp))
+            ) {
+                Text(text = "Active")
+            }
+            Tab(
+                selected = selectedTabIndex == 1,
+                onClick = { selectedTabIndex = 1 },
+                modifier = Modifier
+                    .weight(1f)
+                    .height(45.dp)
+                    .clip(RoundedCornerShape(topEnd = 10.dp))
+            ) {
+                Text(text = "Archived")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        mainSubjectList.let { subjects ->
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -218,6 +259,10 @@ fun SubjectManagementScreen (
                         onArchiveClick = {
                             subjectToArchive = subject
                             showArchiveDialog = true
+                        },
+                        onUnarchiveClick = {
+                            subjectToUnarchive = subject
+                            showUnarchiveDialog = true
                         }
                     )
                 }
@@ -234,7 +279,7 @@ fun SubjectManagementScreen (
                 showDeleteDialog = false
                 subjectToDelete = null
             }
-            viewModel.getAllSubjects()
+            viewModel.updateSubjectLists()
         },
         onDismiss = {
             showDeleteDialog = false
@@ -252,12 +297,31 @@ fun SubjectManagementScreen (
                 showArchiveDialog = false
                 subjectToArchive = null
             }
-            viewModel.getAllSubjects()
+            viewModel.updateSubjectLists()
         },
         onDismiss = {
             showArchiveDialog = false
             subjectToArchive = null
         },
         showDialog = showArchiveDialog
+    )
+
+
+    ConfirmDialog(
+        title = "Unarchive Confirmation",
+        message = "Are you sure you want to unarchive this subject?",
+        onConfirm = {
+            subjectToUnarchive?.let { subject ->
+                viewModel.unarchiveSubject(subject)
+                showUnarchiveDialog = false
+                subjectToUnarchive = null
+            }
+            viewModel.updateSubjectLists()
+        },
+        onDismiss = {
+            showUnarchiveDialog = false
+            subjectToUnarchive = null
+        },
+        showDialog = showUnarchiveDialog
     )
 }

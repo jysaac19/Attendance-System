@@ -30,7 +30,8 @@ fun SubjectItem(
     onClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onUpdateClick: () -> Unit,
-    onArchiveClick: () -> Unit
+    onArchiveClick: () -> Unit,
+    onUnarchiveClick: () -> Unit
 ) {
     Card(
         onClick = onClick,
@@ -89,22 +90,43 @@ fun SubjectItem(
                     }
                 }
 
-                FloatingActionButton(
-                    onClick = onArchiveClick,
-                    modifier = Modifier.weight(1f),
-                ) {
-                    Column (
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
+                if (subject.subjectStatus == "Active") {
+                    FloatingActionButton(
+                        onClick = onArchiveClick,
+                        modifier = Modifier.weight(1f),
                     ) {
-                        Icon(
-                            Icons.Default.Archive,
-                            contentDescription = "Archive Subject"
-                        )
-                        Text(
-                            text = "Archive",
-                            fontSize = 10.sp
-                        )
+                        Column (
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(
+                                Icons.Default.Archive,
+                                contentDescription = "Archive Subject"
+                            )
+                            Text(
+                                text = "Archive",
+                                fontSize = 10.sp
+                            )
+                        }
+                    }
+                } else {
+                    FloatingActionButton(
+                        onClick = onUnarchiveClick,
+                        modifier = Modifier.weight(1f),
+                    ) {
+                        Column (
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(
+                                Icons.Default.Archive,
+                                contentDescription = "Unarchive Subject"
+                            )
+                            Text(
+                                text = "Unarchive",
+                                fontSize = 10.sp
+                            )
+                        }
                     }
                 }
             }

@@ -43,6 +43,7 @@ import com.attendanceapp2.navigation.approutes.AuthRoute
 import com.attendanceapp2.data.model.user.LoggedInUserHolder
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
+import com.attendanceapp2.data.model.Results
 import kotlinx.coroutines.launch
 
 
@@ -128,21 +129,13 @@ fun SignInScreen(
             Button(
                 onClick = {
                     coroutineScope.launch {
-                        val loginResult = signInVM.validateSignIn(email, password)
-                        when (loginResult) {
-                            is Login.Successfully -> {
-                                val loggedInUser = LoggedInUserHolder.getLoggedInUser()
-                                Log.d("Sign In", "Logged in user: $loggedInUser")
-                            }
-                            is Login.Failed -> {
-                                errorMessage = loginResult.errorMessage
-                            }
-                        }
+                        val result = signInVM.validateSignIn(email, password)
+                        errorMessage = result.failureMessage ?: ""
                     }
                 },
                 shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
-                    .size(width = 350.dp,height = 50.dp)
+                    .size(width = 350.dp, height = 50.dp)
             ) {
                 Text(
                     text = "Sign In",
@@ -153,32 +146,6 @@ fun SignInScreen(
             }
 
             Spacer(modifier = Modifier.height(8.dp))
-
-//            Button(
-//                onClick = {  },
-//                shape = RoundedCornerShape(50.dp),
-//                modifier = Modifier
-//                    .size(width = 350.dp,height = 50.dp),
-//            ) {
-//                Row(
-//                    verticalAlignment = Alignment.CenterVertically,
-//                    horizontalArrangement = Arrangement.Center
-//                ) {
-//                    Text(
-//                        text = "Sign In with Google",
-//                        color = Color.White,
-//                        fontSize = 20.sp,
-//                        fontWeight = FontWeight.Normal
-//                    )
-//                    Spacer(modifier = Modifier.width(20.dp))
-//                    Icon(
-//                        imageVector = Icons.Default.Mail,
-//                        contentDescription = "Email",
-//                        tint = Color.White,
-//                        modifier = Modifier.size(24.dp)
-//                    )
-//                }
-//            }
 
             Row(
                 horizontalArrangement = Arrangement.Center,

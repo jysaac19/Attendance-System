@@ -42,6 +42,7 @@ import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.subject.Schedule
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.data.screen.schedule.Clock
+import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.UniversalDropDownMenu
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,142 +55,121 @@ fun AddScheduleScreen (
     val subjectInfo = SelectedSubjectHolder.getSelectedSubject()
     val schedules = remember { mutableStateListOf<Schedule>() }
 
-    // Variable to track the number of cards to display
-    var cardCount by remember { mutableIntStateOf(1) }
-
     // Function to add a new empty schedule
     fun addSchedule() {
         coroutineScope.launch {
             if (subjectInfo!= null) {
                 schedules.add(
                     Schedule(
-                    subjectId = subjectInfo.id,
-                    subjectCode = subjectInfo.code,
-                    subjectName = subjectInfo.name,
-                    day = "",
-                    start = "",
-                    end = ""
+                        subjectId = subjectInfo.id,
+                        subjectCode = subjectInfo.code,
+                        subjectName = subjectInfo.name,
+                        day = "",
+                        start = "",
+                        end = ""
+                    )
                 )
-                ) // Add an empty schedule
-                cardCount++ // Increment the card count
             }
         }
     }
 
     // Function to remove a schedule at a specific index
-    fun removeSchedule(index: Int) {
-        schedules.removeAt(index) // Remove the schedule at the given index
-        cardCount-- // Decrement the card count
+    fun removeSchedule(schedule: Schedule) {
+        schedules.remove(schedule)
     }
 
     LazyColumn {
-        items(cardCount) { index ->
-            val schedule = schedules.getOrNull(index)
+        items(schedules) { schedule ->
+            var selectedDay by remember { mutableStateOf(schedule.day) }
+            var startTime by remember { mutableStateOf(schedule.start) }
+            var endTime by remember { mutableStateOf(schedule.end) }
 
-            if (schedule != null) {
-                var selectedDay by remember { mutableStateOf(schedule.day) }
-                var startTime by remember { mutableStateOf(schedule.start) }
-                var endTime by remember { mutableStateOf(schedule.end) }
-
-                Card(
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp)
+                        .padding(16.dp)
                 ) {
-                    Column(
+                    val daysOfWeek = listOf(
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday"
+                    )
+                    UniversalDropDownMenu(
+                        label = "Weekday",
+                        items = daysOfWeek,
+                        selectedItem = selectedDay,
+                        onItemSelected = { selectedDay = it }
+                    )
+
+                    // Start time selection
+                    OutlinedTextField(
+                        value = startTime,
+                        onValueChange = { startTime = it },
+                        label = { Text("Start Time") },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(20.dp),
+                        trailingIcon = {
+                            Clock(
+                                contentDescription = "Select Start Time",
+                                onTimeSelected = { hours, minutes, amPm ->
+                                    // Update the start time with the selected time
+                                    val formattedTime =
+                                        String.format("%02d:%02d %s", hours, minutes, amPm.name)
+                                    startTime = formattedTime
+                                }
+                            )
+                        }
+                    )
+
+                    // End time selection
+                    OutlinedTextField(
+                        value = endTime,
+                        onValueChange = { endTime = it },
+                        label = { Text("End Time") },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(20.dp),
+                        trailingIcon = {
+                            Clock(
+                                contentDescription = "Select End Time",
+                                onTimeSelected = { hours, minutes, amPm ->
+                                    // Update the start time with the selected time
+                                    val formattedTime =
+                                        String.format("%02d:%02d %s", hours, minutes, amPm.name)
+                                    endTime = formattedTime
+                                }
+                            )
+                        }
+                    )
+
+                    // Remove button
+                    Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp)
+                            .padding(top = 16.dp),
+                        horizontalArrangement = Arrangement.End
                     ) {
-                        Text("Weekday:")
-                        LazyRow(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                        FloatingActionButton(
+                            onClick = { removeSchedule(schedule) },
+                            modifier = Modifier
+                                .padding(8.dp)
                         ) {
-                            val daysOfWeek = listOf(
-                                "Monday",
-                                "Tuesday",
-                                "Wednesday",
-                                "Thursday",
-                                "Friday",
-                                "Saturday"
-                            )
-                            items(daysOfWeek) { day ->
-                                RadioButton(
-                                    selected = selectedDay == day,
-                                    onClick = { selectedDay = day },
-                                    enabled = true,
-                                )
-                                Text(day)
-                            }
+                            Icon(Icons.Default.Remove, contentDescription = "Remove")
                         }
 
-                        // Start time selection
-                        OutlinedTextField(
-                            value = startTime,
-                            onValueChange = { startTime = it },
-                            label = { Text("Start Time") },
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(20.dp),
-                            trailingIcon = {
-                                Clock(
-                                    contentDescription = "Select Start Time",
-                                    onTimeSelected = { hours, minutes, amPm ->
-                                        // Update the start time with the selected time
-                                        val formattedTime =
-                                            String.format("%02d:%02d %s", hours, minutes, amPm.name)
-                                        startTime = formattedTime
-                                    }
-                                )
-                            }
-                        )
-
-                        // End time selection
-                        OutlinedTextField(
-                            value = endTime,
-                            onValueChange = { endTime = it },
-                            label = { Text("End Time") },
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(20.dp),
-                            trailingIcon = {
-                                Clock(
-                                    contentDescription = "Select End Time",
-                                    onTimeSelected = { hours, minutes, amPm ->
-                                        // Update the start time with the selected time
-                                        val formattedTime =
-                                            String.format("%02d:%02d %s", hours, minutes, amPm.name)
-                                        endTime = formattedTime
-                                    }
-                                )
-                            }
-                        )
-
-                        // Remove button
-                        Row(
+                        FloatingActionButton(
+                            onClick = { /* Save schedule */ },
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp),
-                            horizontalArrangement = Arrangement.End
+                                .padding(8.dp)
                         ) {
-                            FloatingActionButton(
-                                onClick = { removeSchedule(index) },
-                                modifier = Modifier
-                                    .padding(8.dp)
-                            ) {
-                                Icon(Icons.Default.Remove, contentDescription = "Remove")
-                            }
-
-
-                            FloatingActionButton(
-                                onClick = {
-
-                                },
-                                modifier = Modifier
-                                    .padding(8.dp)
-                            ) {
-                                Icon(Icons.Default.Check, contentDescription = "Save")
-                            }
+                            Icon(Icons.Default.Check, contentDescription = "Save")
                         }
                     }
                 }

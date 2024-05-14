@@ -44,7 +44,6 @@ import com.attendanceapp2.screenuniversalcomponents.subjectuicomponents.SubjectC
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.user.LoggedInUserHolder
-import com.attendanceapp2.data.model.Results
 import kotlinx.coroutines.launch
 
 @Composable
@@ -146,7 +145,7 @@ fun FacultySubjects (
             onJoinSubject = { subjectCode ->
                 coroutineScope.launch {
                     loggedInUser?.let { user ->
-                        val joinResult = joinViewModel.joinSubjectByCode(user.userId, subjectCode)
+                        val joinResult = joinViewModel.joinSubjectByCode(user.id, subjectCode)
                         joinResult.successMessage?.let { message ->
                             showDialog = false
                         }

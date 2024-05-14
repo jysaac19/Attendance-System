@@ -41,4 +41,7 @@ interface SubjectDao {
 
     @Query("SELECT * FROM Subject WHERE (id LIKE '%' || :query || '%' OR code LIKE '%' || :query || '%' OR name LIKE '%' || :query || '%')")
     fun searchSubject(query: String): Flow<List<Subject>>
+
+    @Query("SELECT * FROM Subject WHERE subjectStatus = :status")
+    fun getSubjectsByStatus(status: String): Flow<List<Subject>>
 }

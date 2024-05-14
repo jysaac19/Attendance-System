@@ -55,4 +55,12 @@ class OfflineSubjectRepository(
     fun searchSubject(query: String): Flow<List<Subject>> {
         return subjectDao.searchSubject(query)
     }
+
+    suspend fun getActiveSubjects(): Flow<List<Subject>> {
+        return subjectDao.getSubjectsByStatus("Active")
+    }
+
+    suspend fun getArchivedSubjects(): Flow<List<Subject>> {
+        return subjectDao.getSubjectsByStatus("Archived")
+    }
 }

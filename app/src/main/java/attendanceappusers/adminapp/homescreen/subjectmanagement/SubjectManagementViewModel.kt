@@ -12,30 +12,49 @@ class SubjectManagementViewModel(
     private val offlineSubjectRepository: OfflineSubjectRepository
 ): ViewModel() {
 
-    private val _subjects: MutableStateFlow<List<Subject>> = MutableStateFlow(emptyList())
-    val subjects: StateFlow<List<Subject>> = _subjects
+    private val _activeSubjects: MutableStateFlow<List<Subject>> = MutableStateFlow(emptyList())
+    val activeSubjects: StateFlow<List<Subject>> = _activeSubjects
 
+    private val _archivedSubjects: MutableStateFlow<List<Subject>> = MutableStateFlow(emptyList())
+    val archivedSubjects: StateFlow<List<Subject>> = _archivedSubjects
 
     init {
-        getAllSubjects()
+        updateSubjectLists()
     }
 
-    fun getAllSubjects() {
+    private fun getActiveSubjects() {
         viewModelScope.launch {
-            offlineSubjectRepository.getAllSubjects().collect { subjects ->
-                _subjects.value = subjects
+            offlineSubjectRepository.getActiveSubjects().collect { subjects ->
+                _activeSubjects.value = subjects
             }
         }
+    }
+
+    private fun getArchivedSubjects() {
+        viewModelScope.launch {
+            offlineSubjectRepository.getArchivedSubjects().collect { subjects ->
+                _archivedSubjects.value = subjects
+            }
+        }
+    }
+
+    fun updateSubjectLists() {
+        getActiveSubjects()
+        getArchivedSubjects()
     }
 
     fun searchSubjectsByCode(subjectCode: String) {
         viewModelScope.launch {
             if (subjectCode.isNotEmpty()) {
                 offlineSubjectRepository.searchSubject(subjectCode).collect { subjects ->
-                    _subjects.value = subjects
+                    _activeSubjects.value = subjects
+                }
+                offlineSubjectRepository.searchSubject(subjectCode).collect { subjects ->
+                    _activeSubjects.value = subjects
                 }
             } else if (subjectCode.isEmpty()) {
-                getAllSubjects()
+                getActiveSubjects()
+                getArchivedSubjects()
             }
         }
     }
@@ -50,6 +69,14 @@ class SubjectManagementViewModel(
         viewModelScope.launch {
             // Update the subject status to "Archived"
             val archivedSubject = subject.copy(subjectStatus = "Archived")
+            offlineSubjectRepository.updateSubject(archivedSubject)
+        }
+    }
+
+    fun unarchiveSubject(subject: Subject) {
+        viewModelScope.launch {
+            // Update the subject status to "Archived"
+            val archivedSubject = subject.copy(subjectStatus = "Active")
             offlineSubjectRepository.updateSubject(archivedSubject)
         }
     }

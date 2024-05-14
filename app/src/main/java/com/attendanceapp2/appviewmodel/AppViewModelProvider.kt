@@ -117,7 +117,9 @@ object AppViewModelProvider {
 
         //Profile ViewModel
         initializer {
-            ProfileViewModel()
+            ProfileViewModel(
+                nbsAttendanceApplication().container.offlineUserRepository
+            )
         }
 
         initializer {

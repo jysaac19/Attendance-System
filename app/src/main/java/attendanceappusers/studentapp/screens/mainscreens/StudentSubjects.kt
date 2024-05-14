@@ -29,7 +29,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -45,7 +44,6 @@ import com.attendanceapp2.data.model.subject.SelectedSubject
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.screenuniversalcomponents.subjectuicomponents.SubjectCard
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
-import com.attendanceapp2.data.model.Results
 import kotlinx.coroutines.launch
 
 @SuppressLint("LogNotTimber")
@@ -147,7 +145,7 @@ fun StudentSubjects (
             onJoinSubject = { subjectCode ->
                 coroutineScope.launch {
                     loggedInUser?.let { user ->
-                        val joinResult = joinViewModel.joinSubjectByCode(user.userId, subjectCode)
+                        val joinResult = joinViewModel.joinSubjectByCode(user.id, subjectCode)
                         joinResult.successMessage?.let { message ->
                             showDialog = false
                         }

@@ -34,8 +34,7 @@ fun Clock(contentDescription: String, onTimeSelected: (Int, Int, AmPm) -> Unit) 
     IconButton(onClick = { clockState.show() } ) {
         Icon(
             imageVector = Icons.Default.Schedule,
-            contentDescription = "$contentDescription",
-            tint = Color.LightGray
+            contentDescription = "$contentDescription"
         )
     }
 }

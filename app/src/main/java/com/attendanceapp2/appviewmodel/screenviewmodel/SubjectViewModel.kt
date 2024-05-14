@@ -21,7 +21,7 @@ class SubjectViewModel(
     fun fetchSubjectsForLoggedInUser() {
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
         viewModelScope.launch {
-            val userId = loggedInUser!!.userId
+            val userId = loggedInUser!!.id
 
             val userSubjectCrossRefs = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForUser(userId)
 

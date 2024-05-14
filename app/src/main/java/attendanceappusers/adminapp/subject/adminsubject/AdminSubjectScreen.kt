@@ -19,6 +19,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -29,23 +33,38 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import attendanceappusers.adminapp.homescreen.ConfirmDialog
+import attendanceappusers.adminapp.homescreen.subjectmanagement.SubjectManagementViewModel
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
+import com.attendanceapp2.data.model.subject.SelectedSubject
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
+import com.attendanceapp2.data.model.subject.Subject
+import com.attendanceapp2.data.model.subject.UpdateSubject
+import com.attendanceapp2.data.model.subject.UpdatingSubjectHolder
+import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.navigation.approutes.admin.AdminSubject
+import kotlinx.coroutines.launch
 
 @Composable
 fun AdminSubjectScreen (
     navController: NavController,
-    viewModel: AdminSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: AdminSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    subjectManagement : SubjectManagementViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val selectedSubject = SelectedSubjectHolder.getSelectedSubject()
+
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var showArchiveDialog by remember { mutableStateOf(false) }
+
+    var subjectToDelete by remember { mutableStateOf<Subject?>(null) }
+    var subjectToArchive by remember { mutableStateOf<Subject?>(null) }
+
+    val subjectSchedules = viewModel.subjectSchedules.collectAsState()
 
     // Use LaunchedEffect to fetch subject schedules when the composable is first launched
     LaunchedEffect(selectedSubject) {
         selectedSubject?.let { viewModel.getSubjectSchedules(it.id) }
     }
-
-    val subjectSchedules = viewModel.subjectSchedules.collectAsState()
 
     Column(
         modifier = Modifier
@@ -138,21 +157,58 @@ fun AdminSubjectScreen (
                         horizontalArrangement = Arrangement.End
                     ) {
                         FloatingActionButton(
-                            onClick = { /* Handle Update action */ },
+                            onClick = {
+                                UpdatingSubjectHolder.setSelectedSubject(
+                                    UpdateSubject(
+                                        selectedSubject.id,
+                                        selectedSubject.code,
+                                        selectedSubject.name,
+                                        selectedSubject.room,
+                                        selectedSubject.faculty,
+                                        selectedSubject.subjectStatus,
+                                        selectedSubject.joinCode
+                                    )
+                                )
+                                navController.navigate(AdminHomeScreen.UpdateSubject.name)
+                            },
                             modifier = Modifier.padding(8.dp)
                         ) {
                             Icon(Icons.Default.Update, contentDescription = "Update")
                         }
 
                         FloatingActionButton(
-                            onClick = { /* Handle Delete action */ },
+                            onClick = {
+                                subjectToDelete =
+                                    Subject(
+                                        selectedSubject.id,
+                                        selectedSubject.code,
+                                        selectedSubject.name,
+                                        selectedSubject.room,
+                                        selectedSubject.faculty,
+                                        selectedSubject.subjectStatus,
+                                        selectedSubject.joinCode
+                                    )
+                                showDeleteDialog = true
+                            },
                             modifier = Modifier.padding(8.dp)
                         ) {
                             Icon(Icons.Default.Delete, contentDescription = "Delete")
                         }
 
                         FloatingActionButton(
-                            onClick = { /* Handle Archive action */ },
+                            onClick = {
+                                subjectToArchive =
+                                    Subject(
+                                        selectedSubject.id,
+                                        selectedSubject.code,
+                                        selectedSubject.name,
+                                        selectedSubject.room,
+                                        selectedSubject.faculty,
+                                        selectedSubject.subjectStatus,
+                                        selectedSubject.joinCode
+                                    )
+                                showArchiveDialog = true
+                            },
                             modifier = Modifier.padding(8.dp)
                         ) {
                             Icon(Icons.Filled.Archive, contentDescription = "Archive")
@@ -164,9 +220,7 @@ fun AdminSubjectScreen (
             }
         }
 
-        // Add new Card for Subject Schedules
         Card(
-            onClick = { /* Navigate to Subject Schedules screen */ },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
@@ -187,7 +241,21 @@ fun AdminSubjectScreen (
                 // Display schedules if available
                 if (subjectSchedules.value.isNotEmpty()) {
                     subjectSchedules.value.forEach { schedule ->
-                        Text(text = "${schedule.day}:                 ${schedule.start} - ${schedule.end}")
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                text = "${schedule.day}:",
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.weight(1f)
+                            )
+                            Text(
+                                text = "${schedule.start} - ${schedule.end}",
+                                modifier = Modifier.weight(3f)
+                            )
+                        }
+
                     }
                 } else {
                     Text(text = "No schedules available")
@@ -258,4 +326,41 @@ fun AdminSubjectScreen (
             }
         }
     }
+
+    ConfirmDialog(
+        title = "Delete Confirmation",
+        message = "Are you sure you want to delete this subject?",
+        onConfirm = {
+            subjectToDelete?.let { subject ->
+                subjectManagement.deleteSubject(subject)
+                showDeleteDialog = false
+                subjectToDelete = null
+            }
+            subjectManagement.updateSubjectLists()
+            navController.navigate(AdminHomeScreen.SubjectManagement.name)
+        },
+        onDismiss = {
+            showDeleteDialog = false
+            subjectToDelete = null
+        },
+        showDialog = showDeleteDialog
+    )
+
+    ConfirmDialog(
+        title = "Archive Confirmation",
+        message = "Are you sure you want to archive this subject?",
+        onConfirm = {
+            subjectToArchive?.let { subject ->
+                subjectManagement.archiveSubject(subject)
+                showArchiveDialog = false
+                subjectToArchive = null
+            }
+            subjectManagement.updateSubjectLists()
+        },
+        onDismiss = {
+            showArchiveDialog = false
+            subjectToArchive = null
+        },
+        showDialog = showArchiveDialog
+    )
 }

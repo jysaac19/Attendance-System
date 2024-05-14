@@ -229,7 +229,7 @@ fun AddSubjectScreen(
                     selectedRoom,
                     selectedFaculty
                 )
-                subjectManagement.getAllSubjects()
+                subjectManagement.updateSubjectLists()
             }
             navController.navigate(AdminHomeScreen.SubjectManagement.name)
         },
