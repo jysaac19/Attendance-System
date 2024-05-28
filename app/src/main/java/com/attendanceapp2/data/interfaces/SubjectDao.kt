@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SubjectDao {
+    @Query("DELETE FROM `Subject`")
+    suspend fun deleteAllSubject()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(subject: Subject)
@@ -21,8 +23,8 @@ interface SubjectDao {
     @Delete
     suspend fun delete(subject: Subject)
 
-    @Query("SELECT * FROM Subject WHERE id IN (:subjectIds)")
-    suspend fun getSubjectsByIds(subjectIds: List<Long>): List<Subject>
+    @Query("SELECT * FROM Subject WHERE id IN (:subjectIds) AND subjectStatus = :status")
+    suspend fun getSubjectsByIdsAndStatus(subjectIds: List<Int>, status: String): List<Subject>
 
     @Query("SELECT * FROM Subject")
     fun getAllSubjects(): Flow<List<Subject>>
@@ -38,6 +40,9 @@ interface SubjectDao {
 
     @Query("SELECT * FROM Subject WHERE name = :subjectName AND subjectStatus = 'Active'")
     suspend fun getActiveSubjectByName(subjectName: String): Subject?
+
+    @Query("SELECT * FROM Subject WHERE (id LIKE '%' || :query || '%' OR code LIKE '%' || :query || '%' OR name LIKE '%' || :query || '%') AND subjectStatus = :status")
+    fun searchSubjectByStatus(query: String, status: String): Flow<List<Subject>>
 
     @Query("SELECT * FROM Subject WHERE (id LIKE '%' || :query || '%' OR code LIKE '%' || :query || '%' OR name LIKE '%' || :query || '%')")
     fun searchSubject(query: String): Flow<List<Subject>>

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 // Data class representing a logged-in user
 data class LoggedInUser(
-    val id: Long,
+    val id: Int,
     val firstname: String,
     val lastname: String,
     val email: String,

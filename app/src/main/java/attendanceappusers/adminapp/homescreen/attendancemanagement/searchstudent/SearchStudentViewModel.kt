@@ -3,43 +3,43 @@ package attendanceappusers.adminapp.homescreen.attendancemanagement.searchstuden
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.user.User
-import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
-import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import com.attendanceapp2.data.repositories.user.OfflineUserRepository
-import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
+import com.attendanceapp2.data.repositories.user.OnlineUserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class SearchStudentViewModel(
-    private val offlineUserRepository: OfflineUserRepository
+    private val offlineUserRepository: OfflineUserRepository,
+    private val onlineUserRepository: OnlineUserRepository
 ): ViewModel() {
 
     private val _students: MutableStateFlow<List<User>> = MutableStateFlow(emptyList())
     val students: StateFlow<List<User>> = _students
 
-    init {
-        // Load attendances when ViewModel is initialized
-        fetchUsers()
-    }
-
-    // Function to search for users based on user ID, first name, or last name
-    fun searchStudents(query: String): Flow<List<User>> {
+    fun searchStudents(query: String) {
         viewModelScope.launch {
-            offlineUserRepository.searchStudents(query).collect { students ->
-                _students.value = students
+            if (query.isEmpty()) {
+                updateOfflineUsers()
+            } else {
+                offlineUserRepository.searchUser(query).collect { students ->
+                    _students.value = students
+                }
             }
         }
-        return offlineUserRepository.searchStudents(query)
     }
 
-    private fun fetchUsers() {
+    private fun updateOfflineUsers() {
         viewModelScope.launch {
-            // Call the repository function to get all attendances
-            offlineUserRepository.getStudents().collect() { users ->
-                // Update the StateFlow with the fetched attendances
-                _students.value = users
+            offlineUserRepository.deleteAllUsers()
+            val users = onlineUserRepository.getAllUsers()
+            users.forEach {
+                offlineUserRepository.insertUser(it)
+            }
+
+            offlineUserRepository.getStudents().collect() {
+                _students.value = it
             }
         }
     }

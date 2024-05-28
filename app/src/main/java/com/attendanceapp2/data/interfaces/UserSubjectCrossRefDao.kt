@@ -10,6 +10,8 @@ import com.attendanceapp2.data.model.subject.UserSubjectCrossRef
 
 @Dao
 interface UserSubjectCrossRefDao {
+    @Query("DELETE FROM `UserSubjectCrossRef`")
+    suspend fun deleteAllUserSubjectCrossRefs()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(userSubjectCrossRef: UserSubjectCrossRef)
@@ -21,11 +23,14 @@ interface UserSubjectCrossRefDao {
     suspend fun delete(userSubjectCrossRef: UserSubjectCrossRef)
 
     @Query("SELECT * FROM UserSubjectCrossRef WHERE userId = :userId")
-    suspend fun getJoinedSubjectsForUser(userId: Long): List<UserSubjectCrossRef>
+    suspend fun getJoinedSubjectsOfUser(userId: Int): List<UserSubjectCrossRef>
 
     @Query("SELECT subjectId FROM UserSubjectCrossRef")
-    suspend fun getAllSubjectIds(): List<Long>
+    suspend fun getAllSubjectIds(): List<Int>
 
     @Query("SELECT * FROM UserSubjectCrossRef WHERE subjectId = :subjectId AND userId = :userId")
-    suspend fun getUserSubjectCrossRefBySubjectAndUser(subjectId: Long, userId: Long): UserSubjectCrossRef?
+    suspend fun getUserSubjectCrossRefBySubjectAndUser(subjectId: Int, userId: Int): UserSubjectCrossRef?
+
+    @Query("SELECT * FROM UserSubjectCrossRef WHERE subjectId = :subjectId")
+    suspend fun getUserSubjectCrossRefBySubject(subjectId: Int): List<UserSubjectCrossRef>
 }

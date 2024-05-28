@@ -80,8 +80,7 @@ fun SearchStudentScreen(
             },
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Enter User ID or Student Name") },
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+            placeholder = { Text("Enter User ID or Student Name") }
         )
 
         Row(

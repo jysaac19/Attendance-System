@@ -16,11 +16,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import attendanceappusers.facultyapp.screens.mainscreen.attendances.FacultyAttendances
-import attendanceappusers.facultyapp.screens.mainscreen.profile.ProfileScreen
-import attendanceappusers.facultyapp.screens.mainscreen.qrscreen.QRGeneratorScreen
-import attendanceappusers.facultyapp.screens.mainscreen.subjects.facultysubjectattendances.FacultySubjectAttendances
-import attendanceappusers.facultyapp.screens.mainscreen.subjects.facultysubjetctlist.FacultySubjects
+import attendanceappusers.facultyapp.attendances.FacultyAttendances
+import attendanceappusers.facultyapp.profile.ProfileScreen
+import attendanceappusers.facultyapp.qrscreen.QRGeneratorScreen
+import attendanceappusers.facultyapp.subjects.facultysubjectattendances.FacultySubjectAttendances
+import attendanceappusers.facultyapp.subjects.facultysubjetctlist.FacultyActiveSubjects
+import attendanceappusers.facultyapp.subjects.facultysubjetctlist.FacultyArchivedSubjects
+import attendanceappusers.facultyapp.subjects.searchstudent.FacultySearchStudentScreen
+import attendanceappusers.facultyapp.subjects.subjectinfo.FacultySubjectInfo
 import com.attendanceapp2.navigation.approutes.faculty.FacultyMainRoute
 import com.attendanceapp2.navigation.approutes.faculty.FacultySubjectsRoutes
 
@@ -49,13 +52,23 @@ fun FacultyNavigation() {
                 startDestination = FacultyMainRoute.Subjects.name
             ) {
                 composable(route = FacultyMainRoute.Subjects.name) {
-                    FacultySubjects(navController)
-                    centerItem = true
+                    FacultyActiveSubjects(navController)
+                    centerItem = false
                     nonCenterItem = true
                 }
                 navigation(startDestination = FacultyMainRoute.Subjects.name, route = FacultySubjectsRoutes.FacultyMainSubjectScreen.name) {
                     composable(route = FacultyMainRoute.Subjects.name) {
-                        FacultySubjects(navController)
+                        FacultyActiveSubjects(navController)
+                        centerItem = false
+                        nonCenterItem = true
+                    }
+                    composable(route = FacultySubjectsRoutes.FacultyArchivedSubjects.name) {
+                        FacultyArchivedSubjects(navController)
+                        centerItem = false
+                        nonCenterItem = true
+                    }
+                    composable(route = FacultySubjectsRoutes.FacultySubjectInfo.name) {
+                        FacultySubjectInfo(navController)
                         centerItem = true
                         nonCenterItem = true
                     }
@@ -64,13 +77,15 @@ fun FacultyNavigation() {
                         centerItem = true
                         nonCenterItem = true
                     }
-                    composable(route = FacultySubjectsRoutes.FacultySubjectQRScreen.name) {
-
+                    composable(route = FacultySubjectsRoutes.FacultySearchStudents.name) {
+                        FacultySearchStudentScreen(navController)
+                        centerItem = false
+                        nonCenterItem = true
                     }
                 }
                 composable(route = FacultyMainRoute.Attendances.name) {
                     FacultyAttendances(navController)
-                    centerItem = true
+                    centerItem = false
                     nonCenterItem = true
                 }
 
@@ -86,7 +101,7 @@ fun FacultyNavigation() {
 
                 composable(route = FacultyMainRoute.Profile.name) {
                     ProfileScreen()
-                    centerItem = true
+                    centerItem = false
                     nonCenterItem = true
                 }
             }

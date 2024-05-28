@@ -10,6 +10,8 @@ import com.attendanceapp2.data.model.subject.Schedule
 
 @Dao
 interface ScheduleDao {
+    @Query("DELETE FROM `Subject Schedules`")
+    suspend fun deleteAllSchedules()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(schedule: Schedule)
@@ -21,5 +23,5 @@ interface ScheduleDao {
     suspend fun delete(schedule: Schedule)
 
     @Query("SELECT * FROM `Subject Schedules` WHERE subjectId = :subjectId")
-    suspend fun getSchedulesForSubject(subjectId: Long): List<Schedule>
+    suspend fun getSchedulesForSubject(subjectId: Int): List<Schedule>
 }

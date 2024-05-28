@@ -1,6 +1,5 @@
 package attendanceappusers.adminapp.homescreen.usermanagement
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,7 +37,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,6 +44,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import attendanceappusers.adminapp.homescreen.ConfirmDialog
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
+import com.attendanceapp2.data.model.showToast
 import com.attendanceapp2.data.model.user.UpdateUser
 import com.attendanceapp2.data.model.user.UpdatingUserHolder
 import com.attendanceapp2.data.model.user.User
@@ -261,6 +260,8 @@ fun UserManagementScreen(
         onConfirm = {
             handleDeleteAction()
             showDeleteDialog = false
+            viewModel.updateOfflineUsers()
+            showToast(context, "User Deleted")
         },
         onDismiss = { showDeleteDialog = false },
         showDialog = showDeleteDialog
@@ -273,6 +274,8 @@ fun UserManagementScreen(
         onConfirm = {
             handleDeactivateAction()
             showDeactivateDialog = false
+            viewModel.updateOfflineUsers()
+            showToast(context, "User Deactivated")
         },
         onDismiss = { showDeactivateDialog = false },
         showDialog = showDeactivateDialog
@@ -284,6 +287,8 @@ fun UserManagementScreen(
         onConfirm = {
             handleReactivateAction()
             showReactivateDialog = false
+            viewModel.updateOfflineUsers()
+            showToast(context, "User Reactivated")
         },
         onDismiss = { showReactivateDialog = false },
         showDialog = showReactivateDialog

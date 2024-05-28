@@ -53,7 +53,7 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Prof. ${subject.faculty}",
+                text = "Prof. ${subject.facultyName}",
                 fontSize = 12.sp
             )
         }

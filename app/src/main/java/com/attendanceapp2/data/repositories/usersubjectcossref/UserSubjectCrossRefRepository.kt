@@ -6,5 +6,5 @@ interface UserSubjectCrossRefRepository {
     suspend fun insert(userSubjectCrossRef: UserSubjectCrossRef)
     suspend fun update(userSubjectCrossRef: UserSubjectCrossRef)
     suspend fun delete(userSubjectCrossRef: UserSubjectCrossRef)
-    suspend fun getSubjectIdsForUser(userId: Long): List<Long>
+    suspend fun getSubjectIdsForUser(userId: Int): List<Int>
 }

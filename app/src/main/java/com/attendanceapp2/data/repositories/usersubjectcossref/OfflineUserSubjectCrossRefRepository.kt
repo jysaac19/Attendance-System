@@ -2,20 +2,12 @@ package com.attendanceapp2.data.repositories.usersubjectcossref
 
 import com.attendanceapp2.data.interfaces.UserSubjectCrossRefDao
 import com.attendanceapp2.data.model.subject.UserSubjectCrossRef
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class OfflineUserSubjectCrossRefRepository(
-    private val userSubjectCrossRefDao: UserSubjectCrossRefDao,
-    private val userSubjectCrossRefs: List<UserSubjectCrossRef>
+    private val userSubjectCrossRefDao: UserSubjectCrossRefDao
 ) {
-
-    init {
-        // Initialize the database with the list of users
-        CoroutineScope(Dispatchers.IO).launch {
-            userSubjectCrossRefs.forEach { userSubjectCrossRef -> userSubjectCrossRefDao.insert(userSubjectCrossRef) }
-        }
+    suspend fun deleteAllUserSubjectCrossRefs() {
+        userSubjectCrossRefDao.deleteAllUserSubjectCrossRefs()
     }
 
     suspend fun insert(userSubjectCrossRef: UserSubjectCrossRef) {
@@ -30,15 +22,19 @@ class OfflineUserSubjectCrossRefRepository(
         userSubjectCrossRefDao.delete(userSubjectCrossRef)
     }
 
-    suspend fun getJoinedSubjectsForUser(userId: Long): List<UserSubjectCrossRef> {
-        return userSubjectCrossRefDao.getJoinedSubjectsForUser(userId)
+    suspend fun getJoinedSubjectsForUser(userId: Int): List<UserSubjectCrossRef> {
+        return userSubjectCrossRefDao.getJoinedSubjectsOfUser(userId)
     }
 
-    suspend fun getAllSubjects(): List<Long> {
+    suspend fun getAllSubjects(): List<Int> {
         return userSubjectCrossRefDao.getAllSubjectIds()
     }
 
-    suspend fun getUserSubjectCrossRefBySubjectAndUser(subjectId: Long, userId: Long): UserSubjectCrossRef? {
+    suspend fun getUserSubjectCrossRefBySubjectAndUser(subjectId: Int, userId: Int): UserSubjectCrossRef? {
         return userSubjectCrossRefDao.getUserSubjectCrossRefBySubjectAndUser(subjectId, userId)
+    }
+
+    suspend fun getUserSubjectCrossRefBySubject(subjectId: Int): List<UserSubjectCrossRef> {
+        return userSubjectCrossRefDao.getUserSubjectCrossRefBySubject(subjectId)
     }
 }

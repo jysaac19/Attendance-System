@@ -2,16 +2,18 @@ package com.attendanceapp2.data.model.attendance
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-// Data class representing attendance information
+@Serializable
 @Entity(tableName = "Attendance")
 data class Attendance(
     @PrimaryKey(autoGenerate = true)
-    val id : Long = 0,
-    val userId : Long,
+    val id : Int = 0,
+    val userId : Int,
     val firstname : String,
     val lastname : String,
-    val subjectId : Long,
+    val subjectId : Int,
     val subjectName : String,
     val subjectCode : String,
     val date: String,

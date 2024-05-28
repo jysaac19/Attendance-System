@@ -34,7 +34,7 @@ fun SubjectListItems(
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = "Name: ${subject.code} - ${subject.name}")
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "Department: ${subject.faculty}")
+            Text(text = "Department: ${subject.facultyName}")
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = "Department: ${subject.room}")
         }

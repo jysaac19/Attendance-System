@@ -3,43 +3,37 @@ package com.attendanceapp2.data.repositories.attendancce
 import com.attendanceapp2.data.interfaces.AttendanceDao
 import com.attendanceapp2.data.model.attendance.Attendance
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 
 class OfflineAttendanceRepository(
-    private val attendanceDao: AttendanceDao,
-    private val attendances: List<Attendance>
+    private val attendanceDao: AttendanceDao
 ) {
-    init {
-        // Initialize the database with the list of users
-        CoroutineScope(Dispatchers.IO).launch {
-            attendances.forEach { attendance -> attendanceDao.insert(attendance) }
-        }
+    suspend fun deleteAllAttendances() {
+        attendanceDao.deleteAllAttendance()
     }
+
     suspend fun insertAttendance(attendance: Attendance) = attendanceDao.insert(attendance)
 
     suspend fun updateAttendance(attendance: Attendance) = attendanceDao.update(attendance)
 
     suspend fun deleteAttendance(attendance: Attendance) = attendanceDao.delete(attendance)
 
-    fun getAttendancesByUserIdSubjectIdAndDate(userId: Long, subjectId: Long, date: String): Flow<List<Attendance>> {
+    fun getAttendancesByUserIdSubjectIdAndDate(userId: Int, subjectId: Int, date: String): Flow<List<Attendance>> {
         return attendanceDao.getAttendancesByUserIdSubjectIdAndDate(userId, subjectId, date)
     }
 
-    fun filterStudentAttendanceBySubjectCodeAndDateRange(startDate: String, endDate: String, userId: Long, subjectCode: String): Flow<List<Attendance>> {
-        return attendanceDao.filterStudentAttendanceBySubjectCodeAndDateRange(startDate, endDate, userId, subjectCode)
+    fun filterStudentAttendanceBySubjectCodeAndDateRange(userId: Int, subjectCode: String, startDate: String, endDate: String): Flow<List<Attendance>> {
+        return attendanceDao.filterStudentAttendanceBySubjectCodeAndDateRange(userId, subjectCode, startDate, endDate)
     }
 
-    fun filterStudentAttendanceByDateRange(startDate: String, endDate: String, userId: Long): Flow<List<Attendance>>{
-        return attendanceDao.filterStudentAttendanceByDateRange(startDate, endDate, userId)
+    fun filterStudentAttendanceByDateRange(userId: Int, startDate: String, endDate: String): Flow<List<Attendance>>{
+        return attendanceDao.filterStudentAttendanceByDateRange(userId, startDate, endDate)
     }
     fun filterAttendancesBySubjectCodeAndDateRange(startDate: String, endDate: String, subjectCode: String): Flow<List<Attendance>> {
         return attendanceDao.filterAttendancesBySubjectCodeAndDateRange(startDate, endDate, subjectCode)
     }
 
-    fun getAttendancesByUserId(userId: Long): Flow<List<Attendance>> {
+    fun getAttendancesByUserId(userId: Int): Flow<List<Attendance>> {
         return attendanceDao.getAttendancesByUserId(userId)
     }
 

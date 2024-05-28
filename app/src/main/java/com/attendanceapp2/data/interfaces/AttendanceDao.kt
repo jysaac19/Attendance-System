@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AttendanceDao {
+    @Query("DELETE FROM `Attendance`")
+    suspend fun deleteAllAttendance()
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(attendance: Attendance)
 
@@ -24,25 +26,25 @@ interface AttendanceDao {
     fun getAllAttendances(): Flow<List<Attendance>>
 
     @Query("SELECT * FROM Attendance WHERE userId = :userId AND subjectId = :subjectId AND date = :date")
-    fun getAttendancesByUserIdSubjectIdAndDate(userId: Long, subjectId : Long, date : String): Flow<List<Attendance>>
+    fun getAttendancesByUserIdSubjectIdAndDate(userId: Int, subjectId : Int, date : String): Flow<List<Attendance>>
 
     @Query("SELECT * FROM Attendance WHERE userId = :userId AND subjectCode = :subjectCode AND date BETWEEN :startDate AND :endDate")
-    fun filterStudentAttendanceBySubjectCodeAndDateRange(startDate: String, endDate: String, userId: Long, subjectCode: String): Flow<List<Attendance>>
+    fun filterStudentAttendanceBySubjectCodeAndDateRange(userId: Int, subjectCode: String, startDate: String, endDate: String): Flow<List<Attendance>>
 
     @Query("SELECT * FROM Attendance WHERE userId = :userId AND date BETWEEN :startDate AND :endDate")
-    fun filterStudentAttendanceByDateRange(startDate: String, endDate: String, userId: Long): Flow<List<Attendance>>
+    fun filterStudentAttendanceByDateRange(userId: Int, startDate: String, endDate: String): Flow<List<Attendance>>
 
     @Query("SELECT * FROM Attendance WHERE subjectCode = :subjectCode AND date BETWEEN :startDate AND :endDate")
     fun filterAttendancesBySubjectCodeAndDateRange(startDate: String, endDate: String, subjectCode: String): Flow<List<Attendance>>
 
     @Query("SELECT * FROM Attendance WHERE userId = :userId")
-    fun getAttendancesByUserId(userId: Long): Flow<List<Attendance>>
+    fun getAttendancesByUserId(userId: Int): Flow<List<Attendance>>
 
     @Query("SELECT * FROM Attendance WHERE subjectId IN (:subjectId)")
-    fun getAttendancesBySubjectId(subjectId: Long): Flow<List<Attendance>>
+    fun getAttendancesBySubjectId(subjectId: Int): Flow<List<Attendance>>
 
     @Query("SELECT * FROM Attendance WHERE userId = :userId AND subjectId = :subjectId")
-    fun getAttendancesByUserIdAndSubjectId(userId: Long, subjectId: Long): Flow<List<Attendance>>
+    fun getAttendancesByUserIdAndSubjectId(userId: Int, subjectId: Int): Flow<List<Attendance>>
 
     @Query("SELECT * FROM Attendance WHERE subjectCode IN (:subjectCodes) AND date BETWEEN :startDate AND :endDate")
     fun filterAttendancesBySubjectCodesAndDateRange(subjectCodes: List<String>, startDate: String, endDate: String): Flow<List<Attendance>>

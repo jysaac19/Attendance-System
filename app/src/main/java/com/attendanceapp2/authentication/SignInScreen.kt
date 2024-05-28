@@ -1,6 +1,8 @@
 package com.attendanceapp2.authentication
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -30,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -44,6 +47,7 @@ import com.attendanceapp2.data.model.user.LoggedInUserHolder
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
 import com.attendanceapp2.data.model.Results
+import com.attendanceapp2.data.model.showToast
 import kotlinx.coroutines.launch
 
 
@@ -53,11 +57,11 @@ fun SignInScreen(
     signInVM: SignInViewModel = viewModel(factory = AppViewModelProvider.Factory),
     subjectVM: SubjectViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val context = LocalContext.current
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
-    var errorMessage by remember { mutableStateOf("") }
 
     LazyColumn(
         modifier = Modifier
@@ -92,7 +96,7 @@ fun SignInScreen(
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Username") },
+                label = { Text("Email") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 shape = RoundedCornerShape(20.dp)
@@ -117,20 +121,16 @@ fun SignInScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Text(
-                text = errorMessage,
-                color = Color.Red,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
             Button(
                 onClick = {
                     coroutineScope.launch {
                         val result = signInVM.validateSignIn(email, password)
-                        errorMessage = result.failureMessage ?: ""
+                        result.successMessage?.let {
+                            showToast(context, it)
+                        }
+                        result.failureMessage?.let {
+                            showToast(context, it)
+                        }
                     }
                 },
                 shape = RoundedCornerShape(50.dp),

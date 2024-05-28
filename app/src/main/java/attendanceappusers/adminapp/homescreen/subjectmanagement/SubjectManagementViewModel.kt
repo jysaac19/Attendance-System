@@ -3,14 +3,26 @@ package attendanceappusers.adminapp.homescreen.subjectmanagement
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.subject.Subject
+import com.attendanceapp2.data.model.subject.UserSubjectCrossRef
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
+import com.attendanceapp2.data.repositories.subject.OnlineSubjectRepository
+import com.attendanceapp2.data.repositories.user.OfflineUserRepository
+import com.attendanceapp2.data.repositories.user.OnlineUserRepository
+import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
+import com.attendanceapp2.data.repositories.usersubjectcossref.OnlineUserSubjectCrossRefRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class SubjectManagementViewModel(
-    private val offlineSubjectRepository: OfflineSubjectRepository
-): ViewModel() {
+    private val offlineSubjectRepository: OfflineSubjectRepository,
+    private val offlineUserRepository: OfflineUserRepository,
+    private val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository,
+    private val onlineSubjectRepository: OnlineSubjectRepository,
+    private val onlineUserRepository: OnlineUserRepository,
+    private val onlineUserSubjectCrossRefRepository: OnlineUserSubjectCrossRefRepository,
+) : ViewModel() {
 
     private val _activeSubjects: MutableStateFlow<List<Subject>> = MutableStateFlow(emptyList())
     val activeSubjects: StateFlow<List<Subject>> = _activeSubjects
@@ -19,65 +31,86 @@ class SubjectManagementViewModel(
     val archivedSubjects: StateFlow<List<Subject>> = _archivedSubjects
 
     init {
-        updateSubjectLists()
+        updateSubjectManagementList()
     }
 
-    private fun getActiveSubjects() {
+
+    private fun updateOfflineSubjects() {
         viewModelScope.launch {
-            offlineSubjectRepository.getActiveSubjects().collect { subjects ->
-                _activeSubjects.value = subjects
+            offlineSubjectRepository.deleteAllSubjects()
+            val subjects = onlineSubjectRepository.getAllSubjects()
+            subjects.forEach {
+                offlineSubjectRepository.insertSubject(it)
             }
         }
     }
 
-    private fun getArchivedSubjects() {
+    private fun updateSubjectManagementList() {
         viewModelScope.launch {
-            offlineSubjectRepository.getArchivedSubjects().collect { subjects ->
-                _archivedSubjects.value = subjects
+            updateOfflineSubjects()
+            fetchArchiveSubjects()
+            fetchActiveSubjects()
+        }
+    }
+
+    private fun fetchArchiveSubjects() {
+        viewModelScope.launch {
+            offlineSubjectRepository.getArchivedSubjects().collect {
+                _archivedSubjects.value = it
             }
         }
     }
 
-    fun updateSubjectLists() {
-        getActiveSubjects()
-        getArchivedSubjects()
+    private fun fetchActiveSubjects() {
+        viewModelScope.launch {
+            offlineSubjectRepository.getActiveSubjects().collect {
+                _activeSubjects.value = it
+            }
+        }
     }
 
-    fun searchSubjectsByCode(subjectCode: String) {
+
+    fun searchSubjectsByCode(searchText: String) {
         viewModelScope.launch {
-            if (subjectCode.isNotEmpty()) {
-                offlineSubjectRepository.searchSubject(subjectCode).collect { subjects ->
+            if (searchText.isNotEmpty()) {
+                offlineSubjectRepository.searchActiveSubject(searchText).collect { subjects ->
                     _activeSubjects.value = subjects
                 }
-                offlineSubjectRepository.searchSubject(subjectCode).collect { subjects ->
-                    _activeSubjects.value = subjects
+                offlineSubjectRepository.searchArchivedSubject(searchText).collect { subjects ->
+                    _archivedSubjects.value = subjects
                 }
-            } else if (subjectCode.isEmpty()) {
-                getActiveSubjects()
-                getArchivedSubjects()
+            } else if (searchText.isEmpty()) {
+                updateSubjectManagementList()
             }
         }
     }
 
     fun deleteSubject(subject: Subject) {
         viewModelScope.launch {
-            offlineSubjectRepository.deleteSubject(subject)
+            val names = subject.facultyName.split(" ")
+            val firstName = names.firstOrNull() ?: ""
+            val lastName = names.drop(1).joinToString(" ")
+            val faculty = onlineUserRepository.getUserByFullName(firstName, lastName)
+
+            onlineSubjectRepository.deleteSubject(subject.id)
+            onlineUserSubjectCrossRefRepository.deleteUserSubCrossRef(UserSubjectCrossRef(faculty!!.id, subject.id))
+            updateSubjectManagementList()
         }
     }
 
     fun archiveSubject(subject: Subject) {
         viewModelScope.launch {
-            // Update the subject status to "Archived"
             val archivedSubject = subject.copy(subjectStatus = "Archived")
-            offlineSubjectRepository.updateSubject(archivedSubject)
+            onlineSubjectRepository.updateSubject(archivedSubject)
+            updateSubjectManagementList()
         }
     }
 
     fun unarchiveSubject(subject: Subject) {
         viewModelScope.launch {
-            // Update the subject status to "Archived"
-            val archivedSubject = subject.copy(subjectStatus = "Active")
-            offlineSubjectRepository.updateSubject(archivedSubject)
+            val activeSubject = subject.copy(subjectStatus = "Active")
+            onlineSubjectRepository.updateSubject(activeSubject)
+            updateSubjectManagementList()
         }
     }
 }

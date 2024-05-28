@@ -44,7 +44,7 @@ fun SubjectItem(
             Text(text = "Subject: ${subject.name}", fontWeight = FontWeight.Bold)
             Text(text = "Code: ${subject.code}")
             Text(text = "Room: ${subject.room}")
-            Text(text = "Faculty: ${subject.faculty}")
+            Text(text = "Faculty: ${subject.facultyName}")
 
             Spacer(modifier = Modifier.height(8.dp))
 

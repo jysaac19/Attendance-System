@@ -235,7 +235,7 @@ fun UpdateUserScreen(
    message = "Are you sure you want to perform this action?",
    onConfirm = {
     coroutineScope.launch {
-     viewModel.updateUser(
+     viewModel.updateOnlineUser(
       User(
        updateUser.id,
        updateUser.firstname,

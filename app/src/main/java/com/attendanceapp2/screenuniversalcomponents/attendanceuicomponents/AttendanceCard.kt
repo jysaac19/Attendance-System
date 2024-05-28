@@ -71,7 +71,7 @@ fun AttendanceCard(
                     fontSize = 12.sp
                 )
                 Text(
-                    attendance.time,
+                    attendance.status,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center,
                     fontSize = 12.sp

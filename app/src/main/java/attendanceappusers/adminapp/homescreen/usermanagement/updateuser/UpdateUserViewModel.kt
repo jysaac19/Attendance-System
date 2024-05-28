@@ -5,14 +5,31 @@ import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.Results
 import com.attendanceapp2.data.model.user.User
 import com.attendanceapp2.data.repositories.user.OfflineUserRepository
+import com.attendanceapp2.data.repositories.user.OnlineUserRepository
 import kotlinx.coroutines.launch
 
 class UpdateUserViewModel(
-    private val offlineUserRepository: OfflineUserRepository
+    private val offlineUserRepository: OfflineUserRepository,
+    private val onlineUserRepository: OnlineUserRepository
 ): ViewModel() {
-    fun updateUser(updatedUser: User) {
+    init {
+        updateOfflineUsers()
+    }
+
+    private fun updateOfflineUsers() {
         viewModelScope.launch {
-            offlineUserRepository.updateStudent(updatedUser)
+            offlineUserRepository.deleteAllUsers()
+            val users = onlineUserRepository.getAllUsers()
+            users.forEach {
+                offlineUserRepository.insertUser(it)
+            }
+        }
+    }
+
+    fun updateOnlineUser(updatedUser: User) {
+        viewModelScope.launch {
+            onlineUserRepository.updateUser(updatedUser)
+            updateOfflineUsers()
         }
     }
 

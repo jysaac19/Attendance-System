@@ -22,11 +22,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import attendanceappusers.facultyapp.screens.mainscreen.profile.ProfileScreen
-import attendanceappusers.studentapp.screens.mainscreens.attendance.StudentAttendances
-import attendanceappusers.studentapp.screens.mainscreens.StudentScanner
-import attendanceappusers.studentapp.screens.mainscreens.StudentSubjects
-import attendanceappusers.studentapp.screens.subjects.StudentSubjectAttendances
+import attendanceappusers.facultyapp.profile.ProfileScreen
+import attendanceappusers.studentapp.attendance.StudentAttendances
+import attendanceappusers.studentapp.scanner.StudentScanner
+import attendanceappusers.studentapp.subjects.subjectlist.StudentActiveSubjects
+import attendanceappusers.studentapp.subjects.subjectattendances.StudentSubjectAttendances
+import attendanceappusers.studentapp.subjects.subjectinfo.StudentSubjectInfo
+import attendanceappusers.studentapp.subjects.subjectlist.StudentArchivedSubjects
 import com.attendanceapp2.navigation.approutes.faculty.FacultyMainRoute
 import com.attendanceapp2.navigation.approutes.student.StudentMainRoute
 import com.attendanceapp2.navigation.approutes.student.StudentSubjectsRoutes
@@ -83,18 +85,28 @@ fun StudentNavigation() {
                 modifier = Modifier.padding(it)
             ) {
                 composable(route = StudentMainRoute.Subjects.name) {
-                    StudentSubjects(navController)
+                    StudentActiveSubjects(navController)
                     centerItem = true
                     nonCenterItem = true
                 }
                 navigation(startDestination = StudentMainRoute.Subjects.name, route = StudentSubjectsRoutes.StudentMainSubjectScreen.name) {
-                    composable(route = FacultyMainRoute.Subjects.name) {
-                        StudentSubjects(navController)
+                    composable(route = StudentMainRoute.Subjects.name) {
+                        StudentActiveSubjects(navController)
+                        centerItem = true
+                        nonCenterItem = true
+                    }
+                    composable(route = StudentSubjectsRoutes.StudentArchivedSubjects.name) {
+                        StudentArchivedSubjects(navController)
                         centerItem = true
                         nonCenterItem = true
                     }
                     composable(route = StudentSubjectsRoutes.StudentSubjectAttendances.name) {
                         StudentSubjectAttendances(navController)
+                        centerItem = true
+                        nonCenterItem = true
+                    }
+                    composable(route = StudentSubjectsRoutes.StudentSubjectInformation.name) {
+                        StudentSubjectInfo(navController)
                         centerItem = true
                         nonCenterItem = true
                     }

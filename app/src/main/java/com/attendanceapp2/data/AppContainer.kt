@@ -1,72 +1,117 @@
 package com.attendanceapp2.data
 
 import android.content.Context
-import com.attendanceapp2.data.model.attendance.Attendance
-import com.attendanceapp2.data.model.subject.Subject
 import com.attendanceapp2.data.model.user.User
-import com.attendanceapp2.data.model.subject.UserSubjectCrossRef
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
+import com.attendanceapp2.data.repositories.attendancce.OnlineAttendanceRepository
 import com.attendanceapp2.data.repositories.schedule.OfflineScheduleRepository
+import com.attendanceapp2.data.repositories.schedule.OnlineScheduleRepository
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
+import com.attendanceapp2.data.repositories.subject.OnlineSubjectRepository
 import com.attendanceapp2.data.repositories.user.OfflineUserRepository
+import com.attendanceapp2.data.repositories.user.OnlineUserRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
-import com.attendanceapp2.posts.repository.OnlinePostRepository
+import com.attendanceapp2.data.repositories.usersubjectcossref.OnlineUserSubjectCrossRefRepository
+import com.professorsattendanceapp.network.KtorClient
 
 interface AppContainer {
-    val onlinePostRepository: OnlinePostRepository
-    val offlineSubjectRepository: OfflineSubjectRepository
+    //USER REPOSITORY
     val offlineUserRepository: OfflineUserRepository
+    val onlineUserRepository: OnlineUserRepository
+
+    //ATTENDANCE REPOSITORY
+    val onlineAttendanceRepository: OnlineAttendanceRepository
     val offlineAttendanceRepository: OfflineAttendanceRepository
+
+    //SUBJECT REPOSITORY
+    val offlineSubjectRepository: OfflineSubjectRepository
+    val onlineSubjectRepository: OnlineSubjectRepository
+
+    //SCHEDULE REPOSITORY
     val offlineScheduleRepository: OfflineScheduleRepository
+    val onlineScheduleRepository: OnlineScheduleRepository
+
+    //USERSUBJECTCROSSREF REPOSITORY
     val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository
+    val onlineUserSubjectCrossRefRepository: OnlineUserSubjectCrossRefRepository
 }
 
 /**
  * [AppContainer] implementation that provides instance of [OfflineUserRepository]
  */
 class AppDataContainer(
-    private val context: Context,
-    private val embeddedUsers: List<User>,
-    private val embeddedSubjects: List<Subject>,
-    private val embeddedAttendances : List<Attendance>,
-    private val embeddedUserSubjectCrossRefs: List<UserSubjectCrossRef>
+    private val context: Context
 ) : AppContainer {
-    override val onlinePostRepository: OnlinePostRepository by lazy {
-        OnlinePostRepository()
-    }
-
     /**
-     * Implementation for [subjectRepository]
+     * Implementation for [offlineSubjectRepository]
      */
     override val offlineSubjectRepository: OfflineSubjectRepository by lazy {
-        OfflineSubjectRepository(AttendanceAppDatabase.getDatabase(context).subjectDao(), embeddedSubjects)
+        OfflineSubjectRepository(AttendanceAppDatabase.getDatabase(context).subjectDao())
     }
 
     /**
-     * Implementation for [scheduleRepository]
+     * Implementation for [onlineAttendanceRepository]
+     */
+    override val onlineSubjectRepository: OnlineSubjectRepository by lazy {
+        OnlineSubjectRepository(KtorClient())
+    }
+
+    /**
+     * Implementation for [offlineScheduleRepository]
      */
     override val offlineScheduleRepository: OfflineScheduleRepository by lazy {
         OfflineScheduleRepository(AttendanceAppDatabase.getDatabase(context).scheduleDao())
     }
 
     /**
-     * Implementation for [userRepository]
+     * Implementation for [onlineScheduleRepository]
+     */
+    override val onlineScheduleRepository: OnlineScheduleRepository by lazy {
+        OnlineScheduleRepository(KtorClient())
+    }
+
+    /**
+     * Implementation for [offlineUserRepository]
      */
     override val offlineUserRepository: OfflineUserRepository by lazy {
-        OfflineUserRepository(AttendanceAppDatabase.getDatabase(context).userDao(), embeddedUsers)
+        OfflineUserRepository(AttendanceAppDatabase.getDatabase(context).userDao())
     }
+
+    /**
+     * Implementation for [onlineUserRepository]
+     */
+    override val onlineUserRepository: OnlineUserRepository by lazy {
+        OnlineUserRepository(KtorClient())
+    }
+
+    /**
+     * Implementation for [offlineUserSubjectCrossRefRepository]
+     */
+    override val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository by lazy {
+        OfflineUserSubjectCrossRefRepository(AttendanceAppDatabase.getDatabase(context).userSubjectCrossRefDao())
+    }
+
+    /**
+     * Implementation for [onlineUserSubjectCrossRefRepository]
+     */
+    override val onlineUserSubjectCrossRefRepository: OnlineUserSubjectCrossRefRepository by lazy {
+        OnlineUserSubjectCrossRefRepository(KtorClient())
+    }
+
+    //ATTENDANCE REPOSITORIES
 
     /**
      * Implementation for [offlineAttendanceRepository]
      */
     override val offlineAttendanceRepository: OfflineAttendanceRepository by lazy {
-        OfflineAttendanceRepository(AttendanceAppDatabase.getDatabase(context).attendanceDao(), embeddedAttendances)
+        OfflineAttendanceRepository(AttendanceAppDatabase.getDatabase(context).attendanceDao())
     }
 
     /**
-     * Implementation for [userSubjectCrossRefRepository]
+     * Implementation for [onlineAttendanceRepository]
      */
-    override val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository by lazy {
-        OfflineUserSubjectCrossRefRepository(AttendanceAppDatabase.getDatabase(context).userSubjectCrossRefDao(), embeddedUserSubjectCrossRefs)
+    override val onlineAttendanceRepository: OnlineAttendanceRepository by lazy {
+        OnlineAttendanceRepository(KtorClient())
     }
+
 }

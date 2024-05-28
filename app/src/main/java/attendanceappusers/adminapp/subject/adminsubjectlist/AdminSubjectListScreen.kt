@@ -27,6 +27,7 @@ import com.attendanceapp2.data.model.subject.SelectedSubject
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.navigation.approutes.admin.AdminSubject
 import com.attendanceapp2.screenuniversalcomponents.subjectuicomponents.SubjectCard
+import java.time.Month
 
 @Composable
 fun AdminSubjectListScreen (
@@ -34,6 +35,18 @@ fun AdminSubjectListScreen (
     viewModel : AdminSubjectListViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val subjects by viewModel.subjects.collectAsState()
+    val currentMonth = Month.entries[java.time.LocalDate.now().monthValue - 1]
+    val schoolYearText = when {
+        currentMonth in java.time.Month.SEPTEMBER..java.time.Month.DECEMBER -> {
+            "S.Y. ${java.time.LocalDate.now().year} - ${java.time.LocalDate.now().year + 1}"
+        }
+        currentMonth in java.time.Month.JANUARY..java.time.Month.JUNE -> {
+            "S.Y. ${java.time.LocalDate.now().year - 1} - ${java.time.LocalDate.now().year}"
+        }
+        else -> {
+            "Summer Class"
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -50,7 +63,7 @@ fun AdminSubjectListScreen (
         Spacer(modifier = Modifier.width(16.dp))
 
         Text(
-            "S.Y. 2023 - 2024",
+            schoolYearText,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
@@ -70,7 +83,7 @@ fun AdminSubjectListScreen (
                             subject.code,
                             subject.name,
                             subject.room,
-                            subject.faculty,
+                            subject.facultyName,
                             subject.subjectStatus,
                             subject.joinCode
                         )

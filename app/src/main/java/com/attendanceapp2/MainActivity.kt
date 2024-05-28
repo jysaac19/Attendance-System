@@ -29,6 +29,7 @@ import com.attendanceapp2.navigation.student.StudentNavigation
 import com.attendanceapp2.theme.NBSCollegeTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
     private val screenViewModel: ScreenViewModel by viewModels {
@@ -65,10 +66,10 @@ class MainActivity : ComponentActivity() {
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
+        Timber.plant(Timber.DebugTree())
         setContent {
             val loggedInUser by LoggedInUserHolder.loggedInUser.collectAsState()
             val navController: NavController = rememberNavController()
-
 
             NBSCollegeTheme {
                 Surface(

@@ -1,5 +1,8 @@
 package com.attendanceapp2.data.model
 
+import android.content.Context
+import android.widget.Toast
+
 sealed class Results {
     data class AddSubjectResult(
         val failureMessage: String? = null,
@@ -12,6 +15,11 @@ sealed class Results {
     ) : Results()
 
     data class AddAttendanceResult(
+        val failureMessage: String? = null,
+        val successMessage: String? = null
+    ) : Results()
+
+    data class AddScheduleResult(
         val failureMessage: String? = null,
         val successMessage: String? = null
     ) : Results()
@@ -40,20 +48,13 @@ sealed class Results {
         val failureMessage: String? = null,
         val successMessage: String? = null
     ) : Results()
+
+    data class FilterAttendanceResult(
+        val failureMessage: String? = null,
+        val successMessage: String? = null
+    ) : Results()
 }
 
-object ResultsManager {
-    private var result: Results? = null
-
-    fun set(result: Results) {
-        this.result = result
-    }
-
-    fun clear() {
-        result = null
-    }
-
-    fun get(): Results? {
-        return result
-    }
+fun showToast(context: Context, message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
 }

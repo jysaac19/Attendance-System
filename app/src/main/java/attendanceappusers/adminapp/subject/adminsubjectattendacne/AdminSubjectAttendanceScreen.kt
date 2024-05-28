@@ -71,7 +71,7 @@ fun AdminSubjectAttendanceScreen (
 
         println("Start Date: $startDateString")
         println("End Date: $endDateString")
-        viewModel.fetchAdminSubjectAttendances(startDateString, endDateString)
+        viewModel.updateOfflineAttendances(startDateString, endDateString)
     }
 
     Column(

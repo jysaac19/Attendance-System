@@ -63,7 +63,7 @@ fun AttendanceColumnName () {
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    "Time",
+                    "Status",
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center
                 )

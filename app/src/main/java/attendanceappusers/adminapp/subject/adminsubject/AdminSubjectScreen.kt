@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Archive
@@ -12,6 +14,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Update
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -22,27 +26,31 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import attendanceappusers.adminapp.homescreen.ConfirmDialog
 import attendanceappusers.adminapp.homescreen.subjectmanagement.SubjectManagementViewModel
+import attendanceappusers.adminapp.subject.addschedule.AddScheduleDialog
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
-import com.attendanceapp2.data.model.subject.SelectedSubject
+import com.attendanceapp2.data.model.showToast
+import com.attendanceapp2.data.model.subject.Schedule
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.data.model.subject.Subject
 import com.attendanceapp2.data.model.subject.UpdateSubject
 import com.attendanceapp2.data.model.subject.UpdatingSubjectHolder
 import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.navigation.approutes.admin.AdminSubject
+import com.attendanceapp2.theme.Purple40
 import kotlinx.coroutines.launch
 
 @Composable
@@ -51,6 +59,13 @@ fun AdminSubjectScreen (
     viewModel: AdminSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory),
     subjectManagement : SubjectManagementViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
+    var selectedDay by remember { mutableStateOf("") }
+    var startTime by remember { mutableStateOf("") }
+    var endTime by remember { mutableStateOf("") }
+
     val selectedSubject = SelectedSubjectHolder.getSelectedSubject()
 
     var showDeleteDialog by remember { mutableStateOf(false) }
@@ -60,10 +75,14 @@ fun AdminSubjectScreen (
     var subjectToArchive by remember { mutableStateOf<Subject?>(null) }
 
     val subjectSchedules = viewModel.subjectSchedules.collectAsState()
+    var addScheduleDialog by remember { mutableStateOf(false) }
+
+    var scheduleToDelete by remember { mutableStateOf<Schedule?>(null) }
+    var showDeleteScheduleDialog by remember { mutableStateOf(false) }
 
     // Use LaunchedEffect to fetch subject schedules when the composable is first launched
     LaunchedEffect(selectedSubject) {
-        selectedSubject?.let { viewModel.getSubjectSchedules(it.id) }
+        selectedSubject?.let { viewModel.getSchedulesForSubjects(it.id) }
     }
 
     Column(
@@ -229,7 +248,8 @@ fun AdminSubjectScreen (
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = "Subject Schedules",
@@ -243,7 +263,9 @@ fun AdminSubjectScreen (
                     subjectSchedules.value.forEach { schedule ->
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(2.dp)
                         ) {
                             Text(
                                 text = "${schedule.day}:",
@@ -252,10 +274,30 @@ fun AdminSubjectScreen (
                             )
                             Text(
                                 text = "${schedule.start} - ${schedule.end}",
-                                modifier = Modifier.weight(3f)
+                                modifier = Modifier.weight(2f)
                             )
-                        }
 
+                            Button(
+                                onClick = {
+                                    scheduleToDelete = schedule
+                                    showDeleteScheduleDialog = true
+                                },
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(35.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Purple40
+                                )
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "Delete Schedule",
+                                    modifier = Modifier
+                                        .size(20.dp),
+                                    tint = Color.White
+                                )
+                            }
+                        }
                     }
                 } else {
                     Text(text = "No schedules available")
@@ -263,7 +305,7 @@ fun AdminSubjectScreen (
 
                 // Add floating action button
                 FloatingActionButton(
-                    onClick = { navController.navigate(AdminSubject.AddSchedule.name) },
+                    onClick = { addScheduleDialog = true },
                     modifier = Modifier.align(Alignment.End)
                 ) {
                     Icon(Icons.Filled.Add, contentDescription = "Add")
@@ -279,7 +321,7 @@ fun AdminSubjectScreen (
             verticalAlignment = Alignment.CenterVertically
         ) {
             FloatingActionButton(
-                onClick = { navController.navigateUp() },
+                onClick = { navController.navigate(AdminHomeScreen.HomeScreen.name) },
                 modifier = Modifier
                     .padding(8.dp)
                     .weight(1f)
@@ -327,6 +369,39 @@ fun AdminSubjectScreen (
         }
     }
 
+    AddScheduleDialog(
+        selectedDay = selectedDay,
+        startTime = startTime,
+        endTime = endTime,
+        onSelectedDayChange = { selectedDay = it },
+        onStartTimeChange = { startTime = it },
+        onEndTimeChange = { endTime = it },
+        onDismiss = { addScheduleDialog = false },
+        onAddSchedule = { selectedDay, startTime, endTime ->
+            coroutineScope.launch {
+                val addScheduleResult = viewModel.addScheduleOnline(
+                    Schedule(
+                        subjectId = selectedSubject!!.id,
+                        subjectCode = selectedSubject.code,
+                        subjectName = selectedSubject.name,
+                        day = selectedDay,
+                        start = startTime,
+                        end = endTime
+                    )
+                )
+                addScheduleResult.successMessage?.let {
+                    addScheduleDialog = false
+                    viewModel.getSchedulesForSubjects(selectedSubject.id)
+                    showToast(context, it)
+                }
+                addScheduleResult.failureMessage?.let {
+                    showToast(context, it)
+                }
+            }
+        },
+        showDialog = addScheduleDialog,
+    )
+
     ConfirmDialog(
         title = "Delete Confirmation",
         message = "Are you sure you want to delete this subject?",
@@ -336,7 +411,6 @@ fun AdminSubjectScreen (
                 showDeleteDialog = false
                 subjectToDelete = null
             }
-            subjectManagement.updateSubjectLists()
             navController.navigate(AdminHomeScreen.SubjectManagement.name)
         },
         onDismiss = {
@@ -355,12 +429,31 @@ fun AdminSubjectScreen (
                 showArchiveDialog = false
                 subjectToArchive = null
             }
-            subjectManagement.updateSubjectLists()
         },
         onDismiss = {
             showArchiveDialog = false
             subjectToArchive = null
         },
         showDialog = showArchiveDialog
+    )
+
+    ConfirmDialog(
+        title = "Delete Schedule Confirmation",
+        message = "Are you sure you want to delete this schedule?",
+        onConfirm = {
+            scheduleToDelete?.let { schedule ->
+                coroutineScope.launch {
+                    viewModel.deleteSchedule(schedule)
+                    viewModel.getSchedulesForSubjects(selectedSubject!!.id)
+                }
+                showDeleteScheduleDialog = false
+                scheduleToDelete = null
+            }
+        },
+        onDismiss = {
+            showDeleteScheduleDialog = false
+            scheduleToDelete = null
+        },
+        showDialog = showDeleteScheduleDialog
     )
 }

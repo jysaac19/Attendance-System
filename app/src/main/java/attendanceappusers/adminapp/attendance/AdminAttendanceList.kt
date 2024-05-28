@@ -122,7 +122,7 @@ fun AdminAttendanceList (
                 },
                 shape = RoundedCornerShape(20.dp),
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("Enter User ID") }
+                placeholder = { Text("Enter User ID or Name") }
             )
 
             Row(
@@ -218,8 +218,8 @@ fun AdminAttendanceList (
     }
 
     LaunchedEffect(query, startDate, endDate, selectedSubjectCode, selectedUserType) {
-        val startDateString = startDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format start date
-        val endDateString = endDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format end date
+        val startDateString = startDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))
+        val endDateString = endDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))
 
         println("Query: $query")
         println("Start Date: $startDateString")

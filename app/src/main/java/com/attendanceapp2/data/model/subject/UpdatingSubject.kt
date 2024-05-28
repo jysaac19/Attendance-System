@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 data class UpdateSubject(
-    val id : Long = 0,
+    val id : Int = 0,
     val code : String,
     val name : String,
     val room : String,

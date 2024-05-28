@@ -10,7 +10,9 @@ import com.attendanceapp2.data.model.subject.Subject
 import com.attendanceapp2.data.model.user.SelectedStudentHolder
 import com.attendanceapp2.data.model.user.SelectedStudentHolder.selectedStudent
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
+import com.attendanceapp2.data.repositories.attendancce.OnlineAttendanceRepository
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
+import com.attendanceapp2.data.repositories.subject.OnlineSubjectRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,13 +23,17 @@ import java.time.format.DateTimeFormatter
 
 class SearchSubjectViewModel(
     private val offlineAttendanceRepository: OfflineAttendanceRepository,
-    private val offlineSubjectRepository: OfflineSubjectRepository
+    private val offlineSubjectRepository: OfflineSubjectRepository,
+
+    private val onlineAttendanceRepository: OnlineAttendanceRepository,
+    private val onlineSubjectRepository: OnlineSubjectRepository
 ) : ViewModel() {
     private val _subjects: MutableStateFlow<List<Subject>> = MutableStateFlow(emptyList())
     val subjects: StateFlow<List<Subject>> = _subjects
 
     init {
-        fetchSubjects()
+        updateOfflineSubjects()
+        updateOfflineAttendances()
     }
 
     fun searchSubjects(query: String): Flow<List<Subject>> {
@@ -39,12 +45,25 @@ class SearchSubjectViewModel(
         return offlineSubjectRepository.searchSubject(query)
     }
 
-    private fun fetchSubjects() {
+    private fun updateOfflineSubjects() {
         viewModelScope.launch {
-            // Call the repository function to get all attendances
-            offlineSubjectRepository.getAllSubjects().collect() { subjects ->
-                // Update the StateFlow with the fetched attendances
-                _subjects.value = subjects
+            val subjects = onlineSubjectRepository.getAllSubjects()
+
+            subjects.forEach {
+                offlineSubjectRepository.insertSubject(it)
+            }
+
+            offlineSubjectRepository.getAllSubjects().collect() {
+                _subjects.value = it
+            }
+        }
+    }
+
+    private fun updateOfflineAttendances() {
+        viewModelScope.launch {
+            val attendances = onlineAttendanceRepository.getAllAttendances()
+            attendances.forEach {
+                offlineAttendanceRepository.insertAttendance(it)
             }
         }
     }
@@ -71,7 +90,7 @@ class SearchSubjectViewModel(
         }
 
         // If no attendance exists for the current date, insert the new attendance
-        offlineAttendanceRepository.insertAttendance(attendance)
+        onlineAttendanceRepository.addAttendance(attendance)
         return Results.AddAttendanceResult(successMessage = "Attendance added successfully.")
     }
 }

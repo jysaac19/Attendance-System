@@ -4,30 +4,33 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.attendance.Attendance
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
+import com.attendanceapp2.data.repositories.attendancce.OnlineAttendanceRepository
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
+import com.attendanceapp2.data.repositories.subject.OnlineSubjectRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class AdminAttendanceViewModel(
     private val offlineAttendanceRepository: OfflineAttendanceRepository,
-    private val offlineSubjectRepository: OfflineSubjectRepository
+    private val offlineSubjectRepository: OfflineSubjectRepository,
+    private val onlineAttendanceRepository: OnlineAttendanceRepository,
+    private val onlineSubjectRepository: OnlineSubjectRepository
 ) : ViewModel() {
 
-    // List of attendances
     private val _attendances: MutableStateFlow<List<Attendance>> = MutableStateFlow(emptyList())
     val attendances: StateFlow<List<Attendance>> = _attendances
 
-    fun filterAttendancesByAdmin(
-        searchQuery: String,
-        subjectCode: String,
-        usertype: String,
-        startDate: String,
-        endDate: String
-    ) {
+    private val _subjects = MutableStateFlow<List<String>>(listOf())
+    val subjects: StateFlow<List<String>> = _subjects.asStateFlow()
+
+    init {
+        updateOfflineSubjects()
+        updateOfflineAttendances()
+    }
+
+    fun filterAttendancesByAdmin(searchQuery: String, subjectCode: String, usertype: String, startDate: String, endDate: String) {
         viewModelScope.launch {
             if (searchQuery.isEmpty() && subjectCode == "All" && usertype == "All") {
                 offlineAttendanceRepository.filterAttendanceByDateRange(startDate, endDate).collect { attendances ->
@@ -69,19 +72,25 @@ class AdminAttendanceViewModel(
         }
     }
 
-    private val _subjects = MutableStateFlow<List<String>>(listOf())
-    val subjects: StateFlow<List<String>> = _subjects.asStateFlow()
-
-    init {
-        getAllSubjectCodes()
-    }
-    private fun getAllSubjectCodes() {
+    private fun updateOfflineSubjects() {
         viewModelScope.launch {
-            val subjectCodes = offlineSubjectRepository.getAllSubjects().map { subjects ->
-                val subjectList = subjects.map { it.code }
-                subjectList
-            }.first()
-            _subjects.value = listOf("All") + subjectCodes // Add "All" at the start of the list
+            offlineSubjectRepository.deleteAllSubjects()
+            val subjects = onlineSubjectRepository.getAllSubjects()
+            val subjectCodes = subjects.map { it.code }
+            _subjects.value = listOf("All") + subjectCodes
+            subjects.forEach {
+                offlineSubjectRepository.insertSubject(it)
+            }
+        }
+    }
+
+    private fun updateOfflineAttendances() {
+        viewModelScope.launch {
+            offlineAttendanceRepository.deleteAllAttendances()
+            val attendances = onlineAttendanceRepository.getAllAttendances()
+            attendances.forEach {
+                offlineAttendanceRepository.insertAttendance(it)
+            }
         }
     }
 }

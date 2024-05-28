@@ -6,6 +6,9 @@ import com.attendanceapp2.data.model.subject.Schedule
 class OfflineScheduleRepository(
     private val scheduleDao: ScheduleDao
 ) {
+    suspend fun deleteAllSchedules() {
+        scheduleDao.deleteAllSchedules()
+    }
 
     suspend fun insertSchedule(schedule: Schedule) = scheduleDao.insert(schedule)
 
@@ -13,7 +16,7 @@ class OfflineScheduleRepository(
 
     suspend fun deleteSchedule(schedule: Schedule) = scheduleDao.delete(schedule)
 
-    suspend fun getSchedulesForSubject(subjectId: Long): List<Schedule> {
+    suspend fun getSchedulesForSubject(subjectId: Int): List<Schedule> {
         return scheduleDao.getSchedulesForSubject(subjectId)
     }
 }

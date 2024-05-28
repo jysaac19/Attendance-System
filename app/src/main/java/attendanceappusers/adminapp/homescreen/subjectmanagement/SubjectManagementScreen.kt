@@ -16,8 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,7 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -40,13 +37,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import attendanceappusers.adminapp.homescreen.ConfirmDialog
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.subject.SelectedSubject
@@ -64,7 +58,7 @@ fun SubjectManagementScreen (
     viewModel: SubjectManagementViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
-    var searchText by remember { mutableStateOf(TextFieldValue()) }
+    var searchText by remember { mutableStateOf("") }
     val activeSubjects by viewModel.activeSubjects.collectAsState()
     val archivedSubjects by viewModel.archivedSubjects.collectAsState()
 
@@ -79,9 +73,8 @@ fun SubjectManagementScreen (
     var selectedTabIndex by remember { mutableStateOf(0) }
     val mainSubjectList = if (selectedTabIndex == 0) activeSubjects else archivedSubjects
 
-    // Launch search when searchText changes
-    LaunchedEffect(searchText.text) {
-        viewModel.searchSubjectsByCode(searchText.text)
+    LaunchedEffect(searchText) {
+        viewModel.searchSubjectsByCode(searchText)
     }
 
     Column(
@@ -100,9 +93,7 @@ fun SubjectManagementScreen (
 
         OutlinedTextField(
             value = searchText,
-            onValueChange = {
-                searchText = it
-            },
+            onValueChange = { searchText = it.uppercase() },
             label = { Text("Search") },
             singleLine = true,
             trailingIcon = {
@@ -213,7 +204,7 @@ fun SubjectManagementScreen (
                                     subject.code,
                                     subject.name,
                                     subject.room,
-                                    subject.faculty,
+                                    subject.facultyName,
                                     subject.subjectStatus,
                                     subject.joinCode
                                 )
@@ -235,7 +226,7 @@ fun SubjectManagementScreen (
                                         subject.code,
                                         subject.name,
                                         subject.room,
-                                        subject.faculty,
+                                        subject.facultyName,
                                         subject.subjectStatus,
                                         subject.joinCode
                                     )
@@ -247,14 +238,13 @@ fun SubjectManagementScreen (
                                         subject.code,
                                         subject.name,
                                         subject.room,
-                                        subject.faculty,
+                                        subject.facultyName,
                                         subject.subjectStatus,
                                         subject.joinCode
                                     )
                                 )
                                 navController.navigate(AdminHomeScreen.UpdateSubject.name)
                             }
-
                         },
                         onArchiveClick = {
                             subjectToArchive = subject
@@ -279,7 +269,6 @@ fun SubjectManagementScreen (
                 showDeleteDialog = false
                 subjectToDelete = null
             }
-            viewModel.updateSubjectLists()
         },
         onDismiss = {
             showDeleteDialog = false
@@ -297,7 +286,6 @@ fun SubjectManagementScreen (
                 showArchiveDialog = false
                 subjectToArchive = null
             }
-            viewModel.updateSubjectLists()
         },
         onDismiss = {
             showArchiveDialog = false
@@ -305,7 +293,6 @@ fun SubjectManagementScreen (
         },
         showDialog = showArchiveDialog
     )
-
 
     ConfirmDialog(
         title = "Unarchive Confirmation",
@@ -316,7 +303,6 @@ fun SubjectManagementScreen (
                 showUnarchiveDialog = false
                 subjectToUnarchive = null
             }
-            viewModel.updateSubjectLists()
         },
         onDismiss = {
             showUnarchiveDialog = false

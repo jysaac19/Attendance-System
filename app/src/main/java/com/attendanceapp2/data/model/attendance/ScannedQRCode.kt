@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 data class ScannedQRCode (
-    val subjectId: Long,
+    val subjectId: Int,
     val subjectName: String,
     val subjectCode: String,
     val date : String,

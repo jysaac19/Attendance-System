@@ -2,32 +2,28 @@ package com.attendanceapp2.data.repositories.subject
 
 import com.attendanceapp2.data.interfaces.SubjectDao
 import com.attendanceapp2.data.model.subject.Subject
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class OfflineSubjectRepository(
-    private val subjectDao: SubjectDao,
-    private val subjects: List<Subject>
+    private val subjectDao: SubjectDao
 ) {
-
-    init {
-        // Initialize the database with the list of subjects
-        CoroutineScope(Dispatchers.IO).launch {
-            subjects.forEach { subject -> subjectDao.insert(subject) }
-        }
+    suspend fun deleteAllSubjects() {
+        subjectDao.deleteAllSubject()
     }
-
     suspend fun insertSubject(subject : Subject) = subjectDao.insert(subject)
 
     suspend fun updateSubject(subject : Subject) = subjectDao.update(subject)
 
     suspend fun deleteSubject(subject : Subject) = subjectDao.delete(subject)
 
-    suspend fun getSubjectsByIds(subjectIds: List<Long>): List<Subject> {
-        return subjectDao.getSubjectsByIds(subjectIds)
+    suspend fun getActiveSubjectsByIds(subjectIds: List<Int>): List<Subject> {
+        return subjectDao.getSubjectsByIdsAndStatus(subjectIds, "Active")
+    }
+
+    suspend fun getArchivedSubjectsByIds(subjectIds: List<Int>): List<Subject> {
+        return subjectDao.getSubjectsByIdsAndStatus(subjectIds, "Archived")
     }
 
     fun getAllSubjects(): Flow<List<Subject>> {
@@ -56,11 +52,18 @@ class OfflineSubjectRepository(
         return subjectDao.searchSubject(query)
     }
 
-    suspend fun getActiveSubjects(): Flow<List<Subject>> {
+    fun searchActiveSubject(query: String): Flow<List<Subject>> {
+        return subjectDao.searchSubjectByStatus(query, "Active")
+    }
+    fun searchArchivedSubject(query: String): Flow<List<Subject>> {
+        return subjectDao.searchSubjectByStatus(query, "Archived")
+    }
+
+    fun getActiveSubjects(): Flow<List<Subject>> {
         return subjectDao.getSubjectsByStatus("Active")
     }
 
-    suspend fun getArchivedSubjects(): Flow<List<Subject>> {
+    fun getArchivedSubjects(): Flow<List<Subject>> {
         return subjectDao.getSubjectsByStatus("Archived")
     }
 }

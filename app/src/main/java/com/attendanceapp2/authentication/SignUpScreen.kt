@@ -49,6 +49,7 @@ import androidx.navigation.NavController
 import com.attendanceapp2.R
 import com.attendanceapp2.navigation.approutes.AuthRoute
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
+import com.attendanceapp2.data.model.showToast
 import kotlinx.coroutines.launch
 
 // Function to capitalize the first letter of each word
@@ -115,15 +116,13 @@ fun SignUpScreen(
                 fontWeight = FontWeight.SemiBold
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 OutlinedTextField(
                     value = firstName,
-                    onValueChange = { firstName = capitalizeFirstLetter(it.toLowerCase()) },
+                    onValueChange = { firstName= it.uppercase() },
                     label = { Text("First Name") },
                     modifier = Modifier.weight(1f),
                     singleLine = true,
@@ -134,15 +133,13 @@ fun SignUpScreen(
 
                 OutlinedTextField(
                     value = lastName,
-                    onValueChange = { lastName = capitalizeFirstLetter(it.toLowerCase()) },
+                    onValueChange = { lastName = it.uppercase() },
                     label = { Text("Last Name") },
                     modifier = Modifier.weight(1f),
                     singleLine = true,
                     shape = RoundedCornerShape(20.dp)
                 )
             }
-
-            Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = email,
@@ -152,8 +149,6 @@ fun SignUpScreen(
                 singleLine = true,
                 shape = RoundedCornerShape(20.dp)
             )
-
-            Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = password,
@@ -172,8 +167,6 @@ fun SignUpScreen(
                 shape = RoundedCornerShape(20.dp)
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
-
             OutlinedTextField(
                 value = reEnterPassword,
                 onValueChange = { reEnterPassword = it },
@@ -191,7 +184,7 @@ fun SignUpScreen(
                 shape = RoundedCornerShape(20.dp)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             ExposedDropdownMenuBox(
                 expanded = expanded,
@@ -220,14 +213,14 @@ fun SignUpScreen(
                             onClick = {
                                 selectedUserType = item
                                 expanded = false
-                                Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
+                                showToast(context, item)
                             }
                         )
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             ExposedDropdownMenuBox(
                 expanded = expandedDepartment,
@@ -256,7 +249,7 @@ fun SignUpScreen(
                             onClick = {
                                 selectedDepartment = item
                                 expandedDepartment = false
-                                Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
+                                showToast(context, item)
                             }
                         )
                     }
@@ -280,18 +273,12 @@ fun SignUpScreen(
                         )
                         when (result) {
                             is SignUpResult.Success -> {
-                                // Successfully signed up, navigate to the next screen or show a success message
-                                Toast.makeText(
-                                    context,
-                                    "Signed up successfully!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
                                 navController.navigate(AuthRoute.SignIn.name)
+                                showToast(context, "Signed up successfully!")
                             }
 
                             is SignUpResult.Error -> {
-                                // Show an error message
-                                Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
+                                showToast(context, result.message)
                             }
                         }
                     }
@@ -307,34 +294,6 @@ fun SignUpScreen(
                     fontWeight = FontWeight.Normal
                 )
             }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-//            Button(
-//                onClick = {  },
-//                shape = RoundedCornerShape(50.dp),
-//                modifier = Modifier
-//                    .size(width = 350.dp,height = 50.dp),
-//            ) {
-//                Row(
-//                    verticalAlignment = Alignment.CenterVertically,
-//                    horizontalArrangement = Arrangement.Center
-//                ) {
-//                    Text(
-//                        text = "Sign Up with Google",
-//                        color = Color.White,
-//                        fontSize = 20.sp,
-//                        fontWeight = FontWeight.Normal
-//                    )
-//                    Spacer(modifier = Modifier.width(20.dp))
-//                    Icon(
-//                        imageVector = Icons.Default.Mail,
-//                        contentDescription = "Email",
-//                        tint = Color.White,
-//                        modifier = Modifier.size(24.dp)
-//                    )
-//                }
-//            }
 
             Spacer(modifier = Modifier.height(8.dp))
 

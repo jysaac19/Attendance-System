@@ -42,7 +42,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.Results
-import com.attendanceapp2.data.model.ResultsManager
 import com.attendanceapp2.data.model.attendance.Attendance
 import com.attendanceapp2.data.model.subject.SelectedSubject
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
@@ -166,7 +165,7 @@ fun SearchSubjectScreen(
                                     subject.code,
                                     subject.name,
                                     subject.room,
-                                    subject.faculty,
+                                    subject.facultyName,
                                     subject.subjectStatus,
                                     subject.joinCode
                                 )

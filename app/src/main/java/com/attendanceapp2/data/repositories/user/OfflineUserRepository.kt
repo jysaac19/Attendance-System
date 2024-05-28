@@ -1,24 +1,16 @@
 package com.attendanceapp2.data.repositories.user
 
 import com.attendanceapp2.data.interfaces.UserDao
+import com.attendanceapp2.data.model.subject.Subject
 import com.attendanceapp2.data.model.user.User
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 
 class OfflineUserRepository(
-    private val userDao: UserDao,
-    private val users: List<User>
+    private val userDao: UserDao
 ) {
-    init {
-        // Initialize the database with the list of users
-        CoroutineScope(Dispatchers.IO).launch {
-            users.forEach { user -> userDao.insert(user) }
-        }
-    }
+    suspend fun deleteAllUsers() = userDao.deleteAllUsers()
 
-    suspend fun insertStudent(user : User) = userDao.insert(user)
+    suspend fun insertUser(user : User) = userDao.insert(user)
 
     suspend fun updateStudent(user : User) = userDao.update(user)
 
@@ -44,6 +36,10 @@ class OfflineUserRepository(
         return userDao.getStudents()
     }
 
+    suspend fun getUsersByIds(userIds: List<Int>): List<User> {
+        return userDao.getUsersByIds(userIds)
+    }
+
     fun filterUsersByQueryAndUserType (query: String, usertype: String): Flow<List<User>> {
         return userDao.filterUsersByQueryAndUserType(query, usertype)
     }
@@ -60,7 +56,7 @@ class OfflineUserRepository(
         return userDao.getUserByFullName(firstname, lastname)
     }
 
-    fun searchStudents(query: String): Flow<List<User>> {
-        return userDao.searchStudents(query)
+    fun searchUser(query: String): Flow<List<User>> {
+        return userDao.searchUser(query)
     }
 }

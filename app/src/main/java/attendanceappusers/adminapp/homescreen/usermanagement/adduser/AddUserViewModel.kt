@@ -1,26 +1,34 @@
 package attendanceappusers.adminapp.homescreen.usermanagement.adduser
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.Results
 import com.attendanceapp2.data.model.user.User
-import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import com.attendanceapp2.data.repositories.user.OfflineUserRepository
-import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
+import com.attendanceapp2.data.repositories.user.OnlineUserRepository
+import kotlinx.coroutines.launch
 
 class AddUserViewModel (
     private val offlineUserRepository: OfflineUserRepository,
+    private val onlineUserRepository: OnlineUserRepository
 ) : ViewModel() {
-    suspend fun registerUser(
-        firstname: String,
-        lastname: String,
-        email: String,
-        password: String,
-        usertype: String,
-        department: String,
-        status: String
-    ): Results.AddUserResult {
+    init {
+        updateOfflineUsers()
+    }
+
+    private fun updateOfflineUsers() {
+        viewModelScope.launch {
+            offlineUserRepository.deleteAllUsers()
+            val users = onlineUserRepository.getAllUsers()
+            users.forEach {
+                offlineUserRepository.insertUser(it)
+            }
+        }
+    }
+
+    suspend fun registerUser(firstname: String, lastname: String, email: String, password: String, usertype: String, department: String, status: String): Results.AddUserResult {
+        updateOfflineUsers()
+
         // Check if firstname, lastname, and email are unique
         if (offlineUserRepository.getUserByEmail(email) != null) {
             return Results.AddUserResult(failureMessage = "User with this email already exists")
@@ -36,10 +44,9 @@ class AddUserViewModel (
             return Results.AddUserResult(failureMessage = "User with this firstname and lastname already exists")
         }
 
-        // Insert the new user into the database
-        offlineUserRepository.insertStudent(
+        onlineUserRepository.addUser(
             User(
-                id = 0, // Auto-generated ID
+                id = 0,
                 firstname = firstname,
                 lastname = lastname,
                 email = email,

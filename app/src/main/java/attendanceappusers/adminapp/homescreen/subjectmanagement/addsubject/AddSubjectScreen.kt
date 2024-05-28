@@ -45,7 +45,7 @@ import kotlinx.coroutines.launch
 fun AddSubjectScreen(
     navController: NavController,
     viewModel: AddSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    subjectManagement : SubjectManagementViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    subjectManagement: SubjectManagementViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
     var subjectCode by remember { mutableStateOf("") }
@@ -115,7 +115,7 @@ fun AddSubjectScreen(
         item {
             OutlinedTextField(
                 value = subjectName,
-                onValueChange = { subjectName = it.uppercase() }, // Convert to uppercase
+                onValueChange = { subjectName = it.uppercase() },
                 label = { Text("Subject Name") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp)
@@ -221,7 +221,6 @@ fun AddSubjectScreen(
         title = "Confirmation",
         message = "Are you sure you want to save this subject?",
         onConfirm = {
-            // If confirmed, proceed with saving the subject
             coroutineScope.launch {
                 viewModel.saveSubject(
                     subjectCode,
@@ -229,12 +228,10 @@ fun AddSubjectScreen(
                     selectedRoom,
                     selectedFaculty
                 )
-                subjectManagement.updateSubjectLists()
             }
             navController.navigate(AdminHomeScreen.SubjectManagement.name)
         },
         onDismiss = {
-            // If dismissed, set the showDialog flag to false
             showDialog = false
         },
         showDialog = showDialog

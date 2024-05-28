@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 data class UpdateUser (
-    val id : Long,
+    val id : Int,
     val firstname : String,
     val lastname : String,
     val email : String, //should be @student.nbscollege.edu.ph
