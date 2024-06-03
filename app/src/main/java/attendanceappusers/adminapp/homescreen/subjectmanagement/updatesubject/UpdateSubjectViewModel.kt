@@ -33,49 +33,81 @@ class UpdateSubjectViewModel(
         return faculty?.id
     }
 
+    private fun generateJoinCode(): String {
+        val allowedChars = ('A'..'Z') + ('0'..'9')
+        return (1..8)
+            .map { allowedChars.random() }
+            .joinToString("")
+    }
+
     suspend fun updateSubject(updatedSubject: Subject, oldFaculty: String) {
         viewModelScope.launch {
-            try {
-                onlineSubjectRepository.updateSubject(updatedSubject)
 
-                val oldFacultyId = try {
-                    getFacultyUserId(oldFaculty)
-                } catch (e: Exception) {
-                    null
-                }
+            val oldFacultyId = getFacultyUserId(oldFaculty)
 
-                val newFacultyId = try {
-                    getFacultyUserId(updatedSubject.facultyName)
-                } catch (e: Exception) {
-                    null
-                }
+            val newFacultyId = getFacultyUserId(updatedSubject.facultyName)
 
-                try {
-                    if (oldFacultyId != null) {
-                        onlineUserSubjectCrossRefRepository.deleteUserSubCrossRef(UserSubjectCrossRef(oldFacultyId.toInt(), updatedSubject.id))
-                    }
-                } catch (e: Exception) {
-                    // Handle exception
-                }
-
-                try {
-                    if (newFacultyId != null) {
-                        onlineUserSubjectCrossRefRepository.addUserSubCrossRef(UserSubjectCrossRef(newFacultyId.toInt(), updatedSubject.id))
-                    }
-                } catch (e: Exception) {
-                    // Handle exception
-                }
-            } catch (e: Exception) {
-                // Handle any other exceptions
+            if (oldFacultyId != null) {
+                onlineUserSubjectCrossRefRepository.deleteUserSubCrossRef(
+                    UserSubjectCrossRef(
+                        oldFacultyId.toInt(),
+                        updatedSubject.id
+                    )
+                )
             }
+
+            if (newFacultyId != null) {
+                onlineUserSubjectCrossRefRepository.addUserSubCrossRef(
+                    UserSubjectCrossRef(
+                        newFacultyId.toInt(),
+                        updatedSubject.id
+                    )
+                )
+            }
+
+            var generatedJoinCode = generateJoinCode()
+            var existingJoinCode: Subject?
+            do {
+                existingJoinCode = onlineSubjectRepository.getSubjectByJoinCode(generatedJoinCode)
+                if (existingJoinCode != null) {
+                    generatedJoinCode = generateJoinCode()
+                }
+            } while (existingJoinCode != null)
+
+            onlineSubjectRepository.updateSubject(updatedSubject.copy(joinCode = generatedJoinCode))
+        }
+    }
+
+    fun removeFaculty(subject : Subject){
+        viewModelScope.launch {
+            val facultyId = getFacultyUserId(subject.facultyName)
+
+            if (facultyId != null) {
+                onlineUserSubjectCrossRefRepository.deleteUserSubCrossRef(
+                    UserSubjectCrossRef(
+                        facultyId.toInt(),
+                        subject.id
+                    )
+                )
+            }
+
+            var generatedJoinCode = generateJoinCode()
+            var existingJoinCode: Subject?
+            do {
+                existingJoinCode = onlineSubjectRepository.getSubjectByJoinCode(generatedJoinCode)
+                if (existingJoinCode != null) {
+                    generatedJoinCode = generateJoinCode()
+                }
+            } while (existingJoinCode != null)
+
+            onlineSubjectRepository.updateSubject(subject.copy(facultyName = "", joinCode = generatedJoinCode))
         }
     }
 
     fun validateFields(subject: Subject): Results.UpdateSubjectResult {
         return when {
-            subject.code.isBlank() || subject.name.isBlank() || subject.room.isBlank() ||
-            subject.facultyName.isBlank() || subject.subjectStatus.isBlank() || subject.joinCode.isBlank()
-            -> Results.UpdateSubjectResult(failureMessage = "All fields are required.")
+            subject.code.isBlank() || subject.name.isBlank() || subject.subjectStatus.isBlank() || subject.joinCode.isBlank()
+            -> Results.UpdateSubjectResult(failureMessage = "Subject Code and Name are Required.")
 
             else -> Results.UpdateSubjectResult(successMessage = "Fields are valid.")
         }

@@ -39,7 +39,7 @@ class AddSubjectViewModel(
         return faculty?.id
     }
 
-    suspend fun saveSubject(subjectCode: String, subjectName: String, room: String, faculty: String): Results.AddSubjectResult {
+    suspend fun saveSubject(subjectCode: String, subjectName: String, room: String?, faculty: String?): Results.AddSubjectResult {
         return try {
             if (subjectCode.isBlank() || subjectName.isBlank()) {
                 return Results.AddSubjectResult(failureMessage = "Subject code and name cannot be empty.")
@@ -67,8 +67,8 @@ class AddSubjectViewModel(
             val newSubject = Subject(
                 code = subjectCode,
                 name = subjectName,
-                room = room,
-                facultyName = faculty,
+                room = room ?: "",
+                facultyName = faculty ?: "",
                 subjectStatus = "Active",
                 joinCode = generatedJoinCode
             )
@@ -80,9 +80,10 @@ class AddSubjectViewModel(
             val insertedSubject = onlineSubjectRepository.getSubjectByCode(subjectCode)
             val subjectId = insertedSubject!!.id
 
-            val facultyUserId = getFacultyUserId(faculty) ?: return Results.AddSubjectResult(failureMessage = "Failed to retrieve facultyUserId.")
-
-            onlineUserSubjectCrossRefRepository.addUserSubCrossRef(UserSubjectCrossRef(facultyUserId, subjectId))
+            if (faculty != null && faculty.isNotBlank()) {
+                val facultyUserId = getFacultyUserId(faculty) ?: return Results.AddSubjectResult(failureMessage = "Failed to retrieve facultyUserId.")
+                onlineUserSubjectCrossRefRepository.addUserSubCrossRef(UserSubjectCrossRef(facultyUserId, subjectId))
+            }
 
             Results.AddSubjectResult(successMessage = "Subject added successfully. SubjectId: $subjectId")
         } catch (e: Exception) {

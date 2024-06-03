@@ -169,4 +169,6 @@ dependencies {
     implementation ("com.google.dagger:dagger-android-support:2.45")
     implementation( "io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
+    implementation ("org.apache.poi:poi-ooxml:5.2.3")
 }

@@ -1,5 +1,8 @@
 package attendanceappusers.adminapp.subject.adminsubject
 
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +16,7 @@ import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Update
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -36,6 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import attendanceappusers.adminapp.homescreen.ConfirmDialog
@@ -52,6 +57,9 @@ import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.navigation.approutes.admin.AdminSubject
 import com.attendanceapp2.theme.Purple40
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.TextStyle
+import java.util.Locale
 
 @Composable
 fun AdminSubjectScreen (
@@ -67,6 +75,7 @@ fun AdminSubjectScreen (
     var endTime by remember { mutableStateOf("") }
 
     val selectedSubject = SelectedSubjectHolder.getSelectedSubject()
+    val attendanceSummaries by viewModel.attendanceSummaries.collectAsState()
 
     var showDeleteDialog by remember { mutableStateOf(false) }
     var showArchiveDialog by remember { mutableStateOf(false) }
@@ -80,9 +89,30 @@ fun AdminSubjectScreen (
     var scheduleToDelete by remember { mutableStateOf<Schedule?>(null) }
     var showDeleteScheduleDialog by remember { mutableStateOf(false) }
 
+    var hasWritePermission by remember {
+        mutableStateOf(
+            ContextCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        )
+    }
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { granted ->
+            hasWritePermission = granted
+        }
+    )
+    LaunchedEffect(key1 = true) {
+        launcher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    }
+
     // Use LaunchedEffect to fetch subject schedules when the composable is first launched
     LaunchedEffect(selectedSubject) {
-        selectedSubject?.let { viewModel.getSchedulesForSubjects(it.id) }
+        selectedSubject?.let {
+            viewModel.getSchedulesForSubjects(it.id)
+            viewModel.getSubjectAttendances(it)
+        }
     }
 
     Column(
@@ -313,6 +343,145 @@ fun AdminSubjectScreen (
             }
         }
 
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+
+                val currentMonth = LocalDate.now().month.getDisplayName(TextStyle.FULL, Locale.getDefault())
+                Text(
+                    text = "Attendance Overview for the month of $currentMonth",
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 20.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                ) {
+                    Text(
+                        text = "Student",
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                    )
+                    Text(
+                        text = "Absences",
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                    )
+                    Text(
+                        text = "Present",
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                    )
+                    Text(
+                        text = "Late",
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                    )
+                }
+
+                // Sorted attendance summaries
+                val sortedAttendanceSummaries = attendanceSummaries.values.sortedByDescending { it.absentCount }
+
+                sortedAttendanceSummaries.forEach { summary ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp)
+                    ) {
+                        Text(
+                            text = "${summary.firstname} ${summary.lastname}",
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
+                        )
+                        Text(
+                            text = summary.absentCount.toString(),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
+                        )
+                        Text(
+                            text = summary.presentCount.toString(),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
+                        )
+                        Text(
+                            text = summary.lateCount.toString(),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
+                        )
+                    }
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    FloatingActionButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                selectedSubject?.let { viewModel.getSubjectAttendances(it) }
+                                if (hasWritePermission) {
+                                    exportAttendanceSummariesAsExcel(context)
+                                } else {
+                                    launcher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                }
+                            }
+                        },
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .weight(1f)
+                    ) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Download",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+
+                            Icon(Icons.Filled.Download, contentDescription = "Download")
+                        }
+                    }
+                }
+            }
+        }
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -321,7 +490,7 @@ fun AdminSubjectScreen (
             verticalAlignment = Alignment.CenterVertically
         ) {
             FloatingActionButton(
-                onClick = { navController.navigate(AdminHomeScreen.HomeScreen.name) },
+                onClick = { navController.navigate(AdminHomeScreen.SubjectManagement.name) },
                 modifier = Modifier
                     .padding(8.dp)
                     .weight(1f)

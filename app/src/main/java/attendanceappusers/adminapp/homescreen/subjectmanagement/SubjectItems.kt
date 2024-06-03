@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.PersonRemove
 import androidx.compose.material.icons.filled.Update
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
@@ -31,7 +32,8 @@ fun SubjectItem(
     onDeleteClick: () -> Unit,
     onUpdateClick: () -> Unit,
     onArchiveClick: () -> Unit,
-    onUnarchiveClick: () -> Unit
+    onUnarchiveClick: () -> Unit,
+    onRemoveFacultyClick: () -> Unit
 ) {
     Card(
         onClick = onClick,
@@ -56,7 +58,7 @@ fun SubjectItem(
                     onClick = onDeleteClick,
                     modifier = Modifier.weight(1f),
                 ) {
-                    Column (
+                    Column(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -75,7 +77,7 @@ fun SubjectItem(
                     onClick = onUpdateClick,
                     modifier = Modifier.weight(1f),
                 ) {
-                    Column (
+                    Column(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -95,7 +97,7 @@ fun SubjectItem(
                         onClick = onArchiveClick,
                         modifier = Modifier.weight(1f),
                     ) {
-                        Column (
+                        Column(
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
@@ -114,7 +116,7 @@ fun SubjectItem(
                         onClick = onUnarchiveClick,
                         modifier = Modifier.weight(1f),
                     ) {
-                        Column (
+                        Column(
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
@@ -127,6 +129,25 @@ fun SubjectItem(
                                 fontSize = 10.sp
                             )
                         }
+                    }
+                }
+
+                FloatingActionButton(
+                    onClick = onRemoveFacultyClick,
+                    modifier = Modifier.weight(1f),
+                ) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Icon(
+                            Icons.Default.PersonRemove,
+                            contentDescription = "Remove Faculty"
+                        )
+                        Text(
+                            text = "Remove Faculty",
+                            fontSize = 10.sp
+                        )
                     }
                 }
             }

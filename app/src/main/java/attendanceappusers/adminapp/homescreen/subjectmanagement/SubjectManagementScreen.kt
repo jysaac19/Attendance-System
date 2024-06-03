@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import attendanceappusers.adminapp.homescreen.ConfirmDialog
+import attendanceappusers.adminapp.homescreen.subjectmanagement.updatesubject.UpdateSubjectViewModel
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.subject.SelectedSubject
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
@@ -55,7 +56,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun SubjectManagementScreen (
     navController: NavController,
-    viewModel: SubjectManagementViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: SubjectManagementViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    updateSubjectViewModel: UpdateSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
     var searchText by remember { mutableStateOf("") }
@@ -65,6 +67,7 @@ fun SubjectManagementScreen (
     var showDeleteDialog by remember { mutableStateOf(false) }
     var showArchiveDialog by remember { mutableStateOf(false) }
     var showUnarchiveDialog by remember { mutableStateOf(false) }
+    var showRemoveFacultyDialog by remember { mutableStateOf(false) }
 
     var subjectToDelete by remember { mutableStateOf<Subject?>(null) }
     var subjectToArchive by remember { mutableStateOf<Subject?>(null) }
@@ -75,6 +78,7 @@ fun SubjectManagementScreen (
 
     LaunchedEffect(searchText) {
         viewModel.searchSubjectsByCode(searchText)
+        viewModel.updateSubjectManagementList()
     }
 
     Column(
@@ -253,6 +257,20 @@ fun SubjectManagementScreen (
                         onUnarchiveClick = {
                             subjectToUnarchive = subject
                             showUnarchiveDialog = true
+                        },
+                        onRemoveFacultyClick = {
+                            SelectedSubjectHolder.setSelectedSubject(
+                                SelectedSubject(
+                                    subject.id,
+                                    subject.code,
+                                    subject.name,
+                                    subject.room,
+                                    subject.facultyName,
+                                    subject.subjectStatus,
+                                    subject.joinCode
+                                )
+                            )
+                            showRemoveFacultyDialog = true
                         }
                     )
                 }
@@ -309,5 +327,34 @@ fun SubjectManagementScreen (
             subjectToUnarchive = null
         },
         showDialog = showUnarchiveDialog
+    )
+
+    ConfirmDialog(
+        title = "Remove Faculty Confirmation",
+        message = "Are you sure you want to remove ${SelectedSubjectHolder.getSelectedSubject()?.faculty} as faculty from this subject?",
+        onConfirm = {
+            coroutineScope.launch {
+                val subject = SelectedSubjectHolder.getSelectedSubject()
+                if (subject != null) {
+                    updateSubjectViewModel.removeFaculty(
+                        Subject(
+                            subject.id,
+                            subject.code,
+                            subject.name,
+                            subject.room,
+                            subject.faculty,
+                            subject.subjectStatus,
+                            subject.joinCode
+                        )
+                    )
+                }
+                viewModel.updateSubjectManagementList()
+                showRemoveFacultyDialog = false
+            }
+        },
+        onDismiss = {
+            showRemoveFacultyDialog = false
+        },
+        showDialog = showRemoveFacultyDialog
     )
 }

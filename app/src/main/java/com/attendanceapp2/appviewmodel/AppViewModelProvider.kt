@@ -33,6 +33,15 @@ import com.attendanceapp2.appviewmodel.screenviewmodel.ScreenViewModel
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
 import com.attendanceapp2.authentication.SignInViewModel
 import com.attendanceapp2.authentication.SignUpViewModel
+import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
+import com.attendanceapp2.data.repositories.attendancce.OnlineAttendanceRepository
+import com.attendanceapp2.data.repositories.schedule.OfflineScheduleRepository
+import com.attendanceapp2.data.repositories.schedule.OnlineScheduleRepository
+import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
+import com.attendanceapp2.data.repositories.subject.OnlineSubjectRepository
+import com.attendanceapp2.data.repositories.user.OnlineUserRepository
+import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
+import com.attendanceapp2.data.repositories.usersubjectcossref.OnlineUserSubjectCrossRefRepository
 import com.attendanceapp2.screenuniversalcomponents.subject.NewSubjectViewModel
 
 /**
@@ -275,10 +284,17 @@ object AppViewModelProvider {
 
         initializer {
             AdminSubjectViewModel(
-                nbsAttendanceApplication().container.offlineAttendanceRepository,
+                nbsAttendanceApplication().container.offlineUserRepository,
+                nbsAttendanceApplication().container.offlineSubjectRepository,
                 nbsAttendanceApplication().container.offlineScheduleRepository,
+                nbsAttendanceApplication().container.offlineAttendanceRepository,
+                nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository,
+
+                nbsAttendanceApplication().container.onlineUserRepository,
+                nbsAttendanceApplication().container.onlineSubjectRepository,
                 nbsAttendanceApplication().container.onlineScheduleRepository,
-                nbsAttendanceApplication().container.offlineSubjectRepository
+                nbsAttendanceApplication().container.onlineAttendanceRepository,
+                nbsAttendanceApplication().container.onlineUserSubjectCrossRefRepository,
             )
         }
 

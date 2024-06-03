@@ -2,6 +2,7 @@ package com.attendanceapp2.data.repositories.attendancce
 
 import com.attendanceapp2.data.interfaces.AttendanceDao
 import com.attendanceapp2.data.model.attendance.Attendance
+import com.attendanceapp2.data.model.attendance.AttendanceSummary
 
 import kotlinx.coroutines.flow.Flow
 
@@ -103,5 +104,9 @@ class OfflineAttendanceRepository(
             startDate = startDate,
             endDate = endDate
         )
+    }
+
+    suspend fun getAttendanceSummary(userId: Int, subjectCode: String, startDate: String, endDate: String): AttendanceSummary {
+        return attendanceDao.getAttendanceSummary(userId, subjectCode, startDate, endDate)
     }
 }

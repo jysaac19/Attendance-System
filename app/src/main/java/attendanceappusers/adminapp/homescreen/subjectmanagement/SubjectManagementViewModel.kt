@@ -45,7 +45,7 @@ class SubjectManagementViewModel(
         }
     }
 
-    private fun updateSubjectManagementList() {
+    fun updateSubjectManagementList() {
         viewModelScope.launch {
             updateOfflineSubjects()
             fetchArchiveSubjects()
@@ -87,13 +87,20 @@ class SubjectManagementViewModel(
 
     fun deleteSubject(subject: Subject) {
         viewModelScope.launch {
-            val names = subject.facultyName.split(" ")
-            val firstName = names.firstOrNull() ?: ""
-            val lastName = names.drop(1).joinToString(" ")
-            val faculty = onlineUserRepository.getUserByFullName(firstName, lastName)
+            val facultyName = subject.facultyName
+
+            if (!facultyName.isNullOrBlank()) {
+                val names = facultyName.split(" ")
+                val firstName = names.firstOrNull() ?: ""
+                val lastName = names.drop(1).joinToString(" ")
+                val faculty = onlineUserRepository.getUserByFullName(firstName, lastName)
+
+                if (faculty != null) {
+                    onlineUserSubjectCrossRefRepository.deleteUserSubCrossRef(UserSubjectCrossRef(faculty.id, subject.id))
+                }
+            }
 
             onlineSubjectRepository.deleteSubject(subject.id)
-            onlineUserSubjectCrossRefRepository.deleteUserSubCrossRef(UserSubjectCrossRef(faculty!!.id, subject.id))
             updateSubjectManagementList()
         }
     }
