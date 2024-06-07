@@ -23,6 +23,7 @@ class UpdateUserViewModel(
             users.forEach {
                 offlineUserRepository.insertUser(it)
             }
+
         }
     }
 

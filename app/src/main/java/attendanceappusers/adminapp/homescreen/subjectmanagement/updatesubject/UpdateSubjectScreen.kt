@@ -33,17 +33,15 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import attendanceappusers.adminapp.homescreen.ConfirmDialog
-import attendanceappusers.adminapp.homescreen.subjectmanagement.SubjectManagementViewModel
+import attendanceappusers.notification.NotificationViewModel
 import com.attendanceapp2.R
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
+import com.attendanceapp2.data.model.Notifications
 import com.attendanceapp2.data.model.Results
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.data.model.subject.Subject
 import com.attendanceapp2.data.model.subject.UpdateSubject
 import com.attendanceapp2.data.model.subject.UpdatingSubjectHolder
-import com.attendanceapp2.data.model.user.UpdateUser
-import com.attendanceapp2.data.model.user.UpdatingUserHolder
-import com.attendanceapp2.data.model.user.User
 import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.UniversalDropDownMenu
 import kotlinx.coroutines.launch
@@ -51,7 +49,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun UpdateSubjectScreen(
     navController: NavController,
-    viewModel: UpdateSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: UpdateSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    notificationViewModel: NotificationViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
     var updateSubject by remember { mutableStateOf(UpdatingSubjectHolder.getSelectedSubject() ?: UpdateSubject(0, "", "", "", "", "", "")) }
@@ -217,8 +216,11 @@ fun UpdateSubjectScreen(
                     ),
                     oldFaculty
                 )
+                notificationViewModel.insertNotifications(Notifications(title = "${updateSubject.code} has been updated!", message = "Your subject details has been changed! Thank you.", portal = "admin"))
                 navController.navigate(AdminHomeScreen.SubjectManagement.name)
             }
+
+
         },
         onDismiss = {
             // If dismissed, set the showDialog flag to false

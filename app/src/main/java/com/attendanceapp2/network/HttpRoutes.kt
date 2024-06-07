@@ -2,7 +2,7 @@ package com.attendanceapp2.network
 
 object HttpRoutes {
 
-    private const val BASE_URL = "http://192.168.254.184:5003"
+    private const val BASE_URL = "http://192.168.158.240:5555"
 
     //LOCAL API
     const val ATTENDANCES = "${BASE_URL}/attendance"
@@ -47,5 +47,8 @@ object HttpRoutes {
     const val DELETE_USER_SUBJECT_CROSS_REF = "${BASE_URL}/deleteUserSubjectCrossRef"
     const val GET_USER_SUBJECT_CROSS_REF_BY_USER_ID = "${BASE_URL}/usersubjectcrossrefByUserId"
     const val GET_USER_SUBJECT_CROSS_REF_BY_USER_ID_SUBJECT_ID = "${BASE_URL}/usersubjectcrossrefBySubjectAndUser"
+
+    const val NOTIFICATIONS = "${BASE_URL}/notifications"
+    const val ADD_NOTIFICATIONS = "${BASE_URL}/addNotifications"
 
 }

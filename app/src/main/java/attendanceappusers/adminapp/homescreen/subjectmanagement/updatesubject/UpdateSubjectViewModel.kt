@@ -1,5 +1,7 @@
 package attendanceappusers.adminapp.homescreen.subjectmanagement.updatesubject
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.Results
@@ -13,6 +15,7 @@ import com.attendanceapp2.data.repositories.user.OnlineUserRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.OnlineUserSubjectCrossRefRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class UpdateSubjectViewModel(
@@ -25,6 +28,7 @@ class UpdateSubjectViewModel(
 ) : ViewModel() {
     val facultyList: Flow<List<User>> = offlineUserRepository.getUsersByUserType("Faculty")
 
+    val subjectUpdated = MutableStateFlow(false)
     private suspend fun getFacultyUserId(fullName: String): Int? {
         val names = fullName.split(" ")
         val firstName = names.firstOrNull() ?: ""
@@ -55,7 +59,6 @@ class UpdateSubjectViewModel(
                     )
                 )
             }
-
             if (newFacultyId != null) {
                 onlineUserSubjectCrossRefRepository.addUserSubCrossRef(
                     UserSubjectCrossRef(
@@ -101,6 +104,7 @@ class UpdateSubjectViewModel(
             } while (existingJoinCode != null)
 
             onlineSubjectRepository.updateSubject(subject.copy(facultyName = "", joinCode = generatedJoinCode))
+            subjectUpdated.value = true
         }
     }
 

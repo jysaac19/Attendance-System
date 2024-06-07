@@ -27,11 +27,16 @@ import com.attendanceapp2.navigation.admin.AdminNavigation
 import com.attendanceapp2.navigation.faculty.FacultyNavigation
 import com.attendanceapp2.navigation.student.StudentNavigation
 import com.attendanceapp2.theme.NBSCollegeTheme
+import com.google.android.gms.location.GeofencingClient
+import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
+
+    lateinit var geofencingClient: GeofencingClient
+
     private val screenViewModel: ScreenViewModel by viewModels {
         AppViewModelProvider.Factory
     }
@@ -39,6 +44,7 @@ class MainActivity : ComponentActivity() {
     private var backPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        geofencingClient = LocationServices.getGeofencingClient(this)
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 

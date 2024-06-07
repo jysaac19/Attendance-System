@@ -2,8 +2,6 @@ package attendanceappusers.adminapp.homescreen.usermanagement.adduser
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +13,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -36,13 +33,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import attendanceappusers.adminapp.homescreen.ConfirmDialog
+import attendanceappusers.notification.NotificationViewModel
 import com.attendanceapp2.R
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
+import com.attendanceapp2.data.model.Notifications
 import com.attendanceapp2.data.model.Results
-import com.attendanceapp2.data.model.user.User
 import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.UniversalDropDownMenu
 import kotlinx.coroutines.launch
@@ -50,7 +46,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun AddUserScreen(
     navController: NavController,
-    viewModel: AddUserViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: AddUserViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    notificationViewModel: NotificationViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -240,8 +237,11 @@ fun AddUserScreen(
             onConfirm = {
                 coroutineScope.launch {
                     result = viewModel.registerUser(firstname, lastname, email, password, selectedFaculty, selectedRoom, "Active")
+                    notificationViewModel.insertNotifications(Notifications(title = "New user has been added!", message = "$firstname $lastname has been added.", portal = "admin"))
+
                     navController.navigate(AdminHomeScreen.UserManagement.name)
                 }
+
             },
             onDismiss = {
                 showDialog = false

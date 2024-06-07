@@ -34,8 +34,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import attendanceappusers.adminapp.homescreen.ConfirmDialog
 import attendanceappusers.adminapp.homescreen.subjectmanagement.SubjectManagementViewModel
+import attendanceappusers.notification.NotificationViewModel
 import com.attendanceapp2.R
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
+import com.attendanceapp2.data.model.Notifications
 import com.attendanceapp2.data.model.Results
 import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.UniversalDropDownMenu
@@ -45,7 +47,8 @@ import kotlinx.coroutines.launch
 fun AddSubjectScreen(
     navController: NavController,
     viewModel: AddSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    subjectManagement: SubjectManagementViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    subjectManagement: SubjectManagementViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    notificationViewModel: NotificationViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
     var subjectCode by remember { mutableStateOf("") }
@@ -228,6 +231,7 @@ fun AddSubjectScreen(
                     selectedRoom,
                     selectedFaculty
                 )
+                notificationViewModel.insertNotifications(Notifications(title = "$subjectCode has been added!", message = "$subjectName has been added to the course list", portal = "admin"))
             }
             navController.navigate(AdminHomeScreen.SubjectManagement.name)
         },

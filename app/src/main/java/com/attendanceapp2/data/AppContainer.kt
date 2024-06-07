@@ -4,6 +4,8 @@ import android.content.Context
 import com.attendanceapp2.data.model.user.User
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
 import com.attendanceapp2.data.repositories.attendancce.OnlineAttendanceRepository
+import com.attendanceapp2.data.repositories.notification.OfflineNotifRepository
+import com.attendanceapp2.data.repositories.notification.OnlineNotifRepository
 import com.attendanceapp2.data.repositories.schedule.OfflineScheduleRepository
 import com.attendanceapp2.data.repositories.schedule.OnlineScheduleRepository
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
@@ -34,6 +36,11 @@ interface AppContainer {
     //USERSUBJECTCROSSREF REPOSITORY
     val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository
     val onlineUserSubjectCrossRefRepository: OnlineUserSubjectCrossRefRepository
+
+    //Notif Repository
+
+    val offlineNotifRepository: OfflineNotifRepository
+    val onlineNotifRepository: OnlineNotifRepository
 }
 
 /**
@@ -114,4 +121,19 @@ class AppDataContainer(
         OnlineAttendanceRepository(KtorClient())
     }
 
+    // Notifications Repositories
+
+    /**
+     * Implementation for [offlineNotifRepository]
+     */
+    override val offlineNotifRepository: OfflineNotifRepository by lazy {
+        OfflineNotifRepository(AttendanceAppDatabase.getDatabase(context).notifDao())
+    }
+
+    /**
+     * Implementation for [onlineNotifRepository]
+     */
+    override val onlineNotifRepository: OnlineNotifRepository by lazy {
+        OnlineNotifRepository(KtorClient())
+    }
 }

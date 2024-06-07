@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import attendanceappusers.facultyapp.subjects.facultysubjectattendances.FacultySubjectAttendanceViewModel
+import attendanceappusers.notification.NotificationViewModel
 import attendanceappusers.studentapp.subjects.joinsubject.JoinSubjectDialog
 import attendanceappusers.studentapp.subjects.joinsubject.JoinSubjectViewModel
 import com.attendanceapp2.navigation.approutes.faculty.FacultySubjectsRoutes
@@ -42,6 +43,7 @@ import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.screenuniversalcomponents.subjectuicomponents.SubjectCard
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
+import com.attendanceapp2.data.model.Notifications
 import com.attendanceapp2.data.model.showToast
 import com.attendanceapp2.data.model.user.LoggedInUserHolder
 import com.attendanceapp2.navigation.approutes.student.StudentSubjectsRoutes
@@ -54,7 +56,8 @@ fun FacultyActiveSubjects (
     navController : NavController,
     viewModel: SubjectViewModel = viewModel(factory = AppViewModelProvider.Factory),
     facultySubjectAttendanceVM: FacultySubjectAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    joinViewModel: JoinSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    joinViewModel: JoinSubjectViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    notificationViewModel: NotificationViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -189,6 +192,12 @@ fun FacultyActiveSubjects (
                             showDialog = false
                             showToast(context, it)
                             viewModel.fetchActiveSubjectsForLoggedInUser()
+                            notificationViewModel.insertNotifications(
+                                Notifications(
+                                    title = "You have joined to $subjectCode",
+                                    message = "Your joining code have been accepted. Please proceed to your class subject",
+                                    portal = "student"
+                                ))
                         }
                         joinResult.failureMessage?.let {
                             showToast(context, it)
