@@ -42,7 +42,7 @@ class SubjectViewModel(
             val userSubjectCrossRefs = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForUser(userId)
             val subjectIds = userSubjectCrossRefs.map { it.subjectId }
 
-            val activeSubjects = offlineSubjectRepository.getActiveSubjectsByIds(subjectIds)
+            val activeSubjects = offlineSubjectRepository.getActiveSubjectsByIds(subjectIds).sortedBy { it.code }
             _activeSubjects.value = activeSubjects
 
             if (activeSubjects.isNotEmpty()) {
@@ -52,7 +52,6 @@ class SubjectViewModel(
             }
         }
     }
-
 
     fun fetchArchivedSubjectsForLoggedInUser() {
         val loggedInUser = LoggedInUserHolder.getLoggedInUser()
@@ -70,7 +69,7 @@ class SubjectViewModel(
             val userSubjectCrossRefs = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForUser(userId)
             val subjectIds = userSubjectCrossRefs.map { it.subjectId }
 
-            val archivedSubjects = offlineSubjectRepository.getArchivedSubjectsByIds(subjectIds)
+            val archivedSubjects = offlineSubjectRepository.getArchivedSubjectsByIds(subjectIds).sortedBy { it.code }
             _archivedSubjects.value = archivedSubjects
 
             if (archivedSubjects.isNotEmpty()) {

@@ -85,12 +85,12 @@ fun SubjectManagementScreen (
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 20.dp, start = 16.dp, end = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
         Text(
             "Subject Management",
-            fontSize = 35.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -125,8 +125,9 @@ fun SubjectManagementScreen (
                     .weight(1f)
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(horizontal = 8.dp)
                 ) {
                     Icon(
                         Icons.Default.ArrowBack,
@@ -135,7 +136,7 @@ fun SubjectManagementScreen (
 
                     Text(
                         text = "Back to Home",
-                        fontSize = 16.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                 }
@@ -148,12 +149,13 @@ fun SubjectManagementScreen (
                     .weight(1f)
             ) {
                 Row (
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(horizontal = 8.dp)
                 ) {
                     Text(
                         text = "Add New Subject",
-                        fontSize = 16.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
 

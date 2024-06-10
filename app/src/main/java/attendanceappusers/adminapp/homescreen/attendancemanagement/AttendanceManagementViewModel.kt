@@ -83,16 +83,22 @@ class AttendanceManagementViewModel(
 
     private fun getAllSubjectCodes() {
         viewModelScope.launch {
+            offlineSubjectRepository.deleteAllSubjects()
             val subjects = onlineSubjectRepository.getAllSubjects()
-            subjects.forEach { subject ->
-                offlineSubjectRepository.insertSubject(subject)
-            }
 
-            val subjectCodes = offlineSubjectRepository.getAllSubjects().map {
-                val subjectList = subjects.map { it.code }
-                subjectList
-            }.first()
-            _subjects.value = listOf("All") + subjectCodes
+            // Sort the subjects by SubjectCode
+            val sortedSubjects = subjects.sortedBy { it.code }
+
+            // Map the sorted subjects to the desired format
+            val subjectCodesNames = sortedSubjects.map { "${it.code} - ${it.name}" }
+
+            // Update the _subjects value with the sorted list
+            _subjects.value = listOf("All") + subjectCodesNames
+
+            // Insert the sorted subjects into the offline repository
+            sortedSubjects.forEach {
+                offlineSubjectRepository.insertSubject(it)
+            }
         }
     }
 

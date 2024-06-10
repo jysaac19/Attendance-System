@@ -42,39 +42,39 @@ fun AttendanceCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     attendance.subjectCode,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center,
-                    fontSize = 12.sp
+                    fontSize = 10.sp
                 )
                 Text(
                     attendance.lastname,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center,
-                    fontSize = 12.sp
+                    fontSize = 10.sp
                 )
                 Text(
                     attendance.firstname,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center,
-                    fontSize = 12.sp
+                    fontSize = 10.sp
                 )
                 Text(
                     attendance.date,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center,
-                    fontSize = 12.sp
+                    fontSize = 10.sp
                 )
                 Text(
                     attendance.status,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center,
-                    fontSize = 12.sp
+                    fontSize = 10.sp
                 )
             }
         }

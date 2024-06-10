@@ -34,7 +34,6 @@ class SubjectManagementViewModel(
         updateSubjectManagementList()
     }
 
-
     private fun updateOfflineSubjects() {
         viewModelScope.launch {
             offlineSubjectRepository.deleteAllSubjects()
@@ -55,20 +54,23 @@ class SubjectManagementViewModel(
 
     private fun fetchArchiveSubjects() {
         viewModelScope.launch {
-            offlineSubjectRepository.getArchivedSubjects().collect {
-                _archivedSubjects.value = it
+            offlineSubjectRepository.getArchivedSubjects().collect { subjects ->
+                // Sort the archived subjects by their code
+                val sortedArchivedSubjects = subjects.sortedBy { it.code }
+                _archivedSubjects.value = sortedArchivedSubjects
             }
         }
     }
 
     private fun fetchActiveSubjects() {
         viewModelScope.launch {
-            offlineSubjectRepository.getActiveSubjects().collect {
-                _activeSubjects.value = it
+            offlineSubjectRepository.getActiveSubjects().collect { subjects ->
+                // Sort the active subjects by their code
+                val sortedActiveSubjects = subjects.sortedBy { it.code }
+                _activeSubjects.value = sortedActiveSubjects
             }
         }
     }
-
 
     fun searchSubjectsByCode(searchText: String) {
         viewModelScope.launch {

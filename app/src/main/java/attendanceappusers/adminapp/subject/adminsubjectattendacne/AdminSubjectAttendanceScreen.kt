@@ -46,25 +46,17 @@ fun AdminSubjectAttendanceScreen (
 ) {
     val subjectInfo = SelectedSubjectHolder.getSelectedSubject()
 
-    // Get the current year
     val currentYear = LocalDate.now().year
-
-    // Default start date and end date
     val defaultEndDate = LocalDate.now()
-    val defaultStartDate = LocalDate.of(currentYear, 1, 1) // January 1st of the current year
-
-    // Collecting the start and end dates with default values
+    val defaultStartDate = LocalDate.of(currentYear, 1, 1)
     var startDate by remember { mutableStateOf(defaultStartDate) }
     var endDate by remember { mutableStateOf(defaultEndDate) }
-
-    // Collect attendances and sort them by date in descending order (most recent first)
     val attendances by viewModel.adminSubjectAttendances.collectAsState()
     val formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy")
     val sortedAttendances = attendances.sortedByDescending { attendance ->
         LocalDate.parse(attendance.date, formatter)
     }
 
-    // Function to fetch attendances whenever start date or end date changes
     LaunchedEffect(startDate, endDate) {
         val startDateString = startDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format start date
         val endDateString = endDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format end date
@@ -82,7 +74,7 @@ fun AdminSubjectAttendanceScreen (
     ) {
         Text(
             text = subjectInfo?.name ?: "Attendances",
-            fontSize = 35.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
@@ -138,7 +130,7 @@ fun AdminSubjectAttendanceScreen (
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -149,7 +141,7 @@ fun AdminSubjectAttendanceScreen (
                         .weight(1f)
                 ) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
@@ -159,7 +151,7 @@ fun AdminSubjectAttendanceScreen (
 
                         Text(
                             text = "Back to Subject Information",
-                            fontSize = 16.sp,
+                            fontSize = 12.sp,
                             fontWeight = FontWeight.SemiBold
                         )
                     }

@@ -69,12 +69,14 @@ fun StudentSubjectInfo(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
-                            text = "Code/Name:",
+                            text = "Code - Name:",
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.weight(1f)
+                            fontSize = 12.sp,
+                            modifier = Modifier.weight(1.5f)
                         )
                         Text(
                             text = "${selectedSubject.code} - ${selectedSubject.name}",
+                            fontSize = 10.sp,
                             modifier = Modifier.weight(3f)
                         )
                     }
@@ -86,10 +88,12 @@ fun StudentSubjectInfo(
                         Text(
                             text = "Faculty:",
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.weight(1f)
+                            fontSize = 12.sp,
+                            modifier = Modifier.weight(1.5f)
                         )
                         Text(
                             text = selectedSubject.faculty,
+                            fontSize = 10.sp,
                             modifier = Modifier.weight(3f)
                         )
                     }
@@ -101,10 +105,12 @@ fun StudentSubjectInfo(
                         Text(
                             text = "Room:",
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.weight(1f)
+                            fontSize = 12.sp,
+                            modifier = Modifier.weight(1.5f)
                         )
                         Text(
                             text = selectedSubject.room,
+                            fontSize = 10.sp,
                             modifier = Modifier.weight(3f)
                         )
                     }
@@ -145,16 +151,18 @@ fun StudentSubjectInfo(
                             Text(
                                 text = "${schedule.day}:",
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.weight(1f)
+                                fontSize = 12.sp,
+                                modifier = Modifier.weight(1.5f)
                             )
                             Text(
                                 text = "${schedule.start} - ${schedule.end}",
-                                modifier = Modifier.weight(2f)
+                                fontSize = 12.sp,
+                                modifier = Modifier.weight(3f)
                             )
                         }
                     }
                 } else {
-                    Text(text = "No schedules available")
+                    Text(text = "No schedules available", fontSize = 12.sp)
                 }
             }
         }
@@ -173,7 +181,7 @@ fun StudentSubjectInfo(
                     .weight(1f)
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
@@ -183,7 +191,7 @@ fun StudentSubjectInfo(
 
                     Text(
                         text = "Back",
-                        fontSize = 16.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                 }
@@ -197,12 +205,12 @@ fun StudentSubjectInfo(
                     .weight(1f)
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = "View Attendances",
-                        fontSize = 16.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
 

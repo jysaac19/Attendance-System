@@ -89,7 +89,7 @@ fun AdminAttendanceList (
     ) {
         Text(
             "Attendances",
-            fontSize = 35.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
 
@@ -97,8 +97,8 @@ fun AdminAttendanceList (
 
         Text(
             "S.Y. 2023 - 2024",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
         )
 
         Spacer(modifier = Modifier.width(16.dp))
@@ -162,7 +162,9 @@ fun AdminAttendanceList (
             label = "Subject",
             items = subjects,
             selectedItem = selectedSubjectCode,
-            onItemSelected = { selectedSubjectCode = it }
+            onItemSelected = {
+                selectedSubjectCode = it.split(" - ")[0]
+            }
         )
 
         Spacer(modifier = Modifier.height(4.dp))

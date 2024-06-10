@@ -78,7 +78,7 @@ fun FacultySearchStudentScreen(
 
         Text(
             "Select Student",
-            fontSize = 35.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
 
@@ -115,17 +115,17 @@ fun FacultySearchStudentScreen(
                     .weight(1f)
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
                         Icons.Default.ArrowBack,
-                        contentDescription = "Back to Subject Attendances"
+                        contentDescription = "Back"
                     )
 
                     Text(
-                        text = "Back to User Management",
-                        fontSize = 16.sp,
+                        text = "Back to Subject Attendances",
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                 }

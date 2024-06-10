@@ -72,7 +72,7 @@ fun StudentAttendances(
     ) {
         Text(
             "Attendances",
-            fontSize = 35.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
 
@@ -80,7 +80,7 @@ fun StudentAttendances(
 
         Text(
             "S.Y. 2023 - 2024",
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )
 
@@ -130,7 +130,9 @@ fun StudentAttendances(
             label = "Subject",
             items = subjects,
             selectedItem = selectedSubjectCode,
-            onItemSelected = { selectedSubjectCode = it }
+            onItemSelected = {
+                selectedSubjectCode = it.split(" - ")[0]
+            }
         )
 
         Spacer(Modifier.height(8.dp))
@@ -158,10 +160,6 @@ fun StudentAttendances(
         println("Start Date: $startDateString")
         println("End Date: $endDateString")
 
-        viewModel.filterStudentAttendances(
-            subjectCode = selectedSubjectCode,
-            startDate = startDateString,
-            endDate = endDateString
-        )
+        viewModel.filterStudentAttendances(selectedSubjectCode, startDateString, endDateString)
     }
 }

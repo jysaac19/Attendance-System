@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.attendanceapp2.data.model.subject.Subject
@@ -43,10 +44,46 @@ fun SubjectItem(
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(text = "Subject: ${subject.name}", fontWeight = FontWeight.Bold)
-            Text(text = "Code: ${subject.code}")
-            Text(text = "Room: ${subject.room}")
-            Text(text = "Faculty: ${subject.facultyName}")
+            Row(
+                modifier = Modifier
+                    .padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column (
+                    modifier = Modifier.weight(1.5f),
+                ) {
+                    Text(
+                        text = "Subject:",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                    Text(
+                        text = "Code:",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                    Text(
+                        text = "Room:",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                    Text(
+                        text = "Faculty:",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
+
+                Column (
+                    modifier = Modifier.weight(4f),
+                ) {
+                    Text(text = subject.name, fontWeight = FontWeight.Bold, fontSize = 10.sp)
+                    Text(text = subject.code, fontSize = 10.sp)
+                    Text(text = subject.room, fontSize = 10.sp)
+                    Text(text = subject.facultyName, fontSize = 10.sp)
+                }
+            }
+
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -68,7 +105,7 @@ fun SubjectItem(
                         )
                         Text(
                             text = "Delete",
-                            fontSize = 10.sp
+                            fontSize = 8.sp
                         )
                     }
                 }
@@ -87,7 +124,7 @@ fun SubjectItem(
                         )
                         Text(
                             text = "Update",
-                            fontSize = 10.sp
+                            fontSize = 8.sp
                         )
                     }
                 }
@@ -107,7 +144,7 @@ fun SubjectItem(
                             )
                             Text(
                                 text = "Archive",
-                                fontSize = 10.sp
+                                fontSize = 8.sp
                             )
                         }
                     }
@@ -126,7 +163,7 @@ fun SubjectItem(
                             )
                             Text(
                                 text = "Unarchive",
-                                fontSize = 10.sp
+                                fontSize = 8.sp
                             )
                         }
                     }
@@ -146,7 +183,8 @@ fun SubjectItem(
                         )
                         Text(
                             text = "Remove Faculty",
-                            fontSize = 10.sp
+                            fontSize = 8.sp,
+                            textAlign = TextAlign.Center
                         )
                     }
                 }

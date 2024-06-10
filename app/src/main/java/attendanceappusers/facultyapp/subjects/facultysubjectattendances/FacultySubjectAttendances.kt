@@ -78,7 +78,7 @@ fun FacultySubjectAttendances (
     ) {
         Text(
             text = subjectInfo?.name ?: "Attendances",
-            fontSize = 35.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
@@ -87,7 +87,7 @@ fun FacultySubjectAttendances (
 
         Text(
             "S.Y. 2023 - 2024",
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )
 
@@ -145,12 +145,12 @@ fun FacultySubjectAttendances (
                     .weight(1f)
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = "Add Attendance",
-                        fontSize = 16.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
 

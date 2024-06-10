@@ -2,7 +2,10 @@ package com.attendanceapp2.network
 
 object HttpRoutes {
 
-    private const val BASE_URL = "http://192.168.158.240:5555"
+    //HOME
+    private const val BASE_URL = "http://192.168.254.184:5555"
+    //SCHOOL
+//    private const val BASE_URL = "http://192.168.221.144:5555"
 
     //LOCAL API
     const val ATTENDANCES = "${BASE_URL}/attendance"
@@ -10,8 +13,6 @@ object HttpRoutes {
     const val UPDATE_ATTENDANCE = "${BASE_URL}/updateAttendance"
     const val DELETE_ATTENDANCE = "${BASE_URL}/deleteAttendance"
     const val ATTENDANCE_BY_USER_ID_SUBJECT_ID_DATE = "${BASE_URL}/attendanceByUserIdSubjectIdDate"
-
-
 
 
     const val SUBJECTS = "${BASE_URL}/subject"
@@ -22,8 +23,6 @@ object HttpRoutes {
     const val GET_SUBJECT_BY_CODE = "${BASE_URL}/subjectByCode"
     const val GET_SUBJECT_BY_NAME = "${BASE_URL}/subjectByName"
     const val GET_SUBJECT_BY_JOIN_CODE = "${BASE_URL}/subjectByJoinCode"
-
-
 
 
     const val USERS = "${BASE_URL}/user"

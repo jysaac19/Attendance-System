@@ -29,7 +29,9 @@ class AdminSubjectListViewModel(
             }
 
             offlineSubjectRepository.getActiveSubjects().collect { subjects ->
-                _subjects.value = subjects
+                // Sort the subjects by their code
+                val sortedSubjects = subjects.sortedBy { it.code }
+                _subjects.value = sortedSubjects
             }
         }
     }

@@ -71,12 +71,15 @@ class FacultyAttendanceViewModel(
 
             val userId = loggedInUser!!.id
             val userSubjectCrossRefs = offlineUserSubjectCrossRefRepository.getJoinedSubjectsForUser(userId)
+
             val subjectIds = userSubjectCrossRefs.map { it.subjectId }
             val subjects = offlineSubjectRepository.getActiveSubjectsByIds(subjectIds)
-            val subjectCodes = subjects.map { it.code }
+            val sortedSubjects = subjects.sortedBy { it.code }
 
-            if (subjectCodes.isNotEmpty()) {
-                _subjects.value = listOf("All") + subjectCodes
+            val subjectCodesNames = sortedSubjects.map { "${it.code} - ${it.name}" }
+
+            if (subjectCodesNames.isNotEmpty()) {
+                _subjects.value = listOf("All") + subjectCodesNames
             } else {
                 _subjects.value = emptyList()
             }
@@ -87,17 +90,9 @@ class FacultyAttendanceViewModel(
         viewModelScope.launch {
             val formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy")
             val filteredAttendances = if (selectedSubject == "All") {
-                offlineAttendanceRepository.filterAttendancesBySubjectIdsAndDateRange(
-                    subjectCodes,
-                    startDate,
-                    endDate
-                )
+                offlineAttendanceRepository.filterAttendancesBySubjectIdsAndDateRange(subjectCodes, startDate, endDate)
             } else {
-                offlineAttendanceRepository.filterAttendancesBySubjectCodeAndDateRange(
-                    startDate = startDate,
-                    endDate = endDate,
-                    subjectCode = selectedSubject
-                )
+                offlineAttendanceRepository.filterAttendancesBySubjectCodeAndDateRange(startDate, endDate, selectedSubject)
             }
 
             filteredAttendances.collect { attendances ->

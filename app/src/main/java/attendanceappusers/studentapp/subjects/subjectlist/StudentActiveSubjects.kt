@@ -85,7 +85,7 @@ fun StudentActiveSubjects (
     ) {
         Text(
             "Subjects",
-            fontSize = 35.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
 
@@ -93,7 +93,7 @@ fun StudentActiveSubjects (
 
         Text(
             schoolYearText,
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )
 
@@ -111,7 +111,7 @@ fun StudentActiveSubjects (
                     .weight(1f)
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
@@ -121,7 +121,7 @@ fun StudentActiveSubjects (
 
                     Text(
                         text = "Join Subject",
-                        fontSize = 16.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                 }
@@ -134,7 +134,7 @@ fun StudentActiveSubjects (
                     .weight(1f)
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
@@ -144,7 +144,7 @@ fun StudentActiveSubjects (
 
                     Text(
                         text = "Archived Subjects",
-                        fontSize = 16.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                 }

@@ -105,7 +105,7 @@ fun AttendanceManagementScreen (
 
         Text(
             "Attendance Management",
-            fontSize = 35.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
 
@@ -165,7 +165,9 @@ fun AttendanceManagementScreen (
             label = "Subject",
             items = subjects,
             selectedItem = selectedSubjectCode,
-            onItemSelected = { selectedSubjectCode = it }
+            onItemSelected = {
+                selectedSubjectCode = it.split(" - ")[0]
+            }
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -219,7 +221,7 @@ fun AttendanceManagementScreen (
                     .weight(1f)
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
@@ -229,7 +231,7 @@ fun AttendanceManagementScreen (
 
                     Text(
                         text = "Back to Home",
-                        fontSize = 16.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                 }
@@ -242,12 +244,12 @@ fun AttendanceManagementScreen (
                     .weight(1f)
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = "Add Attendance",
-                        fontSize = 16.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
 

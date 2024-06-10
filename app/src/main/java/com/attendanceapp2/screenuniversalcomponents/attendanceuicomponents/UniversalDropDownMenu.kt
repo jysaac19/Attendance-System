@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,7 +64,7 @@ fun UniversalDropDownMenu (
         ) {
             items.forEachIndexed { index, item ->
                 DropdownMenuItem(
-                    text = { Text(text = item) },
+                    text = { Text(text = item, fontSize = 10.sp) },
                     onClick = {
                         onItemSelected(item)
                         expanded = false

@@ -73,8 +73,10 @@ fun AdminProfileScreen (
                 ) {
                     Row(
                         modifier = Modifier
-                            .padding(20.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                            .padding(4.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
                     ) {
                         Icon(
                             imageVector = Icons.Default.Person,
@@ -82,42 +84,78 @@ fun AdminProfileScreen (
                             tint = Color.Gray,
                             modifier = Modifier
                                 .size(100.dp)
-                                .padding(8.dp)
-                                .weight(1f)
                         )
+                    }
 
-                        Spacer(modifier = Modifier.width(16.dp))
-
+                    Row(
+                        modifier = Modifier
+                            .padding(20.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Column (
                             modifier = Modifier.weight(1.5f),
                         ) {
                             Text(
+                                text = "User:",
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Normal
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = "Email:",
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Normal
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = "Department:",
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Normal
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = "Role:",
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Normal
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = "Status:",
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Normal
+                            )
+                        }
+
+                        Column (
+                            modifier = Modifier.weight(3f),
+                        ) {
+                            Text(
                                 text = "${loggedInUser.firstname} ${loggedInUser.lastname}",
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "Email: ${loggedInUser.email}",
-                                fontSize = 16.sp,
+                                fontSize = 12.sp,
                                 fontWeight = FontWeight.Normal
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
-                                text = "Department: ${loggedInUser.department}",
-                                fontSize = 16.sp,
+                                text = loggedInUser.email,
+                                fontSize = 12.sp,
                                 fontWeight = FontWeight.Normal
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
-                                text = "User Type: ${loggedInUser.usertype}",
-                                fontSize = 16.sp,
+                                text = loggedInUser.department,
+                                fontSize = 12.sp,
                                 fontWeight = FontWeight.Normal
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
-                                text = "Status: ${loggedInUser.status}",
-                                fontSize = 16.sp,
+                                text = loggedInUser.usertype,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Normal
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = loggedInUser.status,
+                                fontSize = 12.sp,
                                 fontWeight = FontWeight.Normal
                             )
                         }
@@ -128,7 +166,7 @@ fun AdminProfileScreen (
 
                 Button(
                     onClick = { setShowLogoutDialog(true) },
-                    shape = RoundedCornerShape(25.dp),
+                    shape = RoundedCornerShape(10.dp),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp)
@@ -141,7 +179,7 @@ fun AdminProfileScreen (
                         Text(
                             text = "Logout",
                             color = Color.White,
-                            fontSize = 20.sp,
+                            fontSize = 12.sp,
                             fontWeight = FontWeight.Normal
                         )
                         Spacer(modifier = Modifier.width(20.dp))
@@ -156,7 +194,7 @@ fun AdminProfileScreen (
 
                 Button(
                     onClick = { setShowDeactivateDialog(true) },
-                    shape = RoundedCornerShape(25.dp),
+                    shape = RoundedCornerShape(10.dp),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp)
@@ -169,7 +207,7 @@ fun AdminProfileScreen (
                         Text(
                             text = "Deactivate Account",
                             color = Color.White,
-                            fontSize = 20.sp,
+                            fontSize = 12.sp,
                             fontWeight = FontWeight.Normal
                         )
                         Spacer(modifier = Modifier.width(20.dp))
@@ -184,7 +222,7 @@ fun AdminProfileScreen (
 
                 Button(
                     onClick = { setShowDeleteDialog(true) },
-                    shape = RoundedCornerShape(25.dp),
+                    shape = RoundedCornerShape(10.dp),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp)
@@ -197,7 +235,7 @@ fun AdminProfileScreen (
                         Text(
                             text = "Delete Account",
                             color = Color.White,
-                            fontSize = 20.sp,
+                            fontSize = 12.sp,
                             fontWeight = FontWeight.Normal
                         )
                         Spacer(modifier = Modifier.width(20.dp))

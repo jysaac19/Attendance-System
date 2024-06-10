@@ -74,7 +74,7 @@ fun StudentSubjectAttendances (
     ) {
         Text(
             text = subjectInfo?.name ?: "Attendances",
-            fontSize = 35.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
@@ -83,7 +83,7 @@ fun StudentSubjectAttendances (
 
         Text(
             "S.Y. 2023 - 2024",
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )
 

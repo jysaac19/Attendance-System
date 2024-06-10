@@ -122,7 +122,9 @@ fun FacultyAttendances (
             label = "Subjects",
             items = subjects,
             selectedItem = selectedSubject,
-            onItemSelected = { selectedSubject = it }
+            onItemSelected = {
+                selectedSubject = it.split(" - ")[0]
+            }
         )
 
         Spacer(Modifier.height(8.dp))
@@ -145,6 +147,11 @@ fun FacultyAttendances (
     LaunchedEffect(subjects, selectedSubject, startDate, endDate) {
         val startDateString = startDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))
         val endDateString = endDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))
-        viewModel.filterAttendance(subjects, selectedSubject, startDateString, endDateString)
+        val subjectCodes = if (selectedSubject == "All") {
+            subjects.filter { it != "All" }.map { it.split(" - ")[0] }
+        } else {
+            listOf(selectedSubject.split(" - ")[0])
+        }
+        viewModel.filterAttendance(subjectCodes, selectedSubject, startDateString, endDateString)
     }
 }

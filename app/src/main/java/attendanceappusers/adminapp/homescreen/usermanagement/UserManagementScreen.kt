@@ -109,7 +109,7 @@ fun UserManagementScreen(
     ) {
         Text(
             "User Management",
-            fontSize = 35.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -182,14 +182,14 @@ fun UserManagementScreen(
                     .weight(1f)
             ) {
                 Row (
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(Icons.Default.ArrowBack, contentDescription = "Back to Home")
 
                     Text(
                         text = "Back",
-                        fontSize = 16.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                 }
@@ -202,12 +202,12 @@ fun UserManagementScreen(
                     .weight(1f)
             ) {
                 Row (
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = "Add New User",
-                        fontSize = 16.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
 

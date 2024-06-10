@@ -51,13 +51,14 @@ fun HomeScreen(
             ) {
                 Text(
                     "User Management",
-                    fontSize = 24.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     "Navigate to Manage Users screen\nManage existing users in the system",
                     fontSize = 12.sp,
+                    textAlign = TextAlign.Center
                 )
             }
         }
@@ -78,7 +79,7 @@ fun HomeScreen(
             ) {
                 Text(
                     "Attendance Management",
-                    fontSize = 24.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -106,7 +107,7 @@ fun HomeScreen(
             ) {
                 Text(
                     "Subject Management",
-                    fontSize = 24.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold
                 )
                 Spacer(modifier = Modifier.height(8.dp))

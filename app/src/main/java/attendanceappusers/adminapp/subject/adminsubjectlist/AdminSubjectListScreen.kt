@@ -56,7 +56,7 @@ fun AdminSubjectListScreen (
     ) {
         Text(
             "Subjects",
-            fontSize = 35.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
 
@@ -64,8 +64,8 @@ fun AdminSubjectListScreen (
 
         Text(
             schoolYearText,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
         )
 
         Spacer(modifier = Modifier.width(16.dp))

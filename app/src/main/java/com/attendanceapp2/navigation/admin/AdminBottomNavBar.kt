@@ -134,7 +134,7 @@ fun AdminBottomNavBar(
                     if (index == selectedItem) {
                         Text(
                             text = item.title,
-                            fontSize = 12.sp,
+                            fontSize = 8.sp,
                             modifier = Modifier.padding(top = 4.dp)
                         )
                     }
