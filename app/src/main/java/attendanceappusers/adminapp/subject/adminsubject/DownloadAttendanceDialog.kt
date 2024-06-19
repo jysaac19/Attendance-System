@@ -23,9 +23,9 @@ fun DownloadAttendanceDialog(
     onDismiss: () -> Unit,
     onDownload: (String) -> Unit,
     showDialog: Boolean,
+    options: List<String>
 ) {
-    var selectedPeriod by remember { mutableStateOf("Current Month") }
-    val options = listOf("Previous Month", "Current Month", "Whole Year")
+    var selectedPeriod by remember { mutableStateOf(options.firstOrNull() ?: "") }
 
     if (showDialog) {
         AlertDialog(

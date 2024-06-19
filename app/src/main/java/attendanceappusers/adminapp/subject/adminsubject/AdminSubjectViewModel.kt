@@ -8,6 +8,7 @@ import com.attendanceapp2.data.model.attendance.AttendanceSummary
 import com.attendanceapp2.data.model.attendance.AttendanceSummaryListHolder
 import com.attendanceapp2.data.model.attendance.AttendanceToExport
 import com.attendanceapp2.data.model.attendance.AttendanceToExportListHolder
+import com.attendanceapp2.data.model.attendance.AttendanceToExportListHolderForFaculty
 import com.attendanceapp2.data.model.subject.Schedule
 import com.attendanceapp2.data.model.subject.SelectedSubject
 import com.attendanceapp2.data.model.user.User
@@ -228,6 +229,73 @@ class AdminSubjectViewModel(
             Timber.d("Attendance to export list: ${AttendanceToExportListHolder.getAttendanceToExportList()}")
 
             exportAttendanceSummariesAsExcel(context, period)
+        }
+    }
+
+    fun getSubjectsAttendancesToExportForFaculty(context: Context, subject: SelectedSubject, period: String) {
+        viewModelScope.launch {
+            val currentDate = LocalDate.now()
+            val formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy")
+
+            val (startDate, endDate) = when (period) {
+                "Previous Day" -> {
+                    val previousDay = currentDate.minusDays(1)
+                    Pair(previousDay.format(formatter), previousDay.format(formatter))
+                }
+                "Current Day" -> {
+                    val today = currentDate
+                    Pair(today.format(formatter), today.format(formatter))
+                }
+                "Previous Month" -> {
+                    val previousMonth = currentDate.minusMonths(1)
+                    val startOfPreviousMonth = previousMonth.withDayOfMonth(1)
+                    val endOfPreviousMonth = previousMonth.withDayOfMonth(previousMonth.lengthOfMonth())
+                    Pair(startOfPreviousMonth.format(formatter), endOfPreviousMonth.format(formatter))
+                }
+                "Current Month" -> {
+                    val startOfCurrentMonth = currentDate.withDayOfMonth(1)
+                    val endOfCurrentMonth = currentDate.withDayOfMonth(currentDate.lengthOfMonth())
+                    Pair(startOfCurrentMonth.format(formatter), endOfCurrentMonth.format(formatter))
+                }
+                "Whole Year" -> {
+                    val startOfYear = currentDate.withDayOfYear(1)
+                    val endOfYear = currentDate.withDayOfYear(currentDate.lengthOfYear())
+                    Pair(startOfYear.format(formatter), endOfYear.format(formatter))
+                }
+                else -> Pair("", "")
+            }
+
+            val userSubCrossRefs = offlineUserSubjectCrossRefRepository.getUserSubjectCrossRefBySubject(subject.id)
+            val userIds = userSubCrossRefs.map { it.userId }
+            val students = offlineUserRepository.getUsersByIds(userIds)
+            _subjectStudents.value = students
+            Timber.d("Student: ${_subjectStudents.value}")
+
+            // Iterate through each student and fetch their AttendanceSummary
+            val attendanceToExportList = students.map { student ->
+                val summary = offlineAttendanceRepository.getAttendanceSummary(
+                    student.id,
+                    subject.code,
+                    startDate,
+                    endDate
+                )
+                Timber.d("Attendance to export for student with ID ${student.id}: $summary")
+                AttendanceToExport(
+                    userId = student.id,
+                    firstname = student.firstname,
+                    lastname = student.lastname,
+                    presentCount = summary.presentCount,
+                    absentCount = summary.absentCount,
+                    lateCount = summary.lateCount,
+                    totalCount = summary.attendances.size,
+                    attendances = summary.attendances
+                )
+            }
+
+            AttendanceToExportListHolderForFaculty.setAttendanceToExportList(attendanceToExportList)
+            Timber.d("Attendance to export list for faculty: ${AttendanceToExportListHolderForFaculty.getAttendanceToExportList()}")
+
+            exportAttendanceSummariesAsExcelForFaculty(context, period)
         }
     }
 }

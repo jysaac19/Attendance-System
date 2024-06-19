@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import attendanceappusers.adminapp.homescreen.ConfirmDialog
-import attendanceappusers.notification.NotificationViewModel
+import attendanceappusers.adminapp.notification.NotificationViewModel
 import com.attendanceapp2.R
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.Notifications

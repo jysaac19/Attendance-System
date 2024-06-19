@@ -10,10 +10,8 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,7 +34,6 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -82,143 +79,110 @@ fun StudentScanner (
         modifier = Modifier
             .fillMaxSize()
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
+        if (hasCameraPermission) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .drawWithContent {
+                        val canvasWidth = size.width
+                        val canvasHeight = size.height
+                        val cornerRadius = 16.dp.toPx()
+                        val width = canvasWidth * 0.6f
+                        val height = width * 2 / 2f
 
-            if (hasCameraPermission) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .drawWithContent {
-                            val canvasWidth = size.width
-                            val canvasHeight = size.height
-                            val cornerRadius = 16.dp.toPx()
-                            val width = canvasWidth * 0.6f
-                            val height = width * 2 / 2f
+                        drawContent()
 
-                            drawContent()
+                        drawWithLayer {
 
-                            drawWithLayer {
+                            // Destination
+                            // This is transparent color
+                            drawRect(Color.Black.copy(alpha = 0.9f))
 
-                                // Destination
-                                // This is transparent color
-                                drawRect(Color.Black.copy(alpha = 0.9f))
-
-                                // Source
-                                // This is where we extract this rect from transparent
-                                drawRoundRect(
-                                    topLeft = Offset((canvasWidth - width) / 2, canvasHeight * .3f),
-                                    size = Size(width, height),
-                                    cornerRadius = CornerRadius(cornerRadius),
-                                    color = Color.Transparent,
-                                    blendMode = BlendMode.SrcIn
-                                )
-                            }
-
+                            // Source
+                            // This is where we extract this rect from transparent
                             drawRoundRect(
                                 topLeft = Offset((canvasWidth - width) / 2, canvasHeight * .3f),
                                 size = Size(width, height),
                                 cornerRadius = CornerRadius(cornerRadius),
-                                color = Color.White,
-                                style = Stroke(2.dp.toPx())
+                                color = Color.Transparent,
+                                blendMode = BlendMode.SrcIn
                             )
                         }
-                ) {
-                    AndroidView(
-                        factory = {
-                            val previewView = PreviewView(context)
-                            val preview = Preview.Builder().build()
-                            val selector = CameraSelector.Builder()
-                                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                                .build()
-                            preview.setSurfaceProvider(previewView.surfaceProvider)
 
-                            // Set the target resolution to a smaller square size
-                            val targetResolution = android.util.Size(200, 200)
-                            @Suppress("DEPRECATION")
-                            val imageAnalysis = ImageAnalysis.Builder()
-                                .setTargetResolution(targetResolution)
-                                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                                .build()
-                            imageAnalysis.setAnalyzer(
-                                ContextCompat.getMainExecutor(context),
-                                QRCodeAnalyzer(viewModel) { qrCode ->
-                                    // Handle the scanned QR code here
+                        drawRoundRect(
+                            topLeft = Offset((canvasWidth - width) / 2, canvasHeight * .3f),
+                            size = Size(width, height),
+                            cornerRadius = CornerRadius(cornerRadius),
+                            color = Color.White,
+                            style = Stroke(2.dp.toPx())
+                        )
+
+                        // Adding the texts below the overlay box
+                        scannedQRCode?.let { qrCode ->
+                            val textYPosition = (canvasHeight * .3f) + height + 36.dp.toPx() // Added space before subject code
+                            drawContext.canvas.nativeCanvas.apply {
+                                val paint = android.graphics.Paint().apply {
+                                    color = android.graphics.Color.WHITE
+                                    textAlign = android.graphics.Paint.Align.CENTER
+                                    textSize = 18.sp.toPx()
+                                    typeface = android.graphics.Typeface.create(android.graphics.Typeface.DEFAULT, android.graphics.Typeface.BOLD)
                                 }
-                            )
+                                drawText(qrCode.subjectCode, canvasWidth / 2, textYPosition, paint)
+                                paint.textSize = 12.sp.toPx()
+                                //paint.typeface = android.graphics.Typeface.create(android.graphics.Typeface.DEFAULT, android.graphics.Typeface.SEMI_BOLD)
+                                paint.typeface = android.graphics.Typeface.create("sans-serif", android.graphics.Typeface.NORMAL)
+                                drawText(qrCode.subjectName, canvasWidth / 2, textYPosition + 24.dp.toPx(), paint)
 
-                            try {
-                                cameraProviderFuture.get().bindToLifecycle(
-                                    lifecycleOwner,
-                                    selector,
-                                    preview,
-                                    imageAnalysis
-                                )
-                            } catch (e: Exception) {
-                                e.printStackTrace()
+                                // Display attendance result here
+                                attendanceResult?.let {
+                                    paint.textSize = 12.sp.toPx()
+                                    paint.typeface = android.graphics.Typeface.create("sans-serif", android.graphics.Typeface.NORMAL)
+                                    paint.color = if (isSuccess) android.graphics.Color.GREEN else android.graphics.Color.RED
+                                    drawText(it, canvasWidth / 2, textYPosition + 48.dp.toPx(), paint)
+                                }
                             }
-                            previewView
-                        },
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .align(Alignment.Center)
-                    )
-                }
-            }
-        }
-    }
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 200.dp),
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        scannedQRCode?.let { qrCode ->
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+                        }
+                    }
             ) {
-                Text(
-                    text = qrCode.subjectCode,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.width(250.dp)
-                )
-                Text(
-                    text = qrCode.subjectName,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.White,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.width(250.dp)
-                )
+                AndroidView(
+                    factory = {
+                        val previewView = PreviewView(context)
+                        val preview = Preview.Builder().build()
+                        val selector = CameraSelector.Builder()
+                            .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                            .build()
+                        preview.setSurfaceProvider(previewView.surfaceProvider)
 
-                //For debug purposes
-//                Text(
-//                    text = "Sub ID: ${qrCode.subjectId}, QR Date: ${qrCode.date}, QR Time: ${qrCode.time}" ,
-//                    fontSize = 12.sp,
-//                    fontWeight = FontWeight.Bold,
-//                    color = Color.White,
-//                    textAlign = TextAlign.Center,
-//                    modifier = Modifier.width(250.dp)
-//                )
+                        // Set the target resolution to a smaller square size
+                        val targetResolution = android.util.Size(200, 200)
+                        @Suppress("DEPRECATION")
+                        val imageAnalysis = ImageAnalysis.Builder()
+                            .setTargetResolution(targetResolution)
+                            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                            .build()
+                        imageAnalysis.setAnalyzer(
+                            ContextCompat.getMainExecutor(context),
+                            QRCodeAnalyzer(viewModel) { qrCode ->
+                                // Handle the scanned QR code here
+                            }
+                        )
 
-                // Display attendance result here
-                attendanceResult?.let {
-                    val color = if (isSuccess) Color.Green else Color.Red
-                    Text(
-                        text = it,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = color,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.width(250.dp)
-                    )
-                }
+                        try {
+                            cameraProviderFuture.get().bindToLifecycle(
+                                lifecycleOwner,
+                                selector,
+                                preview,
+                                imageAnalysis
+                            )
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                        previewView
+                    },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .align(Alignment.Center)
+                )
             }
         }
     }

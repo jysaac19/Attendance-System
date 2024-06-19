@@ -20,6 +20,12 @@ fun exportAttendanceSummariesAsExcel(context: Context, period: String) {
     val subject = SelectedSubjectHolder.getSelectedSubject()
     val workbook = XSSFWorkbook()
 
+    // Check if there are attendance records
+    if (attendanceSummaries.isEmpty()) {
+        Toast.makeText(context, "No Attendance Record for this Criteria", Toast.LENGTH_SHORT).show()
+        return
+    }
+
     // Determine date ranges
     val currentDate = LocalDate.now()
     val (startDate, endDate, formattedPeriod) = when (period) {

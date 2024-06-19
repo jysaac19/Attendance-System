@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import attendanceappusers.facultyapp.subjects.facultysubjectattendances.FacultySubjectAttendanceViewModel
-import attendanceappusers.notification.NotificationViewModel
+import attendanceappusers.adminapp.notification.NotificationViewModel
 import attendanceappusers.studentapp.subjects.joinsubject.JoinSubjectDialog
 import attendanceappusers.studentapp.subjects.joinsubject.JoinSubjectViewModel
 import com.attendanceapp2.navigation.approutes.faculty.FacultySubjectsRoutes
@@ -46,7 +46,6 @@ import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.Notifications
 import com.attendanceapp2.data.model.showToast
 import com.attendanceapp2.data.model.user.LoggedInUserHolder
-import com.attendanceapp2.navigation.approutes.student.StudentSubjectsRoutes
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.Month

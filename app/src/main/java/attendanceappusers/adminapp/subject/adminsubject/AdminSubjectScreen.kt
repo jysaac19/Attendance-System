@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Archive
@@ -343,7 +344,8 @@ fun AdminSubjectScreen (
                                         .height(35.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = Purple40
-                                    )
+                                    ),
+                                    shape = RoundedCornerShape(8.dp)
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Delete,
@@ -667,6 +669,7 @@ fun AdminSubjectScreen (
                 showDownloadDialog = false
             }
         },
-        showDialog = showDownloadDialog
+        showDialog = showDownloadDialog,
+        options = listOf("Current Month", "Previous Month", "Whole Year")
     )
 }

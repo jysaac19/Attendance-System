@@ -2,6 +2,7 @@ package attendanceappusers.facultyapp.qrscreen
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -66,13 +67,14 @@ fun QRGeneratorScreen(
             selectedSubject?.let {
                 qrCodeBitmap = qrGeneratorVM.generateQrCodeBitmap(it)
             }
-            delay(1000L) // Update every seconds
+            delay(1000L) // Update every second
         }
     }
 
     // Column composable to arrange children vertically
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 24.dp, vertical = 75.dp)
@@ -80,7 +82,7 @@ fun QRGeneratorScreen(
         // Box composable to contain the QR code image
         Box(
             modifier = Modifier
-                .padding(top = 70.dp, bottom = 30.dp),
+                .padding(bottom = 30.dp),
             contentAlignment = Alignment.Center
         ) {
             // Display the QR code image if it's not null
@@ -102,12 +104,12 @@ fun QRGeneratorScreen(
             ) {
                 Text(
                     text = it.name,
-                    fontSize = 25.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = it.code,
-                    fontSize = 16.sp
+                    fontSize = 12.sp
                 )
             }
         }

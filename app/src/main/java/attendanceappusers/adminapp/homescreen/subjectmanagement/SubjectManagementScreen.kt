@@ -78,6 +78,9 @@ fun SubjectManagementScreen (
 
     LaunchedEffect(searchText) {
         viewModel.searchSubjectsByCode(searchText)
+    }
+
+    LaunchedEffect(Unit) {
         viewModel.updateSubjectManagementList()
     }
 
@@ -107,7 +110,7 @@ fun SubjectManagementScreen (
             },
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Enter Subject Code") },
+            placeholder = { Text("Enter Subject Code or Name") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
         )
 

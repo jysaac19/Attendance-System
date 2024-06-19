@@ -31,11 +31,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import attendanceappusers.facultyapp.profile.ProfileScreen
 import attendanceappusers.studentapp.attendance.StudentAttendances
-import attendanceappusers.notification.Notification
 import attendanceappusers.studentapp.scanner.StudentScanner
-import attendanceappusers.studentapp.subjects.subjectlist.StudentActiveSubjects
 import attendanceappusers.studentapp.subjects.subjectattendances.StudentSubjectAttendances
 import attendanceappusers.studentapp.subjects.subjectinfo.StudentSubjectInfo
+import attendanceappusers.studentapp.subjects.subjectlist.StudentActiveSubjects
 import attendanceappusers.studentapp.subjects.subjectlist.StudentArchivedSubjects
 import com.attendanceapp2.MainActivity
 import com.attendanceapp2.navigation.approutes.student.StudentMainRoute
@@ -165,7 +164,7 @@ fun StudentNavigation() {
                 }
 
                 composable(route = StudentMainRoute.Notifications.name) {
-                    Notification(navController = navController)
+//                    Notification(navController = navController)
                 }
 
                 composable(route = StudentMainRoute.Profile.name) {

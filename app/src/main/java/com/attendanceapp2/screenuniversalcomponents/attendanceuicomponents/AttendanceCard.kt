@@ -27,8 +27,7 @@ fun AttendanceCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 2.dp)
-            .height(50.dp),
+            .padding(vertical = 2.dp),
         colors = CardDefaults.cardColors(
             containerColor = backgroundColor
         ),

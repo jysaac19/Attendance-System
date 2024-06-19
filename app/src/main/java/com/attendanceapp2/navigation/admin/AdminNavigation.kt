@@ -27,7 +27,7 @@ import attendanceappusers.adminapp.homescreen.subjectmanagement.addsubject.AddSu
 import attendanceappusers.adminapp.homescreen.subjectmanagement.updatesubject.UpdateSubjectScreen
 import attendanceappusers.adminapp.homescreen.usermanagement.UserManagementScreen
 import attendanceappusers.adminapp.homescreen.usermanagement.updateuser.UpdateUserScreen
-import attendanceappusers.notification.Notification
+import attendanceappusers.adminapp.notification.Notification
 import attendanceappusers.adminapp.profile.AdminProfileScreen
 import attendanceappusers.adminapp.subject.adminsubjectlist.AdminSubjectListScreen
 import attendanceappusers.adminapp.subject.adminsubject.AdminSubjectScreen
@@ -60,7 +60,7 @@ fun AdminNavigation() {
                     AdminAttendanceList(navController)
                 }
                 composable(route = AdminMainRoute.Notification.name) {
-
+                    Notification(navController = navController)
                 }
                 composable(route = AdminMainRoute.Profile.name) {
                     AdminProfileScreen(navController)
@@ -112,7 +112,7 @@ fun AdminNavigation() {
                         AdminSubjectScreen(navController)
                     }
                     composable(route = AdminSubject.AddSchedule.name) {
-                        Notification(navController = navController)
+
                     }
                     composable(route = AdminSubject.SubjectAttendance.name) {
                         AdminSubjectAttendanceScreen(navController)

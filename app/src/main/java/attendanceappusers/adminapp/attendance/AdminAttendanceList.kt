@@ -121,7 +121,8 @@ fun AdminAttendanceList (
                     }
                 },
                 shape = RoundedCornerShape(20.dp),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 placeholder = { Text("Enter User ID or Name") }
             )
 

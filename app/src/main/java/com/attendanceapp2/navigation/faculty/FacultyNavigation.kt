@@ -23,7 +23,7 @@ import attendanceappusers.facultyapp.subjects.facultysubjectattendances.FacultyS
 import attendanceappusers.facultyapp.subjects.facultysubjetctlist.FacultyActiveSubjects
 import attendanceappusers.facultyapp.subjects.facultysubjetctlist.FacultyArchivedSubjects
 import attendanceappusers.facultyapp.subjects.searchstudent.FacultySearchStudentScreen
-import attendanceappusers.facultyapp.subjects.subjectinfo.FacultySubjectInfo
+import attendanceappusers.facultyapp.subjects.subjectinfo.FacultySubjectScreen
 import com.attendanceapp2.navigation.approutes.faculty.FacultyMainRoute
 import com.attendanceapp2.navigation.approutes.faculty.FacultySubjectsRoutes
 
@@ -68,7 +68,7 @@ fun FacultyNavigation() {
                         nonCenterItem = true
                     }
                     composable(route = FacultySubjectsRoutes.FacultySubjectInfo.name) {
-                        FacultySubjectInfo(navController)
+                        FacultySubjectScreen(navController)
                         centerItem = true
                         nonCenterItem = true
                     }
