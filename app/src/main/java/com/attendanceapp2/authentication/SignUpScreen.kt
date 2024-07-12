@@ -1,8 +1,8 @@
 package com.attendanceapp2.authentication
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -47,9 +46,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.R
-import com.attendanceapp2.navigation.approutes.AuthRoute
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.showToast
+import com.attendanceapp2.navigation.approutes.AuthRoute
 import kotlinx.coroutines.launch
 
 // Function to capitalize the first letter of each word
@@ -89,232 +88,243 @@ fun SignUpScreen(
 
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 100.dp),
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         item {
-            Image(
+            Column (
                 modifier = Modifier
-                    .size(200.dp)
-                    .padding(24.dp),
-                painter = painterResource(id = R.drawable.nbslogo),
-                contentDescription = "NBS LOGO"
-            )
-
-            Text(
-                text = "Welcome to NBSC Attendance App!",
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "Please sign up using your school email",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                OutlinedTextField(
-                    value = firstName,
-                    onValueChange = { firstName= it.uppercase() },
-                    label = { Text("First Name") },
-                    modifier = Modifier.weight(1f),
-                    singleLine = true,
-                    shape = RoundedCornerShape(20.dp)
-                )
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-                OutlinedTextField(
-                    value = lastName,
-                    onValueChange = { lastName = it.uppercase() },
-                    label = { Text("Last Name") },
-                    modifier = Modifier.weight(1f),
-                    singleLine = true,
-                    shape = RoundedCornerShape(20.dp)
-                )
-            }
-
-            OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
-                label = { Text("Email") },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                shape = RoundedCornerShape(20.dp)
-            )
-
-            OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
-                label = { Text("Password") },
-                trailingIcon = {
-                    IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-                        Icon(
-                            imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                            contentDescription = "Toggle password visibility"
-                        )
-                    }
-                },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                shape = RoundedCornerShape(20.dp)
-            )
-
-            OutlinedTextField(
-                value = reEnterPassword,
-                onValueChange = { reEnterPassword = it },
-                label = { Text("Re-enter Password") },
-                trailingIcon = {
-                    IconButton(onClick = { isReEnterPasswordVisible = !isReEnterPasswordVisible }) {
-                        Icon(
-                            imageVector = if (isReEnterPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                            contentDescription = "Toggle password visibility"
-                        )
-                    }
-                },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                shape = RoundedCornerShape(20.dp)
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            ExposedDropdownMenuBox(
-                expanded = expanded,
-                onExpandedChange = {
-                    expanded = !expanded
-                }
-            ) {
-                OutlinedTextField(
-                    value = selectedUserType,
-                    onValueChange = {  },
-                    readOnly = true,
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                Image(
                     modifier = Modifier
-                        .menuAnchor(),
-                    shape = RoundedCornerShape(20.dp),
-                    textStyle = TextStyle(textAlign = TextAlign.Center)
+                        .size(200.dp)
+                        .padding(24.dp),
+                    painter = painterResource(id = R.drawable.nbslogo),
+                    contentDescription = "NBS LOGO"
                 )
 
-                ExposedDropdownMenu(
+                Text(
+                    text = "Welcome to NBSC Attendance App!",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "Please sign up using your school email",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    OutlinedTextField(
+                        value = firstName,
+                        onValueChange = { firstName = it.uppercase() },
+                        label = { Text("First Name") },
+                        modifier = Modifier.weight(1f),
+                        singleLine = true,
+                        shape = RoundedCornerShape(20.dp)
+                    )
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    OutlinedTextField(
+                        value = lastName,
+                        onValueChange = { lastName = it.uppercase() },
+                        label = { Text("Last Name") },
+                        modifier = Modifier.weight(1f),
+                        singleLine = true,
+                        shape = RoundedCornerShape(20.dp)
+                    )
+                }
+
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = { email = it },
+                    label = { Text("Email") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    shape = RoundedCornerShape(20.dp)
+                )
+
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    label = { Text("Password") },
+                    trailingIcon = {
+                        IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                            Icon(
+                                imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                                contentDescription = "Toggle password visibility"
+                            )
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    shape = RoundedCornerShape(20.dp)
+                )
+
+                OutlinedTextField(
+                    value = reEnterPassword,
+                    onValueChange = { reEnterPassword = it },
+                    label = { Text("Re-enter Password") },
+                    trailingIcon = {
+                        IconButton(onClick = {
+                            isReEnterPasswordVisible = !isReEnterPasswordVisible
+                        }) {
+                            Icon(
+                                imageVector = if (isReEnterPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                                contentDescription = "Toggle password visibility"
+                            )
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    shape = RoundedCornerShape(20.dp)
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                ExposedDropdownMenuBox(
                     expanded = expanded,
-                    onDismissRequest = { expanded = false }
-                ) {
-                    userType.forEach { item ->
-                        DropdownMenuItem(
-                            text = { Text(text = item) },
-                            onClick = {
-                                selectedUserType = item
-                                expanded = false
-                                showToast(context, item)
-                            }
-                        )
+                    onExpandedChange = {
+                        expanded = !expanded
                     }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            ExposedDropdownMenuBox(
-                expanded = expandedDepartment,
-                onExpandedChange = {
-                    expandedDepartment = !expandedDepartment
-                }
-            ) {
-                OutlinedTextField(
-                    value = selectedDepartment,
-                    onValueChange = {  },
-                    readOnly = true,
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedDepartment) },
-                    modifier = Modifier
-                        .menuAnchor(),
-                    shape = RoundedCornerShape(20.dp),
-                    textStyle = TextStyle(textAlign = TextAlign.Center)
-                )
-
-                ExposedDropdownMenu(
-                    expanded = expandedDepartment,
-                    onDismissRequest = { expandedDepartment = false }
                 ) {
-                    program.forEach { item ->
-                        DropdownMenuItem(
-                            text = { Text(text = item) },
-                            onClick = {
-                                selectedDepartment = item
-                                expandedDepartment = false
-                                showToast(context, item)
-                            }
-                        )
-                    }
-                }
-            }
+                    OutlinedTextField(
+                        value = selectedUserType,
+                        onValueChange = { },
+                        readOnly = true,
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                        modifier = Modifier
+                            .menuAnchor(),
+                        shape = RoundedCornerShape(20.dp),
+                        textStyle = TextStyle(textAlign = TextAlign.Center)
+                    )
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Button(
-                onClick = {
-                    coroutineScope.launch {
-                        val result = viewModel.signUp(
-                            firstName,
-                            lastName,
-                            email,
-                            password,
-                            reEnterPassword,
-                            selectedUserType,
-                            selectedDepartment,
-                            status = "Active"
-                        )
-                        when (result) {
-                            is SignUpResult.Success -> {
-                                navController.navigate(AuthRoute.SignIn.name)
-                                showToast(context, "Signed up successfully!")
-                            }
-
-                            is SignUpResult.Error -> {
-                                showToast(context, result.message)
-                            }
+                    ExposedDropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        userType.forEach { item ->
+                            DropdownMenuItem(
+                                text = { Text(text = item) },
+                                onClick = {
+                                    selectedUserType = item
+                                    expanded = false
+                                    showToast(context, item)
+                                }
+                            )
                         }
                     }
-                },
-                shape = RoundedCornerShape(50.dp),
-                modifier = Modifier
-                    .size(width = 350.dp,height = 50.dp)
-            ) {
-                Text(
-                    text = "Sign Up",
-                    color = Color.White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Normal
-                )
-            }
+                }
 
-            Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
-            Row(
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "Already have an account? ",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Normal
-                )
-
-                ClickableText(
-                    text = AnnotatedString("Sign In"),
-                    onClick = { navController.navigate(AuthRoute.SignIn.name) },
-                    style = TextStyle(
-                        color = Color.Red,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                ExposedDropdownMenuBox(
+                    expanded = expandedDepartment,
+                    onExpandedChange = {
+                        expandedDepartment = !expandedDepartment
+                    }
+                ) {
+                    OutlinedTextField(
+                        value = selectedDepartment,
+                        onValueChange = { },
+                        readOnly = true,
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedDepartment) },
+                        modifier = Modifier
+                            .menuAnchor(),
+                        shape = RoundedCornerShape(20.dp),
+                        textStyle = TextStyle(textAlign = TextAlign.Center)
                     )
-                )
+
+                    ExposedDropdownMenu(
+                        expanded = expandedDepartment,
+                        onDismissRequest = { expandedDepartment = false }
+                    ) {
+                        program.forEach { item ->
+                            DropdownMenuItem(
+                                text = { Text(text = item) },
+                                onClick = {
+                                    selectedDepartment = item
+                                    expandedDepartment = false
+                                    showToast(context, item)
+                                }
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(35.dp))
+
+                Button(
+                    onClick = {
+                        coroutineScope.launch {
+                            val result = viewModel.signUp(
+                                firstName,
+                                lastName,
+                                email,
+                                password,
+                                reEnterPassword,
+                                selectedUserType,
+                                selectedDepartment,
+                                status = "Active"
+                            )
+                            when (result) {
+                                is SignUpResult.Success -> {
+                                    navController.navigate(AuthRoute.SignIn.name)
+                                    showToast(context, "Signed up successfully!")
+                                }
+
+                                is SignUpResult.Error -> {
+                                    showToast(context, result.message)
+                                }
+                            }
+                        }
+                    },
+                    shape = RoundedCornerShape(10.dp),
+                    modifier = Modifier
+                        .size(width = 250.dp, height = 40.dp)
+                ) {
+                    Text(
+                        text = "Sign Up",
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(vertical = 16.dp)
+                ) {
+                    Text(
+                        text = "Already have an account? ",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+
+                    ClickableText(
+                        text = AnnotatedString("Sign In"),
+                        onClick = { navController.navigate(AuthRoute.SignIn.name) },
+                        style = TextStyle(
+                            color = Color.Red,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                }
             }
         }
     }

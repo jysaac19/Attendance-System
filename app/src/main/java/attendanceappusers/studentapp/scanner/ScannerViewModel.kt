@@ -2,11 +2,10 @@ package attendanceappusers.studentapp.scanner
 
 import androidx.lifecycle.ViewModel
 import com.attendanceapp2.data.model.attendance.Attendance
-import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
-import com.attendanceapp2.data.model.user.LoggedInUserHolder
 import com.attendanceapp2.data.model.attendance.ScannedQRCodeHolder
+import com.attendanceapp2.data.model.user.LoggedInUserHolder
+import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
 import com.attendanceapp2.data.repositories.attendancce.OnlineAttendanceRepository
-import kotlinx.coroutines.flow.firstOrNull
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime

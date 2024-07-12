@@ -13,15 +13,10 @@ import com.attendanceapp2.data.model.subject.Schedule
 import com.attendanceapp2.data.model.subject.SelectedSubject
 import com.attendanceapp2.data.model.user.User
 import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
-import com.attendanceapp2.data.repositories.attendancce.OnlineAttendanceRepository
 import com.attendanceapp2.data.repositories.schedule.OfflineScheduleRepository
 import com.attendanceapp2.data.repositories.schedule.OnlineScheduleRepository
-import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
-import com.attendanceapp2.data.repositories.subject.OnlineSubjectRepository
 import com.attendanceapp2.data.repositories.user.OfflineUserRepository
-import com.attendanceapp2.data.repositories.user.OnlineUserRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
-import com.attendanceapp2.data.repositories.usersubjectcossref.OnlineUserSubjectCrossRefRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -31,16 +26,11 @@ import java.time.format.DateTimeFormatter
 
 class AdminSubjectViewModel(
     private val offlineUserRepository: OfflineUserRepository,
-    private val offlineSubjectRepository: OfflineSubjectRepository,
     private val offlineScheduleRepository: OfflineScheduleRepository,
     private val offlineAttendanceRepository: OfflineAttendanceRepository,
     private val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository,
 
-    private val onlineUserRepository: OnlineUserRepository,
-    private val onlineSubjectRepository: OnlineSubjectRepository,
     private val onlineScheduleRepository: OnlineScheduleRepository,
-    private val onlineAttendanceRepository: OnlineAttendanceRepository,
-    private val onlineUserSubjectCrossRefRepository: OnlineUserSubjectCrossRefRepository
 ) : ViewModel() {
     private val _subjectStudents = MutableStateFlow<List<User>>(emptyList())
     val subjectStudents: StateFlow<List<User>> get() = _subjectStudents

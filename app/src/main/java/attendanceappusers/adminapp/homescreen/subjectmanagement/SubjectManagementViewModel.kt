@@ -6,19 +6,14 @@ import com.attendanceapp2.data.model.subject.Subject
 import com.attendanceapp2.data.model.subject.UserSubjectCrossRef
 import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import com.attendanceapp2.data.repositories.subject.OnlineSubjectRepository
-import com.attendanceapp2.data.repositories.user.OfflineUserRepository
 import com.attendanceapp2.data.repositories.user.OnlineUserRepository
-import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.OnlineUserSubjectCrossRefRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class SubjectManagementViewModel(
     private val offlineSubjectRepository: OfflineSubjectRepository,
-    private val offlineUserRepository: OfflineUserRepository,
-    private val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository,
     private val onlineSubjectRepository: OnlineSubjectRepository,
     private val onlineUserRepository: OnlineUserRepository,
     private val onlineUserSubjectCrossRefRepository: OnlineUserSubjectCrossRefRepository,

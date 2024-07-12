@@ -1,6 +1,5 @@
 package attendanceappusers.adminapp.homescreen
 
-import android.graphics.Paint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,13 +18,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 
 @Composable
-fun HomeScreen(
+fun AdminHomeScreen(
     navController: NavController,
     viewModel : AdminHomeScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {

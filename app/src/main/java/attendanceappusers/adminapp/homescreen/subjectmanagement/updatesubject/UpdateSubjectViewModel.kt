@@ -1,18 +1,13 @@
 package attendanceappusers.adminapp.homescreen.subjectmanagement.updatesubject
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.Results
 import com.attendanceapp2.data.model.subject.Subject
 import com.attendanceapp2.data.model.subject.UserSubjectCrossRef
 import com.attendanceapp2.data.model.user.User
-import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
 import com.attendanceapp2.data.repositories.subject.OnlineSubjectRepository
 import com.attendanceapp2.data.repositories.user.OfflineUserRepository
-import com.attendanceapp2.data.repositories.user.OnlineUserRepository
-import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
 import com.attendanceapp2.data.repositories.usersubjectcossref.OnlineUserSubjectCrossRefRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,10 +15,7 @@ import kotlinx.coroutines.launch
 
 class UpdateSubjectViewModel(
     private val offlineUserRepository: OfflineUserRepository,
-    private val onlineUserRepository: OnlineUserRepository,
-    private val offlineSubjectRepository: OfflineSubjectRepository,
     private val onlineSubjectRepository: OnlineSubjectRepository,
-    private val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository,
     private val onlineUserSubjectCrossRefRepository: OnlineUserSubjectCrossRefRepository,
 ) : ViewModel() {
     val facultyList: Flow<List<User>> = offlineUserRepository.getUsersByUserType("Faculty")

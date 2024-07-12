@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -36,15 +35,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import attendanceappusers.studentapp.subjects.joinsubject.JoinSubjectDialog
 import attendanceappusers.studentapp.subjects.joinsubject.JoinSubjectViewModel
-import com.attendanceapp2.navigation.approutes.student.StudentSubjectsRoutes
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
-import com.attendanceapp2.data.model.user.LoggedInUserHolder
-import com.attendanceapp2.data.model.subject.SelectedSubject
-import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
-import com.attendanceapp2.screenuniversalcomponents.subjectuicomponents.SubjectCard
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
 import com.attendanceapp2.data.model.showToast
+import com.attendanceapp2.data.model.subject.SelectedSubject
+import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
+import com.attendanceapp2.data.model.user.LoggedInUserHolder
 import com.attendanceapp2.navigation.approutes.student.StudentMainRoute
+import com.attendanceapp2.navigation.approutes.student.StudentSubjectsRoutes
+import com.attendanceapp2.screenuniversalcomponents.subjectuicomponents.SubjectCard
 import kotlinx.coroutines.launch
 import java.time.Month
 

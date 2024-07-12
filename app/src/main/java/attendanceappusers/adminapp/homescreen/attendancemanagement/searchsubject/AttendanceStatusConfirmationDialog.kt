@@ -1,6 +1,5 @@
 package attendanceappusers.adminapp.homescreen.attendancemanagement.searchsubject
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,12 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.attendanceapp2.data.model.Results
-import com.attendanceapp2.data.model.subject.SelectedSubjectHolder.selectedSubject
 import com.attendanceapp2.data.model.user.SelectedStudent
-import com.attendanceapp2.data.model.user.SelectedStudentHolder.selectedStudent
-import java.time.LocalDate
-import java.time.LocalTime
 
 @Composable
 fun AttendanceStatusConfirmationDialog(

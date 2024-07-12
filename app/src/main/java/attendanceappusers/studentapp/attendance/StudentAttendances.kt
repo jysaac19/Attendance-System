@@ -29,8 +29,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
-import com.attendanceapp2.data.model.showToast
-import com.attendanceapp2.data.model.user.LoggedInUserHolder
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceCard
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnName
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.CustomDatePicker

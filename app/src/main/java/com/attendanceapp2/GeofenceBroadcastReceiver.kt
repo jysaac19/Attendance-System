@@ -1,5 +1,5 @@
 package com.attendanceapp2
-
-class GeofenceBroadcastReceiver {
-
-}
+//
+//class GeofenceBroadcastReceiver {
+//
+//}

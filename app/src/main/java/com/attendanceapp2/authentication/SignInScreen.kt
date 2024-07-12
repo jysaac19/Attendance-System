@@ -1,10 +1,8 @@
 package com.attendanceapp2.authentication
 
-import android.content.Context
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,7 +22,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,14 +39,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import attendanceappusers.adminapp.homescreen.subjectmanagement.updatesubject.UpdateSubjectViewModel
 import com.attendanceapp2.R
-import com.attendanceapp2.navigation.approutes.AuthRoute
-import com.attendanceapp2.data.model.user.LoggedInUserHolder
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
-import com.attendanceapp2.data.model.Results
 import com.attendanceapp2.data.model.showToast
+import com.attendanceapp2.navigation.approutes.AuthRoute
 import kotlinx.coroutines.launch
 
 
@@ -66,107 +60,115 @@ fun SignInScreen(
     val coroutineScope = rememberCoroutineScope()
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 100.dp),
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
 
         item {
-            Image(
+            Column (
                 modifier = Modifier
-                    .size(200.dp)
-                    .padding(24.dp),
-                painter = painterResource(id = R.drawable.nbslogo),
-                contentDescription = "NBS LOGO"
-            )
-
-            Text(
-                text = "Welcome to NBSC Attendance App!",
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold
-            )
-
-            Text(
-                text = "Please sign in using your school email",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
-                label = { Text("Email") },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                shape = RoundedCornerShape(20.dp)
-            )
-
-            OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
-                label = { Text("Password") },
-                trailingIcon = {
-                    IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-                        Icon(
-                            imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                            contentDescription = "Toggle password visibility"
-                        )
-                    }
-                },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                shape = RoundedCornerShape(20.dp)
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Button(
-                onClick = {
-                    coroutineScope.launch {
-                        val result = signInVM.validateSignIn(email, password)
-                        result.successMessage?.let {
-                            showToast(context, it)
-                        }
-                        result.failureMessage?.let {
-                            showToast(context, it)
-                        }
-                    }
-                },
-                shape = RoundedCornerShape(50.dp),
-                modifier = Modifier
-                    .size(width = 350.dp, height = 50.dp)
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
+                Image(
+                    modifier = Modifier
+                        .size(200.dp)
+                        .padding(24.dp),
+                    painter = painterResource(id = R.drawable.nbslogo),
+                    contentDescription = "NBS LOGO"
+                )
+
                 Text(
-                    text = "Sign In",
-                    color = Color.White,
+                    text = "Welcome to NBSC Attendance App!",
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.Bold
                 )
-            }
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.padding(vertical = 16.dp)
-            ) {
                 Text(
-                    text = "Create account ",
+                    text = "Please sign in using your school email",
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.SemiBold
                 )
 
-                ClickableText(
-                    text = AnnotatedString("Sign Up"),
-                    onClick = { navController.navigate(AuthRoute.SignUp.name) },
-                    style = TextStyle(
-                        color = Color.Red,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = { email = it },
+                    label = { Text("Email") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    shape = RoundedCornerShape(20.dp)
                 )
+
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    label = { Text("Password") },
+                    trailingIcon = {
+                        IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                            Icon(
+                                imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                                contentDescription = "Toggle password visibility"
+                            )
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    shape = RoundedCornerShape(20.dp)
+                )
+
+                Spacer(modifier = Modifier.height(35.dp))
+
+                Button(
+                    onClick = {
+                        coroutineScope.launch {
+                            val result = signInVM.validateSignIn(email, password)
+                            result.successMessage?.let {
+                                showToast(context, it)
+                            }
+                            result.failureMessage?.let {
+                                showToast(context, it)
+                            }
+                        }
+                    },
+                    shape = RoundedCornerShape(10.dp),
+                    modifier = Modifier
+                        .size(width = 250.dp,height = 40.dp)
+                ) {
+                    Text(
+                        text = "Sign In",
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(vertical = 16.dp)
+                ) {
+                    Text(
+                        text = "Create account ",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+
+                    ClickableText(
+                        text = AnnotatedString("Sign Up"),
+                        onClick = { navController.navigate(AuthRoute.SignUp.name) },
+                        style = TextStyle(
+                            color = Color.Red,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                }
             }
         }
     }

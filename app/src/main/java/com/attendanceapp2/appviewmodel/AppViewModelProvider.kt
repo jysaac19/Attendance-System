@@ -16,7 +16,7 @@ import attendanceappusers.adminapp.homescreen.usermanagement.UserManagementViewM
 import attendanceappusers.adminapp.homescreen.usermanagement.adduser.AddUserViewModel
 import attendanceappusers.adminapp.homescreen.usermanagement.updateuser.UpdateUserViewModel
 import attendanceappusers.adminapp.subject.adminsubject.AdminSubjectViewModel
-import attendanceappusers.adminapp.subject.adminsubjectattendacne.AdminSubjectAttendanceViewModel
+import attendanceappusers.adminapp.subject.adminsubjectattendance.AdminSubjectAttendanceViewModel
 import attendanceappusers.adminapp.subject.adminsubjectlist.AdminSubjectListViewModel
 import attendanceappusers.facultyapp.qrscreen.FacultyQRGeneratorViewModel
 import attendanceappusers.facultyapp.attendances.FacultyAttendanceViewModel
@@ -49,7 +49,6 @@ object AppViewModelProvider {
 
         initializer {
             JoinSubjectViewModel(
-                nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository,
                 nbsAttendanceApplication().container.offlineSubjectRepository,
 
                 nbsAttendanceApplication().container.onlineUserSubjectCrossRefRepository,
@@ -87,17 +86,8 @@ object AppViewModelProvider {
         //Sign In ViewModel
         initializer {
             SignInViewModel(
-                nbsAttendanceApplication().container.offlineUserRepository,
-                nbsAttendanceApplication().container.offlineSubjectRepository,
-                nbsAttendanceApplication().container.offlineAttendanceRepository,
-                nbsAttendanceApplication().container.offlineScheduleRepository,
-                nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository,
 
                 nbsAttendanceApplication().container.onlineUserRepository,
-                nbsAttendanceApplication().container.onlineSubjectRepository,
-                nbsAttendanceApplication().container.onlineAttendanceRepository,
-                nbsAttendanceApplication().container.onlineScheduleRepository,
-                nbsAttendanceApplication().container.onlineUserSubjectCrossRefRepository,
                 SubjectViewModel(
                     nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository,
                     nbsAttendanceApplication().container.offlineSubjectRepository,
@@ -259,10 +249,7 @@ object AppViewModelProvider {
         initializer {
             UpdateSubjectViewModel(
                 nbsAttendanceApplication().container.offlineUserRepository,
-                nbsAttendanceApplication().container.onlineUserRepository,
-                nbsAttendanceApplication().container.offlineSubjectRepository,
                 nbsAttendanceApplication().container.onlineSubjectRepository,
-                nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository,
                 nbsAttendanceApplication().container.onlineUserSubjectCrossRefRepository
             )
         }
@@ -277,16 +264,11 @@ object AppViewModelProvider {
         initializer {
             AdminSubjectViewModel(
                 nbsAttendanceApplication().container.offlineUserRepository,
-                nbsAttendanceApplication().container.offlineSubjectRepository,
                 nbsAttendanceApplication().container.offlineScheduleRepository,
                 nbsAttendanceApplication().container.offlineAttendanceRepository,
                 nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository,
 
-                nbsAttendanceApplication().container.onlineUserRepository,
-                nbsAttendanceApplication().container.onlineSubjectRepository,
-                nbsAttendanceApplication().container.onlineScheduleRepository,
-                nbsAttendanceApplication().container.onlineAttendanceRepository,
-                nbsAttendanceApplication().container.onlineUserSubjectCrossRefRepository,
+                nbsAttendanceApplication().container.onlineScheduleRepository
             )
         }
 
@@ -317,8 +299,6 @@ object AppViewModelProvider {
         initializer {
             SubjectManagementViewModel(
                 nbsAttendanceApplication().container.offlineSubjectRepository,
-                nbsAttendanceApplication().container.offlineUserRepository,
-                nbsAttendanceApplication().container.offlineUserSubjectCrossRefRepository,
 
                 nbsAttendanceApplication().container.onlineSubjectRepository,
                 nbsAttendanceApplication().container.onlineUserRepository,
@@ -329,7 +309,6 @@ object AppViewModelProvider {
 
         initializer {
             NotificationViewModel(
-                nbsAttendanceApplication().container.offlineNotifRepository,
                 nbsAttendanceApplication().container.onlineNotifRepository
             )
         }

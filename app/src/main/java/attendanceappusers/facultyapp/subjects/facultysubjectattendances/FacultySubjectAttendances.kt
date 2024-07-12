@@ -34,7 +34,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
-import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.navigation.approutes.faculty.FacultySubjectsRoutes
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceCard
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnName

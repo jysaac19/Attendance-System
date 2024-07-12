@@ -1,4 +1,4 @@
-package attendanceappusers.adminapp.subject.adminsubjectattendacne
+package attendanceappusers.adminapp.subject.adminsubjectattendance
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

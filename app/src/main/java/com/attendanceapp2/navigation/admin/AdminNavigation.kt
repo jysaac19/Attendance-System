@@ -17,7 +17,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import attendanceappusers.adminapp.attendance.AdminAttendanceList
-import attendanceappusers.adminapp.homescreen.HomeScreen
+import attendanceappusers.adminapp.homescreen.AdminHomeScreen
 import attendanceappusers.adminapp.homescreen.usermanagement.adduser.AddUserScreen
 import attendanceappusers.adminapp.homescreen.attendancemanagement.AttendanceManagementScreen
 import attendanceappusers.adminapp.homescreen.attendancemanagement.searchsubject.SearchSubjectScreen
@@ -31,7 +31,7 @@ import attendanceappusers.adminapp.notification.Notification
 import attendanceappusers.adminapp.profile.AdminProfileScreen
 import attendanceappusers.adminapp.subject.adminsubjectlist.AdminSubjectListScreen
 import attendanceappusers.adminapp.subject.adminsubject.AdminSubjectScreen
-import attendanceappusers.adminapp.subject.adminsubjectattendacne.AdminSubjectAttendanceScreen
+import attendanceappusers.adminapp.subject.adminsubjectattendance.AdminSubjectAttendanceScreen
 import com.attendanceapp2.navigation.approutes.admin.AdminHomeScreen
 import com.attendanceapp2.navigation.approutes.admin.AdminMainRoute
 import com.attendanceapp2.navigation.approutes.admin.AdminSubject
@@ -69,7 +69,7 @@ fun AdminNavigation() {
                 //Scope: HomeScreen
                 navigation(startDestination = AdminHomeScreen.HomeScreen.name, route = AdminMainRoute.Home.name){
                     composable(route = AdminHomeScreen.HomeScreen.name) {
-                        HomeScreen(navController)
+                        AdminHomeScreen(navController)
                     }
                     composable(route = AdminHomeScreen.AddSubject.name) {
                         AddSubjectScreen(navController)

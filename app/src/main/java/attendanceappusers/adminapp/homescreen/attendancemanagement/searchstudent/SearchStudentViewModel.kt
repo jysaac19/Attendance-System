@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.user.User
 import com.attendanceapp2.data.repositories.user.OfflineUserRepository
 import com.attendanceapp2.data.repositories.user.OnlineUserRepository
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

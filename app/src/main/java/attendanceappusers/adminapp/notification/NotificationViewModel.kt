@@ -2,14 +2,12 @@ package attendanceappusers.adminapp.notification
 
 import androidx.lifecycle.ViewModel
 import com.attendanceapp2.data.model.Notifications
-import com.attendanceapp2.data.repositories.notification.OfflineNotifRepository
 import com.attendanceapp2.data.repositories.notification.OnlineNotifRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
 
 class NotificationViewModel(
-    private val offlineNotifRepository: OfflineNotifRepository,
     private val onlineNotifRepository: OnlineNotifRepository
 ) : ViewModel() {
 

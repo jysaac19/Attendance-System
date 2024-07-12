@@ -20,7 +20,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -33,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import attendanceappusers.adminapp.homescreen.ConfirmDialog
-import attendanceappusers.adminapp.homescreen.subjectmanagement.updatesubject.UpdateSubjectViewModel
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.appviewmodel.screenviewmodel.ProfileViewModel
 import com.attendanceapp2.data.model.user.LoggedInUserHolder

@@ -1,7 +1,6 @@
 package attendanceappusers.studentapp.scanner
 
 import android.graphics.ImageFormat
-import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.attendanceapp2.data.model.attendance.ScannedQRCode
@@ -14,8 +13,6 @@ import com.google.zxing.MultiFormatReader
 import com.google.zxing.PlanarYUVLuminanceSource
 import com.google.zxing.common.HybridBinarizer
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.nio.ByteBuffer
 
 

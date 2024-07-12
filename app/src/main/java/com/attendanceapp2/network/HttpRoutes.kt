@@ -3,9 +3,9 @@ package com.attendanceapp2.network
 object HttpRoutes {
 
     //HOME
-    private const val BASE_URL = "http://192.168.254.184:5555"
+    private const val BASE_URL = "http://192.168.254.191:5555"
     //SCHOOL
-//    private const val BASE_URL = "http://192.168.8.133:5555"
+//    private const val BASE_URL = "http://192.168.119.144:5555"
 
     //LOCAL API
     const val ATTENDANCES = "${BASE_URL}/attendance"

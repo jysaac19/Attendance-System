@@ -4,11 +4,6 @@ plugins {
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
     id("kotlinx-serialization")
-    //id("org.jetbrains.kotlin.plugin.serialization")
-    //id("org.jetbrains.kotlin.plugin.serialization") version "1.8.21"
-
-    //id ("org.jetbrains.kotlin.multiplatform") version "1.9.22"
-    //id ("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
 }
 
 android {

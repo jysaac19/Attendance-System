@@ -1,11 +1,9 @@
 package com.attendanceapp2.authentication
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.attendanceapp2.data.model.user.User
 import com.attendanceapp2.data.repositories.user.OfflineUserRepository
 import com.attendanceapp2.data.repositories.user.OnlineUserRepository
-import kotlinx.coroutines.launch
 
 sealed class SignUpResult {
     data class Success(val user: User) : SignUpResult()

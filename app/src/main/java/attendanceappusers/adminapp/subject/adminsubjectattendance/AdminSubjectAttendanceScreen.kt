@@ -1,4 +1,4 @@
-package attendanceappusers.adminapp.subject.adminsubjectattendacne
+package attendanceappusers.adminapp.subject.adminsubjectattendance
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

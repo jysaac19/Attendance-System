@@ -1,36 +1,17 @@
 package com.attendanceapp2.authentication
 
 import androidx.lifecycle.ViewModel
-import com.attendanceapp2.data.model.user.LoggedInUser
-import com.attendanceapp2.data.model.user.LoggedInUserHolder
 import com.attendanceapp2.appviewmodel.screenviewmodel.SubjectViewModel
 import com.attendanceapp2.data.model.Results
-import com.attendanceapp2.data.repositories.attendancce.OfflineAttendanceRepository
-import com.attendanceapp2.data.repositories.attendancce.OnlineAttendanceRepository
-import com.attendanceapp2.data.repositories.schedule.OfflineScheduleRepository
-import com.attendanceapp2.data.repositories.schedule.OnlineScheduleRepository
-import com.attendanceapp2.data.repositories.subject.OfflineSubjectRepository
-import com.attendanceapp2.data.repositories.subject.OnlineSubjectRepository
-import com.attendanceapp2.data.repositories.user.OfflineUserRepository
+import com.attendanceapp2.data.model.user.LoggedInUser
+import com.attendanceapp2.data.model.user.LoggedInUserHolder
 import com.attendanceapp2.data.repositories.user.OnlineUserRepository
-import com.attendanceapp2.data.repositories.usersubjectcossref.OfflineUserSubjectCrossRefRepository
-import com.attendanceapp2.data.repositories.usersubjectcossref.OnlineUserSubjectCrossRefRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SignInViewModel(
-    private val offlineUserRepository: OfflineUserRepository,
-    private val offlineSubjectRepository: OfflineSubjectRepository,
-    private val offlineAttendanceRepository: OfflineAttendanceRepository,
-    private val offlineScheduleRepository: OfflineScheduleRepository,
-    private val offlineUserSubjectCrossRefRepository: OfflineUserSubjectCrossRefRepository,
-
     private val onlineUserRepository: OnlineUserRepository,
-    private val onlineSubjectRepository: OnlineSubjectRepository,
-    private val onlineAttendanceRepository: OnlineAttendanceRepository,
-    private val onlineScheduleRepository: OnlineScheduleRepository,
-    private val onlineUserSubjectCrossRefRepository: OnlineUserSubjectCrossRefRepository,
     private val subjectViewModel: SubjectViewModel
 ) : ViewModel() {
 
