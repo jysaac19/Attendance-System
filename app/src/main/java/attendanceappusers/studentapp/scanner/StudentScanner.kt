@@ -48,9 +48,7 @@ fun StudentScanner (
 ) {
     var attendanceResult by remember { mutableStateOf<String?>(null) }
     var isSuccess by remember { mutableStateOf(false) }
-    // Collect the scanned QR code state
     val scannedQRCode by ScannedQRCodeHolder.scannedQRCodeHolder.collectAsState()
-
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
@@ -68,6 +66,7 @@ fun StudentScanner (
             hasCameraPermission = granted
         }
     )
+
     LaunchedEffect(key1 = true) {
         launcher.launch(android.Manifest.permission.CAMERA)
     }
@@ -83,9 +82,9 @@ fun StudentScanner (
                     .drawWithContent {
                         val canvasWidth = size.width
                         val canvasHeight = size.height
-                        val cornerRadius = 16.dp.toPx()
+                        val cornerRadius = 20.dp.toPx()
                         val width = canvasWidth * 0.6f
-                        val height = width * 2 / 2f
+                        val height = width
 
                         drawContent()
 
@@ -111,7 +110,7 @@ fun StudentScanner (
                             size = Size(width, height),
                             cornerRadius = CornerRadius(cornerRadius),
                             color = Color.White,
-                            style = Stroke(2.dp.toPx())
+                            style = Stroke(3.dp.toPx())
                         )
 
                         // Adding the texts below the overlay box

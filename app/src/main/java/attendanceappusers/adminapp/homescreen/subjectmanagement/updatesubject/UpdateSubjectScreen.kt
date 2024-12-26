@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,8 +13,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -129,13 +133,19 @@ fun UpdateSubjectScreen(
                 horizontalArrangement = Arrangement.SpaceAround,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 50.dp)
+                    .padding(top = 8.dp)
             ) {
-                FloatingActionButton(
+                Button(
                     onClick = { navController.popBackStack() },
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(start = 4.dp)
                         .weight(1f)
+                        .height(50.dp),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                    )
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -154,7 +164,7 @@ fun UpdateSubjectScreen(
                     }
                 }
 
-                FloatingActionButton(
+                Button(
                     onClick = {
                         result = viewModel.validateFields(
                             Subject(
@@ -174,8 +184,14 @@ fun UpdateSubjectScreen(
                         }
                     },
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(start = 4.dp)
                         .weight(1f)
+                        .height(50.dp),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                    )
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(16.dp),

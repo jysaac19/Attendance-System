@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,21 +30,19 @@ fun AttendanceCard(
 ) {
     Card(
         modifier = Modifier
-            .padding(vertical = 4.dp)
+            .padding(bottom = 8.dp)
             .fillMaxWidth()
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp),
+                .padding(top = 8.dp, bottom = 4.dp, start = 16.dp, end = 16.dp),
         ) {
-
             Row(
-                modifier = Modifier
-                    .padding(8.dp),
+                modifier = Modifier,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column (
-                    modifier = Modifier.weight(1.5f),
+                    modifier = Modifier.weight(1f),
                 ) {
                     Text(text = "Name:", fontSize = 12.sp)
                     Text(text = "Subject:", fontSize = 12.sp)
@@ -51,7 +52,7 @@ fun AttendanceCard(
                 }
 
                 Column (
-                    modifier = Modifier.weight(4f),
+                    modifier = Modifier.weight(2f),
                 ) {
                     Text(text = "${attendance.firstname} ${attendance.lastname}", fontSize = 10.sp)
                     Text(text = attendance.subjectName, fontSize = 10.sp)
@@ -62,20 +63,38 @@ fun AttendanceCard(
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
             ) {
-
-                FloatingActionButton(
+                Button(
                     onClick = onDelete,
-                    modifier = Modifier.padding(end = 8.dp)
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        contentColor = MaterialTheme.colorScheme.error
+                    )
                 ) {
-                    Icon(Icons.Default.Delete, contentDescription = "Delete")
+                    Row (
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
+                    ) {
+                        Text("Delete")
+                        Icon(Icons.Default.Delete, contentDescription = "Delete")
+                    }
                 }
 
-                FloatingActionButton(
-                    onClick = onUpdate
+                Button(
+                    onClick = onUpdate,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        contentColor = MaterialTheme.colorScheme.error
+                    )
                 ) {
-                    Icon(Icons.Default.Edit, contentDescription = "Edit")
+                    Row (
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
+                    ) {
+                        Text("Update")
+                        Icon(Icons.Default.Edit, contentDescription = null)
+                    }
                 }
             }
         }

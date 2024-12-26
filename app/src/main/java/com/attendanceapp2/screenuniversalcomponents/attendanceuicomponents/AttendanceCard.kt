@@ -3,6 +3,7 @@ package com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,25 +24,25 @@ import com.attendanceapp2.data.model.attendance.Attendance
 fun AttendanceCard(
     attendance: Attendance,
     backgroundColor: Color,
+    contentColor: Color
 ) {
     Card(
+        colors = CardDefaults.cardColors(
+            containerColor = backgroundColor,
+            contentColor = contentColor
+        ),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 2.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = backgroundColor
-        ),
-        shape = RoundedCornerShape(20.dp)
+            .height(50.dp),
+        shape = RoundedCornerShape(15.dp)
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -49,31 +50,31 @@ fun AttendanceCard(
                     attendance.subjectCode,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center,
-                    fontSize = 10.sp
+                    fontSize = 12.sp
                 )
                 Text(
                     attendance.lastname,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center,
-                    fontSize = 10.sp
+                    fontSize = 12.sp
                 )
                 Text(
                     attendance.firstname,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center,
-                    fontSize = 10.sp
+                    fontSize = 12.sp
                 )
                 Text(
                     attendance.date,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center,
-                    fontSize = 10.sp
+                    fontSize = 12.sp
                 )
                 Text(
                     attendance.status,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center,
-                    fontSize = 10.sp
+                    fontSize = 12.sp
                 )
             }
         }

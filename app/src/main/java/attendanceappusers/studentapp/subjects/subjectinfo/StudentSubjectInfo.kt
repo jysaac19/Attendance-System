@@ -4,13 +4,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,184 +43,183 @@ fun StudentSubjectInfo(
         selectedSubject?.let { viewModel.updateOfflineSchedules(it.id) }
     }
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(horizontal = 24.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically)
     ) {
-        Card(
-            onClick = { },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-        ) {
-            Column(
+        item {
+            Card(
                 modifier = Modifier
-                    .padding(16.dp)
                     .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(
-                    text = "Subject Information",
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 20.sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                if (selectedSubject != null) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp, 8.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Subject Information",
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 20.sp,
                         modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(
-                            text = "Code - Name:",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 12.sp,
-                            modifier = Modifier.weight(1.5f)
-                        )
-                        Text(
-                            text = "${selectedSubject.code} - ${selectedSubject.name}",
-                            fontSize = 10.sp,
-                            modifier = Modifier.weight(3f)
-                        )
-                    }
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(
-                            text = "Faculty:",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 12.sp,
-                            modifier = Modifier.weight(1.5f)
-                        )
-                        Text(
-                            text = selectedSubject.faculty,
-                            fontSize = 10.sp,
-                            modifier = Modifier.weight(3f)
-                        )
-                    }
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(
-                            text = "Room:",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 12.sp,
-                            modifier = Modifier.weight(1.5f)
-                        )
-                        Text(
-                            text = selectedSubject.room,
-                            fontSize = 10.sp,
-                            modifier = Modifier.weight(3f)
-                        )
-                    }
-                } else {
-                    Text(text = "No subject selected")
-                }
-            }
-        }
-
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Subject Schedules",
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 20.sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                if (subjectSchedules.value.isNotEmpty()) {
-                    subjectSchedules.value.forEach { schedule ->
+                    )
+                    if (selectedSubject != null) {
                         Row(
-                            verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(2.dp)
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
-                                text = "${schedule.day}:",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 12.sp,
-                                modifier = Modifier.weight(1.5f)
-                            )
-                            Text(
-                                text = "${schedule.start} - ${schedule.end}",
-                                fontSize = 12.sp,
-                                modifier = Modifier.weight(3f)
-                            )
+                            Column(
+                                modifier = Modifier.weight(1f),
+                            ) {
+                                Text(
+                                    text = "Code - Name:",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 12.sp
+                                )
+                                Text(
+                                    text = "Faculty:",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 12.sp
+                                )
+                                Text(
+                                    text = "Room:",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 12.sp
+                                )
+                            }
+
+                            Column(
+                                modifier = Modifier.weight(2f),
+                            ) {
+                                Text(
+                                    text = "${selectedSubject.code} - ${selectedSubject.name}",
+                                    fontSize = 12.sp
+                                )
+                                Text(
+                                    text = selectedSubject.faculty,
+                                    fontSize = 12.sp
+                                )
+                                Text(
+                                    text = selectedSubject.room,
+                                    fontSize = 12.sp
+                                )
+                            }
                         }
+                    } else {
+                        Text(text = "No subject selected")
                     }
-                } else {
-                    Text(text = "No schedules available", fontSize = 12.sp)
                 }
             }
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            FloatingActionButton(
-                onClick = { navController.navigate(StudentMainRoute.Subjects.name) },
+        item {
+            Card(
                 modifier = Modifier
-                    .padding(8.dp)
-                    .weight(1f)
+                    .fillMaxWidth(),
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp, 8.dp)
+                        .fillMaxWidth()
                 ) {
-                    Icon(
-                        Icons.Default.ArrowBack,
-                        contentDescription = "Back"
+                    Text(
+                        text = "Subject Schedules",
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 20.sp,
+                        modifier = Modifier.fillMaxWidth()
                     )
 
-                    Text(
-                        text = "Back",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
+                    if (subjectSchedules.value.isNotEmpty()) {
+                        subjectSchedules.value.forEach { schedule ->
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column (
+                                    modifier = Modifier.weight(1f),
+                                ) {
+                                    Text(
+                                        text = "${schedule.day}:",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 12.sp
+                                    )
+                                }
+                                Column (
+                                    modifier = Modifier.weight(2f),
+                                ) {
+                                    Text(
+                                        text = "${schedule.start} - ${schedule.end}",
+                                        fontSize = 12.sp
+                                    )
+                                }
+                            }
+                        }
+                    } else {
+                        Text(text = "No schedules available", fontSize = 12.sp, modifier = Modifier.align(Alignment.CenterHorizontally))
+                    }
                 }
             }
+        }
 
-
-            FloatingActionButton(
-                onClick = { navController.navigate(StudentSubjectsRoutes.StudentSubjectAttendances.name) },
+        item {
+            Row(
                 modifier = Modifier
-                    .padding(8.dp)
-                    .weight(1f)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                FloatingActionButton(
+                    onClick = { navController.navigate(StudentMainRoute.Subjects.name) },
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    modifier = Modifier
+                        .height(50.dp)
+                        .weight(1f)
                 ) {
-                    Text(
-                        text = "View Attendances",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Default.ArrowBack,
+                            contentDescription = "Back"
+                        )
 
-                    Icon(
-                        Icons.Default.ArrowForward,
-                        contentDescription = "Go To Subject Attendances"
-                    )
+                        Text(
+                            text = "Back",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                }
+
+
+                FloatingActionButton(
+                    onClick = { navController.navigate(StudentSubjectsRoutes.StudentSubjectAttendances.name) },
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    modifier = Modifier
+                        .height(50.dp)
+                        .weight(1f)
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "View Attendances",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+
+                        Icon(
+                            Icons.Default.ArrowForward,
+                            contentDescription = "Go To Subject Attendances"
+                        )
+                    }
                 }
             }
         }

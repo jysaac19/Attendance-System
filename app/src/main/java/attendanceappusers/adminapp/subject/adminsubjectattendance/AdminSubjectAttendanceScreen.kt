@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,7 +36,7 @@ import androidx.navigation.NavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceCard
-import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnName
+import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnNames
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.CustomDatePicker
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -127,48 +129,45 @@ fun AdminSubjectAttendanceScreen (
                 }
             }
 
-            Row(
+            FloatingActionButton(
+                onClick = { navController.navigateUp() },
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(vertical = 8.dp)
+                    .fillMaxWidth(),
+                contentColor = MaterialTheme.colorScheme.error,
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                shape = RoundedCornerShape(20.dp)
             ) {
-                FloatingActionButton(
-                    onClick = { navController.navigateUp() },
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .weight(1f)
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            Icons.Default.ArrowBack,
-                            contentDescription = "Back to Subject Search"
-                        )
+                    Icon(
+                        Icons.Default.ArrowBack,
+                        contentDescription = "Back to Subject Search"
+                    )
 
-                        Text(
-                            text = "Back to Subject Information",
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
+                    Text(
+                        text = "Back to Subject Information",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
                 }
             }
         }
 
-        Spacer(modifier = Modifier.width(16.dp))
+        AttendanceColumnNames()
 
-        AttendanceColumnName()
-
-        LazyColumn {
+        LazyColumn  (
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             itemsIndexed(sortedAttendances) { index, attendance ->
-                val backgroundColor = if (index % 2 == 0) Color.Transparent else Color.Gray
+                val backgroundColor = if (index % 2 == 0) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.secondaryContainer
+                val contentColor = if (index % 2 == 0) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.secondary
                 AttendanceCard(
                     attendance = attendance,
-                    backgroundColor = backgroundColor // Set your desired background color here
+                    backgroundColor = backgroundColor,
+                    contentColor = contentColor
                 )
             }
         }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,10 +15,13 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -54,17 +58,16 @@ fun SearchStudentScreen(
 
     Column(
         modifier = Modifier
-            .padding(top = 20.dp, start = 16.dp, end = 16.dp),
+            .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         Text(
             "Select Student",
             fontSize = 35.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 24.dp, bottom = 16.dp)
         )
-
-        Spacer(modifier = Modifier.width(16.dp))
 
         OutlinedTextField(
             value = searchText,
@@ -85,16 +88,21 @@ fun SearchStudentScreen(
 
         Row(
             modifier = Modifier
-                .padding(vertical = 8.dp)
+                .padding(8.dp)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
         ) {
-            FloatingActionButton(
+            Button(
                 onClick = { navController.navigate(AdminHomeScreen.AttendanceManagement.name) },
                 modifier = Modifier
-                    .padding(8.dp)
                     .weight(1f)
+                    .height(50.dp),
+                shape = RoundedCornerShape(20.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    contentColor = MaterialTheme.colorScheme.error
+                )
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),

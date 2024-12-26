@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
@@ -16,6 +18,7 @@ import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -57,10 +60,8 @@ fun FacultySubjectScreen(
     val coroutineScope = rememberCoroutineScope()
     val subjectSchedules = viewModel.subjectSchedules.collectAsState()
     val selectedSubject = SelectedSubjectHolder.getSelectedSubject()
-
     val attendanceSummaries by adminSubVM.attendanceSummaries.collectAsState()
     var showDownloadDialog by remember { mutableStateOf(false) }
-
     var hasWritePermission by remember {
         mutableStateOf(
             ContextCompat.checkSelfPermission(
@@ -85,261 +86,266 @@ fun FacultySubjectScreen(
             adminSubVM.getSubjectsCurrentMonthAttendances(it)
         }
     }
-
     LaunchedEffect(selectedSubject) {
         selectedSubject?.let { viewModel.updateOfflineSchedules(it.id) }
     }
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(horizontal = 24.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically)
     ) {
-        Card(
-            onClick = { },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-        ) {
-            Column(
+        item {
+            Card(
                 modifier = Modifier
-                    .padding(16.dp)
                     .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(
-                    text = "Subject Information",
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 20.sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                if (selectedSubject != null) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp, 8.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Subject Information",
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 20.sp,
                         modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(
-                            text = "Code - Name:",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 12.sp,
-                            modifier = Modifier.weight(1.5f)
-                        )
-                        Text(
-                            text = "${selectedSubject.code} - ${selectedSubject.name}",
-                            fontSize = 10.sp,
-                            modifier = Modifier.weight(3f)
-                        )
-                    }
+                    )
+                    if (selectedSubject != null) {
+                        Row(
+                            modifier = Modifier
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column (
+                                modifier = Modifier.weight(1f),
+                            ) {
+                                Text(text = "Code/Name:", fontSize = 12.sp)
+                                Text(text = "Faculty:", fontSize = 12.sp)
+                                Text(text = "Room:", fontSize = 12.sp)
+                                Text(text = "Join Code:", fontSize = 12.sp)
+                            }
 
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(
-                            text = "Faculty:",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 12.sp,
-                            modifier = Modifier.weight(1.5f)
-                        )
-                        Text(
-                            text = selectedSubject.faculty,
-                            fontSize = 10.sp,
-                            modifier = Modifier.weight(3f)
-                        )
+                            Column (
+                                modifier = Modifier.weight(2f),
+                            ) {
+                                Text(text = "${selectedSubject.code} - ${selectedSubject.name}", fontSize = 12.sp)
+                                Text(text = "${selectedSubject.faculty}", fontSize = 12.sp)
+                                Text(text = selectedSubject.room, fontSize = 12.sp)
+                                Text(text = selectedSubject.joinCode, fontSize = 12.sp)
+                            }
+                        }
+                    } else {
+                        Text(text = "No schedules available", fontSize = 12.sp, modifier = Modifier.align(Alignment.CenterHorizontally))
                     }
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(
-                            text = "Room:",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 12.sp,
-                            modifier = Modifier.weight(1.5f)
-                        )
-                        Text(
-                            text = selectedSubject.room,
-                            fontSize = 10.sp,
-                            modifier = Modifier.weight(3f)
-                        )
-                    }
-                } else {
-                    Text(text = "No subject selected")
                 }
             }
         }
 
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-        ) {
-            Column(
+        item {
+            Card(
                 modifier = Modifier
-                    .padding(16.dp)
                     .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "Subject Schedules",
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 20.sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp, 8.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Subject Schedules",
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 20.sp,
+                        modifier = Modifier.fillMaxWidth()
+                    )
 
-                if (subjectSchedules.value.isNotEmpty()) {
-                    subjectSchedules.value.forEach { schedule ->
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(2.dp)
+                    if (subjectSchedules.value.isNotEmpty()) {
+                        subjectSchedules.value.forEach { schedule ->
+                            Row(
+                                modifier = Modifier
+                                    .padding(8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column (
+                                    modifier = Modifier.weight(1f),
+                                ) {
+                                    Text(
+                                        text = "${schedule.day}:",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 12.sp
+                                    )
+                                }
+                                Column (
+                                    modifier = Modifier.weight(2f),
+                                ) {
+                                    Text(
+                                        text = "${schedule.start} - ${schedule.end}",
+                                        fontSize = 12.sp
+                                    )
+                                }
+                            }
+                        }
+                    } else {
+                        Text(text = "No schedules available", fontSize = 12.sp)
+                    }
+                }
+            }
+        }
+
+        item {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth(),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp, 8.dp)
+                        .fillMaxWidth()
+                ) {
+                    val currentMonth =
+                        LocalDate.now().month.getDisplayName(TextStyle.FULL, Locale.getDefault())
+                    Text(
+                        text = "Attendance Overview for the month of $currentMonth",
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 20.sp,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Row(
+                        modifier = Modifier
+                            .padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            modifier = Modifier.weight(2f),
                         ) {
                             Text(
-                                text = "${schedule.day}:",
+                                text = "Student",
                                 fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
                                 fontSize = 12.sp,
-                                modifier = Modifier.weight(1.5f)
+                                modifier = Modifier
+                                    .weight(2f)
+                                    .fillMaxWidth()
                             )
+                        }
+
+                        Column(
+                            modifier = Modifier.weight(1f),
+                        ) {
                             Text(
-                                text = "${schedule.start} - ${schedule.end}",
+                                text = "Absences",
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
                                 fontSize = 12.sp,
-                                modifier = Modifier.weight(3f)
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxWidth()
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier.weight(1f),
+                        ) {
+                            Text(
+                                text = "Present",
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
+                                fontSize = 12.sp,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxWidth()
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier.weight(1f),
+                        ) {
+                            Text(
+                                text = "Late",
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
+                                fontSize = 12.sp,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxWidth()
                             )
                         }
                     }
-                } else {
-                    Text(text = "No schedules available", fontSize = 12.sp)
-                }
-            }
-        }
 
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
+                    val sortedAttendanceSummaries = attendanceSummaries.values.sortedByDescending { it.absentCount }
 
-                val currentMonth =
-                    LocalDate.now().month.getDisplayName(TextStyle.FULL, Locale.getDefault())
-                Text(
-                    text = "Attendance Overview for the month of $currentMonth",
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 20.sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp)
-                ) {
-                    Text(
-                        text = "Student",
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        fontSize = 12.sp,
-                        modifier = Modifier
-                            .weight(2f)
-                            .fillMaxWidth()
-                    )
-                    Text(
-                        text = "Absences",
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        fontSize = 12.sp,
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                    )
-                    Text(
-                        text = "Present",
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        fontSize = 12.sp,
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                    )
-                    Text(
-                        text = "Late",
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        fontSize = 12.sp,
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                    )
-                }
-
-                // Sorted attendance summaries
-                val sortedAttendanceSummaries =
-                    attendanceSummaries.values.sortedByDescending { it.absentCount }
-
-                sortedAttendanceSummaries.forEach { summary ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp)
-                    ) {
-                        Text(
-                            text = "${summary.firstname} ${summary.lastname}",
-                            textAlign = TextAlign.Center,
-                            fontSize = 12.sp,
+                    sortedAttendanceSummaries.forEach { summary ->
+                        Row(
                             modifier = Modifier
-                                .weight(2f)
-                                .fillMaxWidth()
-                        )
-                        Text(
-                            text = summary.absentCount.toString(),
-                            textAlign = TextAlign.Center,
-                            fontSize = 10.sp,
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                        )
-                        Text(
-                            text = summary.presentCount.toString(),
-                            textAlign = TextAlign.Center,
-                            fontSize = 10.sp,
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                        )
-                        Text(
-                            text = summary.lateCount.toString(),
-                            textAlign = TextAlign.Center,
-                            fontSize = 10.sp,
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                        )
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column(
+                                modifier = Modifier.weight(2f),
+                            ) {
+                                Text(
+                                    text = "${summary.firstname} ${summary.lastname}",
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 12.sp,
+                                    modifier = Modifier
+                                        .weight(2f)
+                                        .fillMaxWidth()
+                                )
+                            }
+                            Column(
+                                modifier = Modifier.weight(1f),
+                            ) {
+                                Text(
+                                    text = summary.absentCount.toString(),
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 10.sp,
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .fillMaxWidth()
+                                )
+                            }
+                            Column(
+                                modifier = Modifier.weight(1f),
+                            ) {
+                                Text(
+                                    text = summary.presentCount.toString(),
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 10.sp,
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .fillMaxWidth()
+                                )
+                            }
+                            Column(
+                                modifier = Modifier.weight(1f),
+                            ) {
+                                Text(
+                                    text = summary.lateCount.toString(),
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 10.sp,
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .fillMaxWidth()
+                                )
+                            }
+                        }
                     }
                 }
             }
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        item {
             FloatingActionButton(
-                onClick = { showDownloadDialog = true }, // Show the download dialog
+                onClick = { showDownloadDialog = true },
+                contentColor = MaterialTheme.colorScheme.error,
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                 modifier = Modifier
-                    .padding(8.dp)
-                    .weight(1f)
+                    .fillMaxWidth()
+                    .height(50.dp)
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -356,57 +362,61 @@ fun FacultySubjectScreen(
             }
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            FloatingActionButton(
-                onClick = { navController.navigate(FacultyMainRoute.Subjects.name) },
+        item {
+            Row(
                 modifier = Modifier
-                    .padding(8.dp)
-                    .weight(1f)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                FloatingActionButton(
+                    onClick = { navController.navigate(FacultyMainRoute.Subjects.name) },
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    modifier = Modifier
+                        .height(50.dp)
+                        .weight(1f)
                 ) {
-                    Icon(
-                        Icons.Default.ArrowBack,
-                        contentDescription = "Back"
-                    )
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Default.ArrowBack,
+                            contentDescription = "Back"
+                        )
 
-                    Text(
-                        text = "Back",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
+                        Text(
+                            text = "Back",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
                 }
-            }
 
 
-            FloatingActionButton(
-                onClick = { navController.navigate(FacultySubjectsRoutes.FacultySubjectAttendances.name) },
-                modifier = Modifier
-                    .padding(8.dp)
-                    .weight(1f)
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                FloatingActionButton(
+                    onClick = { navController.navigate(FacultySubjectsRoutes.FacultySubjectAttendances.name) },
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    modifier = Modifier
+                        .height(50.dp)
+                        .weight(1f)
                 ) {
-                    Text(
-                        text = "View Attendances",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "View Attendances",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
 
-                    Icon(
-                        Icons.Default.ArrowForward,
-                        contentDescription = "Go To Subject Attendances"
-                    )
+                        Icon(
+                            Icons.Default.ArrowForward,
+                            contentDescription = "Go To Subject Attendances"
+                        )
+                    }
                 }
             }
         }

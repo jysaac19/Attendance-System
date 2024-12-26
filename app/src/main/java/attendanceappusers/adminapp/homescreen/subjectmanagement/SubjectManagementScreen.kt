@@ -16,9 +16,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -116,16 +119,20 @@ fun SubjectManagementScreen (
 
         Row(
             modifier = Modifier
-                .padding(vertical = 8.dp)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            horizontalArrangement = Arrangement.Center
         ) {
-            FloatingActionButton(
+            Button(
                 onClick = { navController.navigate(AdminHomeScreen.HomeScreen.name) },
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(end = 2.dp, top = 4.dp, bottom = 4.dp)
                     .weight(1f)
+                    .height(50.dp),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                )
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -145,11 +152,17 @@ fun SubjectManagementScreen (
                 }
             }
 
-            FloatingActionButton(
+            Button(
                 onClick = { navController.navigate(AdminHomeScreen.AddSubject.name) },
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(end = 2.dp, top = 4.dp, bottom = 4.dp)
                     .weight(1f)
+                    .height(50.dp),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                )
             ) {
                 Row (
                     horizontalArrangement = Arrangement.spacedBy(4.dp),

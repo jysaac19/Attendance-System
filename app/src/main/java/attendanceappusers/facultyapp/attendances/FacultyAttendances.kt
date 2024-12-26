@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,7 +30,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceCard
-import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnName
+import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnNames
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.CustomDatePicker
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.UniversalDropDownMenu
 import java.time.LocalDate
@@ -60,7 +61,8 @@ fun FacultyAttendances (
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 20.dp, start = 16.dp, end = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
             "Attendances",
@@ -68,55 +70,41 @@ fun FacultyAttendances (
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.width(16.dp))
-
         Text(
             "S.Y. 2023 - 2024",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.width(16.dp))
-
-        Column(
+        Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = Modifier.weight(1f)
             ) {
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    CustomDatePicker(
-                        label = "From",
-                        selectedDate = startDate,
-                        onDateSelected = { date ->
-                            startDate = date
-                        }
-                    )
-                }
+                CustomDatePicker(
+                    label = "From",
+                    selectedDate = startDate,
+                    onDateSelected = { date ->
+                        startDate = date
+                    }
+                )
+            }
 
-                Spacer(modifier = Modifier.width(16.dp))
-
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    CustomDatePicker(
-                        label = "To",
-                        selectedDate = endDate,
-                        onDateSelected = { date ->
-                            endDate = date
-                        }
-                    )
-                }
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                CustomDatePicker(
+                    label = "To",
+                    selectedDate = endDate,
+                    onDateSelected = { date ->
+                        endDate = date
+                    }
+                )
             }
         }
-
-        Spacer(Modifier.height(8.dp))
 
         UniversalDropDownMenu(
             label = "Subjects",
@@ -127,18 +115,18 @@ fun FacultyAttendances (
             }
         )
 
-        Spacer(Modifier.height(8.dp))
+        AttendanceColumnNames()
 
-        Spacer(Modifier.height(8.dp))
-
-        AttendanceColumnName()
-
-        LazyColumn {
+        LazyColumn  (
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             itemsIndexed(attendances) { index, attendance ->
-                val backgroundColor = if (index % 2 == 0) Color.Transparent else Color.Gray
+                val backgroundColor = if (index % 2 == 0) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.secondaryContainer
+                val contentColor = if (index % 2 == 0) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.secondary
                 AttendanceCard(
                     attendance = attendance,
-                    backgroundColor = backgroundColor
+                    backgroundColor = backgroundColor,
+                    contentColor = contentColor
                 )
             }
         }

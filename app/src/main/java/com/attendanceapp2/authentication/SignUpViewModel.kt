@@ -20,8 +20,10 @@ class SignUpViewModel(
                 return SignUpResult.Error("Please fill in all fields")
             }
 
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                return SignUpResult.Error("Invalid email format")
+            if (!email.matches(Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.(edu\\.[A-Za-z]{2,}|org|company|ph)$")) ||
+                !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+            ) {
+                return SignUpResult.Error("Invalid school/work email address")
             }
 
             if (password != reEnterPassword) {

@@ -21,23 +21,21 @@ fun StudentListItems(
 ) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .fillMaxWidth(),
         onClick = onClick
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
+        Column (
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 8.dp),
         ) {
             Row(
-                modifier = Modifier
-                    .padding(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column (
-                    modifier = Modifier.weight(1.5f),
+                    modifier = Modifier.weight(1f),
                 ) {
                     Text(
-                        text = "User ID:",
+                        text = "Student ID:",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Normal
                     )
@@ -59,7 +57,7 @@ fun StudentListItems(
                 }
 
                 Column (
-                    modifier = Modifier.weight(3f),
+                    modifier = Modifier.weight(2f),
                 ) {
                     Text(text = "${user.id}", fontSize = 10.sp)
                     Text(text = "${user.firstname} ${user.lastname}", fontSize = 10.sp)

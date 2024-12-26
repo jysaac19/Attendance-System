@@ -14,7 +14,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.DoNotDisturb
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Update
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -22,8 +29,11 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -175,17 +185,23 @@ fun UserManagementScreen(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            FloatingActionButton(
+            Button(
                 onClick = { navController.navigate(AdminHomeScreen.HomeScreen.name) },
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(end = 2.dp, top = 4.dp, bottom = 4.dp)
                     .weight(1f)
-            ) {
+                    .height(50.dp),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                )
+            ){
                 Row (
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back to Home")
+                    Icon(Icons.Default.ArrowBack, contentDescription = null)
 
                     Text(
                         text = "Back",
@@ -195,11 +211,17 @@ fun UserManagementScreen(
                 }
             }
 
-            FloatingActionButton(
+            Button(
                 onClick = { navController.navigate(AdminHomeScreen.AddUser.name) },
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(start = 2.dp, top = 4.dp, bottom = 4.dp)
                     .weight(1f)
+                    .height(50.dp),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                )
             ) {
                 Row (
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -211,7 +233,7 @@ fun UserManagementScreen(
                         fontWeight = FontWeight.SemiBold
                     )
 
-                    Icon(Icons.Default.Add, contentDescription = "Go To Add New User Screen")
+                    Icon(Icons.Default.Add, contentDescription = null)
                 }
             }
         }

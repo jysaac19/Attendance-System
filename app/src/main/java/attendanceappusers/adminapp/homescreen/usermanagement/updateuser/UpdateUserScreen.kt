@@ -5,14 +5,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -126,7 +130,14 @@ fun UpdateUserScreen(
    item {
     UniversalDropDownMenu(
      label = "Department",
-     items = listOf("BSCS", "BSA", "BSE", "BSAIS", "BSTM"),
+     items = listOf(
+      "Computer Science",
+      "Accountancy",
+      "Accounting Information System",
+      "Entrepreneurship",
+      "Tourism Management",
+      "General Education"
+     ),
      selectedItem = updateUser.department,
      onItemSelected = { updateUser = updateUser.copy(department = it) }
     )
@@ -136,7 +147,7 @@ fun UpdateUserScreen(
    item {
     UniversalDropDownMenu(
      label = "Status",
-     items = listOf("Active", "Inactive"),
+     items = listOf("Active", "Inactive", "Drop Out", "Alumni"),
      selectedItem = updateUser.status,
      onItemSelected = { updateUser = updateUser.copy(status = it) }
     )
@@ -157,15 +168,21 @@ fun UpdateUserScreen(
      horizontalArrangement = Arrangement.SpaceAround,
      modifier = Modifier
       .fillMaxWidth()
-      .padding(bottom = 50.dp)
+      .padding(top = 8.dp)
     ) {
-     FloatingActionButton(
+     Button(
       onClick = {
        navController.navigate(AdminHomeScreen.UserManagement.name)
       },
       modifier = Modifier
-       .padding(8.dp)
+       .padding(start = 4.dp)
        .weight(1f)
+       .height(50.dp),
+      shape = RoundedCornerShape(20.dp),
+      colors = ButtonDefaults.buttonColors(
+       contentColor = MaterialTheme.colorScheme.error,
+       containerColor = MaterialTheme.colorScheme.tertiaryContainer
+      )
      ) {
       Row(
        horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -184,7 +201,7 @@ fun UpdateUserScreen(
       }
      }
 
-     FloatingActionButton(
+     Button(
       onClick = {
        result = viewModel.validateFields(
         User(
@@ -205,8 +222,14 @@ fun UpdateUserScreen(
        }
       },
       modifier = Modifier
-       .padding(8.dp)
+       .padding(start = 4.dp)
        .weight(1f)
+       .height(50.dp),
+      shape = RoundedCornerShape(20.dp),
+      colors = ButtonDefaults.buttonColors(
+       contentColor = MaterialTheme.colorScheme.error,
+       containerColor = MaterialTheme.colorScheme.tertiaryContainer
+      )
      ) {
       Row(
        horizontalArrangement = Arrangement.spacedBy(16.dp),

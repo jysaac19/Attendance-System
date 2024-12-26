@@ -15,6 +15,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.attendanceapp2.data.model.user.User
+
 
 @Composable
 fun UserCard(
@@ -45,7 +47,7 @@ fun UserCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column (
-                    modifier = Modifier.weight(1.5f),
+                    modifier = Modifier.weight(1f),
                 ) {
                     Text(
                         text = "User ID:",
@@ -62,7 +64,7 @@ fun UserCard(
                 }
 
                 Column (
-                    modifier = Modifier.weight(4f),
+                    modifier = Modifier.weight(2f),
                 ) {
                     Text(text = "${user.id}", fontSize = 12.sp)
                     Text(text = "${user.firstname} ${user.lastname}", fontSize = 12.sp)
@@ -78,15 +80,21 @@ fun UserCard(
                 FloatingActionButton(
                     onClick = onDeleteClick,
                     shape = RoundedCornerShape(10.dp),
-                    contentColor = LocalContentColor.current,
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                     content = {
                         Column (
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Icon(Icons.Default.Delete, contentDescription = "Delete")
-                            Text(text = "Delete",
-                                fontSize = 8.sp)
+                            Icon(
+                                Icons.Default.Delete,
+                                contentDescription = null
+                            )
+                            Text(
+                                text = "Delete",
+                                fontSize = 8.sp
+                            )
                         }
                     },
                     modifier = Modifier.weight(1f),
@@ -95,14 +103,18 @@ fun UserCard(
                     FloatingActionButton(
                         onClick = onDeactivateClick,
                         shape = RoundedCornerShape(10.dp),
-                        contentColor = LocalContentColor.current,
+                        contentColor = MaterialTheme.colorScheme.error,
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                         content = {
-                            Column (
-                                verticalArrangement = Arrangement.Center,
+                            Column (verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                Icon(Icons.Default.DoNotDisturb, contentDescription = "Deactivate")
-                                Text(text = "Deactivate",
+                                Icon(
+                                    Icons.Default.DoNotDisturb,
+                                    contentDescription = null
+                                )
+                                Text(
+                                    text = "Deactivate",
                                     fontSize = 8.sp)
                             }
                         },
@@ -112,14 +124,19 @@ fun UserCard(
                     FloatingActionButton(
                         onClick = onReactivateClick,
                         shape = RoundedCornerShape(10.dp),
-                        contentColor = LocalContentColor.current,
+                        contentColor = MaterialTheme.colorScheme.primary,
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                         content = {
                             Column (
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                Icon(Icons.Default.Refresh, contentDescription = "Reactivate")
-                                Text(text = "Reactivate",
+                                Icon(
+                                    Icons.Default.Refresh,
+                                    contentDescription = null
+                                )
+                                Text(
+                                    text = "Reactivate",
                                     fontSize = 8.sp)
                             }
                         },
@@ -129,15 +146,21 @@ fun UserCard(
                 FloatingActionButton(
                     onClick = onUpdateClick,
                     shape = RoundedCornerShape(10.dp),
-                    contentColor = LocalContentColor.current,
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                     content = {
                         Column (
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Icon(Icons.Default.Update, contentDescription = "Update")
-                            Text(text = "Update",
-                                fontSize = 8.sp)
+                            Icon(
+                                Icons.Default.Update,
+                                contentDescription = null
+                            )
+                            Text(
+                                text = "Update",
+                                fontSize = 8.sp
+                            )
                         }
                     },
                     modifier = Modifier.weight(1f),

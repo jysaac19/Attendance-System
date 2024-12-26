@@ -3,21 +3,17 @@ package attendanceappusers.facultyapp.profile
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +22,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -44,204 +41,135 @@ fun ProfileScreen(
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-
     val (showLogoutDialog, setShowLogoutDialog) = remember { mutableStateOf(false) }
     val (showDeactivateDialog, setShowDeactivateDialog) = remember { mutableStateOf(false) }
     val (showDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf(false) }
-
     val loggedInUser = LoggedInUserHolder.getLoggedInUser()
 
     if (loggedInUser != null) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
+                .padding(horizontal = 24.dp)
+                .fillMaxWidth()
+                .offset(y = (0.2f * LocalConfiguration.current.screenHeightDp).dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically)
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.weight(1f)
             ) {
-                Card(
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Profile Picture",
+                    tint = Color.Gray,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp),
-                    elevation = CardDefaults.cardElevation(4.dp)
+                        .size(200.dp)
+                )
+                Text(
+                    text = "${loggedInUser.firstname} ${loggedInUser.lastname}",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Normal
+                )
+                Text(
+                    text = loggedInUser.email,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Normal
+                )
+                Text(
+                    text = "${loggedInUser.department} Department",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Normal
+                )
+                Text(
+                    text = loggedInUser.usertype,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Normal
+                )
+
+                Row (
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
                 ) {
-                    Row(
+                    FloatingActionButton(
+                        onClick = { setShowLogoutDialog(true) },
+                        contentColor = MaterialTheme.colorScheme.error,
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                         modifier = Modifier
-                            .padding(4.dp)
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
+                            .height(50.dp)
+                            .weight(1f)
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "Profile Picture",
-                            tint = Color.Gray,
-                            modifier = Modifier
-                                .size(100.dp)
-                        )
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .padding(20.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column (
-                            modifier = Modifier.weight(1.5f),
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
                         ) {
                             Text(
-                                text = "User:",
+                                text = "Logout",
+                                color = Color.White,
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Normal
                             )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "Email:",
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Normal
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "Department:",
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Normal
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "Role:",
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Normal
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "Status:",
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Normal
-                            )
-                        }
-
-                        Column (
-                            modifier = Modifier.weight(3f),
-                        ) {
-                            Text(
-                                text = "${loggedInUser.firstname} ${loggedInUser.lastname}",
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Normal
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = loggedInUser.email,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Normal
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = loggedInUser.department,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Normal
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = loggedInUser.usertype,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Normal
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = loggedInUser.status,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Normal
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = "User",
+                                tint = Color.White,
+                                modifier = Modifier.size(24.dp)
                             )
                         }
                     }
-                }
-
-                Spacer(modifier = Modifier.height(4.dp))
-                Button(
-                    onClick = { setShowLogoutDialog(true) },
-                    shape = RoundedCornerShape(10.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp)
-                        .padding(vertical = 4.dp)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
+                    FloatingActionButton(
+                        onClick = { setShowLogoutDialog(true) },
+                        contentColor = MaterialTheme.colorScheme.error,
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        modifier = Modifier
+                            .height(50.dp)
+                            .weight(1f)
                     ) {
-                        Text(
-                            text = "Logout",
-                            color = Color.White,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Normal
-                        )
-                        Spacer(modifier = Modifier.width(20.dp))
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "User",
-                            tint = Color.White,
-                            modifier = Modifier.size(24.dp)
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
+                        ) {
+                            Text(
+                                text = "Deactivate Account",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Normal
+                            )
+                            Icon(
+                                imageVector = Icons.Default.Mail,
+                                contentDescription = "Email",
+                                tint = Color.White,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
                     }
-                }
-
-                Button(
-                    onClick = { setShowDeactivateDialog(true) },
-                    shape = RoundedCornerShape(10.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp)
-                        .padding(vertical = 4.dp)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
+                    FloatingActionButton(
+                        onClick = { setShowLogoutDialog(true) },
+                        contentColor = MaterialTheme.colorScheme.error,
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        modifier = Modifier
+                            .height(50.dp)
+                            .weight(1f)
                     ) {
-                        Text(
-                            text = "Deactivate Account",
-                            color = Color.White,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Normal
-                        )
-                        Spacer(modifier = Modifier.width(20.dp))
-                        Icon(
-                            imageVector = Icons.Default.Mail,
-                            contentDescription = "Email",
-                            tint = Color.White,
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
-                }
-
-                Button(
-                    onClick = { setShowDeleteDialog(true) },
-                    shape = RoundedCornerShape(10.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp)
-                        .padding(vertical = 4.dp)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = "Delete Account",
-                            color = Color.White,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Normal
-                        )
-                        Spacer(modifier = Modifier.width(20.dp))
-                        Icon(
-                            imageVector = Icons.Default.Mail,
-                            contentDescription = "Email",
-                            tint = Color.White,
-                            modifier = Modifier.size(24.dp)
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
+                        ) {
+                            Text(
+                                text = "Delete Account",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Normal
+                            )
+                            Icon(
+                                imageVector = Icons.Default.Mail,
+                                contentDescription = "Email",
+                                tint = Color.White,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
                     }
                 }
             }

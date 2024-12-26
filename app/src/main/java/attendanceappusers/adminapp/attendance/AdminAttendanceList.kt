@@ -20,6 +20,7 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,7 +42,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceCard
-import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnName
+import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnNames
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.CustomDatePicker
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.UniversalDropDownMenu
 import java.time.LocalDate
@@ -54,32 +54,27 @@ fun AdminAttendanceList (
     navController: NavController,
     viewModel : AdminAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    // Get the current year
     val currentYear = LocalDate.now().year
-
-    // Default start date and end date
     val defaultEndDate = LocalDate.now()
-    val defaultStartDate = LocalDate.of(currentYear, 1, 1) // January 1st of the current year
-
-    // Collecting the start and end dates with default values
+    val defaultStartDate = LocalDate.of(currentYear, 1, 1)
     var startDate by remember { mutableStateOf(defaultStartDate) }
     var endDate by remember { mutableStateOf(defaultEndDate) }
-
     var selectedSubjectCode by remember { mutableStateOf("All") }
     val subjects by viewModel.subjects.collectAsState()
-
-    // Collect attendances and sort them by date in descending order (most recent first)
     val attendances by viewModel.attendances.collectAsState()
     val formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy")
     val sortedAttendances = attendances.sortedByDescending { attendance ->
         LocalDate.parse(attendance.date, formatter)
     }
-
     var query by remember { mutableStateOf("") }
-
     var selectedUserType by remember { mutableStateOf("All") }
     val userType = listOf("All", "Admin", "Student", "Faculty")
     var expanded by remember { mutableStateOf(false) }
+    val syString = if (defaultEndDate.monthValue >= 9) {
+        "${currentYear} - ${currentYear + 1}"
+    } else {
+        "${currentYear - 1} - ${currentYear}"
+    }
 
     Column(
         modifier = Modifier
@@ -93,19 +88,17 @@ fun AdminAttendanceList (
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.width(16.dp))
-
         Text(
-            "S.Y. 2023 - 2024",
+            "S.Y. $syString",
             fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold
         )
 
-        Spacer(modifier = Modifier.width(16.dp))
-
         Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Top,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 4.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
@@ -157,64 +150,64 @@ fun AdminAttendanceList (
                     )
                 }
             }
-        }
 
-        UniversalDropDownMenu(
-            label = "Subject",
-            items = subjects,
-            selectedItem = selectedSubjectCode,
-            onItemSelected = {
-                selectedSubjectCode = it.split(" - ")[0]
-            }
-        )
-
-        Spacer(modifier = Modifier.height(4.dp))
-
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = {
-                expanded = !expanded
-            }
-        ) {
-            OutlinedTextField(
-                value = selectedUserType,
-                label = { Text("User Type") },
-                onValueChange = { },
-                readOnly = true,
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                modifier = Modifier
-                    .menuAnchor()
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                textStyle = TextStyle(textAlign = TextAlign.Center)
+            UniversalDropDownMenu(
+                label = "Subject",
+                items = subjects,
+                selectedItem = selectedSubjectCode,
+                onItemSelected = {
+                    selectedSubjectCode = it.split(" - ")[0]
+                }
             )
 
-            ExposedDropdownMenu(
+            ExposedDropdownMenuBox(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onExpandedChange = {
+                    expanded = !expanded
+                }
             ) {
-                userType.forEach { item ->
-                    DropdownMenuItem(
-                        text = { Text(text = item) },
-                        onClick = {
-                            selectedUserType = item
-                            expanded = false
-                        }
-                    )
+                OutlinedTextField(
+                    value = selectedUserType,
+                    label = { Text("User Type") },
+                    onValueChange = { },
+                    readOnly = true,
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                    modifier = Modifier
+                        .menuAnchor()
+                        .fillMaxWidth(),
+                    shape = RoundedCornerShape(20.dp),
+                    textStyle = TextStyle(textAlign = TextAlign.Center)
+                )
+
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    userType.forEach { item ->
+                        DropdownMenuItem(
+                            text = { Text(text = item) },
+                            onClick = {
+                                selectedUserType = item
+                                expanded = false
+                            }
+                        )
+                    }
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(4.dp))
+        AttendanceColumnNames()
 
-        AttendanceColumnName()
-
-        LazyColumn {
+        LazyColumn  (
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             itemsIndexed(sortedAttendances) { index, attendance ->
-                val backgroundColor = if (index % 2 == 0) Color.Transparent else Color.Gray
+                val backgroundColor = if (index % 2 == 0) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.secondaryContainer
+                val contentColor = if (index % 2 == 0) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.secondary
                 AttendanceCard(
                     attendance = attendance,
-                    backgroundColor = backgroundColor
+                    backgroundColor = backgroundColor,
+                    contentColor = contentColor
                 )
             }
         }

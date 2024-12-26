@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,8 +14,11 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -61,7 +65,14 @@ fun AddUserScreen(
     var showDialog by remember { mutableStateOf(false) }
     var result by remember { mutableStateOf(Results.AddUserResult()) }
 
-    val department = listOf("BSCS", "BSA", "BSAIS", "BSE", "BSTM")
+    val department = listOf(
+        "Computer Science",
+        "Accountancy",
+        "Accounting Information System",
+        "Entrepreneurship",
+        "Tourism Management",
+        "General Education"
+    )
     val usertype = listOf("Student", "Faculty", "Admin")
 
     LazyColumn(
@@ -169,15 +180,21 @@ fun AddUserScreen(
                 horizontalArrangement = Arrangement.SpaceAround,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 50.dp)
+                    .padding(top = 8.dp)
             ) {
-                FloatingActionButton(
+                Button(
                     onClick = {
                         navController.navigate(AdminHomeScreen.UserManagement.name)
                     },
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(start = 4.dp)
                         .weight(1f)
+                        .height(50.dp),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                    )
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -196,7 +213,7 @@ fun AddUserScreen(
                     }
                 }
 
-                FloatingActionButton(
+                Button(
                     onClick = {
                         coroutineScope.launch {
                             result = viewModel.registerUser(firstname, lastname, email, password, selectedFaculty, selectedRoom, "Active")
@@ -206,8 +223,14 @@ fun AddUserScreen(
                         }
                     },
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(start = 4.dp)
                         .weight(1f)
+                        .height(50.dp),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                    )
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(16.dp),

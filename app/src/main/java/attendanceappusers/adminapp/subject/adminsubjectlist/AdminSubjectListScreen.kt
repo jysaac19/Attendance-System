@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -34,11 +35,11 @@ fun AdminSubjectListScreen (
 ) {
     val subjects by viewModel.subjects.collectAsState()
     val currentMonth = Month.entries[java.time.LocalDate.now().monthValue - 1]
-    val schoolYearText = when {
-        currentMonth in java.time.Month.SEPTEMBER..java.time.Month.DECEMBER -> {
+    val schoolYearText = when (currentMonth) {
+        in Month.SEPTEMBER..Month.DECEMBER -> {
             "S.Y. ${java.time.LocalDate.now().year} - ${java.time.LocalDate.now().year + 1}"
         }
-        currentMonth in java.time.Month.JANUARY..java.time.Month.JUNE -> {
+        in Month.JANUARY..Month.JUNE -> {
             "S.Y. ${java.time.LocalDate.now().year - 1} - ${java.time.LocalDate.now().year}"
         }
         else -> {
@@ -71,7 +72,7 @@ fun AdminSubjectListScreen (
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 200.dp),
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
         ) {
             items(subjects) { subject ->
                 SubjectCard(subject = subject) {

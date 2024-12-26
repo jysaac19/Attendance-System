@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,7 +37,7 @@ import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.navigation.approutes.faculty.FacultySubjectsRoutes
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceCard
-import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnName
+import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnNames
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.CustomDatePicker
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -47,25 +48,21 @@ fun FacultySubjectAttendances (
     viewModel: FacultySubjectAttendanceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val subjectInfo = SelectedSubjectHolder.getSelectedSubject()
-
-    // Get the current year
     val currentYear = LocalDate.now().year
-
-    // Default start date and end date
     val defaultEndDate = LocalDate.now()
-    val defaultStartDate = LocalDate.of(currentYear, 1, 1) // January 1st of the current year
-
-    // Collecting the start and end dates with default values
+    val defaultStartDate = LocalDate.of(currentYear, 1, 1)
+    val attendances by viewModel.facultySubjectAttendances.collectAsState()
+    val syString = if (defaultEndDate.monthValue >= 9) {
+        "$currentYear - ${currentYear + 1}"
+    } else {
+        "${currentYear - 1} - $currentYear"
+    }
     var startDate by remember { mutableStateOf(defaultStartDate) }
     var endDate by remember { mutableStateOf(defaultEndDate) }
 
-    // Collect attendances and sort them by date in descending order (most recent first)
-    val attendances by viewModel.facultySubjectAttendances.collectAsState()
-
-    // Function to fetch attendances whenever start date or end date changes
     LaunchedEffect(startDate, endDate) {
-        val startDateString = startDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format start date
-        val endDateString = endDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format end date
+        val startDateString = startDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))
+        val endDateString = endDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))
         viewModel.fetchFacultySubjectAttendances(startDateString, endDateString)
     }
 
@@ -73,7 +70,8 @@ fun FacultySubjectAttendances (
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 20.dp, start = 16.dp, end = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
             text = subjectInfo?.name ?: "Attendances",
@@ -82,95 +80,79 @@ fun FacultySubjectAttendances (
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.width(16.dp))
-
         Text(
-            "S.Y. 2023 - 2024",
+            "S.Y. $syString",
             fontSize = 16.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.SemiBold
         )
 
-        Spacer(modifier = Modifier.width(16.dp))
-
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    CustomDatePicker(
-                        label = "From",
-                        selectedDate = startDate,
-                        onDateSelected = { date ->
-                            startDate = date
-                        }
-                    )
-                }
-
-                Spacer(modifier = Modifier.width(16.dp))
-
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    CustomDatePicker(
-                        label = "To",
-                        selectedDate = endDate,
-                        onDateSelected = { date ->
-                            endDate = date
-                        }
-                    )
-                }
-            }
-        }
-
         Row(
-            modifier = Modifier
-                .padding(vertical = 8.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            FloatingActionButton(
-                onClick = { navController.navigate(FacultySubjectsRoutes.FacultySearchStudents.name) },
-                modifier = Modifier
-                    .padding(8.dp)
-                    .weight(1f)
+            Column(
+                modifier = Modifier.weight(1f)
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Add Attendance",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
+                CustomDatePicker(
+                    label = "From",
+                    selectedDate = startDate,
+                    onDateSelected = { date ->
+                        startDate = date
+                    }
+                )
+            }
 
-                    Icon(
-                        Icons.Default.Add,
-                        contentDescription = "Add Attendance"
-                    )
-                }
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                CustomDatePicker(
+                    label = "To",
+                    selectedDate = endDate,
+                    onDateSelected = { date ->
+                        endDate = date
+                    }
+                )
             }
         }
 
-        Spacer(Modifier.height(8.dp))
+        FloatingActionButton(
+            onClick = { navController.navigate(FacultySubjectsRoutes.FacultySearchStudents.name) },
+            contentColor = MaterialTheme.colorScheme.error,
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Add Attendance",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
 
-        AttendanceColumnName()
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = "Add Attendance"
+                )
+            }
+        }
 
-        LazyColumn {
+        AttendanceColumnNames()
+
+        LazyColumn (
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             itemsIndexed(attendances) { index, attendance ->
-                val backgroundColor = if (index % 2 == 0) Color.Transparent else Color.Gray
+                val backgroundColor = if (index % 2 == 0) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.secondaryContainer
+                val contentColor = if (index % 2 == 0) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.secondary
                 AttendanceCard(
                     attendance = attendance,
-                    backgroundColor = backgroundColor // Set your desired background color here
+                    backgroundColor = backgroundColor,
+                    contentColor = contentColor
                 )
             }
         }

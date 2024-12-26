@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,8 +27,10 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
-        colors = CardDefaults.cardColors(),
+            .padding(4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer
+        ),
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
@@ -39,18 +42,16 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
                 .fillMaxWidth()
                 .padding(start = 8.dp, end = 8.dp, bottom = 8.dp, top = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.spacedBy(4.dp,Alignment.CenterVertically)
         ) {
 
             Text(
                 text = subject.name,
-                fontSize = 18.sp,
+                fontSize = 16.sp,
                 textAlign = TextAlign.Center,
                 maxLines = 1, // Limit to 2 lines
                 overflow = TextOverflow.Ellipsis // Add ellipsis for overflow
             )
-
-            Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = "Prof. ${subject.facultyName}",
@@ -62,9 +63,10 @@ fun SubjectCard(subject: Subject, onClick: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth(),
             colors = CardDefaults.cardColors(
-                Color.Red.copy(alpha = 0.8f)
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.error
             ),
-            shape = RoundedCornerShape(20.dp),
+            shape = RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp),
             elevation = CardDefaults.cardElevation(
 //                defaultElevation = 4.dp
             )

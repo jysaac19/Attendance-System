@@ -12,10 +12,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.PersonRemove
+import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material.icons.filled.Update
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,8 +41,9 @@ fun SubjectItem(
 ) {
     Card(
         onClick = onClick,
-        shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -93,6 +97,8 @@ fun SubjectItem(
             ) {
                 FloatingActionButton(
                     onClick = onDeleteClick,
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                     modifier = Modifier.weight(1f),
                 ) {
                     Column(
@@ -112,6 +118,8 @@ fun SubjectItem(
 
                 FloatingActionButton(
                     onClick = onUpdateClick,
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                     modifier = Modifier.weight(1f),
                 ) {
                     Column(
@@ -132,6 +140,8 @@ fun SubjectItem(
                 if (subject.subjectStatus == "Active") {
                     FloatingActionButton(
                         onClick = onArchiveClick,
+                        contentColor = MaterialTheme.colorScheme.error,
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                         modifier = Modifier.weight(1f),
                     ) {
                         Column(
@@ -151,6 +161,8 @@ fun SubjectItem(
                 } else {
                     FloatingActionButton(
                         onClick = onUnarchiveClick,
+                        contentColor = MaterialTheme.colorScheme.primary,
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                         modifier = Modifier.weight(1f),
                     ) {
                         Column(
@@ -158,7 +170,7 @@ fun SubjectItem(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Icon(
-                                Icons.Default.Archive,
+                                Icons.Default.Unarchive,
                                 contentDescription = "Unarchive Subject"
                             )
                             Text(
@@ -171,6 +183,8 @@ fun SubjectItem(
 
                 FloatingActionButton(
                     onClick = onRemoveFacultyClick,
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                     modifier = Modifier.weight(1f),
                 ) {
                     Column(

@@ -11,11 +11,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -60,11 +62,11 @@ fun StudentArchivedSubjects (
 
     val subjects by viewModel.archivedSubjects.collectAsState()
     val currentMonth = Month.entries[java.time.LocalDate.now().monthValue - 1]
-    val schoolYearText = when {
-        currentMonth in java.time.Month.SEPTEMBER..java.time.Month.DECEMBER -> {
+    val schoolYearText = when (currentMonth) {
+        in Month.SEPTEMBER..Month.DECEMBER -> {
             "S.Y. ${java.time.LocalDate.now().year} - ${java.time.LocalDate.now().year + 1}"
         }
-        currentMonth in java.time.Month.JANUARY..java.time.Month.JUNE -> {
+        in Month.JANUARY..Month.JUNE -> {
             "S.Y. ${java.time.LocalDate.now().year - 1} - ${java.time.LocalDate.now().year}"
         }
         else -> {
@@ -89,8 +91,6 @@ fun StudentArchivedSubjects (
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.width(16.dp))
-
         Text(
             schoolYearText,
             fontSize = 16.sp,
@@ -99,16 +99,19 @@ fun StudentArchivedSubjects (
 
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            horizontalArrangement = Arrangement.Center,
+                .padding(vertical = 4.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically
         ) {
             FloatingActionButton(
                 onClick = { showDialog = true },
                 modifier = Modifier
-                    .padding(8.dp)
-                    .weight(1f)
+                    .fillMaxWidth()
+                    .weight(1f),
+                contentColor = MaterialTheme.colorScheme.error,
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                shape = RoundedCornerShape(20.dp)
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -130,8 +133,11 @@ fun StudentArchivedSubjects (
             FloatingActionButton(
                 onClick = { navController.navigate(StudentMainRoute.Subjects.name) },
                 modifier = Modifier
-                    .padding(8.dp)
-                    .weight(1f)
+                    .fillMaxWidth()
+                    .weight(1f),
+                contentColor = MaterialTheme.colorScheme.error,
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                shape = RoundedCornerShape(20.dp)
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),

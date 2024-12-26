@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,8 +18,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -58,117 +62,112 @@ fun SignInScreen(
     var password by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
+
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .offset(y = (0.2f * LocalConfiguration.current.screenHeightDp).dp)
+            .padding(horizontal = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-
         item {
-            Column (
+            Image(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Image(
-                    modifier = Modifier
-                        .size(200.dp)
-                        .padding(24.dp),
-                    painter = painterResource(id = R.drawable.nbslogo),
-                    contentDescription = "NBS LOGO"
-                )
+                    .size(200.dp)
+                    .padding(24.dp),
+                painter = painterResource(id = R.drawable.nbslogo),
+                contentDescription = "NBS LOGO"
+            )
+        }
+        item {
+            Text(
+                text = "Welcome to NBSC Attendance App!",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+        item {
+            Text(
+                text = "Please sign in using your school email",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
+        item {
+            OutlinedTextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Email") },
+                singleLine = true,
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.fillMaxWidth()
+            )
 
-                Text(
-                    text = "Welcome to NBSC Attendance App!",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-
-                Text(
-                    text = "Please sign in using your school email",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                OutlinedTextField(
-                    value = email,
-                    onValueChange = { email = it },
-                    label = { Text("Email") },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    shape = RoundedCornerShape(20.dp)
-                )
-
-                OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    label = { Text("Password") },
-                    trailingIcon = {
-                        IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-                            Icon(
-                                imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                                contentDescription = "Toggle password visibility"
-                            )
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    shape = RoundedCornerShape(20.dp)
-                )
-
-                Spacer(modifier = Modifier.height(35.dp))
-
-                Button(
-                    onClick = {
-                        coroutineScope.launch {
-                            val result = signInVM.validateSignIn(email, password)
-                            result.successMessage?.let {
-                                showToast(context, it)
-                            }
-                            result.failureMessage?.let {
-                                showToast(context, it)
-                            }
-                        }
-                    },
-                    shape = RoundedCornerShape(10.dp),
-                    modifier = Modifier
-                        .size(width = 250.dp,height = 40.dp)
-                ) {
-                    Text(
-                        text = "Sign In",
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Normal
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(vertical = 16.dp)
-                ) {
-                    Text(
-                        text = "Create account ",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Normal
-                    )
-
-                    ClickableText(
-                        text = AnnotatedString("Sign Up"),
-                        onClick = { navController.navigate(AuthRoute.SignUp.name) },
-                        style = TextStyle(
-                            color = Color.Red,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Password") },
+                trailingIcon = {
+                    IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                        Icon(
+                            imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                            contentDescription = "Toggle password visibility"
                         )
+                    }
+                },
+                singleLine = true,
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        item {
+            FloatingActionButton (
+                onClick = {
+                    coroutineScope.launch {
+                        val result = signInVM.validateSignIn(email, password)
+                        result.successMessage?.let {
+                            showToast(context, it)
+                        }
+                        result.failureMessage?.let {
+                            showToast(context, it)
+                        }
+                    }
+                },
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier
+                    .fillMaxWidth(0.7f)
+                    .height(50.dp),
+                contentColor = MaterialTheme.colorScheme.error,
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
+                Text(
+                    text = "Sign In",
+                    color = Color.White,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal
+                )
+            }
+        }
+        item {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
+            ) {
+                Text(
+                    text = "Create account ",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal
+                )
+
+                ClickableText(
+                    text = AnnotatedString("Sign Up"),
+                    onClick = { navController.navigate(AuthRoute.SignUp.name) },
+                    style = TextStyle(
+                        color = MaterialTheme.colorScheme.primary,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
                     )
-                }
+                )
             }
         }
     }

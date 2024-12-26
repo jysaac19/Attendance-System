@@ -16,6 +16,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -23,6 +25,7 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -99,17 +102,16 @@ fun AttendanceManagementScreen (
 
     Column(
         modifier = Modifier
-            .padding(top = 20.dp, start = 16.dp, end = 16.dp),
+            .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         Text(
             "Attendance Management",
             fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 24.dp, bottom = 16.dp)
         )
-
-        Spacer(modifier = Modifier.width(16.dp))
 
         OutlinedTextField(
             value = query,
@@ -146,8 +148,6 @@ fun AttendanceManagementScreen (
                 )
             }
 
-            Spacer(modifier = Modifier.width(16.dp))
-
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -169,8 +169,6 @@ fun AttendanceManagementScreen (
                 selectedSubjectCode = it.split(" - ")[0]
             }
         )
-
-        Spacer(modifier = Modifier.height(4.dp))
 
         ExposedDropdownMenuBox(
             expanded = expanded,
@@ -209,16 +207,21 @@ fun AttendanceManagementScreen (
 
         Row(
             modifier = Modifier
-                .padding(vertical = 8.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            FloatingActionButton(
+            Button(
                 onClick = { navController.navigate(AdminHomeScreen.HomeScreen.name) },
                 modifier = Modifier
-                    .padding(8.dp)
                     .weight(1f)
+                    .height(50.dp),
+                shape = RoundedCornerShape(20.dp),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                )
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -237,11 +240,18 @@ fun AttendanceManagementScreen (
                 }
             }
 
-            FloatingActionButton(
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Button(
                 onClick = { navController.navigate(AdminHomeScreen.SearchStudent.name) },
                 modifier = Modifier
-                    .padding(8.dp)
                     .weight(1f)
+                    .height(50.dp),
+                shape = RoundedCornerShape(20.dp),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                )
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),

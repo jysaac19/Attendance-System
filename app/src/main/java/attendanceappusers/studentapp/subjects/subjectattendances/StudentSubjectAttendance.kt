@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,7 +32,7 @@ import androidx.navigation.NavController
 import com.attendanceapp2.appviewmodel.AppViewModelProvider
 import com.attendanceapp2.data.model.subject.SelectedSubjectHolder
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceCard
-import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnName
+import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.AttendanceColumnNames
 import com.attendanceapp2.screenuniversalcomponents.attendanceuicomponents.CustomDatePicker
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -43,22 +44,13 @@ fun StudentSubjectAttendances (
 ) {
 
     val subjectInfo = SelectedSubjectHolder.getSelectedSubject()
-
-    // Get the current year
     val currentYear = LocalDate.now().year
-
-    // Default start date and end date
     val defaultEndDate = LocalDate.now()
-    val defaultStartDate = LocalDate.of(currentYear, 1, 1) // January 1st of the current year
-
-    // Collecting the start and end dates with default values
+    val defaultStartDate = LocalDate.of(currentYear, 1, 1)
+    val attendances by viewModel.attendances.collectAsState()
     var startDate by remember { mutableStateOf(defaultStartDate) }
     var endDate by remember { mutableStateOf(defaultEndDate) }
 
-    // Collect attendances and sort them by date in descending order (most recent first)
-    val attendances by viewModel.attendances.collectAsState()
-
-    // Function to fetch attendances whenever start date or end date changes
     LaunchedEffect(startDate, endDate) {
         val startDateString = startDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format start date
         val endDateString = endDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) // Format end date
@@ -69,16 +61,14 @@ fun StudentSubjectAttendances (
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 20.dp, start = 16.dp, end = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
             text = subjectInfo?.name ?: "Attendances",
             fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
+            fontWeight = FontWeight.Bold
         )
-
-        Spacer(modifier = Modifier.width(16.dp))
 
         Text(
             "S.Y. 2023 - 2024",
@@ -86,57 +76,48 @@ fun StudentSubjectAttendances (
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.width(16.dp))
-
-        Column(
+        Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = Modifier.weight(1f)
             ) {
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    CustomDatePicker(
-                        label = "From",
-                        selectedDate = startDate,
-                        onDateSelected = { date ->
-                            startDate = date
-                        }
-                    )
-                }
+                CustomDatePicker(
+                    label = "From",
+                    selectedDate = startDate,
+                    onDateSelected = { date ->
+                        startDate = date
+                    }
+                )
+            }
 
-                Spacer(modifier = Modifier.width(16.dp))
-
-                // CustomDatePicker for selecting end date
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    CustomDatePicker(
-                        label = "To",
-                        selectedDate = endDate,
-                        onDateSelected = { date ->
-                            endDate = date
-                        }
-                    )
-                }
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                CustomDatePicker(
+                    label = "To",
+                    selectedDate = endDate,
+                    onDateSelected = { date ->
+                        endDate = date
+                    }
+                )
             }
         }
 
-        Spacer(Modifier.height(8.dp))
+        AttendanceColumnNames()
 
-        AttendanceColumnName()
-
-        LazyColumn {
+        LazyColumn  (
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             itemsIndexed(attendances) { index, attendance ->
-                val backgroundColor = if (index % 2 == 0) Color.Transparent else Color.Gray
+                val backgroundColor = if (index % 2 == 0) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.secondaryContainer
+                val contentColor = if (index % 2 == 0) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.secondary
                 AttendanceCard(
                     attendance = attendance,
-                    backgroundColor = backgroundColor // Set your desired background color here
+                    backgroundColor = backgroundColor,
+                    contentColor = contentColor
                 )
             }
         }

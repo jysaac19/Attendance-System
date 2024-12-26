@@ -26,6 +26,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -139,78 +141,34 @@ fun AdminSubjectScreen (
                     )
                     if (selectedSubject != null) {
                         Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
-                                text = "Code/Name:",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp,
-                                modifier = Modifier.weight(2f)
-                            )
-                            Text(
-                                text = "${selectedSubject.code} - ${selectedSubject.name}",
-                                fontSize = 12.sp,
-                                modifier = Modifier.weight(3f)
-                            )
-                        }
+                            Column (
+                                modifier = Modifier.weight(1f),
+                            ) {
+                                Text(text = "Code/Name:", fontSize = 12.sp)
+                                Text(text = "Faculty:", fontSize = 12.sp)
+                                Text(text = "Room:", fontSize = 12.sp)
+                                Text(text = "Join Code:", fontSize = 12.sp)
+                            }
 
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                text = "Faculty:",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp,
-                                modifier = Modifier.weight(2f)
-                            )
-                            Text(
-                                text = selectedSubject.faculty,
-                                fontSize = 12.sp,
-                                modifier = Modifier.weight(3f)
-                            )
-                        }
-
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                text = "Room:",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp,
-                                modifier = Modifier.weight(2f)
-                            )
-                            Text(
-                                text = selectedSubject.room,
-                                fontSize = 12.sp,
-                                modifier = Modifier.weight(3f)
-                            )
-                        }
-
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                text = "Join Code:",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp,
-                                modifier = Modifier.weight(2f)
-                            )
-                            Text(
-                                text = selectedSubject.joinCode,
-                                fontSize = 12.sp,
-                                modifier = Modifier.weight(3f)
-                            )
+                            Column (
+                                modifier = Modifier.weight(2f),
+                            ) {
+                                Text(text = "${selectedSubject.code} - ${selectedSubject.name}", fontSize = 12.sp)
+                                Text(text = "${selectedSubject.faculty}", fontSize = 12.sp)
+                                Text(text = selectedSubject.room, fontSize = 12.sp)
+                                Text(text = selectedSubject.joinCode, fontSize = 12.sp)
+                            }
                         }
 
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 8.dp),
-                            horizontalArrangement = Arrangement.End
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             FloatingActionButton(
                                 onClick = {
@@ -227,15 +185,16 @@ fun AdminSubjectScreen (
                                     )
                                     navController.navigate(AdminHomeScreen.UpdateSubject.name)
                                 },
-                                modifier = Modifier.padding(8.dp)
+                                contentColor = MaterialTheme.colorScheme.error,
+                                containerColor = MaterialTheme.colorScheme.tertiaryContainer
                             ) {
                                 Column(
                                     verticalArrangement = Arrangement.Center,
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
-                                Icon(Icons.Default.Update, contentDescription = "Update")
-                                Text(text = "Update", fontSize = 6.sp)
-                                    }
+                                    Icon(Icons.Default.Update, contentDescription = "Update")
+                                    Text(text = "Update", fontSize = 6.sp)
+                                }
                             }
 
                             FloatingActionButton(
@@ -252,7 +211,8 @@ fun AdminSubjectScreen (
                                         )
                                     showDeleteDialog = true
                                 },
-                                modifier = Modifier.padding(8.dp)
+                                contentColor = MaterialTheme.colorScheme.error,
+                                containerColor = MaterialTheme.colorScheme.tertiaryContainer
                             ) {
                                 Column(
                                     verticalArrangement = Arrangement.Center,
@@ -277,7 +237,8 @@ fun AdminSubjectScreen (
                                         )
                                     showArchiveDialog = true
                                 },
-                                modifier = Modifier.padding(8.dp)
+                                contentColor = MaterialTheme.colorScheme.error,
+                                containerColor = MaterialTheme.colorScheme.tertiaryContainer
                             ) {
                                 Column(
                                     verticalArrangement = Arrangement.Center,
@@ -340,10 +301,11 @@ fun AdminSubjectScreen (
                                         showDeleteScheduleDialog = true
                                     },
                                     modifier = Modifier
-                                        .weight(1.5f)
-                                        .height(35.dp),
+                                        .weight(1f)
+                                        .height(50.dp),
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = Purple40
+                                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                                        contentColor = MaterialTheme.colorScheme.error
                                     ),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
@@ -364,9 +326,23 @@ fun AdminSubjectScreen (
                     // Add floating action button
                     FloatingActionButton(
                         onClick = { addScheduleDialog = true },
-                        modifier = Modifier.align(Alignment.End)
+                        contentColor = MaterialTheme.colorScheme.error,
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp)
                     ) {
-                        Icon(Icons.Filled.Add, contentDescription = "Add")
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Add Schedule",
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                            Icon(Icons.Filled.Add, contentDescription = "Add")
+                        }
                     }
                 }
             }
@@ -490,7 +466,9 @@ fun AdminSubjectScreen (
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 FloatingActionButton(
-                    onClick = { showDownloadDialog = true }, // Show the download dialog
+                    onClick = { showDownloadDialog = true },
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                     modifier = Modifier
                         .padding(8.dp)
                         .weight(1f)
@@ -519,6 +497,8 @@ fun AdminSubjectScreen (
             ) {
                 FloatingActionButton(
                     onClick = { navController.navigate(AdminHomeScreen.SubjectManagement.name) },
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                     modifier = Modifier
                         .padding(8.dp)
                         .weight(1f)
@@ -543,6 +523,8 @@ fun AdminSubjectScreen (
 
                 FloatingActionButton(
                     onClick = { navController.navigate(AdminSubject.SubjectAttendance.name) },
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                     modifier = Modifier
                         .padding(8.dp)
                         .weight(1f)
